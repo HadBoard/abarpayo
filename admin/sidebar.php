@@ -57,6 +57,13 @@ $action = new Action();
         </a>
     </li>
 
+    <li>
+        <a class="has-arrow" href="product-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">محصولات</span>
+        </a>
+    </li>
+
     <hr class="m-0">
 
 </ul>
