@@ -148,9 +148,21 @@ include('header.php'); ?>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="text" name="last_name" class="form-control input-default "
-                                           placeholder="نام خانوادگی"
-                                           value="<?= ($edit) ? $row->last_name : "" ?>" required>
+                                    <select class="form-control" name="parent">
+                                        <option>وابستگی را انتخاب فرمایید .</option>
+                                        <?
+                                        $option_result = $action->category_option($row->parent);
+                                        while ($option = $option_result->fetch_object()) {
+                                            echo '<option value="';
+                                            echo $option->id;
+                                            echo '"';
+                                            if ($option->id == $row->parent) echo "selected";
+                                            echo '>';
+                                            echo $option->title;
+                                            echo '</option>';
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
 
                                 <div class="form-actions">
@@ -165,7 +177,8 @@ include('header.php'); ?>
                                         <i class="fa fa-check"></i> ثبت
                                     </button>
 
-                                    <a href="<?= $list_url ?>"><span name="back" class="btn btn-inverse">بازگشت به لیست</span></a>
+                                    <a href="<?= $list_url ?>"><span name="back"
+                                                                     class="btn btn-inverse">بازگشت به لیست</span></a>
 
                                 </div>
 
@@ -182,5 +195,4 @@ include('header.php'); ?>
 
 </div>
 <? include('footer.php'); ?>
-// ----------- end html :) ---------------------------------------------------------------------------------------------
 

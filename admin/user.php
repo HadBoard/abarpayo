@@ -15,10 +15,7 @@ $edit = false;
 if (isset($_GET['edit'])) {
     $edit = true;
     $id = $action->request('edit');
-    $result = $connection->query("SELECT * FROM tbl_user WHERE id ='$id'");
-    if (!$action->result($result)) return false;
-    if (!$result->num_rows) header("Location: user-list.php");
-    $row = $result->fetch_object();
+    $row = $action->user_get($id);
 }
 // ----------- get data from database when action is edit --------------------------------------------------------------
 
@@ -221,5 +218,4 @@ include('header.php'); ?>
 
 </div>
 <? include('footer.php'); ?>
-// ----------- end html :) ---------------------------------------------------------------------------------------------
 
