@@ -51,7 +51,7 @@ include('header.php'); ?>
     <div class="row page-titles">
         <!-- ----------- start breadcrumb ---------------------------------------------------------------------- -->
         <div class="col-md-12 align-self-center text-right">
-            <h3 class="text-primary">کاربران</h3></div>
+            <h3 class="text-primary">محصولات</h3></div>
         <div class="col-md-12 align-self-center text-right">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
