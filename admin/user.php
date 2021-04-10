@@ -159,7 +159,7 @@ include('header.php'); ?>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="number" name="national_code" class="form-control"
+                                    <input type="text" name="national_code" class="form-control"
                                            placeholder="کدملی"
                                            value="<?= ($edit) ? $row->national_code : "" ?>" required>
                                 </div>
