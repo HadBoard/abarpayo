@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2021 at 09:35 AM
+-- Generation Time: Apr 10, 2021 at 10:02 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -32,6 +32,7 @@ CREATE TABLE `tbl_product` (
   `category_id` int(11) NOT NULL,
   `shop_id` int(11) NOT NULL,
   `title` varchar(50) NOT NULL,
+  `discription` text NOT NULL,
   `price` varchar(20) NOT NULL,
   `discount` int(11) DEFAULT NULL,
   `score` int(11) DEFAULT NULL,
