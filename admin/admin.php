@@ -92,7 +92,7 @@ include('header.php'); ?>
                         خانه
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="user-list.php">مدیران</a></li>
+                <li class="breadcrumb-item"><a href="<?= $list_url ?>">مدیران</a></li>
                 <?php if ($edit) { ?>
                     <li class="breadcrumb-item"><a href="javascript:void(0)">ثبت</a></li>
                 <?php } else { ?>
