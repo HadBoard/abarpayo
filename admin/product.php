@@ -150,8 +150,8 @@ include('header.php'); ?>
                                     
                                         <option 
                                         <?
-                                        if($edit && $category->id==$row->id)
-                                        echo 'selected="selected"';
+                                        // if($edit && $category->id==$row->id)
+                                        // echo 'selected="selected"';
                                         ?>
                                         value="<?= $category->id ?>"><?= $category->title ?></option>
                                         <?
@@ -167,8 +167,8 @@ include('header.php'); ?>
                                         ?>
                                         <option 
                                         <?
-                                        if($edit && $shop->id==$row->id)
-                                        echo 'selected="selected"';
+                                        // if($edit && $shop->id==$row->id)
+                                        // echo 'selected="selected"';
                                         ?>
                                         value="<?= $shop->id ?>"><?= $shop->title ?></option>
                                         <?
