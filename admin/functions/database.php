@@ -411,6 +411,60 @@ class Action
 
     // ----------- end USERS -------------------------------------------------------------------------------------------
 
+    // ----------- start CATEGORIES -----------------------------------------------------------------------------------------
+
+    public function category_list()
+    {
+        return $this->table_list("tbl_category");
+    }
+
+    public function category_add($title, $parent, $status)
+    {
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_user`
+        (`title`,`parent`,`status`,`created_at`) 
+        VALUES
+        ('$title','$parent','$status','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function category_edit($id, $title, $parent, $status)
+    {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_user` SET 
+        `title`='$title',
+        `parent`='$status',
+        `status`='$status',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    public function category_remove($id)
+    {
+        return $this->remove_data("tbl_category", $id);
+    }
+
+    public function category_status($id)
+    {
+        $status = $this->user_get($id)->status;
+        $status = !$status;
+        return $this->change_status('tbl_category', $id, $status);
+    }
+
+    public function category_get($id)
+    {
+        return $this->get_data("tbl_category", $id);
+    }
+
+    public function category_counter()
+    {
+        return $this->table_cunter("tbl_category");
+    }
+
+    // ----------- end CATEGORIES -------------------------------------------------------------------------------------------
 
 }
 // ----------- end Action class ----------------------------------------------------------------------------------------
