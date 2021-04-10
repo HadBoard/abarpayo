@@ -340,7 +340,7 @@ class Action
     public function admin()
     {
         $id = $_SESSION['admin_id'];
-        return $this->get_data("tbl_admin", $id);
+        return $this->admin_get($id);
     }
 
     // ----------- count of admin
@@ -457,11 +457,6 @@ class Action
     public function category_get($id)
     {
         return $this->get_data("tbl_category", $id);
-    }
-
-    public function category_counter()
-    {
-        return $this->table_cunter("tbl_category");
     }
 
     // ----------- end CATEGORIES -------------------------------------------------------------------------------------------
