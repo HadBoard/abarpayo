@@ -493,7 +493,7 @@ class Action
          return $this->connection->insert_id;
      }
  
-     public function product_edit($id, $store_id,$title,$description,$price,$status)
+     public function product_edit($id,$title,$description,$price,$status)
      {
          $now = time();
          $result = $this->connection->query("UPDATE `tbl_product` SET 
