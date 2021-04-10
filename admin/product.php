@@ -149,9 +149,9 @@ include('header.php'); ?>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="text" name="description" class="form-control input-default "
+                                    <textarea type="text" name="description" class="form-control input-default "
                                            placeholder="توضیحات"
-                                           value="<?= ($edit) ? $row->description : "" ?>" >
+                                           value="<?= ($edit) ? $row->description : "" ?>" ></textarea>
                                 </div>
 
                                 <div class="form-group">
