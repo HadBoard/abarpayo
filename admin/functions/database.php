@@ -463,7 +463,7 @@ class Action
 
     public function category_status($id)
     {
-        $status = $this->user_get($id)->status;
+        $status = $this->category_get($id)->status;
         $status = !$status;
         return $this->change_status('tbl_category', $id, $status);
     }
