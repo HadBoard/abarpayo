@@ -589,6 +589,109 @@ class Action
      }
  
      // ----------- end PRODUCT -------------------------------------------------------------------------------------------
+    // ----------- start PROVINCE -----------------------------------------------------------------------------------------
+
+         public function province_list()
+         {
+             return $this->table_list("tbl_province");
+         }
+     
+         public function province_add($name,$status)
+         {
+             $now = time();
+             $result = $this->connection->query("INSERT INTO `tbl_province`
+             (`name`,`status`,`created_at`) 
+             VALUES
+             ('$name','$status','$now')");
+             if (!$this->result($result)) return false;
+             return $this->connection->insert_id;
+         }
+     
+         public function province_edit($id,$name,$status)
+         {
+             $now = time();
+             $result = $this->connection->query("UPDATE `tbl_province` SET 
+             `name` = '$name',
+             `status`='$status',
+             `updated_at`='$now'
+             WHERE `id` ='$id'");
+             if (!$this->result($result)) return false;
+             return $id;
+         }
+     
+         public function province_remove($id)
+         {
+             return $this->remove_data("tbl_province", $id);
+         }
+     
+         public function province_status($id)
+         {
+             return $this->change_status('tbl_province', $id);
+         }
+     
+         public function province_get($id)
+         {
+             return $this->get_data("tbl_province", $id);
+         }
+     
+         public function province_counter()
+         {
+             return $this->table_cunter("tbl_province");
+         }
+     
+         // ----------- end PROVINCE -------------------------------------------------------------------------------------------
+         // ----------- start CITY -----------------------------------------------------------------------------------------
+
+        public function city_list()
+        {
+            return $this->table_list("tbl_city");
+        }
+ 
+        public function city_add($province_id,$name,$status)
+        {
+            $now = time();
+            $result = $this->connection->query("INSERT INTO `tbl_city`
+            (`province_id`,`name`,`status`,`created_at`) 
+            VALUES
+            ('$province_id','$name','$status','$now')");
+            if (!$this->result($result)) return false;
+            return $this->connection->insert_id;
+        }
+    
+        public function city_edit($id,$province_id,$name,$status)
+        {
+            $now = time();
+            $result = $this->connection->query("UPDATE `tbl_product` SET 
+            `province_id` = '$province_id',
+            `name`='$name',
+            `status`='$status',
+            `updated_at`='$now'
+            WHERE `id` ='$id'");
+            if (!$this->result($result)) return false;
+            return $id;
+        }
+    
+        public function city_remove($id)
+        {
+            return $this->remove_data("tbl_city", $id);
+        }
+    
+        public function city_status($id)
+        {
+            return $this->change_status('tbl_city', $id);
+        }
+    
+        public function city_get($id)
+        {
+            return $this->get_data("tbl_city", $id);
+        }
+    
+        public function city_counter()
+        {
+            return $this->table_cunter("tbl_city");
+        }
+ 
+     // ----------- end CITY -------------------------------------------------------------------------------------------
  
 }
 // ----------- end Action class ----------------------------------------------------------------------------------------
