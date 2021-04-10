@@ -159,9 +159,9 @@ include('header.php'); ?>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="text" name="fax" class="form-control"
+                                    <input type="text" name="fax" class="form-control input-default "
                                            placeholder="فکس"
-                                           value="<?= ($edit) ? $row->fax : "" ?>" required>
+                                           value="<?= ($edit) ? $row->fax : "" ?>">
                                 </div>
 
                                 <div class="form-group">
@@ -179,11 +179,12 @@ include('header.php'); ?>
                                 <div class="form-group">
                                     <input type="text" name="longitude" class="form-control input-default "
                                            placeholder="طول جغرافیایی"
-                                           value="<?= ($edit) ? $row->longitude : "" ?>" required>
+                                           value="<?= ($edit) ? $row->longitude : "" ?>"
+                                           required>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="text" id="date" name="latitude" class="form-control"
+                                    <input type="text" name="latitude" class="form-control input-default "
                                            placeholder="عرض جغرافیایی"
                                            value="<?= ($edit) ? $row->latitude : "" ?>"
                                            required>
