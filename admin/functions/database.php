@@ -81,7 +81,7 @@ class Action
     }
 
     // ----------- count of table's field
-    public function table_cunter($table)
+    public function table_counter($table)
     {
         $result = $this->connection->query("SELECT * FROM `$table` ");
         if (!$this->result($result)) return false;
@@ -89,10 +89,10 @@ class Action
     }
 
     // ----------- get all fields in table
-    public function table_list($teble)
+    public function table_list($table)
     {
         $id = $this->admin()->id;
-        $result = $this->connection->query("SELECT * FROM `$teble` ORDER BY `id` DESC");
+        $result = $this->connection->query("SELECT * FROM `$table` ORDER BY `id` DESC");
         if (!$this->result($result)) return false;
         return $result;
     }
@@ -346,7 +346,7 @@ class Action
     // ----------- count of admin
     public function admin_counter()
     {
-        return $this->table_cunter("tbl_admin");
+        return $this->table_counter("tbl_admin");
     }
 
     // ----------- end ADMINS ------------------------------------------------------------------------------------------
@@ -406,7 +406,7 @@ class Action
 
     public function user_counter()
     {
-        return $this->table_cunter("tbl_user");
+        return $this->table_counter("tbl_user");
     }
 
     // ----------- end USERS -------------------------------------------------------------------------------------------
