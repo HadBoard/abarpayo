@@ -141,7 +141,41 @@ include('header.php'); ?>
                     <div class="card-body">
                         <div class="basic-form">
                             <form action="" method="post" enctype="multipart/form-data">
-
+                                <div class="form-group">
+                                    <select class="form-control" name="category_id">
+                                        <?
+                                        $categories = $action -> category_list();
+                                        while ($category = $categories->fetch_object()) { 
+                                        ?>
+                                    
+                                        <option 
+                                        <?
+                                        if($edit && $category->id==$row->id)
+                                        echo 'selected="selected"';
+                                        ?>
+                                        value="<?= $category->id ?>"><?= $category->title ?></option>
+                                        <?
+                                        }
+                                        ?>
+                                   </select>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" name="shop_id">
+                                        <?
+                                        $shops = $action -> shop_list();
+                                        while ($shop = $shops->fetch_object()) { 
+                                        ?>
+                                        <option 
+                                        <?
+                                        if($edit && $shop->id==$row->id)
+                                        echo 'selected="selected"';
+                                        ?>
+                                        value="<?= $shop->id ?>"><?= $shop->title ?></option>
+                                        <?
+                                        }
+                                        ?>
+                                   </select>
+                                </div>
                                 <div class="form-group">
                                     <input type="text" name="title" class="form-control input-default "
                                            placeholder="عنوان"
@@ -157,7 +191,19 @@ include('header.php'); ?>
                                 <div class="form-group">
                                     <input type="text" name="price" class="form-control input-default "
                                            placeholder="قیمت"
-                                           value="<?= ($edit) ? $row->price : "" ?>" >
+                                           value="<?= ($edit) ? $row->price : "" ?>" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="discount" class="form-control input-default "
+                                           placeholder="تخفیف"
+                                           value="<?= ($edit) ? $row->discount : "" ?>" >
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="score" class="form-control input-default "
+                                           placeholder="امتیاز"
+                                           value="<?= ($edit) ? $row->score : "" ?>" >
                                 </div>
                                 
                                 <div class="form-actions">
