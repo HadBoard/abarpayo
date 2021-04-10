@@ -64,6 +64,20 @@ $action = new Action();
         </a>
     </li>
 
+    <li>
+        <a class="has-arrow" href="province-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">استان ها</span>
+        </a>
+    </li>
+
+    <li>
+        <a class="has-arrow" href="city-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">شهرستان ها</span>
+        </a>
+    </li>
+
     <hr class="m-0">
 
 </ul>
