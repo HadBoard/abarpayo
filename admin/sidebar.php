@@ -51,7 +51,7 @@ $action = new Action();
     <hr class="m-0">
 
     <li>
-        <a class="has-arrow" href="store-list.php" aria-expanded="false">
+        <a class="has-arrow" href="shop-list.php" aria-expanded="false">
             <i class="fa fa-user"></i>
             <span class="hide-menu">فروشگاه ها</span>
         </a>
