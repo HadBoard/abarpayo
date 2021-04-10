@@ -97,6 +97,15 @@ class Action
         return $result;
     }
 
+    // ----------- get all fields in table other than one :)
+    public function table_option($table, $id)
+    {
+        $id = $this->admin()->id;
+        $result = $this->connection->query("SELECT * FROM `$table` WHERE NOT `id`='$id' ORDER BY `id` DESC");
+        if (!$this->result($result)) return false;
+        return $result;
+    }
+
     // ----------- change status of field
     public function change_status($table, $id, $status)
     {
@@ -418,10 +427,15 @@ class Action
         return $this->table_list("tbl_category");
     }
 
+    public function category_option($id)
+    {
+        return $this->table_option("tbl_category", $id);
+    }
+
     public function category_add($title, $parent, $status)
     {
         $now = time();
-        $result = $this->connection->query("INSERT INTO `tbl_user`
+        $result = $this->connection->query("INSERT INTO `tbl_category`
         (`title`,`parent`,`status`,`created_at`) 
         VALUES
         ('$title','$parent','$status','$now')");
@@ -432,9 +446,9 @@ class Action
     public function category_edit($id, $title, $parent, $status)
     {
         $now = time();
-        $result = $this->connection->query("UPDATE `tbl_user` SET 
+        $result = $this->connection->query("UPDATE `tbl_category` SET 
         `title`='$title',
-        `parent`='$status',
+        `parent`='$parent',
         `status`='$status',
         `updated_at`='$now'
         WHERE `id` ='$id'");
