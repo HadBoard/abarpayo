@@ -473,6 +473,11 @@ class Action
         return $this->get_data("tbl_category", $id);
     }
 
+    public function category_counter()
+     {
+         return $this->table_cunter("tbl_category");
+     }
+
     // ----------- end CATEGORIES -------------------------------------------------------------------------------------------
 
      // ----------- start PRODUCT -----------------------------------------------------------------------------------------
@@ -482,21 +487,23 @@ class Action
          return $this->table_list("tbl_product");
      }
  
-     public function product_add($title,$description,$price,$status)
+     public function product_add($category_id,$shop_id,$title,$description,$price,$status)
      {
          $now = time();
          $result = $this->connection->query("INSERT INTO `tbl_product`
-         (`title`,`description`,`price`,`status`,`created_at`) 
+         (`category_id`,`shop_id`,`title`,`description`,`price`,`status`,`created_at`) 
          VALUES
-         ('$title','$description','$price','$status','$now')");
+         ('$category_id','$shop_id','$title','$description','$price','$status','$now')");
          if (!$this->result($result)) return false;
          return $this->connection->insert_id;
      }
  
-     public function product_edit($id,$title,$description,$price,$status)
+     public function product_edit($id,$category_id,$shop_id,$title,$description,$price,$status)
      {
          $now = time();
          $result = $this->connection->query("UPDATE `tbl_product` SET 
+         `category_id` = '$category_id',
+         `shop_id`='$shop_id',
          `title`='$title',
          `description`='$description',
          `price` = '$price',
