@@ -32,6 +32,8 @@ if (isset($_SESSION['error'])) {
 if (isset($_POST['submit'])) {
 
     // get fields
+    $category_id = $action->request('category_id');
+    $shop_id = $action->request('shop_id');
     $title = $action->request('title');
     $description = $action->request('description');
     $price = $action->request('price');
@@ -39,9 +41,9 @@ if (isset($_POST['submit'])) {
 
     // send query
     if ($edit) {
-        $command = $action->product_edit($id, $title, $description, $price,$status);
+        $command = $action->product_edit($id,$category_id,$shop_id,$title, $description, $price,$status);
     } else {
-        $command = $action->product_add($title, $description, $price, $status);
+        $command = $action->product_add($title,$category_id,$shop_id,$description, $price, $status);
     }
 
     // check errors
@@ -145,16 +147,12 @@ include('header.php'); ?>
                                     <select class="form-control" name="category_id">
                                         <?
                                         $categories = $action -> category_list();
+                                        if($action -> category_counter() > 0 ){
                                         while ($category = $categories->fetch_object()) { 
                                         ?>
-                                    
-                                        <option 
+                                           <option value="<?= $category->id ?>"><?= $category->title ?></option>
                                         <?
-                                        // if($edit && $category->id==$row->id)
-                                        // echo 'selected="selected"';
-                                        ?>
-                                        value="<?= $category->id ?>"><?= $category->title ?></option>
-                                        <?
+                                        }
                                         }
                                         ?>
                                    </select>
@@ -162,17 +160,12 @@ include('header.php'); ?>
                                 <div class="form-group">
                                     <select class="form-control" name="shop_id">
                                         <?
-                                        $shops = $action -> shop_list();
-                                        while ($shop = $shops->fetch_object()) { 
+                                        // $shops = $action -> shop_list();
+                                        // while ($shop = $shops->fetch_object()) { 
                                         ?>
-                                        <option 
+                                          <!-- <option value="<?= $shop->id ?>"><?= $shop->title ?></option> -->
                                         <?
-                                        // if($edit && $shop->id==$row->id)
-                                        // echo 'selected="selected"';
-                                        ?>
-                                        value="<?= $shop->id ?>"><?= $shop->title ?></option>
-                                        <?
-                                        }
+                                        // }
                                         ?>
                                    </select>
                                 </div>
