@@ -115,7 +115,6 @@ include('header.php'); ?>
 
                                         <td class="text-center"><?= $counter++ ?></td>
                                         <td class="text-center"><?= $row->title ?></td>
-                                        <td class="text-center"><?= $row->parent ?></td>
 
                                         <td class="text-center">
                                             <?
