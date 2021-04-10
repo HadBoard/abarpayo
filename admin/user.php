@@ -87,7 +87,7 @@ include('header.php'); ?>
                         خانه
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="user-list.php">کاربران</a></li>
+                <li class="breadcrumb-item"><a href="<?= $list_url ?>">کاربران</a></li>
                 <?php if ($edit) { ?>
                     <li class="breadcrumb-item"><a href="javascript:void(0)">ثبت</a></li>
                 <?php } else { ?>
@@ -159,7 +159,7 @@ include('header.php'); ?>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="number" name="national_code" class="form-control"
+                                    <input type="text" name="national_code" class="form-control"
                                            placeholder="کدملی"
                                            value="<?= ($edit) ? $row->national_code : "" ?>" required>
                                 </div>
@@ -186,7 +186,7 @@ include('header.php'); ?>
                                     <input type="text" id="date" name="birthday" class="form-control"
                                            placeholder="تاریخ تولد"
                                            value="<?= ($edit) ? $action->time_to_shamsi($row->birthday) : "" ?>"
-                                           required>
+                                           >
                                 </div>
 
                                 <div class="form-actions">

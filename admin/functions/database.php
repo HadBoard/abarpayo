@@ -107,8 +107,11 @@ class Action
     }
 
     // ----------- change status of field
-    public function change_status($table, $id, $status)
+    public function change_status($table, $id)
     {
+        $status = $this->get_data($table, $id)->status;
+        $status = !$status;
+
         $now = time();
         $result = $this->connection->query("UPDATE `$table` SET 
         `status`='$status',
@@ -333,10 +336,7 @@ class Action
     // ----------- change admin's status
     public function admin_status($id)
     {
-        if ($this->admin_get($id)->access) return false;
-        $status = $this->admin_get($id)->status;
-        $status = !$status;
-        return $this->change_status('tbl_admin', $id, $status);
+        return $this->change_status('tbl_admin', $id);
     }
 
     // ----------- get admin's data
@@ -403,9 +403,7 @@ class Action
 
     public function user_status($id)
     {
-        $status = $this->user_get($id)->status;
-        $status = !$status;
-        return $this->change_status('tbl_user', $id, $status);
+        return $this->change_status('tbl_user', $id);
     }
 
     public function user_get($id)
@@ -463,9 +461,7 @@ class Action
 
     public function category_status($id)
     {
-        $status = $this->category_get($id)->status;
-        $status = !$status;
-        return $this->change_status('tbl_category', $id, $status);
+        return $this->change_status('tbl_category', $id);
     }
 
     public function category_get($id)
@@ -479,6 +475,64 @@ class Action
      }
 
     // ----------- end CATEGORIES -------------------------------------------------------------------------------------------
+
+    // ----------- start SHOPS -----------------------------------------------------------------------------------------
+
+    public function shop_list()
+    {
+        return $this->table_list("tbl_shop");
+    }
+
+    public function shop_option($id)
+    {
+        return $this->table_option("tbl_shop", $id);
+    }
+
+    public function shop_add($title, $phone, $fax, $city_id, $address, $longitude, $latitude, $status)
+    {
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_shop`
+        (`title`,`phone`,`fax`,`city_id`,`address`,`longitude`,`latitude`,`status`,`created_at`) 
+        VALUES
+        ('$title','$phone','$fax','$city_id','$address','$longitude','$latitude','$status','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function shop_edit($id, $title, $phone, $fax, $city_id, $address, $longitude, $latitude, $status)
+    {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_shop` SET 
+        `title`='$title',
+        `phone`='$phone',
+        `fax`='$fax',
+        `city_id`='$city_id',
+        `address`='$address',
+        `longitude`='$longitude',
+        `latitude`='$latitude',
+        `status`='$status',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    public function shop_remove($id)
+    {
+        return $this->remove_data("tbl_shop", $id);
+    }
+
+    public function shop_status($id)
+    {
+        return $this->change_status('tbl_shop', $id);
+    }
+
+    public function shop_get($id)
+    {
+        return $this->get_data("tbl_shop", $id);
+    }
+
+    // ----------- end SHOPS -------------------------------------------------------------------------------------------
 
      // ----------- start PRODUCT -----------------------------------------------------------------------------------------
 
@@ -521,9 +575,7 @@ class Action
  
      public function product_status($id)
      {
-         $product = $this->product_get($id)->status;
-         $status = !$status;
-         return $this->change_status('tbl_product', $id, $status);
+         return $this->change_status('tbl_product', $id);
      }
  
      public function product_get($id)
