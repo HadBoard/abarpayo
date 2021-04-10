@@ -147,45 +147,45 @@ include('header.php'); ?>
                             <form action="" method="post" enctype="multipart/form-data">
 
                                 <div class="form-group">
-                                    <input type="text" name="first_name" class="form-control input-default "
-                                           placeholder="نام"
-                                           value="<?= ($edit) ? $row->first_name : "" ?>" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="text" name="last_name" class="form-control input-default "
-                                           placeholder="نام خانوادگی"
-                                           value="<?= ($edit) ? $row->last_name : "" ?>" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="number" name="national_code" class="form-control"
-                                           placeholder="کدملی"
-                                           value="<?= ($edit) ? $row->national_code : "" ?>" required>
+                                    <input type="text" name="title" class="form-control input-default "
+                                           placeholder="عنوان"
+                                           value="<?= ($edit) ? $row->title : "" ?>" required>
                                 </div>
 
                                 <div class="form-group">
                                     <input type="text" name="phone" class="form-control input-default "
-                                           placeholder="تلفن همراه"
+                                           placeholder="شماره تماس"
                                            value="<?= ($edit) ? $row->phone : "" ?>" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="text" name="username" class="form-control input-default "
-                                           placeholder="نام کاربری"
-                                           value="<?= ($edit) ? $row->username : "" ?>" required>
+                                    <input type="text" name="fax" class="form-control"
+                                           placeholder="فکس"
+                                           value="<?= ($edit) ? $row->fax : "" ?>" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="text" name="password" class="form-control input-default "
-                                           placeholder="رمز عبور"
-                                           value="<?= ($edit) ? $row->password : "" ?>" required>
+                                    <input type="text" name="city_id" class="form-control input-default "
+                                           placeholder="استان"
+                                           value="<?= ($edit) ? $row->city_id : "" ?>" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="text" id="date" name="birthday" class="form-control"
-                                           placeholder="تاریخ تولد"
-                                           value="<?= ($edit) ? $action->time_to_shamsi($row->birthday) : "" ?>"
+                                    <input type="text" name="address" class="form-control input-default "
+                                           placeholder="آدرس"
+                                           value="<?= ($edit) ? $row->address : "" ?>" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="longitude" class="form-control input-default "
+                                           placeholder="طول جغرافیایی"
+                                           value="<?= ($edit) ? $row->longitude : "" ?>" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" id="date" name="latitude" class="form-control"
+                                           placeholder="عرض جغرافیایی"
+                                           value="<?= ($edit) ? $row->latitude : "" ?>"
                                            required>
                                 </div>
 
