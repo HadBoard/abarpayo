@@ -466,6 +466,63 @@ class Action
 
     // ----------- end CATEGORIES -------------------------------------------------------------------------------------------
 
+     // ----------- start PRODUCT -----------------------------------------------------------------------------------------
+
+     public function product_list()
+     {
+         return $this->table_list("tbl_product");
+     }
+ 
+     public function product_add($store_id,$title,$description,$price,$status)
+     {
+         $now = time();
+         $result = $this->connection->query("INSERT INTO `tbl_product`
+         (`store_id`,`title`,`description`,`price`,`status`,`created_at`) 
+         VALUES
+         ('$store_id','$title','$description','$price','$status','$now')");
+         if (!$this->result($result)) return false;
+         return $this->connection->insert_id;
+     }
+ 
+     public function product_edit($id, $store_id,$title,$description,$price,$status)
+     {
+         $now = time();
+         $result = $this->connection->query("UPDATE `tbl_product` SET 
+         `store_id`,'$store_id',
+         `title`='$title',
+         `description`='$description',
+         `price` = '$price',
+         `status`='$status',
+         `updated_at`='$now'
+         WHERE `id` ='$id'");
+         if (!$this->result($result)) return false;
+         return $id;
+     }
+ 
+     public function product_remove($id)
+     {
+         return $this->remove_data("tbl_product", $id);
+     }
+ 
+     public function product_status($id)
+     {
+         $product = $this->product_get($id)->status;
+         $status = !$status;
+         return $this->change_status('tbl_product', $id, $status);
+     }
+ 
+     public function product_get($id)
+     {
+         return $this->get_data("tbl_product", $id);
+     }
+ 
+     public function product_counter()
+     {
+         return $this->table_cunter("tbl_product");
+     }
+ 
+     // ----------- end PRODUCT -------------------------------------------------------------------------------------------
+ 
 }
 // ----------- end Action class ----------------------------------------------------------------------------------------
 
