@@ -103,7 +103,8 @@ include('header.php'); ?>
                                 <tr>
                                     <th class="text-center">ردیف</th>
                                     <th class="text-center">عنوان</th>
-                                    <th class="text-center">توضیحات</th>
+                                    <th class="text-center">دسته بندی</th>
+                                    <th class="text-center">فروشگاه</th>
                                     <th class="text-center">قیمت</th>
                                     <th class="text-center">وضعیت</th>
                                     <th class="text-center">مدیریت</th>
@@ -116,9 +117,9 @@ include('header.php'); ?>
 
                                         <td class="text-center"><?= $counter++ ?></td>
                                         <td class="text-center"><?= $row->title ?></td>
-                                        <td class="text-center"><?= $row->description ?></td>
+                                        <td class="text-center"><?= $action->category_get($row->category_id)->title ?></td>
+                                        <td class="text-center"><?= $action->shop_get($row->shop_id)->title ?></td>
                                         <td class="text-center"><?= $row->price ?></td>
-
                                         <td class="text-center">
                                             <a href="<?= $list_url ?>?status=<?= $row->id ?>">
                                                 <?
@@ -148,7 +149,6 @@ include('header.php'); ?>
             </div>
         </div>
         <!-- ----------- end row of table ---------------------------------------------------------------------- -->
-
     </div>
 </div>
 
