@@ -143,32 +143,7 @@ include('header.php'); ?>
                     <div class="card-body">
                         <div class="basic-form">
                             <form action="" method="post" enctype="multipart/form-data">
-                                <div class="form-group">
-                                    <select class="form-control" name="category_id">
-                                        <?
-                                        $categories = $action -> category_list();
-                                        if($action -> category_counter() > 0 ){
-                                        while ($category = $categories->fetch_object()) { 
-                                        ?>
-                                           <option value="<?= $category->id ?>"><?= $category->title ?></option>
-                                        <?
-                                        }
-                                        }
-                                        ?>
-                                   </select>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" name="shop_id">
-                                        <?
-                                        // $shops = $action -> shop_list();
-                                        // while ($shop = $shops->fetch_object()) { 
-                                        ?>
-                                          <!-- <option value="<?= $shop->id ?>"><?= $shop->title ?></option> -->
-                                        <?
-                                        // }
-                                        ?>
-                                   </select>
-                                </div>
+                                
                                 <div class="form-group">
                                     <input type="text" name="title" class="form-control input-default "
                                            placeholder="عنوان"
