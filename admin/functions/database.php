@@ -482,13 +482,13 @@ class Action
          return $this->table_list("tbl_product");
      }
  
-     public function product_add($store_id,$title,$description,$price,$status)
+     public function product_add($title,$description,$price,$status)
      {
          $now = time();
          $result = $this->connection->query("INSERT INTO `tbl_product`
-         (`store_id`,`title`,`description`,`price`,`status`,`created_at`) 
+         (`title`,`description`,`price`,`status`,`created_at`) 
          VALUES
-         ('$store_id','$title','$description','$price','$status','$now')");
+         ('$title','$description','$price','$status','$now')");
          if (!$this->result($result)) return false;
          return $this->connection->insert_id;
      }
@@ -497,7 +497,6 @@ class Action
      {
          $now = time();
          $result = $this->connection->query("UPDATE `tbl_product` SET 
-         `store_id`,'$store_id',
          `title`='$title',
          `description`='$description',
          `price` = '$price',
