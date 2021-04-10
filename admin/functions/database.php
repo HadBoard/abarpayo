@@ -483,23 +483,28 @@ class Action
         return $this->table_option("tbl_shop", $id);
     }
 
-    public function shop_add($title, $parent, $status)
+    public function shop_add($title, $phone, $fax, $city_id, $address, $longitude, $latitude, $status)
     {
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_shop`
-        (`title`,`parent`,`status`,`created_at`) 
+        (`title`,`phone`,`fax`,`city_id`,`address`,`longitude`,`latitude`,`status`,`created_at`) 
         VALUES
-        ('$title','$parent','$status','$now')");
+        ('$title','$phone','$fax','$city_id','$address','$longitude','$latitude','$status','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
-    public function shop_edit($id, $title, $parent, $status)
+    public function shop_edit($id, $title, $phone, $fax, $city_id, $address, $longitude, $latitude, $status)
     {
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_shop` SET 
         `title`='$title',
-        `parent`='$parent',
+        `phone`='$phone',
+        `fax`='$fax',
+        `city_id`='$city_id',
+        `address`='$address',
+        `longitude`='$longitude',
+        `latitude`='$latitude',
         `status`='$status',
         `updated_at`='$now'
         WHERE `id` ='$id'");
