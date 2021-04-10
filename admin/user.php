@@ -186,7 +186,7 @@ include('header.php'); ?>
                                     <input type="text" id="date" name="birthday" class="form-control"
                                            placeholder="تاریخ تولد"
                                            value="<?= ($edit) ? $action->time_to_shamsi($row->birthday) : "" ?>"
-                                           required>
+                                           >
                                 </div>
 
                                 <div class="form-actions">
