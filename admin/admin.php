@@ -21,10 +21,7 @@ $edit = false;
 if (isset($_GET['edit'])) {
     $edit = true;
     $id = $action->request('edit');
-    $result = $connection->query("SELECT * FROM tbl_admin WHERE `id`='$id' AND `access`='0' ");
-    if (!$action->result($result)) return false;
-    if (!$result->num_rows) header("Location: admin-list.php");
-    $row = $result->fetch_object();
+    $row = $action->admin_get($id);
 }
 // ----------- get data from database when action is edit --------------------------------------------------------------
 
