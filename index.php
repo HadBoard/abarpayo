@@ -6,7 +6,6 @@
   <title>Swiper demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
-  <!-- Link Swiper's CSS -->
   <link rel="stylesheet" href="assets/css/swiper.css">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/fontiran.css">
@@ -16,19 +15,9 @@
   <script src='assets/js/jquery.js'></script>
   <script src='assets/js/fontAwsome.js'></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <!-- <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script> -->
   
 
-  <!-- Demo styles -->
 <style>
-
-    /* external css: flickity.css */
-
-    /* external css: flickity.css */
-
-    * { box-sizing: border-box; }
-
- 
 .carousel-cell.is-selected {
   transform: scale(1.02);
 }
@@ -171,12 +160,7 @@
         </div>
     </section>
   
-   
 
-  <!-- Swiper JS -->
-  <!-- <script src="../package/swiper-bundle.min.js"></script> -->
-
-  <!-- Initialize Swiper -->
   
 </body>
 
