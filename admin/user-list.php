@@ -105,6 +105,7 @@ include('header.php'); ?>
                                     <th class="text-center">نام</th>
                                     <th class="text-center">نام خانوادگی</th>
                                     <th class="text-center">کدملی</th>
+                                    <th class="text-center">کارت ها</th>
                                     <th class="text-center">وضعیت</th>
                                     <th class="text-center">مدیریت</th>
                                 </tr>
@@ -118,7 +119,7 @@ include('header.php'); ?>
                                         <td class="text-center"><?= $row->first_name ?></td>
                                         <td class="text-center"><?= $row->last_name ?></td>
                                         <td class="text-center"><?= $row->national_code ?></td>
-
+                                        <td class="text-center"><a href="cart.php?user_id=<?= $row->id ?>">مشاهده</a></td>
                                         <td class="text-center">
                                             <a href="<?= $list_url ?>?status=<?= $row->id ?>">
                                                 <?

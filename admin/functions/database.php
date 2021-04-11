@@ -367,18 +367,18 @@ class Action
         return $this->table_list("tbl_user");
     }
 
-    public function user_add($first_name, $last_name, $national_code, $phone, $username, $password, $birthday, $status)
+    public function user_add( $first_name, $last_name, $national_code, $phone, $username, $password,$city_id,$address,$postal_code,$reference_code,$birthday,$score,$wallet,$iban,$status)
     {
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_user`
-        (`first_name`,`last_name`,`national_code`,`phone`,`username`,`password`,`birthday`,`status`,`created_at`) 
+        (`first_name`,`last_name`,`national_code`,`phone`,`username`,`password`,`city_id`,`address`,`postal_code`,`reference_code`,`birthday`,`score`,`wallet`,`iban`,`status`,`created_at`) 
         VALUES
-        ('$first_name','$last_name','$national_code','$phone','$username','$password','$birthday','$status','$now')");
+        ('$first_name','$last_name','$national_code','$phone','$username','$password','$city_id','$address','$postal_code','$reference_code','$birthday','$score','$wallet','$iban','$status','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
-    public function user_edit($id, $first_name, $last_name, $national_code, $phone, $username, $password, $birthday, $status)
+    public function user_edit($id, $first_name, $last_name, $national_code, $phone, $username, $password,$city_id,$address,$postal_code,$reference_code,$birthday,$score,$wallet,$iban,$status)
     {
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_user` SET 
@@ -388,7 +388,14 @@ class Action
         `phone`='$phone',
         `username`='$username',
         `password`='$password',
+        `city_id`='$city_id',
+        `address` = '$address',
+        `postal_code` = '$postal_code',
+        `reference_code`= '$reference_code',
         `birthday`='$birthday',
+        `score` = '$score',
+        `wallet`= '$wallet',
+        `iban` = '$iban',
         `status`='$status',
         `updated_at`='$now'
         WHERE `id` ='$id'");
@@ -475,7 +482,58 @@ class Action
      }
 
     // ----------- end CATEGORIES -------------------------------------------------------------------------------------------
+    // ----------- start CARD -----------------------------------------------------------------------------------------
 
+    public function cart_list()
+    {
+        return $this->table_list("tbl_user_cart");
+    }
+
+    public function user_get_cart($user_id){
+        return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$user_id'");
+    }
+
+    public function cart_add($user_id,$title,$cart_number,$validation)
+    {
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_user_cart`
+        (`user_id`,`title`,`cart_number`,`validation`,`created_at`) 
+        VALUES
+        ('$user_id','$title','$cart_number','$validation','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function cart_edit($id,$user_id,$title,$cart_number,$validation)
+    {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_user_cart` SET 
+        `user_id`='$user_id',
+        `title`='$title',
+        `cart_number`='$cart_number',
+        `validation`='$validation',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    public function cart_remove($id)
+    {
+        return $this->remove_data("tbl_user_cart", $id);
+    }
+
+    public function cart_status($id)
+    {
+        return $this->change_status('tbl_user_cart', $id);
+    }
+
+    public function cart_get($id)
+    {
+        return $this->get_data("tbl_user_cart", $id);
+    }
+
+    // ----------- end CATEGORIES -------------------------------------------------------------------------------------------
     // ----------- start SHOPS -----------------------------------------------------------------------------------------
 
     public function shop_list()
@@ -605,6 +663,11 @@ class Action
          {
            return $this->connection->query("SELECT * FROM `tbl_city` WHERE `province_id` = '$province_id'");
          }
+
+        public function province_option($id)
+        {
+            return $this->table_option("tbl_province", $id);
+        }
      
          public function province_add($name,$status)
          {
