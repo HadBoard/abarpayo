@@ -38,12 +38,14 @@ if (isset($_POST['submit'])) {
     $description = $action->request('description');
     $price = $action->request('price');
     $status = $action->request('status');
+    $discount = $action->request('discount');
+    $score = $action->request('score');
 
     // send query
     if ($edit) {
-        $command = $action->product_edit($id,$category_id,$shop_id,$title, $description, $price,$status);
+        $command = $action->product_edit($id,$category_id,$shop_id,$title,$description,$price,$discount,$score,$status);
     } else {
-        $command = $action->product_add($title,$category_id,$shop_id,$description, $price, $status);
+        $command = $action->product_add($category_id,$shop_id,$title,$description,$price,$discount,$score,$status);
     }
 
     // check errors
@@ -143,12 +145,11 @@ include('header.php'); ?>
                     <div class="card-body">
                         <div class="basic-form">
                             <form action="" method="post" enctype="multipart/form-data">
-                                
-                            <div class="form-group">
-                                    <select class="form-control" name="category_id">
+                               <div class="form-group">
+                                    <select class="form-control select2" name="category_id">
                                         <option>دسته بندی را انتخاب فرمایید .</option>
                                         <?
-                                        $option_result = $action->product_option($row->category_id);
+                                        $option_result = $action->category_list();
                                         while ($option = $option_result->fetch_object()) {
                                             echo '<option value="';
                                             echo $option->id;
@@ -161,12 +162,11 @@ include('header.php'); ?>
                                         ?>
                                     </select>
                                 </div>
-
                                 <div class="form-group">
-                                    <select class="form-control" name="shop_id">
-                                        <option>فروشگاه  را انتخاب فرمایید .</option>
+                                    <select class="form-control select2" name="shop_id">
+                                        <option> فروشگاه را انتخاب فرمایید .</option>
                                         <?
-                                        $option_result = $action->product_option($row->shop_id);
+                                        $option_result = $action->shop_list();
                                         while ($option = $option_result->fetch_object()) {
                                             echo '<option value="';
                                             echo $option->id;
@@ -179,7 +179,7 @@ include('header.php'); ?>
                                         ?>
                                     </select>
                                 </div>
-                                
+                          
                                 <div class="form-group">
                                     <input type="text" name="title" class="form-control input-default "
                                            placeholder="عنوان"
@@ -189,7 +189,7 @@ include('header.php'); ?>
                                 <div class="form-group">
                                     <textarea type="text" name="description" class="form-control input-default "
                                            placeholder="توضیحات"
-                                            ><?= ($edit) ? $row->description : "" ?></textarea>
+                                            ><?= ($edit) ? $row->discription : "" ?></textarea>
                                 </div>
 
                                 <div class="form-group">
