@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 11, 2021 at 06:21 AM
+-- Generation Time: Apr 11, 2021 at 06:32 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -42,6 +42,7 @@ CREATE TABLE `tbl_user` (
   `reference_id` int(11) DEFAULT NULL,
   `birthday` bigint(20) NOT NULL,
   `profile` text DEFAULT NULL,
+  `score` int(11) DEFAULT NULL,
   `wallet` varchar(20) NOT NULL,
   `iban` varchar(26) DEFAULT NULL,
   `last_login` bigint(20) DEFAULT NULL,
@@ -54,8 +55,8 @@ CREATE TABLE `tbl_user` (
 -- Dumping data for table `tbl_user`
 --
 
-INSERT INTO `tbl_user` (`id`, `first_name`, `last_name`, `national_code`, `phone`, `username`, `password`, `city_id`, `address`, `postal_code`, `reference_code`, `reference_id`, `birthday`, `profile`, `wallet`, `iban`, `last_login`, `created_at`, `updated_at`, `status`) VALUES
-(1, 'سید هادی', 'رنجبر', '0000000000', '09218248954', 'hadi', '1234', 0, '', '', '', NULL, 971901000, '', '', '', 0, 1617967581, 1618042896, 0);
+INSERT INTO `tbl_user` (`id`, `first_name`, `last_name`, `national_code`, `phone`, `username`, `password`, `city_id`, `address`, `postal_code`, `reference_code`, `reference_id`, `birthday`, `profile`, `score`, `wallet`, `iban`, `last_login`, `created_at`, `updated_at`, `status`) VALUES
+(1, 'سید هادی', 'رنجبر', '0000000000', '09218248954', 'hadi', '1234', 0, '', '', '', NULL, 971901000, '', NULL, '', '', 0, 1617967581, 1618042896, 0);
 
 --
 -- Indexes for dumped tables
