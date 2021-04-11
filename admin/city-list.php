@@ -15,7 +15,7 @@ $list_url = "city-list.php";
 $counter = 1;
 if(isset($_GET['province'])){
     $province_id = $_GET['province'];
-    $result = city_get($province_id);
+    $result = $action->city_get($province_id);
 }else{
     $result = $action->city_list();
 }
