@@ -540,6 +540,11 @@ class Action
      {
          return $this->table_list("tbl_product");
      }
+
+     public function product_option($id)
+    {
+        return $this->table_option("tbl_product", $id);
+    }
  
      public function product_add($category_id,$shop_id,$title,$description,$price,$status)
      {
