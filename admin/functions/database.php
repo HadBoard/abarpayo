@@ -600,6 +600,11 @@ class Action
          {
              return $this->table_list("tbl_province");
          }
+
+         public function province_city_list($province_id)
+         {
+           return $this->connection->query("SELECT * FROM `tbl_city` WHERE `province_id` = '$province_id'");
+         }
      
          public function province_add($name,$status)
          {
