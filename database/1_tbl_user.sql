@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2021 at 06:14 AM
+-- Generation Time: Apr 11, 2021 at 06:04 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -35,7 +35,15 @@ CREATE TABLE `tbl_user` (
   `phone` varchar(20) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
+  `city_id` int(11) NOT NULL,
+  `address` text NOT NULL,
+  `postal_code` varchar(10) NOT NULL,
+  `reference_code` varchar(10) NOT NULL,
+  `reference_id` int(11) DEFAULT NULL,
   `birthday` bigint(20) NOT NULL,
+  `profile` text DEFAULT NULL,
+  `wallet` varchar(20) NOT NULL,
+  `last_login` bigint(20) DEFAULT NULL,
   `created_at` bigint(20) NOT NULL,
   `updated_at` bigint(20) DEFAULT NULL,
   `status` tinyint(1) NOT NULL
@@ -45,8 +53,8 @@ CREATE TABLE `tbl_user` (
 -- Dumping data for table `tbl_user`
 --
 
-INSERT INTO `tbl_user` (`id`, `first_name`, `last_name`, `national_code`, `phone`, `username`, `password`, `birthday`, `created_at`, `updated_at`, `status`) VALUES
-(1, 'سید هادی', 'رنجبر', '0000000000', '09218248954', 'hadi', '1234', 971901000, 1617967581, 1617973814, 0);
+INSERT INTO `tbl_user` (`id`, `first_name`, `last_name`, `national_code`, `phone`, `username`, `password`, `city_id`, `address`, `postal_code`, `reference_code`, `reference_id`, `birthday`, `profile`, `wallet`, `last_login`, `created_at`, `updated_at`, `status`) VALUES
+(1, 'سید هادی', 'رنجبر', '0000000000', '09218248954', 'hadi', '1234', 0, '', '', '', NULL, 971901000, '', '', 0, 1617967581, 1618042896, 0);
 
 --
 -- Indexes for dumped tables
@@ -57,7 +65,8 @@ INSERT INTO `tbl_user` (`id`, `first_name`, `last_name`, `national_code`, `phone
 --
 ALTER TABLE `tbl_user`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `reference_code` (`reference_code`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -67,7 +76,7 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
