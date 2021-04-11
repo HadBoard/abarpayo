@@ -540,6 +540,11 @@ class Action
      {
          return $this->table_list("tbl_product");
      }
+
+     public function product_option($id)
+    {
+        return $this->table_option("tbl_product", $id);
+    }
  
      public function product_add($category_id,$shop_id,$title,$description,$price,$status)
      {
@@ -595,6 +600,11 @@ class Action
          {
              return $this->table_list("tbl_province");
          }
+
+         public function province_city_list($province_id)
+         {
+           return $this->connection->query("SELECT * FROM `tbl_city` WHERE `province_id` = '$province_id'");
+         }
      
          public function province_add($name,$status)
          {
@@ -646,7 +656,12 @@ class Action
         {
             return $this->table_list("tbl_city");
         }
- 
+        
+        public function city_option($id)
+        {
+            return $this->table_option("tbl_city", $id);
+        }
+
         public function city_add($province_id,$name,$status)
         {
             $now = time();

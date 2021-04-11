@@ -115,7 +115,9 @@ include('header.php'); ?>
 
                                         <td class="text-center"><?= $counter++ ?></td>
                                         <td class="text-center"><?= $row->name ?></td>
-                                        <td class="text-center"></td>
+                                        <td class="text-center">
+                                            <a href="city-list.php?province=<?= $row->id ?>"><i class="fa fa-list-ol"></i></a>
+                                        </td>
 
                                         <td class="text-center">
                                             <a href="<?= $list_url ?>?status=<?= $row->id ?>">

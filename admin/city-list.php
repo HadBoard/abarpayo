@@ -13,14 +13,20 @@ $list_url = "city-list.php";
 
 // ----------- get data ------------------------------------------------------------------------------------------------
 $counter = 1;
-$result = $action->city_list();
+if(isset($_GET['province'])){
+    $province_id = $_GET['province'];
+    $result = $action->province_city_list($province_id);
+}else{
+    $result = $action->city_list();
+}
 // ----------- get data ------------------------------------------------------------------------------------------------
 
 // ----------- delete --------------------------------------------------------------------------------------------------
 if (isset($_GET['remove'])) {
     $id = $action->request('remove');
+    $province_id = $action->city_get($id)->province_id;
     $_SESSION['error'] = !$action->city_remove($id);
-    header("Location: $list_url");
+    header("Location: $list_url?province=$province_id");
     return;
 }
 // ----------- delete --------------------------------------------------------------------------------------------------
@@ -114,7 +120,7 @@ include('header.php'); ?>
                                     <tr class="text-center">
 
                                         <td class="text-center"><?= $counter++ ?></td>
-                                        <td class="text-center"></td>
+                                        <td class="text-center"><?= $action->province_get($row->province_id)->name?></td>
                                         <td class="text-center"><?= $row->name ?></td>
                                         <td class="text-center">
                                             <a href="<?= $list_url ?>?status=<?= $row->id ?>">

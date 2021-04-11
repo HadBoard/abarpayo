@@ -144,6 +144,42 @@ include('header.php'); ?>
                         <div class="basic-form">
                             <form action="" method="post" enctype="multipart/form-data">
                                 
+                            <div class="form-group">
+                                    <select class="form-control" name="category_id">
+                                        <option>دسته بندی را انتخاب فرمایید .</option>
+                                        <?
+                                        $option_result = $action->product_option($row->category_id);
+                                        while ($option = $option_result->fetch_object()) {
+                                            echo '<option value="';
+                                            echo $option->id;
+                                            echo '"';
+                                            if ($option->id == $row->category_id) echo "selected";
+                                            echo '>';
+                                            echo $option->title;
+                                            echo '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <select class="form-control" name="shop_id">
+                                        <option>فروشگاه  را انتخاب فرمایید .</option>
+                                        <?
+                                        $option_result = $action->product_option($row->shop_id);
+                                        while ($option = $option_result->fetch_object()) {
+                                            echo '<option value="';
+                                            echo $option->id;
+                                            echo '"';
+                                            if ($option->id == $row->shop_id) echo "selected";
+                                            echo '>';
+                                            echo $option->title;
+                                            echo '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                
                                 <div class="form-group">
                                     <input type="text" name="title" class="form-control input-default "
                                            placeholder="عنوان"
