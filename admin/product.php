@@ -148,7 +148,7 @@ include('header.php'); ?>
                                     <select class="form-control" name="category_id">
                                         <option>دسته بندی را انتخاب فرمایید .</option>
                                         <?
-                                        $option_result = $action->category_option($row->category_id);
+                                        $option_result = $action->product_option($row->category_id);
                                         while ($option = $option_result->fetch_object()) {
                                             echo '<option value="';
                                             echo $option->id;
@@ -166,7 +166,7 @@ include('header.php'); ?>
                                     <select class="form-control" name="shop_id">
                                         <option>فروشگاه  را انتخاب فرمایید .</option>
                                         <?
-                                        $option_result = $action->shop_option($row->shop_id);
+                                        $option_result = $action->product_option($row->shop_id);
                                         while ($option = $option_result->fetch_object()) {
                                             echo '<option value="';
                                             echo $option->id;
