@@ -651,7 +651,12 @@ class Action
         {
             return $this->table_list("tbl_city");
         }
- 
+        
+        public function city_option($id)
+        {
+            return $this->table_option("tbl_city", $id);
+        }
+
         public function city_add($province_id,$name,$status)
         {
             $now = time();
