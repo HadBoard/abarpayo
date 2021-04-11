@@ -367,18 +367,18 @@ class Action
         return $this->table_list("tbl_user");
     }
 
-    public function user_add( $first_name, $last_name, $national_code, $phone, $username, $password,$city_id,$address,$postal_code,$reference_code,$birthday,$score,$wallet,$iban,$status)
+    public function user_add( $first_name, $last_name, $national_code, $phone, $username, $password,$city_id,$address,$postal_code,$reference_code,$birthday,$profile,$score,$wallet,$iban,$status)
     {
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_user`
-        (`first_name`,`last_name`,`national_code`,`phone`,`username`,`password`,`city_id`,`address`,`postal_code`,`reference_code`,`birthday`,`score`,`wallet`,`iban`,`status`,`created_at`) 
+        (`first_name`,`last_name`,`national_code`,`phone`,`username`,`password`,`city_id`,`address`,`postal_code`,`reference_code`,`birthday`,`profile`,`score`,`wallet`,`iban`,`status`,`created_at`) 
         VALUES
-        ('$first_name','$last_name','$national_code','$phone','$username','$password','$city_id','$address','$postal_code','$reference_code','$birthday','$score','$wallet','$iban','$status','$now')");
+        ('$first_name','$last_name','$national_code','$phone','$username','$password','$city_id','$address','$postal_code','$reference_code','$birthday','$profile','$score','$wallet','$iban','$status','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
-    public function user_edit($id, $first_name, $last_name, $national_code, $phone, $username, $password,$city_id,$address,$postal_code,$reference_code,$birthday,$score,$wallet,$iban,$status)
+    public function user_edit($id, $first_name, $last_name, $national_code, $phone, $username, $password,$city_id,$address,$postal_code,$reference_code,$birthday,$profile,$score,$wallet,$iban,$status)
     {
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_user` SET 
@@ -393,6 +393,7 @@ class Action
         `postal_code` = '$postal_code',
         `reference_code`= '$reference_code',
         `birthday`='$birthday',
+        `profile`='$profile',
         `score` = '$score',
         `wallet`= '$wallet',
         `iban` = '$iban',
@@ -523,10 +524,6 @@ class Action
         return $this->remove_data("tbl_user_cart", $id);
     }
 
-    public function cart_status($id)
-    {
-        return $this->change_status('tbl_user_cart', $id);
-    }
 
     public function cart_get($id)
     {
@@ -604,26 +601,28 @@ class Action
         return $this->table_option("tbl_product", $id);
     }
  
-     public function product_add($category_id,$shop_id,$title,$description,$price,$status)
+     public function product_add($category_id,$shop_id,$title,$description,$price,$discount,$score,$status)
      {
          $now = time();
          $result = $this->connection->query("INSERT INTO `tbl_product`
-         (`category_id`,`shop_id`,`title`,`description`,`price`,`status`,`created_at`) 
+         (`category_id`,`shop_id`,`title`,`discription`,`price`,`discount`,`score`,`status`,`created_at`) 
          VALUES
-         ('$category_id','$shop_id','$title','$description','$price','$status','$now')");
+         ('$category_id','$shop_id','$title','$description','$price','$discount','$score','$status','$now')");
          if (!$this->result($result)) return false;
          return $this->connection->insert_id;
      }
  
-     public function product_edit($id,$category_id,$shop_id,$title,$description,$price,$status)
+     public function product_edit($id,$category_id,$shop_id,$title,$description,$price,$discount,$score,$status)
      {
          $now = time();
          $result = $this->connection->query("UPDATE `tbl_product` SET 
          `category_id` = '$category_id',
          `shop_id`='$shop_id',
          `title`='$title',
-         `description`='$description',
+         `discription`='$description',
          `price` = '$price',
+         `discount`= '$discount',
+         `score` = '$score',
          `status`='$status',
          `updated_at`='$now'
          WHERE `id` ='$id'");
