@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2021 at 07:43 AM
+-- Generation Time: Apr 12, 2021 at 07:47 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -34,7 +34,7 @@ CREATE TABLE `tbl_product_comment` (
   `text` text NOT NULL,
   `score` int(11) NOT NULL,
   `created_at` bigint(20) NOT NULL,
-  `solved_at` bigint(20) DEFAULT NULL
+  `status` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
