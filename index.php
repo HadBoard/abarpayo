@@ -1,7 +1,7 @@
 <?
 require_once "functions/database.php";
 $action = new Action();
-$title = "ابر پایا";
+$title = "ابر پایو";
 include_once "header.php"
 ?>
 
