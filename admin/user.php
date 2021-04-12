@@ -16,6 +16,7 @@ if (isset($_GET['edit'])) {
     $edit = true;
     $id = $action->request('edit');
     $row = $action->user_get($id);
+    $province_id = $action->city_get($row->city_id)->province_id;
 }
 // ----------- get data from database when action is edit --------------------------------------------------------------
 
@@ -39,13 +40,38 @@ if (isset($_POST['submit'])) {
     $username = $action->request('username');
     $password = $action->request('password');
     $birthday = $action->request_date('birthday');
+    $iban = $action->request('iban');
+    $postal_code = $action->request('postal_code');
+    $wallet = $action->request('wallet');
+    $score = $action->request('score');
+    $reference_code = $action->request('reference_code');
+    $address = $action->request('address');
+    $city_id = $action->request('city');
     $status = $action->request('status');
+    $icon = '';
+    // $icon = ($edit ? $row->profile : "");
+    
+    // if($_FILES["icon"]["name"]){
+    //     unlink("users/$icon");
+    //     $target_dir = "users/";
+    //     $target_file = $target_dir . basename($_FILES["icon"]["name"]);
+    //     $FileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+    //     $FileName = $action -> get_token(10) . "." . $FileType;
+    //     $image = new image();
+    //     $image->load($_FILES['icon']['tmp_name']);
+    //     if ($FileType != "jpg" && $FileType != "png" && $FileType != "jpeg"
+    //         && $FileType != "gif") {
+    //         return 0;
+    //     }
+    //     $image->saveImage($target_dir . $FileName);
+    //     $icon = $FileName;
+    // }
 
     // send query
     if ($edit) {
-        $command = $action->user_edit($id, $first_name, $last_name, $national_code, $phone, $username, $password, $birthday, $status);
+        $command = $action->user_edit($id, $first_name, $last_name, $national_code, $phone, $username, $password,$city_id,$address,$postal_code,$reference_code,$birthday,$icon,$score,$wallet,$iban,$status);
     } else {
-        $command = $action->user_add($first_name, $last_name, $national_code, $phone, $username, $password, $birthday, $status);
+        $command = $action->user_add($first_name, $last_name, $national_code, $phone, $username, $password,$city_id,$address,$postal_code,$reference_code,$birthday,$icon,$score,$wallet,$iban,$status);
     }
 
     // check errors
@@ -57,7 +83,7 @@ if (isset($_POST['submit'])) {
 
     // bye bye :)
     header("Location: $main_url?edit=$command");
-
+    
 }
 // ----------- add or edit ---------------------------------------------------------------------------------------------
 
@@ -188,6 +214,76 @@ include('header.php'); ?>
                                            value="<?= ($edit) ? $action->time_to_shamsi($row->birthday) : "" ?>"
                                            >
                                 </div>
+                                <div class="form-group">
+                                    <select class="form-control select2" name="province" id="province">
+                                        <option>استان را انتخاب فرمایید .</option>
+                                        <?
+                                        $option_result = $action->province_list();
+                                        while ($option = $option_result->fetch_object()) {
+                                            echo '<option value="';
+                                            echo $option->id;
+                                            echo '"';
+                                            if ($option->id == $province_id) echo "selected";
+                                            echo '>';
+                                            echo $option->name;
+                                            echo '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                   
+                                    <select class="form-control select2" name="city" id="city">
+                                        <option>شهرستان را انتخاب فرمایید .</option>
+                                        <?
+                                        $option_result =  $action->province_city_list($province_id);
+                                        while ($option = $option_result->fetch_object()) {
+                                            echo '<option value="';
+                                            echo $option->id;
+                                            echo '"';
+                                            if ($option->id == $row->city_id) echo "selected";
+                                            echo '>';
+                                            echo $option->name;
+                                            echo '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                
+                                </div>
+                                <div class="form-group">
+                                    <input type="text"  name="postal_code" class="form-control"
+                                           placeholder="کد پستی "
+                                           value="<?= ($edit) ? $row->postal_code : "" ?>">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text"  name="iban" class="form-control"
+                                           placeholder="شماره شبا"
+                                           value="<?= ($edit) ? $row->iban : "" ?>">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text"  name="wallet" class="form-control"
+                                           placeholder="کیف پول"
+                                           value="<?= ($edit) ? $row->wallet : "" ?>">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text"  name="reference_code" class="form-control"
+                                           placeholder="کد رفرنس"
+                                           value="<?= ($edit) ? $row->reference_code : "" ?>">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text"  name="score" class="form-control"
+                                           placeholder="امتیاز"
+                                           value="<?= ($edit) ? $row->score : "" ?>">
+                                </div>
+                                <div class="form-group">
+                                    <textarea type="text" name="address" class="form-control input-default "
+                                           placeholder="آدرس"
+                                            ><?= ($edit) ? $row->address : "" ?></textarea>
+                                </div>
+                                <div>
+                                            <label for="icon" class="btn btn-dark btn-block m-0">انتخاب عکس پروفایل </label>
+                                            <input type="file" name="icon" id="icon" style="visibility:hidden;">
+                                </div>
 
                                 <div class="form-actions">
 
@@ -212,10 +308,31 @@ include('header.php'); ?>
                 <!-- ----------- end row of fields ----------------------------------------------------------- -->
 
             </div>
+            <? if($edit && $row->profile) { ?>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <img src="users/<?= $row->profile ?>">
+                        </div>
+                    </div>
+            <? } ?>
         </div>
     </div>
     <!-- ----------- end main container ------------------------------------------------------------------------ -->
-
 </div>
+<script>
+ document.getElementById('province').onchange=function(){
+       var province_id=document.getElementById('province').value;
+       console.log(province_id);
+       $.ajax({
+            url:'ajax/get_city.php',
+            type:'post',
+            data:{province_id:province_id},
+            success:function(response){
+        		$("#city").html(response);
+            }
+       })
+       
+   }
+</script>
 <? include('footer.php'); ?>
 
