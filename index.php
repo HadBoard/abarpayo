@@ -1,4 +1,9 @@
-<? include_once "header.php" ?>
+<?
+require_once "functions/database.php";
+$action = new Action();
+$title = "ابر پایا";
+include_once "header.php"
+?>
 
     <section class="main_slider">
         <div class="carousel"
