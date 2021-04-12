@@ -10,14 +10,16 @@ $action = new Action();
 
 <head>
     <meta charset="utf-8">
-    <title>Swiper demo</title>
+    <title><?= (isset($title)?$title:"ابر پایو") ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <link rel='icon' type='image/png' href='assets/images/logo.png'>
 
     <link rel="stylesheet" href="assets/css/swiper.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/fontiran.css">
     <link rel="stylesheet" href="assets/css/fontAswome.css">
     <link rel="stylesheet" href="assets/css/bootstrap-grid.css">
+
     <script src='assets/js/swiper.js'></script>
     <script src='assets/js/jquery.js'></script>
     <script src='assets/js/fontAwsome.js'></script>
