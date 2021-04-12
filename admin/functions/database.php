@@ -771,6 +771,49 @@ class Action
         }
  
      // ----------- end CITY -------------------------------------------------------------------------------------------
+     // ----------- start TICKETS -----------------------------------------------------------------------------------------
+
+     public function solved_ticket_list()
+     {
+        return $this->connection->query("SELECT * FROM `tbl_ticket` WHERE NOT `admin_id` = 0 ");
+     }
+ 
+     public function not_solved_ticket_list()
+     {
+        return $this->connection->query("SELECT * FROM `tbl_ticket` WHERE `admin_id` = 0 ");
+     }
+ 
+     public function ticket_add($user_id,$subject,$text)
+     {
+         $now = time();
+         $result = $this->connection->query("INSERT INTO `tbl_ticket`
+         (`user_id`,`subject`,`text`,`created_at`) 
+         VALUES
+         ('$user_id','$subject','$text','$now')");
+         if (!$this->result($result)) return false;
+         return $this->connection->insert_id;
+     }
+
+     public function ticket_solve($id,$admin_id,$solve)
+     {
+         $now = time();
+         $status = 3;
+         $result = $this->connection->query("UPDATE `tbl_ticket` SET 
+         `admin_id` = '$admin_id',
+         `solve`='$solve',
+         `status`='$status',
+         `solved_at`='$now'
+         WHERE `id` ='$id'");
+         if (!$this->result($result)) return false;
+         return $id;
+     }
+ 
+     public function ticket_get($id)
+     {
+         return $this->get_data("tbl_ticket", $id);
+     }
+ 
+     // ----------- end SHOPS -------------------------------------------------------------------------------------------
  
 }
 // ----------- end Action class ----------------------------------------------------------------------------------------
