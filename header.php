@@ -10,7 +10,7 @@ $action = new Action();
 
 <head>
     <meta charset="utf-8">
-    <title><?= (isset($title)?$title:"ابر پایو") ?></title>
+    <title><?= (isset($title) ? $title : "ابر پایو") ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <link rel='icon' type='image/png' href='assets/images/logo.png'>
 
@@ -30,6 +30,7 @@ $action = new Action();
         .carousel-cell.is-selected {
             transform: scale(1.02);
         }
+
         .main-slider {
             width: 100%;
             margin-top: 30px;
@@ -57,15 +58,14 @@ $action = new Action();
         }
 
         .flickity-viewport {
-            height:  525px !important;
+            height: 525px !important;
         }
+
         .carousel-cell {
             max-width: 100% !important;
             height: auto;
             transform: scale(0.8);
         }
-
-
 
 
     </style>
@@ -102,7 +102,7 @@ $action = new Action();
     <!-- eof info header -->
     <div class="container main_header">
         <div class="row main_header_top">
-            <div class="col-1 logo_header" >
+            <div class="col-1 logo_header">
                 <img src="assets/images/logo.png">
             </div>
             <div class="col-md-3 search_header">
@@ -118,13 +118,17 @@ $action = new Action();
                     <option>یزد-یزد</option>
                 </select>
             </div>
-            <div class="col-md-5">
-                <a class="main_btn">
-                    <i class="fa fa-user"></i>
 
-                    ورود یا ثبت نام
-                </a>
-            </div>
+            <? if ($action->auth()) { ?>
+                
+            <? } else { ?>
+                <div class="col-md-5">
+                    <a class="main_btn">
+                        <i class="fa fa-user"></i>
+                        ورود یا ثبت نام
+                    </a>
+                </div>
+            <? } ?>
 
         </div>
         <div class="row main_header-nav">
