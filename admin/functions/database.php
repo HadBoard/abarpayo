@@ -775,12 +775,32 @@ class Action
 
      public function solved_ticket_list()
      {
-        return $this->connection->query("SELECT * FROM `tbl_ticket` WHERE NOT `admin_id` = 0 ");
+        return $this->connection->query("SELECT * FROM `tbl_ticket` WHERE `status` = 3 ORDER BY id DESC ");
      }
  
      public function not_solved_ticket_list()
      {
-        return $this->connection->query("SELECT * FROM `tbl_ticket` WHERE `admin_id` = 0 ");
+        return $this->connection->query("SELECT * FROM `tbl_ticket` WHERE `status` = 0 ORDER BY id DESC ");
+     }
+
+     public function in_queue_ticket_list()
+     {
+        return $this->connection->query("SELECT * FROM `tbl_ticket` WHERE `status` = 1 ORDER BY id DESC ");
+     }
+
+     public function solving_ticket_list(){
+        return $this->connection->query("SELECT * FROM `tbl_ticket` WHERE `status` = 2 ORDER BY id DESC ");
+     }
+
+     public function ticket_set_status($id,$status)
+     {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_ticket` SET 
+        `status`='$status',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
      }
  
      public function ticket_add($user_id,$subject,$text)
@@ -792,6 +812,18 @@ class Action
          ('$user_id','$subject','$text','$now')");
          if (!$this->result($result)) return false;
          return $this->connection->insert_id;
+     }
+
+     public function ticket_edit($id,$admin_id,$solve)
+     {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_ticket` SET 
+        `admin_id`= '$admin_id',
+        `solve`='$solve',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
      }
 
      public function ticket_solve($id,$admin_id,$solve)
@@ -813,7 +845,7 @@ class Action
          return $this->get_data("tbl_ticket", $id);
      }
  
-     // ----------- end SHOPS -------------------------------------------------------------------------------------------
+     // ----------- end TICKET -------------------------------------------------------------------------------------------
  
 }
 // ----------- end Action class ----------------------------------------------------------------------------------------

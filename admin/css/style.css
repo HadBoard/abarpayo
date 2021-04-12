@@ -8609,6 +8609,9 @@ li.nav-label, .sidebar-nav ul li a {
 .add-user i {
     margin-right: 10px;
 }
+.active_ticket_button {
+    background-color: #249c40;
+}
 
 /*login*/
 .login-btn {

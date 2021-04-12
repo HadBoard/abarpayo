@@ -13,7 +13,7 @@ $list_url = "ticket-list.php";
 // ----------- get data from database when action is edit --------------------------------------------------------------
 $edit = false;
 if (isset($_GET['id'])) {
-    $edit = true;
+    //$edit = true;
     $id = $action->request('id');
     $row = $action->ticket_get($id);
 }
@@ -32,22 +32,15 @@ if (isset($_SESSION['error'])) {
 if (isset($_POST['submit'])) {
 
     // get fields
-    $category_id = $action->request('category_id');
-    $shop_id = $action->request('shop_id');
-    $title = $action->request('title');
-    $description = $action->request('description');
-    $price = $action->request('price');
-    $status = $action->request('status');
-    $discount = $action->request('discount');
-    $score = $action->request('score');
-
+    $solve = $action->request('solve');
     // send query
-    if ($edit) {
-        $command = $action->product_edit($id,$category_id,$shop_id,$title,$description,$price,$discount,$score,$status);
-    } else {
-        $command = $action->product_add($category_id,$shop_id,$title,$description,$price,$discount,$score,$status);
+    $admin_id = $_SESSION['admin_id'];
+    if($row->status == 3){
+        $command = $action->ticket_edit($id,$admin_id,$solve);
+    }else{
+        $command = $action->ticket_solve($id,$admin_id,$solve);
     }
-
+    
     // check errors
     if ($command) {
         $_SESSION['error'] = 0;
@@ -56,7 +49,7 @@ if (isset($_POST['submit'])) {
     }
 
     // bye bye :)
-    header("Location: $main_url?edit=$command");
+    header("Location: $main_url?id=$command");
 
 }
 // ----------- add or edit ---------------------------------------------------------------------------------------------
@@ -71,9 +64,9 @@ include('header.php'); ?>
         <!-- ----------- start title --------------------------------------------------------------------------- -->
         <div class="col-md-12 align-self-center text-right">
             <?php if (!isset($_GET['action'])) { ?>
-                <h3 class="text-primary">ثبت محصول </h3>
+                <h3 class="text-primary">تیکت</h3>
             <?php } else { ?>
-                <h3 class="text-primary">ویرایش محصول </h3>
+                <h3 class="text-primary">تیکت</h3>
             <?php } ?>
         </div>
         <!-- ----------- end title ----------------------------------------------------------------------------- -->
@@ -87,11 +80,11 @@ include('header.php'); ?>
                         خانه
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="<?= $list_url ?>">محصولات</a></li>
-                <?php if ($edit) { ?>
+                <li class="breadcrumb-item"><a href="<?= $list_url ?>">تیکت ها</a></li>
+                <?php if ($row->status != 3) { ?>
                     <li class="breadcrumb-item"><a href="javascript:void(0)">ثبت</a></li>
                 <?php } else { ?>
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">ویرایش</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">جزئیات</a></li>
                 <?php } ?>
             </ol>
         </div>
@@ -117,122 +110,86 @@ include('header.php'); ?>
         <!-- ----------- end error list ------------------------------------------------------------------------ -->
 
         <div class="row">
-            <div class="col-lg-6">
-
                 <!-- ----------- start history ----------------------------------------------------------------- -->
-                <? if ($edit) { ?>
-                    <div class="row m-b-0">
-                        <div class="col-lg-6">
-                            <p class="text-right m-b-0">
-                                تاریخ ثبت :
-                                <?= $action->time_to_shamsi($row->created_at) ?>
-                            </p>
-                        </div>
-                        <? if ($row->updated_at) { ?>
-                            <div class="col-lg-6">
-                                <p class="text-right m-b-0">
-                                    آخرین ویرایش :
-                                    <?= $action->time_to_shamsi($row->updated_at) ?>
+                <!-- ----------- end history ------------------------------------------------------------------- -->
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <h3 class="text-primary text-right">کاربر : </h3>
+                                <p class="text-right">
+                                    <a href="user.php?edit=<?= $row->user_id ?>"><i class="fas fa-plus"></i></a>
+                                    <?= $action->user_get($row->user_id)->last_name?>
                                 </p>
                             </div>
-                        <? } ?>
-                    </div>
-                <? } ?>
-                <!-- ----------- end history ------------------------------------------------------------------- -->
 
-                <!-- ----------- start row of fields ----------------------------------------------------------- -->
-                <div class="card">
-                    <div class="card-body">
-                        <div class="basic-form">
-                            <form action="" method="post" enctype="multipart/form-data">
-                               <div class="form-group">
-                                    <select class="form-control select2" name="category_id" required>
-                                        <option>دسته بندی را انتخاب فرمایید .</option>
-                                        <?
-                                        $option_result = $action->category_list();
-                                        while ($option = $option_result->fetch_object()) {
-                                            echo '<option value="';
-                                            echo $option->id;
-                                            echo '"';
-                                            if ($option->id == $row->category_id) echo "selected";
-                                            echo '>';
-                                            echo $option->title;
-                                            echo '</option>';
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control select2" name="shop_id" required>
-                                        <option> فروشگاه را انتخاب فرمایید .</option>
-                                        <?
-                                        $option_result = $action->shop_list();
-                                        while ($option = $option_result->fetch_object()) {
-                                            echo '<option value="';
-                                            echo $option->id;
-                                            echo '"';
-                                            if ($option->id == $row->shop_id) echo "selected";
-                                            echo '>';
-                                            echo $option->title;
-                                            echo '</option>';
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                          
-                                <div class="form-group">
-                                    <input type="text" name="title" class="form-control input-default "
-                                           placeholder="عنوان"
-                                           value="<?= ($edit) ? $row->title : "" ?>" required>
-                                </div>
+                            <div class="form-group">
+                                <h3 class="text-primary text-right">تاریخ ایجاد : </h3>
+                                <p class="text-right"><?= $action->time_to_shamsi($row->created_at) ?></p>
+                            </div>
 
-                                <div class="form-group">
-                                    <textarea type="text" name="description" class="form-control input-default "
-                                           placeholder="توضیحات"
-                                            ><?= ($edit) ? $row->discription : "" ?></textarea>
-                                </div>
+                            <div class="form-group">
+                                <h3 class="text-primary text-right">عنوان : </h3>
+                                <p class="text-right"><?= $row->subject ?></p>
+                            </div>
 
-                                <div class="form-group">
-                                    <input type="text" name="price" class="form-control input-default "
-                                           placeholder="قیمت"
-                                           value="<?= ($edit) ? $row->price : "" ?>" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="text" name="discount" class="form-control input-default "
-                                           placeholder="تخفیف"
-                                           value="<?= ($edit) ? $row->discount : "" ?>" >
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="text" name="score" class="form-control input-default "
-                                           placeholder="امتیاز"
-                                           value="<?= ($edit) ? $row->score : "" ?>" >
-                                </div>
-                                
-                                <div class="form-actions">
-
-                                    <label class="float-right">
-                                        <input type="checkbox" class="float-right m-1" name="status" value="1"
-                                            <? if ($edit && $row->status) echo "checked"; ?> >
-                                        فعال
-                                    </label>
-
-                                    <button type="submit" name="submit" class="btn btn-success sweet-success">
-                                        <i class="fa fa-check"></i> ثبت
-                                    </button>
-
-                                    <a href="<?= $list_url ?>"><span name="back" class="btn btn-inverse">بازگشت به لیست</span></a>
-
-                                </div>
-
-                            </form>
+                            <div class="form-group">
+                                <h3 class="text-primary text-right">متن تیکت : </h3>
+                                <p class="text-right"><?= $row->text ?></p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- ----------- end row of fields ----------------------------------------------------------- -->
+                <? if($row->status == 3){ ?>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
 
-            </div>
+                                <div class="form-group">
+                                    <h3 class="text-primary text-right">پشتیبان : </h3>
+                                    <p class="text-right"><?= $action->admin_get($row->admin_id)->last_name ?></p>
+                                </div>
+
+                                <div class="form-group">
+                                    <h3 class="text-primary text-right">تاریخ پاسخ : </h3>
+                                    <p class="text-right"><?= $action->time_to_shamsi($row->solved_at) ?></p>
+                                </div>
+
+                                <div class="form-group">
+                                    <h3 class="text-primary text-right">پاسخ تیکت : </h3>
+                                    <div  class="d-flex flex-row"><?= $row->solve ?></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <? }else{ ?>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="text-primary text-right">پاسخ تیکت : </h3>
+
+                                <div class="basic-form">
+
+                                    <form action="" method="post">
+
+                                        <div class="form-group">
+                                        <textarea type="text" name="solve" class="form-control input-default "
+                                        required><?= $row->solve ?></textarea>
+                                        </div>
+                                        <div class="form-actions">
+                                            <button type="submit" name="submit" class="btn btn-success sweet-success">
+                                            <i class="fa fa-check"></i>ثبت
+                                            </button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <? }?>
+            
         </div>
     </div>
     <!-- ----------- end main container ------------------------------------------------------------------------ -->

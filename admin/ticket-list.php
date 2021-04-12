@@ -13,8 +13,25 @@ $list_url = "ticket-list.php";
 
 // ----------- get data ------------------------------------------------------------------------------------------------
 $counter = 1;
-$solved = $action->solved_ticket_list();
-$not_solved = $action->not_solved_ticket_list();
+if(isset($_GET['solved'])){
+    $result = $action->solved_ticket_list();
+    $solved = 1;
+}
+else if(isset($_GET['not-solved'])){
+    $result = $action->not_solved_ticket_list();
+    $not_solved = 1;
+
+}
+else if(isset($_GET['in-queue'])){
+    $result = $action->in_queue_ticket_list();
+    $in_queue = 1;
+}
+else if(isset($_GET['solving'])){
+    $result = $action->solving_ticket_list();
+    $solving = 1;
+}else{
+    header("Location: $list_url?solved");
+}
 // ----------- get data ------------------------------------------------------------------------------------------------
 
 // ----------- check error ---------------------------------------------------------------------------------------------
@@ -67,55 +84,23 @@ include('header.php'); ?>
         <!-- ----------- end error list ------------------------------------------------------------------------ -->
         <!-- ----------- start row of not solved ticket table -------------------------------------------------------------------- -->
         <div class="row">
-            <div class="col-12">
-                
+            <a class="add-user mb-2<?= $solved ?'active_ticket_button' : '';?>" href="<?= $list_url ?>?solved">پاسخ داده شده</a>
+            <a class="add-user mb-2<?= $not_solved ? 'active_ticket_button' : '';?>" href="<?= $list_url ?>?not-solved">پاسخ داده نشده</a>
+            <a class="add-user mb-2<?= $in_queue ? 'active_ticket_button' : '' ;?>" href="<?= $list_url ?>?in-queue">در صف بررسی</a>
+            <a class="add-user mb-2<?= $solving ? 'active_ticket_button' : '';?>" href="<?= $list_url ?>?solving">در حال بررسی</a>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">            
                 <div class="card">
                     <div class="card-title">
                         <div class="col-md-12 align-self-center text-right">
-                            <h3 class="text-primary">تیکت های بدون پاسخ</h3>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                    <div class="table-responsive m-t-5">
-                                <table id="example25" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
-                                <tr>
-                                    <th class="text-center">ردیف</th>
-                                    <th class="text-center">کاربر</th>
-                                    <th class="text-center">عنوان</th>
-                                    <th class="text-center">متن</th>
-                                    <th class="text-center">پاسخ</th>
-                                    <th class="text-center">وضعیت</th>
-                                </tr>
-                                </thead>
-
-                                <tbody class="text-center">
-                                <? while ($not_solved_row = $not_solved->fetch_object()) { ?>
-                                    <tr class="text-center">
-
-                                        <td class="text-center"><?= $counter++ ?></td>
-                                        <td class="text-center"><?= $action->user_get($not_solved_row->user_id)->last_name ?></td>
-                                        <td class="text-center"><?= $not_solved_row->subject ?></td>
-                                        <td class="text-center"><?= $not_solved_row->text ?></td>
-                                        <td class="text-center"><a href="<?= $main_url?>?id=<?= $not_solved_row->id?>"><i class="fa fa-pencil-square-o"></i></a></td>
-                                        <td class="text-center">
-                                            <?
-                                            if ($not_solved_row->admin_id) echo "<status-indicator positive pulse></status-indicator>";
-                                            else echo "<status-indicator negative pulse></status-indicator>";
-                                            ?>
-                                        </td>
-                                    </tr>
-                                <? } ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">
-                        <div class="col-md-12 align-self-center text-right">
-                            <h3 class="text-primary">تیکت های پاسخ داده شده</h3>
+                            <h3 class="text-primary">
+                            <?if($solved) echo "تیکت های پاسخ داده شده";?>
+                            <?if($solving) echo "تیکت های در حال بررسی";?>
+                            <?if($in_queue) echo "تیکت های در صف بررسی";?>
+                            <?if($not_solved) echo "تیکت های پاسخ داده نشده";?>
+                            </h3>
                         </div>
                     </div>
                     <div class="card-body">
@@ -124,28 +109,35 @@ include('header.php'); ?>
                                 <thead>
                                 <tr>
                                     <th class="text-center">ردیف</th>
-                                    <th class="text-center">پشتیبان</th>
+                                    <?if($solved){?>
+                                        <th class="text-center">پشتیبان</th>
+                                    <?}?>
                                     <th class="text-center">کاربر</th>
                                     <th class="text-center">عنوان</th>
+                                    <th class="text-center">تاریخ ثبت</th>
                                     <th class="text-center">مشاهده</th>
                                     <th class="text-center">وضعیت</th>
                                 </tr>
                                 </thead>
 
                                 <tbody class="text-center">
-                                <? while ($solved_row = $solved->fetch_object()) { ?>
+                                <? while ($row = $result->fetch_object()) { ?>
                                     <tr class="text-center">
-
                                         <td class="text-center"><?= $counter++ ?></td>
-                                        <td class="text-center"><?= $action->admin_get($solved_row->admin_id)->last_name ?></td>
-                                        <td class="text-center"><?= $action->user_get($solved_row->user_id)->last_name ?></td>
-                                        <td class="text-center"><?= $solved_row->title ?></td>
-                                        <td class="text-center"><a href="<?= $main_url?>?id=<?= $solved_row->id?>"><i class="fa fa-pencil-square-o"></i></a></td>
+                                        <?if($solved){?>
+                                        <td class="text-center"><?= $action->admin_get($row->admin_id)->last_name ?></td>
+                                        <?}?>
+                                        <td class="text-center"><?= $action->user_get($row->user_id)->last_name ?></td>
+                                        <td class="text-center"><?= $row->subject ?></td>
+                                        <td class="text-center"><?= $action->time_to_shamsi($row->created_at) ?></td>
+                                        <td class="text-center"><a href="<?= $main_url?>?id=<?= $row->id?>"><i class="fa fa-pencil-square-o"></i></a></td>
                                         <td class="text-center">
-                                            <?
-                                            if ($solved_row->admin_id) echo "<status-indicator positive pulse></status-indicator>";
-                                            else echo "<status-indicator negative pulse></status-indicator>";
-                                            ?>
+                                            <select class="form-control" name="status" id="<?= $row->id ?>" onchange="setStatus(<?= $row->id ?>)">
+                                                <option <? if($row->status == 0) echo 'selected="selected"'; ?>  value="0">پاسخ داده نشده</option>
+                                                <option <? if($row->status == 1) echo 'selected="selected"'; ?>  value="1">در صف بررسی</option>
+                                                <option <? if($row->status == 2) echo 'selected="selected"'; ?>  value="2">در حال بررسی</option>
+                                                <option <? if($row->status == 3) echo 'selected="selected"'; ?>  value="3">پاسخ داده شده</option>
+                                            </select>
                                         </td>
                                     </tr>
                                 <? } ?>
@@ -154,13 +146,26 @@ include('header.php'); ?>
                         </div>
                     </div>
                 </div>
-               
             </div> 
         </div>
 
         <!-- ----------- end row of not solved table ---------------------------------------------------------------------- -->
-
     </div>
 </div>
+<script>
+    function setStatus(id){
+        var status=document.getElementById(id).value;
+        $.ajax({
+            url: "ajax/set_status.php",
+            method:"POST",
+            data:{
+                id,status
+            },
+            success: function(data){
+              window.location.reload();
+            }
+        });
+    }
+</script>
 
 <? include('footer.php'); ?>
