@@ -846,7 +846,29 @@ class Action
      }
  
      // ----------- end TICKET -------------------------------------------------------------------------------------------
- 
+      // ----------- start PRODCT_COMMENT -----------------------------------------------------------------------------------------
+
+      public function product_comment_list($product_id)
+      {
+         return $this->connection->query("SELECT * FROM `tbl_product_comment` WHERE `product_id` = $product_id");
+      }
+  
+      public function product_comment_status($id)
+      {
+        return $this->change_status('tbl_product_comment',$id);
+      }
+
+      public function product_comment_remove($id)
+      {
+        return $this->remove_data("tbl_product_comment", $id);
+      }
+  
+      public function product_comment_get($id)
+      {
+          return $this->get_data("tbl_product_comment", $id);
+      }
+  
+      // ----------- end PRODUCT_COMMENT -------------------------------------------------------------------------------------------
 }
 // ----------- end Action class ----------------------------------------------------------------------------------------
 
