@@ -120,7 +120,7 @@ include('header.php'); ?>
                                         <td class="text-center"><?= $row->last_name ?></td>
                                         <td class="text-center"><?= $row->national_code ?></td>
                                         <td class="text-center">
-                                            <a href="cart.php?user_id=<?= $row->id ?>">
+                                            <a href="user-cart.php?user_id=<?= $row->id ?>">
                                                 <i class="fa fa-credit-card-alt"></i>
                                             </a>
                                         </td>
