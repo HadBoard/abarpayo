@@ -54,8 +54,7 @@ if (isset($_POST['submit'])) {
     // get fields
     $title = $action->request('title');
     $cart_number = $action->request('cart_number');
-    // $validation = $action->request('validation');
-    $validation = 0;
+    $validation = $action->request('validation');
 
     // send query
     if ($edit_id) {
@@ -163,6 +162,11 @@ include('header.php'); ?>
                                 </div>
 
                                 <div class="form-actions">
+                                    <label class="float-right">
+                                        <input type="checkbox" class="float-right m-1" name="validation" value="1"
+                                            <? if ($edit_id && $edit_row->validation) echo "checked"; ?> required>
+                                        فعال
+                                    </label>
 
                                     <button type="submit" name="submit" class="btn btn-success sweet-success">
                                         <i class="fa fa-check"></i> ثبت

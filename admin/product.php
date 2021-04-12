@@ -146,7 +146,7 @@ include('header.php'); ?>
                         <div class="basic-form">
                             <form action="" method="post" enctype="multipart/form-data">
                                <div class="form-group">
-                                    <select class="form-control select2" name="category_id">
+                                    <select class="form-control select2" name="category_id" required>
                                         <option>دسته بندی را انتخاب فرمایید .</option>
                                         <?
                                         $option_result = $action->category_list();
@@ -163,7 +163,7 @@ include('header.php'); ?>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control select2" name="shop_id">
+                                    <select class="form-control select2" name="shop_id" required>
                                         <option> فروشگاه را انتخاب فرمایید .</option>
                                         <?
                                         $option_result = $action->shop_list();
