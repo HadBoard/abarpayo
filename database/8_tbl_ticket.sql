@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 11, 2021 at 06:57 AM
+-- Generation Time: Apr 12, 2021 at 07:49 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tbl_ticket` (
   `id` int(11) NOT NULL,
+  `shop_id` int(11) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   `subject` varchar(100) NOT NULL,
   `text` text NOT NULL,
