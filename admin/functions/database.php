@@ -238,7 +238,7 @@ class Action
         $rowcount = mysqli_num_rows($result);
         $row = $result->fetch_object();
         if ($rowcount) {
-            $this->admin_update_last_login($row->id);
+            $this->admin_update_last_login();
             $_SESSION['admin_id'] = $row->id;
             $_SESSION['admin_access'] = $row->access;
             return true;
@@ -263,8 +263,9 @@ class Action
     }
 
     // ----------- update last login of admin (logged)
-    public function admin_update_last_login($id)
+    public function admin_update_last_login()
     {
+        $id = $this->admin()->id;
         $now = strtotime(date('Y-m-d H:i:s'));
         $result = $this->connection->query("UPDATE `tbl_admin` SET `last_login`='$now' WHERE `id`='$id'");
         if (!$this->result($result)) return false;
