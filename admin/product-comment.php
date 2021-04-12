@@ -29,9 +29,14 @@ if (isset($_GET['remove']) && isset($_GET['product'])) {
 
 // ----------- validate -------------------------------------------------------------------------------------------
 if (isset($_GET['product']) && isset($_GET['status'])) {
+    $product_id = $action->request('product');
+    $counter = 1;
+    $result = $action->product_comment_list($product_id);
+
     $id = $action->request('status');
-    $_SESSION['error'] = !$action->product_comment_status($id);
-    header("Location: $list_url");
+    $old_status = $action->product_comment_get($id)->status;
+    $_SESSION['error'] = !$action->product_comment_status($id,$old_status);
+    header("Location: $main_url?product=$product_id");
     return;
 }
 // ----------- validate -------------------------------------------------------------------------------------------
@@ -107,7 +112,8 @@ include('header.php'); ?>
                                     <th class="text-center">توضیحات</th>
                                     <th class="text-center">امتیاز</th>
                                     <th class="text-center">تاریخ ثبت</th>
-                                    <th class="text-center">مدیریت</th>
+                                    <th class="text-center">تایید</th>
+                                    <th class="text-center">حذف</th>
                                 </tr>
                                 </thead>
 
@@ -123,9 +129,13 @@ include('header.php'); ?>
                                         <td class="text-center"><?= $action->time_to_shamsi($row->created_at) ?></td>
                                         <td class="text-center">
                                             <a href="<?= $main_url?>?product=<?= $row->product_id?>&status=<?= $row->id ?>">
-                                                <i class="fa fa-pencil-square-o"></i>
+                                                <?
+                                                if ($row->status) echo "<status-indicator positive pulse></status-indicator>";
+                                                else echo "<status-indicator negative pulse></status-indicator>";
+                                                ?>
                                             </a>
-                                            |
+                                        </td>
+                                        <td>
                                             <a href="<?= $main_url ?>?product=<?= $row->product_id?>&remove=<?= $row->id ?>">
                                                 <i class="fa fa-trash"></i>
                                             </a>

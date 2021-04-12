@@ -853,9 +853,14 @@ class Action
          return $this->connection->query("SELECT * FROM `tbl_product_comment` WHERE `product_id` = $product_id");
       }
   
-      public function product_comment_status($id)
+      public function product_comment_status($id,$old_status)
       {
-        return $this->change_status('tbl_product_comment',$id);
+        $status = !$old_status;
+        $result = $this->connection->query("UPDATE `tbl_product_comment` SET 
+         `status`='$status'
+         WHERE `id` ='$id'");
+         if (!$this->result($result)) return false;
+         return $id;
       }
 
       public function product_comment_remove($id)
