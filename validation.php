@@ -12,7 +12,7 @@ include_once "header.php"
                 <div class="col-md-5 right-form mobile_validiation">
                     <div class="form_top">
                         <img src="assets/images/logo.png">
-                        <h4>ثبت نام در ابرپایو</h4>
+                        <h4>ثبت نام / ورود </h4>
                     </div>
 
                     <form>
