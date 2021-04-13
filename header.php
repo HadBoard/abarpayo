@@ -107,7 +107,7 @@ $action = new Action();
               </div>
             <? } else { ?>
                 <div class="col-md-4">
-                    <a class="main_btn" href="signin.php">
+                    <a class="main_btn" href="signiup.php">
                         <i class="fa fa-user"></i>
                         ورود یا ثبت نام
                     </a>
