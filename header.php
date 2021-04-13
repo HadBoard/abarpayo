@@ -15,10 +15,10 @@ $action = new Action();
     <link rel='icon' type='image/png' href='assets/images/logo.png'>
 
     <link rel="stylesheet" href="assets/css/swiper.css">
-    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/fontiran.css">
     <link rel="stylesheet" href="assets/css/fontAswome.css">
     <link rel="stylesheet" href="assets/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 
     <script src='assets/js/swiper.js'></script>
     <script src='assets/js/jquery.js'></script>
