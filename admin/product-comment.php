@@ -6,33 +6,40 @@ $action = new Action();
 
 // ----------- urls ----------------------------------------------------------------------------------------------------
 // main url for add , edit
-$main_url = "product.php";
-// main url for remove , change status
-$list_url = "product-list.php";
+$main_url = "product-comment.php";
 // ----------- urls ----------------------------------------------------------------------------------------------------
 
 // ----------- get data ------------------------------------------------------------------------------------------------
 $counter = 1;
-$result = $action->product_list();
+if (isset($_GET['product'])) {
+    $product_id = $action->request('product');
+    $result = $action->product_comment_list($product_id);
+}
 // ----------- get data ------------------------------------------------------------------------------------------------
 
 // ----------- delete --------------------------------------------------------------------------------------------------
-if (isset($_GET['remove'])) {
-    $id = $action->request('remove');
-    $_SESSION['error'] = !$action->product_remove($id);
-    header("Location: $list_url");
+if (isset($_GET['remove']) && isset($_GET['product'])) {
+    $remove_id = $action->request('remove');
+    $product_id = $action->request('product');
+    $_SESSION['error'] = !$action->product_comment_remove($remove_id);
+    header("Location: $main_url?product=$product_id");
     return;
 }
 // ----------- delete --------------------------------------------------------------------------------------------------
 
-// ----------- change status -------------------------------------------------------------------------------------------
-if (isset($_GET['status'])) {
+// ----------- validate -------------------------------------------------------------------------------------------
+if (isset($_GET['product']) && isset($_GET['status'])) {
+    $product_id = $action->request('product');
+    $result = $action->product_comment_list($product_id);
+
     $id = $action->request('status');
-    $_SESSION['error'] = !$action->product_status($id);
-    header("Location: $list_url");
+    $old_status = $action->product_comment_get($id)->status;
+    $_SESSION['error'] = !$action->product_comment_status($id,$old_status);
+    header("Location: $main_url?product=$product_id");
     return;
 }
-// ----------- change status -------------------------------------------------------------------------------------------
+// ----------- validate -------------------------------------------------------------------------------------------
+
 
 // ----------- check error ---------------------------------------------------------------------------------------------
 $error = false;
@@ -51,7 +58,7 @@ include('header.php'); ?>
     <div class="row page-titles">
         <!-- ----------- start breadcrumb ---------------------------------------------------------------------- -->
         <div class="col-md-12 align-self-center text-right">
-            <h3 class="text-primary">محصولات</h3></div>
+            <h3 class="text-primary">نظرات محصولات</h3></div>
         <div class="col-md-12 align-self-center text-right">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
@@ -60,7 +67,8 @@ include('header.php'); ?>
                         خانه
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="javascript:void(0)">محصولات</a></li>
+                <li class="breadcrumb-item"><a href="product-list.php">محصولات</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">نظرات</a></li>
             </ol>
         </div>
         <!-- ----------- end breadcrumb ------------------------------------------------------------------------ -->
@@ -84,15 +92,11 @@ include('header.php'); ?>
         <!-- ----------- end error list ------------------------------------------------------------------------ -->
 
         <!-- ----------- add button ---------------------------------------------------------------------------- -->
-        <div class="row">
-            <a class="add-user mb-2" href="<?= $main_url ?>"> ثبت محصول <i class="fas fa-plus"></i></a>
-        </div>
         <!-- ----------- add button ---------------------------------------------------------------------------- -->
 
         <!-- ----------- start row of table -------------------------------------------------------------------- -->
         <div class="row">
-            <div class="col-12">
-
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
 
@@ -102,13 +106,13 @@ include('header.php'); ?>
                                 <thead>
                                 <tr>
                                     <th class="text-center">ردیف</th>
-                                    <th class="text-center">عنوان</th>
-                                    <th class="text-center">دسته بندی</th>
-                                    <th class="text-center">فروشگاه</th>
-                                    <th class="text-center">قیمت</th>
-                                    <th class="text-center">نظرات</th>
-                                    <th class="text-center">وضعیت</th>
-                                    <th class="text-center">مدیریت</th>
+                                    <th class="text-center">کاربر</th>
+                                    <th class="text-center">محصول</th>
+                                    <th class="text-center">توضیحات</th>
+                                    <th class="text-center">امتیاز</th>
+                                    <th class="text-center">تاریخ ثبت</th>
+                                    <th class="text-center">تایید</th>
+                                    <th class="text-center">حذف</th>
                                 </tr>
                                 </thead>
 
@@ -117,26 +121,21 @@ include('header.php'); ?>
                                     <tr class="text-center">
 
                                         <td class="text-center"><?= $counter++ ?></td>
-                                        <td class="text-center"><?= $row->title ?></td>
-                                        <td class="text-center"><?= $action->category_get($row->category_id)->title ?></td>
-                                        <td class="text-center"><?= $action->shop_get($row->shop_id)->title ?></td>
-                                        <td class="text-center"><?= $row->price ?></td>
-                                        <td class="text-center"><a href="product-comment.php?product=<?= $row->id?>"><i class="fas fa-comment"></i></a></td>
+                                        <td class="text-center"><?= $action->user_get($row->user_id)->last_name ?></td>
+                                        <td class="text-center"><?= $action->product_get($row->product_id)->title ?></td>
+                                        <td class="text-center"><?= $row->text ?></td>
+                                        <td class="text-center"><?= $row->score ?></td>
+                                        <td class="text-center"><?= $action->time_to_shamsi($row->created_at) ?></td>
                                         <td class="text-center">
-                                            <a href="<?= $list_url ?>?status=<?= $row->id ?>">
+                                            <a href="<?= $main_url?>?product=<?= $row->product_id?>&status=<?= $row->id ?>">
                                                 <?
                                                 if ($row->status) echo "<status-indicator positive pulse></status-indicator>";
                                                 else echo "<status-indicator negative pulse></status-indicator>";
                                                 ?>
                                             </a>
                                         </td>
-
-                                        <td class="text-center">
-                                            <a href="<?= $main_url ?>?edit=<?= $row->id ?>">
-                                                <i class="fa fa-pencil-square-o"></i>
-                                            </a>
-                                            |
-                                            <a href="<?= $list_url ?>?remove=<?= $row->id ?>">
+                                        <td>
+                                            <a href="<?= $main_url ?>?product=<?= $row->product_id?>&remove=<?= $row->id ?>">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </td>
@@ -151,6 +150,7 @@ include('header.php'); ?>
             </div>
         </div>
         <!-- ----------- end row of table ---------------------------------------------------------------------- -->
+
     </div>
 </div>
 

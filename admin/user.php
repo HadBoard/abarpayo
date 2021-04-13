@@ -48,25 +48,29 @@ if (isset($_POST['submit'])) {
     $address = $action->request('address');
     $city_id = $action->request('city');
     $status = $action->request('status');
-    $icon = '';
-    // $icon = ($edit ? $row->profile : "");
+    $icon = ($edit ? $row->profile : "");
     
-    // if($_FILES["icon"]["name"]){
-    //     unlink("users/$icon");
-    //     $target_dir = "users/";
-    //     $target_file = $target_dir . basename($_FILES["icon"]["name"]);
-    //     $FileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-    //     $FileName = $action -> get_token(10) . "." . $FileType;
-    //     $image = new image();
-    //     $image->load($_FILES['icon']['tmp_name']);
-    //     if ($FileType != "jpg" && $FileType != "png" && $FileType != "jpeg"
-    //         && $FileType != "gif") {
-    //         return 0;
-    //     }
-    //     $image->saveImage($target_dir . $FileName);
-    //     $icon = $FileName;
-    // }
+    if($_FILES["icon"]["name"]){
+//$name = $_FILES['icon']['name'];
 
+        $target_dir = "users/";
+        $target_file = $target_dir . basename($_FILES["icon"]["name"]);
+
+        // Select file type
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+        // Valid file extensions
+        $extensions_arr = array("jpg","jpeg","png","gif");
+
+        // Check extension
+        if( in_array($imageFileType,$extensions_arr) ){
+            $name = $action -> get_token(10) . "." . $imageFileType;
+            // Upload file
+            move_uploaded_file($_FILES['icon']['tmp_name'],$target_dir.$name);
+            $icon = $name;
+
+        } 
+    }
     // send query
     if ($edit) {
         $command = $action->user_edit($id, $first_name, $last_name, $national_code, $phone, $username, $password,$city_id,$address,$postal_code,$reference_code,$birthday,$icon,$score,$wallet,$iban,$status);
@@ -289,7 +293,7 @@ include('header.php'); ?>
 
                                     <label class="float-right">
                                         <input type="checkbox" class="float-right m-1" name="status" value="1"
-                                            <? if ($edit && $row->status) echo "checked"; ?> required>
+                                            <? if ($edit && $row->status) echo "checked"; ?> >
                                         فعال
                                     </label>
 

@@ -846,8 +846,64 @@ class Action
      }
  
      // ----------- end TICKET -------------------------------------------------------------------------------------------
- 
-}
+      // ----------- start PRODCT_COMMENT -----------------------------------------------------------------------------------------
+
+      public function product_comment_list($product_id)
+      {
+         return $this->connection->query("SELECT * FROM `tbl_product_comment` WHERE `product_id` = $product_id");
+      }
+  
+      public function product_comment_status($id,$old_status)
+      {
+        $status = !$old_status;
+        $result = $this->connection->query("UPDATE `tbl_product_comment` SET 
+         `status`='$status'
+         WHERE `id` ='$id'");
+         if (!$this->result($result)) return false;
+         return $id;
+      }
+
+      public function product_comment_remove($id)
+      {
+        return $this->remove_data("tbl_product_comment", $id);
+      }
+  
+      public function product_comment_get($id)
+      {
+          return $this->get_data("tbl_product_comment", $id);
+      }
+  
+      // ----------- end PRODUCT_COMMENT -------------------------------------------------------------------------------------------
+      // ----------- start SHOP_COMMENT -----------------------------------------------------------------------------------------
+
+      public function shop_comment_list($shop_id)
+      {
+         return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = $shop_id");
+      }
+  
+      public function shop_comment_status($id,$old_status)
+      {
+        $status = !$old_status;
+        $result = $this->connection->query("UPDATE `tbl_shop_comment` SET 
+         `status`='$status'
+         WHERE `id` ='$id'");
+         if (!$this->result($result)) return false;
+         return $id;
+      }
+
+      public function shop_comment_remove($id)
+      {
+        return $this->remove_data("tbl_shop_comment", $id);
+      }
+  
+      public function shop_comment_get($id)
+      {
+          return $this->get_data("tbl_shop_comment", $id);
+      }
+  
+      // ----------- end SHOP_COMMENT ----------------------------------------------------------------------------
+    }
+
 // ----------- end Action class ----------------------------------------------------------------------------------------
 
 
