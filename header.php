@@ -26,7 +26,6 @@ $action = new Action();
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 
-
 </head>
 
 <body>
@@ -45,6 +44,7 @@ $action = new Action();
                         <p> zhetoon@gmail.com </p>
                     </a>
                 </div>
+
                 <div class="col-2">
                     <span class="material-icons">
                         call
@@ -53,6 +53,7 @@ $action = new Action();
                         <p>+98-9135244859</p>
                     </a>
                 </div>
+
             </div>
         </div>
 
@@ -61,7 +62,11 @@ $action = new Action();
     <div class="container main_header">
         <div class="row main_header_top">
             <div class="col-1 logo_header">
-                <img src="assets/images/logo.png">
+
+                <a href="index.php">
+                    <img src="assets/images/logo.png">
+                </a>
+
             </div>
             <div class="col-md-4 search_header">
                 <input placeholder="لطفا کلمه مورد نظر خود را جستجو کنید">
@@ -79,32 +84,32 @@ $action = new Action();
 
             <? if ($action->auth()) { ?>
                 <div class="col-md-4 active_header_user ">
-                        <div class="user_header">
-                            <a>
-                                <img src="assets/images/user (1).png">
-                            </a>
+                    <div class="user_header">
+                        <a href="profile.php">
+                            <img src="assets/images/user (1).png">
+                        </a>
 
-                        </div>
-                        <div class="line_header">
-                            <img src="assets/images/Line 15.png">
-                        </div>
-                      <div class="notice_header">
-                          <a>
-                              <img src="assets/images/Announcement.png">
-                              <span>2</span>
+                    </div>
 
-                          </a>
-                      </div>
-                     <div class="message_header">
-                         <a>
+                    <div class="line_header">
+                        <img src="assets/images/Line 15.png">
+                    </div>
+
+                    <div class="notice_header">
+                        <a href="notification.php">
+                            <img src="assets/images/Announcement.png">
+                            <span>2</span>
+                        </a>
+                    </div>
+
+                    <div class="message_header">
+                        <a href="message.php">
                             <img src="assets/images/message.png">
                             <span>2</span>
+                        </a>
+                    </div>
 
-
-                         </a>
-                     </div>
-
-              </div>
+                </div>
             <? } else { ?>
                 <div class="col-md-4">
                     <a class="main_btn" href="phone.php">
@@ -118,55 +123,55 @@ $action = new Action();
         <div class="row main_header-nav">
             <nav>
                 <ul class="menu_header">
-                <li style="position: relative;">
+                    <li style="position: relative;">
                             <span class="material-icons">
                                 menu
                             </span>
-                            <a class="category_btn" href="#">دسته بندی</a>
-                            <div class="submenu">
-                                <a href="#">
-                                    <img src="assets/images/shop.png">
-                                    <h5>رستوران و کافی شاپ</h5>
-                                    
-                                </a>
-                                <a href="#">
-                                    <img src="assets/images/playground.png">
-                                    <h5>تفریحی ورزشی</h5>
-                                    
-                                </a>
-                                <a href="#">
-                                    <img src="assets/images/Group 272.png">
-                                    <h5>سلامتی و پزشکی</h5>
-                                    
-                                </a>
-                                <a href="#">
-                                    <img src="assets/images/theatre.png">
-                                    <h5>هنر و تئاتر</h5>
-                                    
-                                </a>
-                                <a href="#">
-                                    <img src="assets/images/presentation (1).png">
-                                    <h5>آموزش</h5>
-                                    
-                                </a>
-                                <a href="#">
-                                    <img src="assets/images/mascara (1).png">
-                                    <h5>زیبایی و آرایشی</h5>
-                                    
-                                </a>
-                                <a href="#">
-                                    <img src="assets/images/sunset.png">
-                                    <h5>تور و سفر</h5>
-                                    
-                                </a>
-                                <a href="#">
-                                    <img src="assets/images/technical-support.png">
-                                    <h5>خدمات</h5>
-                                    
-                                </a>
-                            
-                            </div>
-                        </li>
+                        <a class="category_btn" href="#">دسته بندی</a>
+                        <div class="submenu">
+                            <a href="#">
+                                <img src="assets/images/shop.png">
+                                <h5>رستوران و کافی شاپ</h5>
+
+                            </a>
+                            <a href="#">
+                                <img src="assets/images/playground.png">
+                                <h5>تفریحی ورزشی</h5>
+
+                            </a>
+                            <a href="#">
+                                <img src="assets/images/Group 272.png">
+                                <h5>سلامتی و پزشکی</h5>
+
+                            </a>
+                            <a href="#">
+                                <img src="assets/images/theatre.png">
+                                <h5>هنر و تئاتر</h5>
+
+                            </a>
+                            <a href="#">
+                                <img src="assets/images/presentation (1).png">
+                                <h5>آموزش</h5>
+
+                            </a>
+                            <a href="#">
+                                <img src="assets/images/mascara (1).png">
+                                <h5>زیبایی و آرایشی</h5>
+
+                            </a>
+                            <a href="#">
+                                <img src="assets/images/sunset.png">
+                                <h5>تور و سفر</h5>
+
+                            </a>
+                            <a href="#">
+                                <img src="assets/images/technical-support.png">
+                                <h5>خدمات</h5>
+
+                            </a>
+
+                        </div>
+                    </li>
                     <li>
                         <a href="#">صفحه اصلی</a>
                     </li>
