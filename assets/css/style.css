@@ -4,8 +4,8 @@
 @font-face { font-family: IRANSans; font-style: normal; font-weight: 300; src: url("../fonts/eot/IRANSansWeb_Light.eot?#iefix") format("embedded-opentype"), url("../fonts/woff2/IRANSansWeb_Light.woff2") format("woff2"), url("../fonts/woff/IRANSansWeb_Light.woff") format("woff"), url("../fonts/ttf/IRANSansWeb_Light.ttf") format("truetype"); }
 @font-face { font-family: IRANSans; font-style: normal; font-weight: 200; src: url("../fonts/eot/IRANSansWeb_UltraLight.eot?#iefix") format("embedded-opentype"), url("../fonts/woff2/IRANSansWeb_UltraLight.woff2") format("woff2"), url("../fonts/woff/IRANSansWeb_UltraLight.woff") format("woff"), url("../fonts/ttf/IRANSansWeb_UltraLight.ttf") format("truetype"); }
 @font-face { font-family: IRANSans; font-style: normal; font-weight: normal; src: url("../fonts/eot/IRANSansWeb.eot?#iefix") format("embedded-opentype"), url("../fonts/woff2/IRANSansWeb.woff2") format("woff2"), url("../fonts/woff/IRANSansWeb.woff") format("woff"), url("../fonts/ttf/IRANSansWeb.ttf") format("truetype"); }
-* { padding: 0px; margin: 0px; box-sizing: border-box; font-family: IRANSans; color: rgb(26, 26, 26); }
-body {overflow-x: hidden;height: 100vh;}
+* {padding: 0px;margin: 0px;box-sizing: border-box;font-family: IRANSans;color: rgb(26, 26, 26);}
+body {overflow-x: hidden;height: 100vh;background: #FCFCFC;}
 html { width: 100vw; }
 a { text-decoration: none; }
 :focus { outline: none; }
@@ -134,3 +134,116 @@ header { box-shadow: rgba(0, 0, 0, 0.11) 1px 1px 3px 1px; margin-bottom: 14px; }
 .shop_list_btn { width: 16%; padding: 5px 0px; margin-top: 51px !important; }
 .main_btn i { color: rgb(255, 255, 255); margin-right: 9px; margin-top: 5px; margin-left: 9px; }
 
+.shop_container {
+    width: 100%;
+    display: table;
+    margin-bottom: 10px;
+}
+
+.shop_img_icon {
+    transform: scale(1.4);
+    text-align: center;
+    margin-top: 21px;
+}
+
+.shop_right h2 {
+    font-size: 23px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    margin-top: 5px;
+}
+
+.shop_left {
+    text-align: left;
+}
+
+.shop_left h3 span ,.shop_left h3 {
+    color: #FD7600;
+    text-shadow: -1px 1px 2px #0000006b;
+}
+.shop_left h3 span{margin:0 -5px 0 8px}
+
+.star_card.star_card_shop {
+    width: 24%;
+    float: left;
+    margin-top: 15px;
+}
+.main_shop {
+    background: #ffff;
+    width: 100;
+    display: table;
+    padding: 34px 56px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 11px 3px #0000001f;
+}
+
+.shop_content_header {
+    text-align: right;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #1a1a1a80;
+    width: 50%;
+    margin-bottom: 20px;
+}
+
+.shop_content_header h4 {
+    font-size: 21px;
+    font-weight: 500;
+    /* float: right; */
+    /* text-align: revert; */
+}
+
+.main_shop_right p ,.main_shop_left p{
+    color: #363636;
+    margin-bottom: 20px;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+ul {
+    list-style: none;
+}
+
+.main_shop_right li ,.main_shop_left li{
+    margin-bottom: 13px;
+    font-weight: 500;
+}
+
+.main_shop_right li img ,.main_shop_left li img{
+    float: right;
+    margin-left: 13px;
+}
+
+.main_shop_right ul ,.main_shop_left ul{
+    margin-bottom: 15px;
+}
+
+.address_shop h6 {
+    font-size: 17px;
+    float: right;
+    margin-left: 10px;
+}
+
+.address_shop span {
+    font-weight: 400;
+}
+
+.shop_map {
+    width: 100%;
+    display: table;
+    margin-top: 15px;
+}
+.shop_map iframe {
+    width: 100%;
+    border-radius: 16px !important;
+}
+.main_btn.middle_btn.shop_btn_way {
+    width: 16%;
+    text-align: center;
+    margin: 32px auto 20px auto !important;
+}
+
+
+.shop_extra {
+    margin: 65px auto 50px auto;
+    display: table;
+  }
