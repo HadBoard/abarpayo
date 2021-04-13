@@ -6,7 +6,7 @@ $action = new Action();
 
 // ----------- urls ----------------------------------------------------------------------------------------------------
 // main url for add , edit
-$main_url = "cart.php";
+$main_url = "user-cart.php";
 // ----------- urls ----------------------------------------------------------------------------------------------------
 
 // ----------- get data ------------------------------------------------------------------------------------------------
@@ -93,6 +93,7 @@ include('header.php'); ?>
                         خانه
                     </a>
                 </li>
+                <li class="breadcrumb-item"><a href="user-list.php">کاربران</a></li>
                 <li class="breadcrumb-item"><a href="javascript:void(0)">کارت ها</a></li>
             </ol>
         </div>
@@ -161,7 +162,7 @@ include('header.php'); ?>
                                 </div>
 
                                 <div class="form-actions">
-                                <label class="float-right">
+                                    <label class="float-right">
                                         <input type="checkbox" class="float-right m-1" name="validation" value="1"
                                             <? if ($edit_id && $edit_row->validation) echo "checked"; ?> required>
                                         فعال

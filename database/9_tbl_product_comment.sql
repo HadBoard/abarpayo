@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2021 at 07:49 AM
+-- Generation Time: Apr 12, 2021 at 07:47 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -24,23 +24,17 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_ticket`
+-- Table structure for table `tbl_product_comment`
 --
 
-CREATE TABLE `tbl_ticket` (
+CREATE TABLE `tbl_product_comment` (
   `id` int(11) NOT NULL,
-  `shop_id` int(11) DEFAULT NULL,
+  `product_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `subject` varchar(100) NOT NULL,
   `text` text NOT NULL,
-  `type` int(11) NOT NULL,
-  `view` tinyint(1) NOT NULL,
-  `admin_id` int(11) DEFAULT NULL,
-  `solve` text DEFAULT NULL,
+  `score` int(11) NOT NULL,
   `created_at` bigint(20) NOT NULL,
-  `updated_at` bigint(20) DEFAULT NULL,
-  `solved_at` bigint(20) DEFAULT NULL,
-  `status` int(11) NOT NULL
+  `status` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -48,9 +42,9 @@ CREATE TABLE `tbl_ticket` (
 --
 
 --
--- Indexes for table `tbl_ticket`
+-- Indexes for table `tbl_product_comment`
 --
-ALTER TABLE `tbl_ticket`
+ALTER TABLE `tbl_product_comment`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -58,9 +52,9 @@ ALTER TABLE `tbl_ticket`
 --
 
 --
--- AUTO_INCREMENT for table `tbl_ticket`
+-- AUTO_INCREMENT for table `tbl_product_comment`
 --
-ALTER TABLE `tbl_ticket`
+ALTER TABLE `tbl_product_comment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 

@@ -212,10 +212,10 @@ include('header.php'); ?>
                                     <input type="text" id="date" name="birthday" class="form-control"
                                            placeholder="تاریخ تولد"
                                            value="<?= ($edit) ? $action->time_to_shamsi($row->birthday) : "" ?>"
-                                           >
+                                           required>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control select2" name="province" id="province">
+                                    <select class="form-control select2" name="province" id="province" required>
                                         <option>استان را انتخاب فرمایید .</option>
                                         <?
                                         $option_result = $action->province_list();
@@ -233,7 +233,7 @@ include('header.php'); ?>
                                 </div>
                                 <div class="form-group">
                                    
-                                    <select class="form-control select2" name="city" id="city">
+                                    <select class="form-control select2" name="city" id="city" required>
                                         <option>شهرستان را انتخاب فرمایید .</option>
                                         <?
                                         $option_result =  $action->province_city_list($province_id);
@@ -253,43 +253,43 @@ include('header.php'); ?>
                                 <div class="form-group">
                                     <input type="text"  name="postal_code" class="form-control"
                                            placeholder="کد پستی "
-                                           value="<?= ($edit) ? $row->postal_code : "" ?>">
+                                           value="<?= ($edit) ? $row->postal_code : "" ?>" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="text"  name="iban" class="form-control"
                                            placeholder="شماره شبا"
-                                           value="<?= ($edit) ? $row->iban : "" ?>">
+                                           value="<?= ($edit) ? $row->iban : "" ?>" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="text"  name="wallet" class="form-control"
                                            placeholder="کیف پول"
-                                           value="<?= ($edit) ? $row->wallet : "" ?>">
+                                           value="<?= ($edit) ? $row->wallet : "" ?>" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="text"  name="reference_code" class="form-control"
                                            placeholder="کد رفرنس"
-                                           value="<?= ($edit) ? $row->reference_code : "" ?>">
+                                           value="<?= ($edit) ? $row->reference_code : "" ?>" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="text"  name="score" class="form-control"
                                            placeholder="امتیاز"
-                                           value="<?= ($edit) ? $row->score : "" ?>">
+                                           value="<?= ($edit) ? $row->score : "" ?>" required>
                                 </div>
                                 <div class="form-group">
                                     <textarea type="text" name="address" class="form-control input-default "
-                                           placeholder="آدرس"
+                                           placeholder="آدرس" required
                                             ><?= ($edit) ? $row->address : "" ?></textarea>
                                 </div>
                                 <div>
-                                            <label for="icon" class="btn btn-dark btn-block m-0">انتخاب عکس پروفایل </label>
-                                            <input type="file" name="icon" id="icon" style="visibility:hidden;">
+                                        <label for="icon" class="btn btn-dark btn-block m-0">انتخاب عکس پروفایل </label>
+                                        <input type="file" name="icon" id="icon" style="visibility:hidden;">
                                 </div>
 
                                 <div class="form-actions">
 
                                     <label class="float-right">
                                         <input type="checkbox" class="float-right m-1" name="status" value="1"
-                                            <? if ($edit && $row->status) echo "checked"; ?> >
+                                            <? if ($edit && $row->status) echo "checked"; ?> required>
                                         فعال
                                     </label>
 

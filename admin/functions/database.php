@@ -238,7 +238,7 @@ class Action
         $rowcount = mysqli_num_rows($result);
         $row = $result->fetch_object();
         if ($rowcount) {
-            $this->admin_update_last_login($row->id);
+            $this->admin_update_last_login();
             $_SESSION['admin_id'] = $row->id;
             $_SESSION['admin_access'] = $row->access;
             return true;
@@ -263,8 +263,9 @@ class Action
     }
 
     // ----------- update last login of admin (logged)
-    public function admin_update_last_login($id)
+    public function admin_update_last_login()
     {
+        $id = $this->admin()->id;
         $now = strtotime(date('Y-m-d H:i:s'));
         $result = $this->connection->query("UPDATE `tbl_admin` SET `last_login`='$now' WHERE `id`='$id'");
         if (!$this->result($result)) return false;
@@ -770,6 +771,81 @@ class Action
         }
  
      // ----------- end CITY -------------------------------------------------------------------------------------------
+     // ----------- start TICKETS -----------------------------------------------------------------------------------------
+
+     public function solved_ticket_list()
+     {
+        return $this->connection->query("SELECT * FROM `tbl_ticket` WHERE `status` = 3 ORDER BY id DESC ");
+     }
+ 
+     public function not_solved_ticket_list()
+     {
+        return $this->connection->query("SELECT * FROM `tbl_ticket` WHERE `status` = 0 ORDER BY id DESC ");
+     }
+
+     public function in_queue_ticket_list()
+     {
+        return $this->connection->query("SELECT * FROM `tbl_ticket` WHERE `status` = 1 ORDER BY id DESC ");
+     }
+
+     public function solving_ticket_list(){
+        return $this->connection->query("SELECT * FROM `tbl_ticket` WHERE `status` = 2 ORDER BY id DESC ");
+     }
+
+     public function ticket_set_status($id,$status)
+     {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_ticket` SET 
+        `status`='$status',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+     }
+ 
+     public function ticket_add($user_id,$subject,$text)
+     {
+         $now = time();
+         $result = $this->connection->query("INSERT INTO `tbl_ticket`
+         (`user_id`,`subject`,`text`,`created_at`) 
+         VALUES
+         ('$user_id','$subject','$text','$now')");
+         if (!$this->result($result)) return false;
+         return $this->connection->insert_id;
+     }
+
+     public function ticket_edit($id,$admin_id,$solve)
+     {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_ticket` SET 
+        `admin_id`= '$admin_id',
+        `solve`='$solve',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+     }
+
+     public function ticket_solve($id,$admin_id,$solve)
+     {
+         $now = time();
+         $status = 3;
+         $result = $this->connection->query("UPDATE `tbl_ticket` SET 
+         `admin_id` = '$admin_id',
+         `solve`='$solve',
+         `status`='$status',
+         `solved_at`='$now'
+         WHERE `id` ='$id'");
+         if (!$this->result($result)) return false;
+         return $id;
+     }
+ 
+     public function ticket_get($id)
+     {
+         return $this->get_data("tbl_ticket", $id);
+     }
+ 
+     // ----------- end TICKET -------------------------------------------------------------------------------------------
  
 }
 // ----------- end Action class ----------------------------------------------------------------------------------------
