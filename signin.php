@@ -1,7 +1,7 @@
 <?
 require_once "functions/database.php";
 $action = new Action();
-$title = "ابر پایو";
+$title = "ثبت نام";
 include_once "header.php"
 ?>
 
@@ -11,7 +11,7 @@ include_once "header.php"
             <div class="row">
                 <div class="col-md-5 right-form">
                     <div class="form_top">
-                        <img src="../assets/images/logo.png">
+                        <img src="assets/images/logo.png">
                         <h4>ثبت نام در ابرپایو</h4>
                     </div>
 
@@ -37,7 +37,7 @@ include_once "header.php"
                     </form>
                 </div>
                 <div class="col-md-7 left-form">
-                    <img src="../assets/images/Group 380@2x.png">
+                    <img src="assets/images/Group 380@2x.png">
                 </div>
             </div>
             <p>با ورود یا ثبت نام در ابرپایو <a>شرایط و قوانین </a> را میپذیرید.</p>
