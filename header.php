@@ -26,49 +26,7 @@ $action = new Action();
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 
-    <style>
-        .carousel-cell.is-selected {
-            transform: scale(1.02);
-        }
 
-        .main-slider {
-            width: 100%;
-            margin-top: 30px;
-            margin-bottom: 50px;;
-        }
-
-        .carousel-cell {
-            width: 66%;
-            height: 400px;
-            margin-right: 10px;
-            /*! background: #8C8; */
-            border-radius: 5px;
-            counter-increment: carousel-cell;
-            padding-top: 21px;
-        }
-
-        /* cell number */
-        .carousel-cell:before {
-            display: block;
-            text-align: center;
-            /* content: counter(carousel-cell); */
-            line-height: 200px;
-            font-size: 80px;
-            /* color: white; */
-        }
-
-        .flickity-viewport {
-            height: 525px !important;
-        }
-
-        .carousel-cell {
-            max-width: 100% !important;
-            height: auto;
-            transform: scale(0.8);
-        }
-
-
-    </style>
 </head>
 
 <body>
@@ -105,7 +63,7 @@ $action = new Action();
             <div class="col-1 logo_header">
                 <img src="assets/images/logo.png">
             </div>
-            <div class="col-md-3 search_header">
+            <div class="col-md-4 search_header">
                 <input placeholder="لطفا کلمه مورد نظر خود را جستجو کنید">
                 <button><span class="material-icons">
                     search
@@ -120,9 +78,35 @@ $action = new Action();
             </div>
 
             <? if ($action->auth()) { ?>
-                
+                <div class="col-md-4 active_header_user ">
+                        <div class="user_header">
+                            <a>
+                                <img src="assets/images/user (1).png">
+                            </a>
+
+                        </div>
+                        <div class="line_header">
+                            <img src="assets/images/Line 15.png">
+                        </div>
+                      <div class="notice_header">
+                          <a>
+                              <img src="assets/images/Announcement.png">
+                              <span>2</span>
+
+                          </a>
+                      </div>
+                     <div class="message_header">
+                         <a>
+                            <img src="assets/images/message.png">
+                            <span>2</span>
+
+
+                         </a>
+                     </div>
+
+              </div>
             <? } else { ?>
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <a class="main_btn">
                         <i class="fa fa-user"></i>
                         ورود یا ثبت نام
@@ -134,12 +118,55 @@ $action = new Action();
         <div class="row main_header-nav">
             <nav>
                 <ul class="menu_header">
-                    <span class="material-icons">
-                        menu
-                    </span>
-                    <li>
-                        <a href="#">دسته بندی</a>
-                    </li>
+                <li style="position: relative;">
+                            <span class="material-icons">
+                                menu
+                            </span>
+                            <a class="category_btn" href="#">دسته بندی</a>
+                            <div class="submenu">
+                                <a href="#">
+                                    <img src="../assets/images/shop.png">
+                                    <h5>رستوران و کافی شاپ</h5>
+                                    
+                                </a>
+                                <a href="#">
+                                    <img src="../assets/images/playground.png">
+                                    <h5>تفریحی ورزشی</h5>
+                                    
+                                </a>
+                                <a href="#">
+                                    <img src="../assets/images/Group 272.png">
+                                    <h5>سلامتی و پزشکی</h5>
+                                    
+                                </a>
+                                <a href="#">
+                                    <img src="../assets/images/theatre.png">
+                                    <h5>هنر و تئاتر</h5>
+                                    
+                                </a>
+                                <a href="#">
+                                    <img src="../assets/images/presentation (1).png">
+                                    <h5>آموزش</h5>
+                                    
+                                </a>
+                                <a href="#">
+                                    <img src="../assets/images/mascara (1).png">
+                                    <h5>زیبایی و آرایشی</h5>
+                                    
+                                </a>
+                                <a href="#">
+                                    <img src="../assets/images/sunset.png">
+                                    <h5>تور و سفر</h5>
+                                    
+                                </a>
+                                <a href="#">
+                                    <img src="../assets/images/technical-support.png">
+                                    <h5>خدمات</h5>
+                                    
+                                </a>
+                            
+                            </div>
+                        </li>
                     <li>
                         <a href="#">صفحه اصلی</a>
                     </li>
