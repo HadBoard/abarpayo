@@ -56,6 +56,12 @@ include_once "header.php"
 
         <!-- buttons -->
     <div class="tab_index">
+        <?
+            $result = $action->category_ordered_list();
+            while($row = $result->fetch_object()){
+        ?>
+            <button class="tablinks active_tablink"><?= $row->title ?></button>
+        <?  } ?>
         <button class="tablinks active_tablink">رستوران و کافی شاپ</button>
         <button class="tablinks" >تفریحی ورزشی</button>
         <button class="tablinks" >آرایشی  و بهداشتی</button>

@@ -129,7 +129,18 @@ $action = new Action();
                             </span>
                         <a class="category_btn" href="#">دسته بندی</a>
                         <div class="submenu">
-                            <a href="#">
+                            <?
+                                $result = $action->category_ordered_list();
+                                while($row = $result->fetch_object()){
+                            ?>
+                                <a href="#">
+                                    <img src="admin/images/categoryIcons/<?= $row->icon ?>">
+                                    <h5><?= $row->title ?></h5>
+                                </a>
+                            <?
+                                }
+                            ?>
+                            <!-- <a href="#">
                                 <img src="assets/images/shop.png">
                                 <h5>رستوران و کافی شاپ</h5>
 
@@ -168,7 +179,7 @@ $action = new Action();
                                 <img src="assets/images/technical-support.png">
                                 <h5>خدمات</h5>
 
-                            </a>
+                            </a> -->
 
                         </div>
                     </li>

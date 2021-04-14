@@ -545,21 +545,22 @@ class Action
         return $this->table_option("tbl_shop", $id);
     }
 
-    public function shop_add($title, $phone, $fax, $city_id, $address, $longitude, $latitude, $status)
+    public function shop_add($category_id,$title, $phone, $fax, $city_id, $address, $longitude, $latitude, $status)
     {
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_shop`
-        (`title`,`phone`,`fax`,`city_id`,`address`,`longitude`,`latitude`,`status`,`created_at`) 
+        (`category_id`,`title`,`phone`,`fax`,`city_id`,`address`,`longitude`,`latitude`,`status`,`created_at`) 
         VALUES
-        ('$title','$phone','$fax','$city_id','$address','$longitude','$latitude','$status','$now')");
+        ('$category_id','$title','$phone','$fax','$city_id','$address','$longitude','$latitude','$status','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
-    public function shop_edit($id, $title, $phone, $fax, $city_id, $address, $longitude, $latitude, $status)
+    public function shop_edit($id,$category_id, $title, $phone, $fax, $city_id, $address, $longitude, $latitude, $status)
     {
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_shop` SET 
+        `category_id`= '$category_id',
         `title`='$title',
         `phone`='$phone',
         `fax`='$fax',

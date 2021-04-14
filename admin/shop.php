@@ -32,6 +32,7 @@ if (isset($_SESSION['error'])) {
 if (isset($_POST['submit'])) {
 
     // get fields
+    $category_id = $action->request('category_id');
     $title = $action->request('title');
     $phone = $action->request('phone');
     $fax = $action->request('fax');
@@ -43,9 +44,9 @@ if (isset($_POST['submit'])) {
 
     // send query
     if ($edit) {
-        $command = $action->shop_edit($id, $title, $phone, $fax, $city_id, $address, $longitude, $latitude, $status);
+        $command = $action->shop_edit($id,$category_id, $title, $phone, $fax, $city_id, $address, $longitude, $latitude, $status);
     } else {
-        $command = $action->shop_add($title, $phone, $fax, $city_id, $address, $longitude, $latitude, $status);
+        $command = $action->shop_add($category_id,$title, $phone, $fax, $city_id, $address, $longitude, $latitude, $status);
     }
 
     // check errors
@@ -145,7 +146,23 @@ include('header.php'); ?>
                     <div class="card-body">
                         <div class="basic-form">
                             <form action="" method="post" enctype="multipart/form-data">
-
+                            <div class="form-group">
+                                    <select class="form-control select2" name="category_id" required>
+                                        <option>دسته بندی را انتخاب فرمایید .</option>
+                                        <?
+                                        $option_result = $action->category_list();
+                                        while ($option = $option_result->fetch_object()) {
+                                            echo '<option value="';
+                                            echo $option->id;
+                                            echo '"';
+                                            if ($option->id == $row->category_id) echo "selected";
+                                            echo '>';
+                                            echo $option->title;
+                                            echo '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <input type="text" name="title" class="form-control input-default "
                                            placeholder="عنوان"
