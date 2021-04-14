@@ -368,19 +368,20 @@ class Action
         return $this->table_list("tbl_user");
     }
 
-    public function user_add($first_name, $last_name, $national_code, $phone, $username, $password,$city_id,$address,$postal_code,$reference_code,$birthday,$icon,$score,$wallet,$iban,$status)
+    public function user_add($first_name, $last_name, $national_code, $phone,$city_id,$address,$postal_code,$birthday,$icon,$score,$wallet,$iban,$status)
     {
         $now = time();
+        $reference_code = $this->get_token(6);
         $result = $this->connection->query("INSERT INTO `tbl_user`
-        (`first_name`,`last_name`,`national_code`,`phone`,`username`,`password`,`city_id`,`address`,`postal_code`,`reference_code`,`birthday`,`profile`,`score`,`wallet`,`iban`,`status`,`created_at`) 
+        (`first_name`,`last_name`,`national_code`,`phone`,`city_id`,`address`,`postal_code`,`reference_code`,`birthday`,`profile`,`score`,`wallet`,`iban`,`status`,`created_at`) 
         VALUES
-        ('$first_name','$last_name','$national_code','$phone','$username','$password','$city_id','$address','$postal_code','$reference_code','$birthday','$icon','$score','$wallet','$iban','$status','$now')");
+        ('$first_name','$last_name','$national_code','$phone','$city_id','$address','$postal_code','$reference_code','$birthday','$icon','$score','$wallet','$iban','$status','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
 
-    public function user_edit($id, $first_name, $last_name, $national_code, $phone, $username, $password,$city_id,$address,$postal_code,$reference_code,$birthday,$icon,$score,$wallet,$iban,$status)
+    public function user_edit($id, $first_name, $last_name, $national_code, $phone,$city_id,$address,$postal_code,$birthday,$icon,$score,$wallet,$iban,$status)
     {
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_user` SET 
@@ -388,12 +389,9 @@ class Action
         `last_name`='$last_name',
         `national_code`='$national_code',
         `phone`='$phone',
-        `username`='$username',
-        `password`='$password',
         `city_id`='$city_id',
         `address` = '$address',
         `postal_code` = '$postal_code',
-        `reference_code`= '$reference_code',
         `birthday`='$birthday',
         `profile`='$icon',
         `score` = '$score',
@@ -902,7 +900,8 @@ class Action
       }
   
       // ----------- end SHOP_COMMENT ----------------------------------------------------------------------------
-    }
+    
+}
 
 // ----------- end Action class ----------------------------------------------------------------------------------------
 

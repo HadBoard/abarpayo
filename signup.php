@@ -1,8 +1,36 @@
 <?
 require_once "functions/database.php";
+// if($_SESSION['fromValidation'] == 'true'){
+// $_SESSION['fromValidation'] = 'false';
 $action = new Action();
 $title = "ثبت نام";
 include_once "header.php"
+?>
+<?
+    if(isset($_POST['submit'])){
+        $first_name = $action->request('first_name');
+        $last_name = $action->request('last_name');
+        $reference_code = $action->request('reference_code');
+        if($reference_code){
+            $result = $action->user_reference_code($reference_code);
+            $reference = $result->fetch_object();
+            $reference_id = $reference->id;
+        } 
+        $phone = $_SESSION['phone'];
+        $command = $action->user_add($first_name,$last_name,$phone,$reference_id);    
+        if($command){
+            unset($_SESSION['phone']);
+            echo "<script type='text/javascript'>window.location.href = 'index.php';</script>"; 
+        }else{
+            ?>
+            <div class="alert alert-danger">
+             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+             <strong>ناموفق!</strong>دوباره تلاش کنید.
+           </div> 
+           <?
+        }
+    }
+
 ?>
 
 <div class="background_page">
@@ -15,24 +43,21 @@ include_once "header.php"
                         <h4>ثبت نام در ابرپایو</h4>
                     </div>
 
-                    <form>
+                    <form action="" method="post">
                         <div class="form-group">
-                            <label for="name">نام</label>
-                            <input type="text" name="name" placeholder="فقط حروف فارسی">
+                            <label for="first_name">نام</label>
+                            <input type="text" name="first_name" placeholder="فقط حروف فارسی">
                         </div>
                         <div class="form-group">
-                            <label for="lname">نام خانوادگی</label>
-                            <input type="text" name="lname" placeholder="فقط حروف فارسی">
+                            <label for="last_name">نام خانوادگی</label>
+                            <input type="text" name="last_name" placeholder="فقط حروف فارسی">
                         </div>
+                    
                         <div class="form-group">
-                            <label for="phone">شماره موبایل</label>
-                            <input type="text" name="phone" placeholder="فقط حروف فارسی">
+                            <label for="reference_code">کد معرف(اختیاری)</label>
+                            <input type="text" name="reference_code" placeholder="فقط حروف فارسی">
                         </div>
-                        <div class="form-group">
-                            <label for="name">کد معرف(اختیاری)</label>
-                            <input type="text" name="name" placeholder="فقط حروف فارسی">
-                        </div>
-                        <input type="submit" class="main_btn" value="ادامه">
+                        <input name="submit" type="submit" class="main_btn" value="ادامه">
 
                     </form>
                 </div>
@@ -44,5 +69,9 @@ include_once "header.php"
         </div>
     </div>
 </div>
-
-<? include_once "footer.php" ?>
+<? 
+include_once "footer.php" ;
+// }else{
+//     echo "<script type='text/javascript'>window.location.href = 'phone.php';</script>";
+// }
+?>

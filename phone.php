@@ -5,6 +5,22 @@ $title = "ثبت نام";
 include_once "header.php"
 ?>
 
+<?
+    if(isset($_POST['submit'])){
+        $phone = $action->request('phone');
+        $code=rand(100000,999999);
+        // $action->send_sms($phone,$code);
+        $_SESSION['code'] = $code;
+        $_SESSION['phone'] = $phone;
+        $_SESSION['fromPhone'] = 'true';
+        $result = $action->user_get_phone($phone);
+        $user = $result->fetch_object();
+        $user_id = $user ? $user->id : 0;
+        $action->validation_code_add($user_id,$code);
+        // header("Location: validation.php");
+        echo "<script type='text/javascript'>window.location.href = 'validation.php';</script>";   
+    }
+?>
 <div class="background_page">
     <div class="container">
         <div class="center_form">
@@ -15,12 +31,12 @@ include_once "header.php"
                         <h4>ثبت نام / ورود </h4>
                     </div>
 
-                    <form>
+                    <form action="" method="post">
                         <div class="form-group">
-                            <label for="name">شماره موبایل خود را وارد کنید.</label>
-                            <input type="text" name="name" placeholder="*******09">
+                            <label for="phone">شماره موبایل خود را وارد کنید.</label>
+                            <input type="text" name="phone" placeholder="*******09">
                         </div>
-                        <input type="submit" class="main_btn" value="ادامه">
+                        <input name="submit" type="submit" class="main_btn" value="ادامه">
                     </form>
                     <a class="form_ques">در ابرپایو <span>عضو</span> نیستید ؟</a>
 

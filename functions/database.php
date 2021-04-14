@@ -291,9 +291,55 @@ class Action
         $id = $_SESSION['user_id'];
         return $this->user_get($id);
     }
+    public function user_get_phone($phone){
+        return $this->connection->query("SELECT * FROM `tbl_user` WHERE `phone` = '$phone'");
+    }
+
+    public function user_add($first_name,$last_name,$phone,$reference_id)
+    {
+        $now = time();
+        $reference_code = $this->get_token(6);
+        $result = $this->connection->query("INSERT INTO `tbl_user`
+        (`first_name`,`last_name`,`phone`,`reference_code`,`reference_id`,`created_at`) 
+        VALUES
+        ('$first_name','$last_name','$phone','$reference_code','$reference_id','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function user_reference_code($reference_code){
+        return $this->connection->query("SELECT * FROM `tbl_user` WHERE `reference_code` = '$reference_code'");
+    }
 
     // ----------- end USERS ------------------------------------------------------------------------------------------
+     // ----------- start VALIDATION_CODE ------------------------------------------------------------------------------------------
+     public function validation_code_add($user_id, $code)
+     {
+         $now = time();
+         $result = $this->connection->query("INSERT INTO `tbl_validation_code`
+         (`user_id`,`code`,`created_at`) 
+         VALUES
+         ('$user_id','$code','$now')");
+         if (!$this->result($result)) return false;
+         return $this->connection->insert_id;
+     }
+ 
+     public function validate_code($code){
+         $dt = new DateTime("-3 minutes");
+         $dt = $dt->format("Y-m-d h:i:s"); 
+         $dt = strtotime($dt);
+         return $this->connection->query("SELECT * FROM `tbl_validation_code` WHERE `code` = '$code' AND
+            `created_at`> '$dt' ");
+     }
 
+     public function validation_code_remove($id)
+    {
+        return $this->remove_data("tbl_validation_code", $id);
+    }
+
+    
+        
+        // ----------- end VALIDATION_CODE ------------------------------------------------------------------------------------------
 }
 // ----------- end Action class ----------------------------------------------------------------------------------------
 

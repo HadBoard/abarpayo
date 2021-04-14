@@ -37,14 +37,11 @@ if (isset($_POST['submit'])) {
     $last_name = $action->request('last_name');
     $national_code = $action->request('national_code');
     $phone = $action->request('phone');
-    $username = $action->request('username');
-    $password = $action->request('password');
     $birthday = $action->request_date('birthday');
     $iban = $action->request('iban');
     $postal_code = $action->request('postal_code');
     $wallet = $action->request('wallet');
     $score = $action->request('score');
-    $reference_code = $action->request('reference_code');
     $address = $action->request('address');
     $city_id = $action->request('city');
     $status = $action->request('status');
@@ -73,9 +70,9 @@ if (isset($_POST['submit'])) {
     }
     // send query
     if ($edit) {
-        $command = $action->user_edit($id, $first_name, $last_name, $national_code, $phone, $username, $password,$city_id,$address,$postal_code,$reference_code,$birthday,$icon,$score,$wallet,$iban,$status);
+        $command = $action->user_edit($id, $first_name, $last_name, $national_code, $phone,$city_id,$address,$postal_code,$birthday,$icon,$score,$wallet,$iban,$status);
     } else {
-        $command = $action->user_add($first_name, $last_name, $national_code, $phone, $username, $password,$city_id,$address,$postal_code,$reference_code,$birthday,$icon,$score,$wallet,$iban,$status);
+        $command = $action->user_add($first_name, $last_name, $national_code, $phone,$city_id,$address,$postal_code,$birthday,$icon,$score,$wallet,$iban,$status);
     }
 
     // check errors
@@ -198,18 +195,6 @@ include('header.php'); ?>
                                     <input type="text" name="phone" class="form-control input-default "
                                            placeholder="تلفن همراه"
                                            value="<?= ($edit) ? $row->phone : "" ?>" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="text" name="username" class="form-control input-default "
-                                           placeholder="نام کاربری"
-                                           value="<?= ($edit) ? $row->username : "" ?>" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="text" name="password" class="form-control input-default "
-                                           placeholder="رمز عبور"
-                                           value="<?= ($edit) ? $row->password : "" ?>" required>
                                 </div>
 
                                 <div class="form-group">
