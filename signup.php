@@ -1,10 +1,12 @@
 <?
 require_once "functions/database.php";
-// if($_SESSION['fromValidation'] == 'true'){
-// $_SESSION['fromValidation'] = 'false';
+if(!isset($_SESSION['fromValidation'])){
+    header("Location: phone.php");
+}
 $action = new Action();
 $title = "ثبت نام";
-include_once "header.php"
+include_once "header.php";
+unset($_SESSION['fromValidation']);
 ?>
 <?
     if(isset($_POST['submit'])){
@@ -71,7 +73,4 @@ include_once "header.php"
 </div>
 <? 
 include_once "footer.php" ;
-// }else{
-//     echo "<script type='text/javascript'>window.location.href = 'phone.php';</script>";
-// }
 ?>

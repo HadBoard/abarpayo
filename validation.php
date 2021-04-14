@@ -1,10 +1,12 @@
 <?
 require_once "functions/database.php";
-// if($_SESSION['fromPhone'] == 'true'){
-// $_SESSION['fromPhone'] = 'false';
+if(!isset($_SESSION['fromPhone'])){
+    header("Location: phone.php");
+}
+unset($_SESSION['fromPhone']);
 $action = new Action();
 $title = "ثبت نام";
-include_once "header.php"
+
 ?>
 <?
     if(isset($_POST['submit'])){
@@ -12,17 +14,16 @@ include_once "header.php"
         $result = $action->validate_code($code);
         $validated_code = $result->fetch_object();
         if($validated_code){
-            // $_SESSION['fromValidation'] = 'true';
+            $_SESSION['fromValidation'] = 'true';
             if($validated_code->user_id == 0){
-                // header("Location: signup.php");
                 $action->validation_code_remove($validated_code->id);
-                echo "<script type='text/javascript'>window.location.href = 'signup.php';</script>"; 
+                header("Location: signup.php");
             }
             else{ 
-                // header("Location: index.php");
+                // 
                 $_SESSION['user_id'] = $validated_code->user_id;
                 $action->validation_code_remove($validated_code->id);
-                echo "<script type='text/javascript'>window.location.href = 'index.php';</script>"; 
+                header("Location: index.php");
             } 
         }else{
           ?>
@@ -33,10 +34,8 @@ include_once "header.php"
           <?
         }
     }
-    if(isset($_POST['resend'])){
-        $action->send_sms();
-    }
     $code_correct = $_SESSION['code'];
+    include_once "header.php";
 ?>
 
 <div class="background_page">
@@ -70,7 +69,6 @@ include_once "header.php"
                 </div>
             </div>
             <p>با ورود یا ثبت نام در ابرپایو <a>شرایط و قوانین </a> را میپذیرید.</p>
-            <p><button  type="submit" name="resend">ارسال مجدد کد</button></p>
         </div>
     </div>
 </div>
@@ -81,8 +79,6 @@ include_once "header.php"
 </script> 
 
 <? include_once "footer.php" ;
-//  }else{
-//     echo "<script type='text/javascript'>window.location.href = 'phone.php';</script>";
-//  }
+
 ?>
 
