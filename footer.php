@@ -165,21 +165,7 @@
 </footer>
 
 
-<script>
-    let tab_btns = document.querySelectorAll('.tablinks')
-    let tab_content = document.querySelectorAll('.tabcontent')
-    tab_content[0].style.display='block';
-    for (let index = 0; index < tab_btns.length; index++) {
-        tab_btns[index].addEventListener('click' , function(){
-            $('.tablinks').removeClass('active_tablink');
-            $('.tabcontent').hide();
-            tab_content[index].style.display = 'block';
-            tab_btns[index].classList.add('active_tablink');
-        })
 
-    }
-
-</script>
 
 </body>
 

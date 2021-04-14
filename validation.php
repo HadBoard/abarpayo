@@ -57,10 +57,11 @@ $title = "ثبت نام";
                             <label for="code">کد تایید را وارد کنید.</label>
                             <input type="text" name="code" placeholder="" value="<?=$code_correct?>">
                         </div>
-                        <p class="resent_code_form">
-                            ارسال مجدد کد تا
-                            <span>02:35</span>
+                        <p id="resent_code_form"  class="resent_code_form">
+                                ارسال مجدد کد تا 
+                                <span id="countdown">02:35</span>
                         </p>
+                        <a id="resent_btn" style="display:none">ارسال مجدد کد</a>
                         <input name="submit" type="submit" class="main_btn" value="ادامه">
                     </form>
                 </div>
@@ -73,9 +74,55 @@ $title = "ثبت نام";
     </div>
 </div>
 <script>
-    $('document').ready(function(){
-        setTimeout(function(){  $('.alert').hide(); }, 3000);
-    })
+
+    
+// timer
+down_expired();
+
+var min,sec;
+    function down_expired(){
+        min =0;
+         sec = 5;
+        document.getElementById('resent_btn').style.display = 'none';
+        document.getElementById('resent_code_form').style.display='block';
+        var x= setInterval(
+            function(){
+                print_time(min,sec);
+                if(sec == 0){
+                    min--;
+                    sec= 60;
+                }if(  min<0 ){
+                    sec=0;
+                    min = 0;
+                    document.getElementById('resent_btn').style.display = 'block';
+                    document.getElementById('resent_code_form').style.display='none';
+                    print_time(min,sec)
+                    clearInterval(x);
+                }
+                sec--;
+            }
+            ,1000
+        )         
+    }
+    var c = document.getElementById('countdown');
+
+    function print_time(min,sec){
+
+        if(min<10 && sec<10){
+        c.innerHTML = "0"+min + ":" +"0"+sec;
+        }
+        else if(min<10){
+            c.innerHTML = "0"+min + ":" +sec;
+        }
+        else if(sec<10){
+            c.innerHTML = min + ":" +"0"+sec;
+
+        }
+        
+    }
+    document.getElementById('resent_btn').onclick = function(){
+        down_expired()
+    }
 </script> 
 
 <? include_once "footer.php" ;
