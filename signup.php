@@ -5,7 +5,6 @@ if(!isset($_SESSION['fromValidation'])){
 }
 $action = new Action();
 $title = "ثبت نام";
-include_once "header.php";
 unset($_SESSION['fromValidation']);
 ?>
 <?
@@ -22,7 +21,7 @@ unset($_SESSION['fromValidation']);
         $command = $action->user_add($first_name,$last_name,$phone,$reference_id);    
         if($command){
             unset($_SESSION['phone']);
-            echo "<script type='text/javascript'>window.location.href = 'index.php';</script>"; 
+            header("Location: index.php");
         }else{
             ?>
             <div class="alert alert-danger">
@@ -32,7 +31,7 @@ unset($_SESSION['fromValidation']);
            <?
         }
     }
-
+    include_once "header.php";
 ?>
 
 <div class="background_page">

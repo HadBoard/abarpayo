@@ -35,12 +35,35 @@ if (isset($_POST['submit'])) {
     $title = $action->request('title');
     $parent = $action->request('parent');
     $status = $action->request('status');
+    $ord = $action->request('ord');
+    $icon = ($edit ? $row->icon : "");
+    
+    if($_FILES["icon"]["name"]){
+
+        $target_dir = "images/categoryIcons/";
+        $target_file = $target_dir . basename($_FILES["icon"]["name"]);
+
+        // Select file type
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+        // Valid file extensions
+        $extensions_arr = array("jpg","jpeg","png","gif");
+
+        // Check extension
+        if( in_array($imageFileType,$extensions_arr) ){
+            $name = $action -> get_token(10) . "." . $imageFileType;
+            // Upload file
+            move_uploaded_file($_FILES['icon']['tmp_name'],$target_dir.$name);
+            $icon = $name;
+
+        } 
+    }
 
     // send query
     if ($edit) {
-        $command = $action->category_edit($id, $title, $parent, $status);
+        $command = $action->category_edit($id, $title, $parent,$icon,$ord,$status);
     } else {
-        $command = $action->category_add($title, $parent, $status);
+        $command = $action->category_add($title, $parent,$icon,$ord,$status);
     }
 
     // check errors
@@ -165,6 +188,17 @@ include('header.php'); ?>
                                     </select>
                                 </div>
 
+                                <div class="form-group">
+                                    <input type="text" name="ord" class="form-control input-default "
+                                           placeholder="ترتیب"
+                                           value="<?= ($edit) ? $row->ord : "" ?>" required>
+                                </div>
+
+                                <div>
+                                    <label for="icon" class="btn btn-dark btn-block m-0">انتخاب آیکون</label>
+                                    <input type="file" name="icon" id="icon" style="visibility:hidden;">
+                                </div>
+
                                 <div class="form-actions">
 
                                     <label class="float-right">
@@ -187,8 +221,14 @@ include('header.php'); ?>
                     </div>
                 </div>
                 <!-- ----------- end row of fields ----------------------------------------------------------- -->
-
             </div>
+            <? if($edit && $row->icon) { ?>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <img src="images/categoryIcons/<?= $row->icon ?>">
+                        </div>
+                    </div>
+            <? } ?>
         </div>
     </div>
     <!-- ----------- end main container ------------------------------------------------------------------------ -->

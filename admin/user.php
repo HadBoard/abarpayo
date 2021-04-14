@@ -48,7 +48,6 @@ if (isset($_POST['submit'])) {
     $icon = ($edit ? $row->profile : "");
     
     if($_FILES["icon"]["name"]){
-//$name = $_FILES['icon']['name'];
 
         $target_dir = "users/";
         $target_file = $target_dir . basename($_FILES["icon"]["name"]);

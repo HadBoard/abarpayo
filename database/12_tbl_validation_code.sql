@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2021 at 10:57 AM
+-- Generation Time: Apr 14, 2021 at 10:56 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -24,35 +24,24 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_category`
+-- Table structure for table `tbl_validation_code`
 --
 
-CREATE TABLE `tbl_category` (
+CREATE TABLE `tbl_validation_code` (
   `id` int(11) NOT NULL,
-  `title` varchar(50) NOT NULL,
-  `parent` int(11) DEFAULT NULL,
-  `icon` varchar(50) NOT NULL,
-  `ord` int(11) NOT NULL,
-  `updated_at` bigint(20) DEFAULT NULL,
-  `created_at` bigint(20) NOT NULL,
-  `status` tinyint(1) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `code` int(11) NOT NULL,
+  `created_at` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbl_category`
---
-
-INSERT INTO `tbl_category` (`id`, `title`, `parent`, `icon`, `ord`, `updated_at`, `created_at`, `status`) VALUES
-(2, 'فروشگاه', 0, 'voxcLJ8MNT.jpg', 2, 1618390268, 1618390075, 0);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `tbl_category`
+-- Indexes for table `tbl_validation_code`
 --
-ALTER TABLE `tbl_category`
+ALTER TABLE `tbl_validation_code`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -60,10 +49,10 @@ ALTER TABLE `tbl_category`
 --
 
 --
--- AUTO_INCREMENT for table `tbl_category`
+-- AUTO_INCREMENT for table `tbl_validation_code`
 --
-ALTER TABLE `tbl_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `tbl_validation_code`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

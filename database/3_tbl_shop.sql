@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2021 at 09:26 AM
+-- Generation Time: Apr 14, 2021 at 10:56 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tbl_shop` (
   `id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
   `title` varchar(50) NOT NULL,
   `phone` varchar(20) NOT NULL,
   `fax` varchar(20) DEFAULT NULL,
@@ -40,6 +41,13 @@ CREATE TABLE `tbl_shop` (
   `created_at` bigint(20) NOT NULL,
   `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_shop`
+--
+
+INSERT INTO `tbl_shop` (`id`, `category_id`, `title`, `phone`, `fax`, `city_id`, `address`, `longitude`, `latitude`, `updated_at`, `created_at`, `status`) VALUES
+(1, 0, 'سوپری', '09030933038', '76543', 0, 'یزد/یزد/قاسم اباد', '224', '212', 1618149903, 1618118282, 1);
 
 --
 -- Indexes for dumped tables
@@ -60,7 +68,7 @@ ALTER TABLE `tbl_shop`
 -- AUTO_INCREMENT for table `tbl_shop`
 --
 ALTER TABLE `tbl_shop`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
