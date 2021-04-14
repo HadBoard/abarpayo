@@ -247,3 +247,8 @@ ul {
     margin: 65px auto 50px auto;
     display: table;
   }
+  
+#resent_btn {
+    font-size: 13px;
+    cursor: pointer;
+  }
