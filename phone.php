@@ -2,7 +2,7 @@
 require_once "functions/database.php";
 $action = new Action();
 $title = "ثبت نام";
-include_once "header.php"
+
 ?>
 
 <?
@@ -17,9 +17,9 @@ include_once "header.php"
         $user = $result->fetch_object();
         $user_id = $user ? $user->id : 0;
         $action->validation_code_add($user_id,$code);
-        // header("Location: validation.php");
-        echo "<script type='text/javascript'>window.location.href = 'validation.php';</script>";   
+        header("Location: validation.php");
     }
+    include_once "header.php";
 ?>
 <div class="background_page">
     <div class="container">

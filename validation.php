@@ -20,7 +20,6 @@ $title = "ثبت نام";
                 header("Location: signup.php");
             }
             else{ 
-                // 
                 $_SESSION['user_id'] = $validated_code->user_id;
                 $action->validation_code_remove($validated_code->id);
                 header("Location: index.php");
