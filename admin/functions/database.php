@@ -496,24 +496,27 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$user_id'");
     }
 
-    public function cart_add($user_id,$title,$cart_number,$validation)
+    public function cart_add($user_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation)
     {
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_user_cart`
-        (`user_id`,`title`,`cart_number`,`validation`,`created_at`) 
+        (`user_id`,`bank_id`,`title`,`cart_number`,`account_number`,`iban`,`validation`,`created_at`) 
         VALUES
-        ('$user_id','$title','$cart_number','$validation','$now')");
+        ('$user_id','$bank_id','$title','$cart_number','$account_number','$iban','$validation','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
-    public function cart_edit($id,$user_id,$title,$cart_number,$validation)
+    public function cart_edit($id,$user_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation)
     {
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_user_cart` SET 
         `user_id`='$user_id',
+        `bank_id`='$bank_id',
         `title`='$title',
         `cart_number`='$cart_number',
+        `account_number`= '$account_number',
+        `iban`= '$iban',
         `validation`='$validation',
         `updated_at`='$now'
         WHERE `id` ='$id'");
@@ -904,6 +907,16 @@ class Action
   
       // ----------- end SHOP_COMMENT ----------------------------------------------------------------------------
     
+    // ----------- start BANK ----------------------------------------------------------------------------
+    public function bank_list()
+    {
+        return $this->table_list("tbl_bank");
+    }
+    public function bank_get($id)
+    {
+        return $this->get_data("tbl_bank", $id);
+    }
+    // ----------- end BANK ----------------------------------------------------------------------------
 }
 
 // ----------- end Action class ----------------------------------------------------------------------------------------

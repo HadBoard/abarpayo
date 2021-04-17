@@ -307,6 +307,21 @@ class Action
         return $this->connection->insert_id;
     }
 
+    public function user_profile_edit($first_name, $last_name, $phone, $email)
+    {
+        $id = $this->admin()->id;
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_admin` SET 
+        `first_name`='$first_name',
+        `last_name`='$last_name',
+        `phone`='$phone',
+        `password`='$password',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
     public function user_reference_code($reference_code){
         return $this->connection->query("SELECT * FROM `tbl_user` WHERE `reference_code` = '$reference_code'");
     }
@@ -338,6 +353,7 @@ class Action
     }
      
    // ----------- end VALIDATION_CODE ------------------------------------------------------------------------------------------
+   
    // ----------- start CATEGORIES ------------------------------------------------------------------------------------------
     public function category_ordered_list(){
         return $this->connection->query("SELECT * FROM `tbl_category` ORDER BY ord ASC");

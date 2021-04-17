@@ -52,15 +52,18 @@ if (isset($_SESSION['error'])) {
 if (isset($_POST['submit'])) {
 
     // get fields
+    $bank_id = $action->request('bank_id');
     $title = $action->request('title');
     $cart_number = $action->request('cart_number');
+    $account_number = $action->request('account_number');
+    $iban = $action->request('iban');
     $validation = $action->request('validation');
 
     // send query
     if ($edit_id) {
-        $command = $action->cart_edit($edit_id,$user_id,$title,$cart_number,$validation);
+        $command = $action->cart_edit($edit_id,$user_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation);
     } else {
-        $command = $action->cart_add($user_id,$title,$cart_number,$validation);
+        $command = $action->cart_add($user_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation);
     }
 
     // check errors
@@ -148,6 +151,23 @@ include('header.php'); ?>
                     <div class="card-body">
                         <div class="basic-form">
                             <form action="" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                    <select class="form-control select2" name="bank_id" required>
+                                        <option>بانک  را انتخاب فرمایید .</option>
+                                        <?
+                                        $option_result = $action->bank_list();
+                                        while ($option = $option_result->fetch_object()) {
+                                            echo '<option value="';
+                                            echo $option->id;
+                                            echo '"';
+                                            if ($option->id == $row->bank_id) echo "selected";
+                                            echo '>';
+                                            echo $option->name;
+                                            echo '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
 
                                 <div class="form-group">
                                     <input type="text" name="title" class="form-control input-default "
@@ -159,6 +179,18 @@ include('header.php'); ?>
                                     <input type="text" name="cart_number" class="form-control input-default "
                                            placeholder="شماره کارت"
                                            value="<?= ($edit_id) ? $edit_row->cart_number : "" ?>" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="account_number" class="form-control input-default "
+                                           placeholder="شماره حساب"
+                                           value="<?= ($edit_id) ? $edit_row->account_number : "" ?>" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="iban" class="form-control input-default "
+                                           placeholder="شماره شبا"
+                                           value="<?= ($edit_id) ? $edit_row->iban : "" ?>" required>
                                 </div>
 
                                 <div class="form-actions">
@@ -179,7 +211,7 @@ include('header.php'); ?>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
 
@@ -189,8 +221,11 @@ include('header.php'); ?>
                                 <thead>
                                 <tr>
                                     <th class="text-center">ردیف</th>
+                                    <th class="text-center"> بانک</th>
                                     <th class="text-center">عنوان</th>
                                     <th class="text-center">شماره کارت</th>
+                                    <th class="text-center">شماره حساب </th>
+                                    <th class="text-center">شماره شبا</th>
                                     <th class="text-center">مدیریت</th>
                                 </tr>
                                 </thead>
@@ -200,8 +235,11 @@ include('header.php'); ?>
                                     <tr class="text-center">
 
                                         <td class="text-center"><?= $counter++ ?></td>
+                                        <td class="text-center"><?= $action->bank_get($row->bank_id)->name ?></td>
                                         <td class="text-center"><?= $row->title ?></td>
                                         <td class="text-center"><?= $row->cart_number ?></td>
+                                        <td class="text-center"><?= $row->account_number ?></td>
+                                        <td class="text-center"><?= $row->iban ?></td>
                                       
                                         <td class="text-center">
                                             <a href="<?= $main_url?>?user_id=<?= $user_id?>&edit=<?= $row->id ?>">
