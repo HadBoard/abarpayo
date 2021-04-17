@@ -22,8 +22,8 @@ a { text-decoration: none; }
 .main_btn {padding: 10px;color: rgb(255, 255, 255);border-radius: 8px;float: left;box-shadow: rgba(0, 0, 0, 0.21) -1px 2px 3px 1px;margin-top: 6px !important;background-image: linear-gradient(99deg, #ff8e0a 8%,#fd7600 90%);}
 .row.main_header_top { margin-top: 8px; }
 .row.main_header-nav { margin-top: 18px; }
-.menu_header li { float: right; list-style: none; text-align: center; margin-left: 20px; width: 10%; padding: 8px 5px; }
-.menu_header span { float: right; margin-left: 7px; margin-right: 5px; }
+.menu_header li { float: right; list-style: none; text-align: center; margin-left: 20px; width: 9%; padding: 8px 5px; }
+.menu_header span { float: right; margin-left: 12px; margin-right: 5px; }
 .menu_header li a { color: rgb(0, 0, 0); font-weight: 300; }
 .menu_header li:first-child:hover { background: var(--yellow_a); border-radius: 5px 5px 0px 0px; }
 .menu_header li:first-child:hover span, .menu_header li:first-child:hover .category_btn, .category_btn:hover { color: rgb(255, 255, 255) !important; }
@@ -125,10 +125,12 @@ header { box-shadow: rgba(0, 0, 0, 0.11) 1px 1px 3px 1px; margin-bottom: 14px; }
 .notice_header, .message_header { position: relative; width: 12%; text-align: center; padding-top: 4px; }
 .notice_header span, .message_header span { background: var(--yellow_a); padding: 0px 6px; border-radius: 6px; color: rgb(255, 255, 255); font-size: 9px; top: -1px; right: 12px; position: absolute; }
 .submenu { position: absolute; background: rgb(255, 255, 255); top: 42px; box-shadow: rgba(0, 0, 0, 0.2) -1px 0px 5px 2px; width: 100%; right: 0.2px; z-index: 999; border-radius: 0px 0px 8px 8px; display: none; transition: all 0s cubic-bezier(0.895, 0.03, 0.685, 0.22) 0s; }
-.menu_header li:first-child { width: 15%; margin-left: 0px; text-align: right; }
+.menu_header li:first-child { width: 12%; margin-left: 0px; text-align: right; transition:0.3s ease-in-out all}
 .submenu a { width: 100%; padding: 9px 7px; display: table; }
 .submenu img, .submenu h5 { float: right; margin-left: 8px; font-weight: 400; font-size: 13px; }
 .submenu a:hover { color: var(--yellow_a); border: none !important; }
+.menu_header li:first-child:hover{width:16%}
+
 .menu_header li:first-child:hover .submenu { display: block; }
 .shop_list_header {width: 90%;display: table;margin: 44px auto 56px;padding-bottom: 47px;border-bottom: 1px solid rgba(26, 26, 26, 0.5);}
 .shop_list_btn { width: 16%; padding: 5px 0px; margin-top: 51px !important; }
@@ -263,7 +265,7 @@ ul {
 }
 
 .profile_right {
-    width: 80%;
+    width: 88%;
     margin: auto;
     box-shadow: 0 1.5px 3px 0 rgb(0 0 0 / 50%);
     border-radius: 15px;
@@ -328,7 +330,7 @@ ul {
     margin-bottom: 20px;
 }       
 .edit_profile_div {
-    width: 80%;
+    width: 90%;
     margin: auto;
     box-shadow: 0 1.5px 3px 0 rgb(0 0 0 / 50%);
     border-radius: 15px;
