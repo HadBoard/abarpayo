@@ -1,7 +1,7 @@
 <?
 require_once "functions/database.php";
 $action = new Action();
-$title = "فروشگاه ها";
+$title = "پروفایل";
 include_once "header.php"
 ?>
 
