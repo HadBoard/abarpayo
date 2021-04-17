@@ -683,18 +683,22 @@ margin: 0 20px 20px 0;
 
 /* alert */
 .alert{
-    background: red;
     padding: 14px 10px;
     width: 50%;
     margin: auto;
     margin-bottom: 27px;
-    background-color: #FFBABA;
     border-radius: 5px;
 }
-.alert p{
-    color: #D8000C;
-
+.alert-fail{
+    background: #f44336;
 }
-.close_alart {
+.alert-suc{
+    background:#4CAF50;
+}
+.alert p{
+    color: #fff;
+}
+.close_alart ,.close_alart:hover{
   margin: -8px 5px 0 10px;
+  color:#FFF
 }
