@@ -33,7 +33,6 @@ if (isset($_POST['submit'])) {
 
     // get fields
     $title = $action->request('title');
-    $parent = $action->request('parent');
     $status = $action->request('status');
     $ord = $action->request('ord');
     $icon = ($edit ? $row->icon : "");
@@ -55,15 +54,14 @@ if (isset($_POST['submit'])) {
             // Upload file
             move_uploaded_file($_FILES['icon']['tmp_name'],$target_dir.$name);
             $icon = $name;
-
         } 
     }
 
     // send query
     if ($edit) {
-        $command = $action->category_edit($id, $title, $parent,$icon,$ord,$status);
+        $command = $action->category_edit($id, $title,$icon,$ord,$status);
     } else {
-        $command = $action->category_add($title, $parent,$icon,$ord,$status);
+        $command = $action->category_add($title,$icon,$ord,$status);
     }
 
     // check errors
@@ -168,24 +166,6 @@ include('header.php'); ?>
                                     <input type="text" name="title" class="form-control input-default "
                                            placeholder="عنوان"
                                            value="<?= ($edit) ? $row->title : "" ?>" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <select class="form-control" name="parent">
-                                        <option>وابستگی را انتخاب فرمایید .</option>
-                                        <?
-                                        $option_result = $action->category_option($row->parent);
-                                        while ($option = $option_result->fetch_object()) {
-                                            echo '<option value="';
-                                            echo $option->id;
-                                            echo '"';
-                                            if ($option->id == $row->parent) echo "selected";
-                                            echo '>';
-                                            echo $option->title;
-                                            echo '</option>';
-                                        }
-                                        ?>
-                                    </select>
                                 </div>
 
                                 <div class="form-group">

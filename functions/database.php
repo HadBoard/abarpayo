@@ -307,19 +307,44 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function user_profile_edit($first_name, $last_name, $phone, $email)
+    public function user_profile_edit($first_name, $last_name,$national_code, $phone, $email)
     {
-        $id = $this->admin()->id;
+        $user_id = $_SESSION['user_id']; 
         $now = time();
-        $result = $this->connection->query("UPDATE `tbl_admin` SET 
+        $result = $this->connection->query("UPDATE `tbl_user` SET 
         `first_name`='$first_name',
         `last_name`='$last_name',
         `phone`='$phone',
-        `password`='$password',
+        `national_code`='$nationa_code',
+        `email`= '$email',
         `updated_at`='$now'
-        WHERE `id` ='$id'");
+        WHERE `id` ='$user_id'");
         if (!$this->result($result)) return false;
         return $id;
+    }
+
+    public function user_location_edit($city_id)
+    {
+        $user_id = $_SESSION['user_id']; 
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_user` SET 
+        `city_id` = '$city_id',
+        `updated_at`='$now'
+        WHERE `id` ='$user_id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    public function cart_add($bank_id,$title,$cart_number,$account_number,$iban,$validation)
+    {
+        $user_id = $_SESSION['user_id']; 
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_user_cart`
+        (`user_id`,`bank_id`,`title`,`cart_number`,`account_number`,`iban`,`validation`,`created_at`) 
+        VALUES
+        ('$user_id','$bank_id','$title','$cart_number','$account_number','$iban','$validation','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
     }
 
     public function user_reference_code($reference_code){
