@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 11, 2021 at 06:25 AM
+-- Generation Time: Apr 17, 2021 at 07:09 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -30,12 +30,22 @@ SET time_zone = "+00:00";
 CREATE TABLE `tbl_user_cart` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `bank_id` int(11) NOT NULL,
   `title` varchar(50) NOT NULL,
   `cart_number` varchar(16) NOT NULL,
+  `account_number` int(11) NOT NULL,
+  `iban` varchar(26) NOT NULL,
   `validation` tinyint(1) NOT NULL,
   `updated_at` bigint(20) DEFAULT NULL,
   `created_at` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_user_cart`
+--
+
+INSERT INTO `tbl_user_cart` (`id`, `user_id`, `bank_id`, `title`, `cart_number`, `account_number`, `iban`, `validation`, `updated_at`, `created_at`) VALUES
+(15, 22, 2, 'سامان', '9876543', 8765432, '98765', 1, NULL, 1618634885);
 
 --
 -- Indexes for dumped tables
@@ -55,7 +65,7 @@ ALTER TABLE `tbl_user_cart`
 -- AUTO_INCREMENT for table `tbl_user_cart`
 --
 ALTER TABLE `tbl_user_cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
