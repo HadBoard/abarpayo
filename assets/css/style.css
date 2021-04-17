@@ -549,3 +549,10 @@ td.dec_wallet {
 .wallet_increasement input:first-child {
     font-size: 16px;
 }
+.city_header.city_pro {
+    margin-bottom: 24px;
+    display: table;
+}
+form h3{
+margin: 0 20px 20px 0;
+}
