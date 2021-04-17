@@ -103,7 +103,7 @@ include('header.php'); ?>
                                 <tr>
                                     <th class="text-center">ردیف</th>
                                     <th class="text-center">عنوان</th>
-                                    <th class="text-center">وابستگی</th>
+                                    <th class="text-center">ترتیب</th>
                                     <th class="text-center">وضعیت</th>
                                     <th class="text-center">مدیریت</th>
                                 </tr>
@@ -115,13 +115,7 @@ include('header.php'); ?>
 
                                         <td class="text-center"><?= $counter++ ?></td>
                                         <td class="text-center"><?= $row->title ?></td>
-
-                                        <td class="text-center">
-                                            <?
-                                            if ($row->parent) echo $action->category_get($row->paren)->title;
-                                            else echo "!";
-                                            ?>
-                                        </td>
+                                        <td class="text-center"><?= $row->ord ?></td>
 
                                         <td class="text-center">
                                             <a href="<?= $list_url ?>?status=<?= $row->id ?>">
