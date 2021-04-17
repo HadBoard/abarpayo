@@ -307,30 +307,30 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function user_profile_edit($first_name, $last_name,$national_code, $phone, $email)
+    public function user_profile_edit($first_name, $last_name,$national_code, $phone,$birthday)
     {
-        $user_id = $_SESSION['user_id']; 
+        $id = $this->user()->id;
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_user` SET 
         `first_name`='$first_name',
         `last_name`='$last_name',
-        `phone`='$phone',
         `national_code`='$national_code',
-        `email`= '$email',
+        `phone`='$phone',
+        `birthday` = '$birthday',
         `updated_at`='$now'
-        WHERE `id` ='$user_id'");
+        WHERE `id` ='$id'");
         if (!$this->result($result)) return false;
         return $id;
     }
 
     public function user_city_edit($city_id)
     {
-        $user_id = $_SESSION['user_id']; 
+        $id = $this->user()->id;
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_user` SET 
         `city_id` = '$city_id',
         `updated_at`='$now'
-        WHERE `id` ='$user_id'");
+        WHERE `id` ='$id'");
         if (!$this->result($result)) return false;
         return $id;
     }

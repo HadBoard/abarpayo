@@ -58,8 +58,7 @@
             ?>
         </select>
         </div>
-        <input name="submit" type="submit" class="main_btn middle_btn " value="ادامه">
-                        
+        <input name="submit" type="submit" class="main_btn middle_btn " value="ادامه">            
     </form>
 </div>
 <script>
