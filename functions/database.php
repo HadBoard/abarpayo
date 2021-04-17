@@ -315,7 +315,7 @@ class Action
         `first_name`='$first_name',
         `last_name`='$last_name',
         `phone`='$phone',
-        `national_code`='$nationa_code',
+        `national_code`='$national_code',
         `email`= '$email',
         `updated_at`='$now'
         WHERE `id` ='$user_id'");
@@ -323,7 +323,7 @@ class Action
         return $id;
     }
 
-    public function user_location_edit($city_id)
+    public function user_city_edit($city_id)
     {
         $user_id = $_SESSION['user_id']; 
         $now = time();
@@ -385,7 +385,21 @@ class Action
     }
    
    // ----------- end CATEGORIES ------------------------------------------------------------------------------------------
+
+   public function province_list()
+   {
+       return $this->table_list("tbl_province");
+   }
+   public function province_city_list($province_id)
+    {
+    return $this->connection->query("SELECT * FROM `tbl_city` WHERE `province_id` = '$province_id'");
+    }
+    public function city_get($id)
+    {
+        return $this->get_data("tbl_city", $id);
+    }
 }
+
 // ----------- end Action class ----------------------------------------------------------------------------------------
 
 
