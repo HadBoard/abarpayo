@@ -83,7 +83,7 @@ class Action
     // ----------- get all fields in table
     public function table_list($table)
     {
-        $id = $this->admin()->id;
+        // $id = $this->admin()->id;
         $result = $this->connection->query("SELECT * FROM `$table` ORDER BY `id` DESC");
         if (!$this->result($result)) return false;
         return $result;
@@ -307,7 +307,22 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function user_profile_edit($first_name, $last_name,$national_code, $phone,$birthday)
+    public function user_profile_edit($first_name, $last_name,$national_code,$birthday)
+    {
+        $id = $this->user()->id;
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_user` SET 
+        `first_name`='$first_name',
+        `last_name`='$last_name',
+        `national_code`='$national_code',
+        `birthday` = '$birthday',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    public function user_phone_edit($first_name,$last_name,$national_code,$phone,$birthday)
     {
         $id = $this->user()->id;
         $now = time();
@@ -322,12 +337,25 @@ class Action
         if (!$this->result($result)) return false;
         return $id;
     }
+    // public function user_phone_edit($phone)
+    // {
+    //     $id = $this->user()->id;
+    //     $now = time();
+    //     $result = $this->connection->query("UPDATE `tbl_user` SET 
+    //     `phone`='$phone',
+    //     `updated_at`='$now'
+    //     WHERE `id` ='$id'");
+    //     if (!$this->result($result)) return false;
+    //     return $id;
+    // }
 
-    public function user_city_edit($city_id)
+    public function user_address_edit($city_id,$postal_code,$address)
     {
         $id = $this->user()->id;
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_user` SET 
+        `postal_code`='$postal_code',
+        `address`='$address',
         `city_id` = '$city_id',
         `updated_at`='$now'
         WHERE `id` ='$id'");
@@ -386,10 +414,11 @@ class Action
    
    // ----------- end CATEGORIES ------------------------------------------------------------------------------------------
 
-   public function province_list()
-   {
-       return $this->table_list("tbl_province");
-   }
+    public function province_list()
+    {
+        return $this->table_list("tbl_province");
+
+    }
    public function province_city_list($province_id)
     {
     return $this->connection->query("SELECT * FROM `tbl_city` WHERE `province_id` = '$province_id'");

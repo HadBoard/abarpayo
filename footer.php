@@ -163,7 +163,6 @@
         </div>
     </div>
 </footer>
-<script src="assets/js/modal.js"></script>
 
 
 

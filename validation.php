@@ -14,6 +14,7 @@ $title = "ثبت نام";
         $result = $action->validate_code($code);
         $validated_code = $result->fetch_object();
         if($validated_code){
+            unset($_SESSION['code']);
             $_SESSION['fromValidation'] = 'true';
             if($validated_code->user_id == 0){
                 $action->validation_code_remove($validated_code->id);
@@ -22,6 +23,7 @@ $title = "ثبت نام";
             else{ 
                 $_SESSION['user_id'] = $validated_code->user_id;
                 $action->validation_code_remove($validated_code->id);
+                unset($_SESSION['phone']);
                 header("Location: index.php");
             } 
         }else{

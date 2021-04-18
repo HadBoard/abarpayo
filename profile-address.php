@@ -1,12 +1,25 @@
-<?  $id = $_SESSION['user_id'];
-    $row = $action->user_get($id);
-    $province_id = $action->city_get($row->city_id)->province_id;
+<?  
+    $user_id = $action->user()->id;
+    $province_id = $action->city_get($action->user_get($user_id)->city_id)->province_id;
+    // $province_id = 2;
     
     if(isset($_POST['submit'])){
         $city_id = $action->request('city');
-        $command = $action->user_city_edit($city_id);
+        $postal_code = $action->request('postal_code');
+        $address = $action->request('address');
+        $command = $action->user_address_edit($city_id,$postal_code,$address);
         if($command){
-
+            ?> 
+                <div class="modal">
+                    <div class="alert alert-suc">
+                        <span class="close_alart">×</span>
+                        <p>
+                            عملیات موفق بود!
+                        </p>
+                    </div>
+                </div>
+                <script src="assets/js/alert.js"></script>
+            <?
         }
     }
 ?>
@@ -25,10 +38,10 @@
    <form action="" method="post">
         <h3>انتخاب شهر و استان</h3>
         <div class="col-md-10  city_header city_pro ">
-        <select name="province" id="province" required>
+        <select name="province" id="province">
             <option>استان را انتخاب فرمایید .</option>
             <?
-            $option_result = $action->province_list();
+            $option_result =  $action->province_list();
             while ($option = $option_result->fetch_object()) {
                 echo '<option value="';
                 echo $option->id;
@@ -42,24 +55,34 @@
         </select>
         </div>
         <div class="col-md-10 city_header city_pro">
-        <select name="city" id="city" required>
-            <option>شهرستان را انتخاب فرمایید .</option>
-            <?
-            $option_result =  $action->province_city_list($province_id);
-            while ($option = $option_result->fetch_object()) {
-                echo '<option value="';
-                echo $option->id;
-                echo '"';
-                if ($option->id == $row->city_id) echo "selected";
-                echo '>';
-                echo $option->name;
-                echo '</option>';
-            }
-            ?>
-        </select>
+            <select name="city" id="city">
+                <option>شهرستان را انتخاب فرمایید .</option>
+                <?
+                $option_result =  $action->province_city_list($province_id);
+                while ($option = $option_result->fetch_object()) {
+                    echo '<option value="';
+                    echo $option->id;
+                    echo '"';
+                    if ($option->id == $action->user_get($user_id)->city_id) echo "selected";
+                    echo '>';
+                    echo $option->name;
+                    echo '</option>';
+                }
+                ?>
+            </select>
+        </div>
+        <div class="form-group">
+                <label for="postal_code">کدپستی</label>
+                <input type="text" id="postal_code" name="postal_code" placeholder=""  value="<?= $action->user_get($user_id)->postal_code?>">
+        </div>
+        <div class="form-group">
+            <textarea type="text" name="address" class="form-control input-default "
+                    placeholder="آدرس"
+                    ><?= $action->user_get($user_id)->address ?></textarea>
         </div>
         <input name="submit" type="submit" class="main_btn middle_btn " value="ادامه">            
     </form>
+</div>
 </div>
 <script>
  document.getElementById('province').onchange=function(){
@@ -73,6 +96,5 @@
         		$("#city").html(response);
             }
        })
-       
    }
 </script>
