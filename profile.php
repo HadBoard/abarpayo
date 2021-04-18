@@ -2,7 +2,10 @@
 require_once "functions/database.php";
 $action = new Action();
 $title = "پروفایل";
-include_once "header.php"
+if(!$action->auth()){
+    header("Location: phone.php");
+}
+include_once "header.php";
 ?>
 
 <main>

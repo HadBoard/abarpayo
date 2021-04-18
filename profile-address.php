@@ -1,4 +1,7 @@
 <?  
+    if(!$action->auth()){
+        header("Location: phone.php");
+    }
     $user_id = $action->user()->id;
     $province_id = $action->city_get($action->user_get($user_id)->city_id)->province_id;
     // $province_id = 2;
@@ -76,7 +79,7 @@
                 <input type="text" id="postal_code" name="postal_code" placeholder=""  value="<?= $action->user_get($user_id)->postal_code?>">
         </div>
         <div class="form-group">
-            <textarea type="text" name="address" class="form-control input-default "
+            <textarea type="text" name="address" class="form-control"
                     placeholder="آدرس"
                     ><?= $action->user_get($user_id)->address ?></textarea>
         </div>

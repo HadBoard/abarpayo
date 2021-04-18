@@ -72,6 +72,13 @@ $action = new Action();
     </li>
 
     <li>
+        <a class="has-arrow" href="slider-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">اسلایدر ها</span>
+        </a>
+    </li>
+
+    <li>
         <a class="has-arrow" href="province-list.php" aria-expanded="false">
             <i class="fa fa-user"></i>
             <span class="hide-menu">استان ها</span>

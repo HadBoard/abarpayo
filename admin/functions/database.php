@@ -904,6 +904,7 @@ class Action
           return $this->get_data("tbl_shop_comment", $id);
       }
   
+
       // ----------- end SHOP_COMMENT ----------------------------------------------------------------------------
     
     // ----------- start BANK ----------------------------------------------------------------------------
@@ -916,6 +917,55 @@ class Action
         return $this->get_data("tbl_bank", $id);
     }
     // ----------- end BANK ----------------------------------------------------------------------------
+
+     // ----------- start SLIDERS -----------------------------------------------------------------------------------------
+
+     public function slider_list()
+     {
+         return $this->table_list("tbl_slider");
+     }
+     public function slider_add($title,$link,$image,$status)
+     {
+         $now = time();
+         $result = $this->connection->query("INSERT INTO `tbl_slider`
+         (`title`,`link`,`image`,`status`,`created_at`) 
+         VALUES
+         ('$title','$link','$image','$status','$now')");
+         if (!$this->result($result)) return false;
+         return $this->connection->insert_id;
+     }
+ 
+     public function slider_edit($id, $title,$link,$image, $status)
+     {
+         $now = time();
+         $result = $this->connection->query("UPDATE `tbl_slider` SET 
+         `title`='$title',
+         `link` = '$link',
+         `image` = '$image',
+         `status`='$status',
+         `updated_at`='$now'
+         WHERE `id` ='$id'");
+         if (!$this->result($result)) return false;
+         return $id;
+     }
+ 
+     public function slider_remove($id)
+     {
+         return $this->remove_data("tbl_slider", $id);
+     }
+ 
+     public function slider_status($id)
+     {
+         return $this->change_status('tbl_slider', $id);
+     }
+ 
+     public function slider_get($id)
+     {
+         return $this->get_data("tbl_slider", $id);
+     }
+ 
+     // ----------- end SLIDERS -------------------------------------------------------------------------------------------
+
 }
 
 // ----------- end Action class ----------------------------------------------------------------------------------------

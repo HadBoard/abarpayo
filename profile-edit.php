@@ -1,4 +1,7 @@
 <?
+    if(!$action->auth()){
+        header("Location: phone.php");
+    }
     $user_id = $action->user()->id;
     if(isset($_POST['submit'])){
         $phone = $action->request('phone');
