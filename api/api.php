@@ -67,5 +67,45 @@ if(isset($_POST['function'])) {
         $json = json_encode($obj);
         echo $json;
     }
+
+    if($_POST['function'] == 'dashboard'){
+        $obj = null;
+        $categories = [];
+        $sliders = [];
+        $shops = [];
+        
+        $result = $action->slider_list();
+        while ($row = $result->fetch_object()) {
+            $obj_in -> title = $row -> title;
+            $obj_in -> link = "http://abarpayo.com/site/admin/images/slider/$row->image";
+            $sliders[] = $obj_in;
+            $obj_in = null;
+        }
+
+        $categories_list = $action -> category_ordered_list();
+        while ($category = $categories_list->fetch_object()) {
+            $obj_in -> c_id = $category->id;
+            $obj_in -> title = $category->title;
+            
+            $shops_list = $action->category_shops_list($category->id);
+            while ($shop = $shops_list->fetch_object()) {
+                $obj_inner -> s_id = $shop -> id;
+                $obj_inner -> name = $shop -> title;
+                $obj_inner -> address = $shop -> address;
+                $shops[] = $obj_inner;
+                $obj_inner = null;
+            }
+
+            $obj_in -> shops = $shops;
+            $categories[] = $obj_in;
+            $obj_in = null;
+            $shops = [];
+        }
+
+        $obj -> categories = $categories;
+        $obj -> sliders = $sliders;
+        $json = json_encode($obj);
+        echo $json;
+    }
 }
 

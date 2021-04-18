@@ -411,6 +411,10 @@ class Action
     public function category_ordered_list(){
         return $this->connection->query("SELECT * FROM `tbl_category` ORDER BY ord ASC");
     }
+
+    public function category_shops_list($category_id){
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id' ");
+    }
    
    // ----------- end CATEGORIES ------------------------------------------------------------------------------------------
 
