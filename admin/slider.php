@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
     
     if($_FILES["icon"]["name"]){
 
-        $target_dir = "users/";
+        $target_dir = "images/sliders/";
         $target_file = $target_dir . basename($_FILES["icon"]["name"]);
 
         // Select file type
@@ -203,6 +203,13 @@ include('header.php'); ?>
                 <!-- ----------- end row of fields ----------------------------------------------------------- -->
 
             </div>
+            <? if($edit && $row->image) { ?>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <img src="images/sliders/<?= $row->image ?>">
+                        </div>
+                    </div>
+            <? } ?>
         </div>
     </div>
     <!-- ----------- end main container ------------------------------------------------------------------------ -->
