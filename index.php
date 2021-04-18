@@ -8,11 +8,14 @@ include_once "header.php"
     <section class="main_slider">
         <div class="carousel"
              data-flickity='{ "wrapAround": true }'>
-            <img class="carousel-cell" src="assets/images/slide1.png">
-            <img class="carousel-cell" src="assets/images/slide1.png">
-            <img class="carousel-cell" src="assets/images/slide1.png">
-            <img class="carousel-cell" src="assets/images/slide1.png">
-            <img class="carousel-cell" src="assets/images/slide1.png">
+             <?
+                $result = $action->slider_list();
+                while ($row = $result->fetch_object()) {
+             ?>
+                <img class="carousel-cell" src="admin/images/sliders/<?= $row->image ?>">
+            <?
+                }
+            ?>
 
         </div>
     </section>

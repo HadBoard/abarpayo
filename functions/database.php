@@ -414,19 +414,37 @@ class Action
    
    // ----------- end CATEGORIES ------------------------------------------------------------------------------------------
 
+    // ----------- start PROVINCE ------------------------------------------------------------------------------------------
     public function province_list()
     {
         return $this->table_list("tbl_province");
 
     }
-   public function province_city_list($province_id)
+
+    public function province_city_list($province_id)
     {
     return $this->connection->query("SELECT * FROM `tbl_city` WHERE `province_id` = '$province_id'");
     }
+
     public function city_get($id)
     {
         return $this->get_data("tbl_city", $id);
     }
+
+    // ----------- end PROVINCE ------------------------------------------------------------------------------------------
+
+     // ----------- start SLIDER ------------------------------------------------------------------------------------------
+    public function slider_get($id)
+    {
+        return $this->get_data("tbl_slider", $id);
+    }
+
+    public function slider_list()
+    {
+        return $this->table_list("tbl_slider");
+    }
+     // ----------- end SLIDER ------------------------------------------------------------------------------------------
+ 
 }
 
 // ----------- end Action class ----------------------------------------------------------------------------------------
