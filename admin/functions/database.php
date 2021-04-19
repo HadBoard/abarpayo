@@ -967,7 +967,33 @@ class Action
      }
  
      // ----------- end SLIDERS -------------------------------------------------------------------------------------------
+     public function request_edit($id, $description,$paymented_at){
+        $now = time();
+        $status = 1;
+        $result = $this->connection->query("UPDATE `tbl_request` SET 
+        `description`='$description',
+        `paymented_at` = '$paymented_at',
+        `status`='$status',
+        `updated_at`='$now',
+        `status` = '$status',
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+     }
 
+     public function request_list(){
+        return $this->table_list("tbl_request");
+     }
+
+     public function request_get($id)
+     {
+         return $this->get_data("tbl_request", $id);
+     }
+
+     public function request_remove($id)
+     {
+         return $this->remove_data("tbl_request", $id);
+     }
 }
 
 // ----------- end Action class ----------------------------------------------------------------------------------------

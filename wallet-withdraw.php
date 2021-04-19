@@ -17,7 +17,7 @@
                 <script src="assets/js/alert.js"></script>
             <?
         }else{
-            // $command  = $action->request_add();
+            $command  = $action->request_add($cart_id,$amount);
             if($command){
                 ?> 
                 <div class="modal">

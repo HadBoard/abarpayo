@@ -20,7 +20,8 @@ include_once "header.php";
                 <?
                 if (isset($_GET['address']))
                     include_once "profile-address.php";
-                // else if(isset($_GET['edit']))
+                else if(isset($_GET['edit']))
+                    include_once "profile-edit.php";
                 else if(isset($_GET['wallet']))
                     include_once "profile-wallet.php";
                 else if(isset($_GET['wallet-increase']))

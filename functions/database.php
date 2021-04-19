@@ -449,6 +449,18 @@ class Action
    
    // ----------- end CATEGORIES ------------------------------------------------------------------------------------------
 
+    // ----------- start REQUEST ------------------------------------------------------------------------------------------
+    public function request_add($cart_id,$amount){
+        $user_id = $this->user()->id;
+        $now  = time();
+        $result = $this->connection->query("INSERT INTO `tbl_request`
+        (`user_id`,`cart_id`,`amount`,`created_at`) 
+        VALUES
+        ('$user_id','$cart_id','$amount','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+     // ----------- end REQUEST ------------------------------------------------------------------------------------------
     // ----------- start PROVINCE ------------------------------------------------------------------------------------------
     public function province_list()
     {
