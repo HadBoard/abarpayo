@@ -7,7 +7,7 @@
         <div class="col-6 profile_user">
             <h3>علی علوی</h3>
             <h5>09135244743</h5>
-            <a href="?" class="main_btn edit_profile">
+            <a href="?edit" class="main_btn edit_profile">
                 <i class="fa fa-edit"></i>
                 ویرایش
             </a>
@@ -19,7 +19,7 @@
             <h4>انتخاب شهر</h4>
             <img src="assets/images/006-right-arrow.svg">
         </a>
-        <a class="main_btn profile_btn">
+        <a href="?wallet" class="main_btn profile_btn">
             <i class="fa fa-user"></i>
             <h4>کیف پول</h4>
             <img src="assets/images/006-right-arrow.svg">

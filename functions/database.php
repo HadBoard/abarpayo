@@ -365,7 +365,7 @@ class Action
 
     public function cart_add($bank_id,$title,$cart_number,$account_number,$iban,$validation)
     {
-        $user_id = $_SESSION['user_id']; 
+        $user_id = $this->user()->id; 
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_user_cart`
         (`user_id`,`bank_id`,`title`,`cart_number`,`account_number`,`iban`,`validation`,`created_at`) 
@@ -375,9 +375,32 @@ class Action
         return $this->connection->insert_id;
     }
 
+    public function user_get_cart($user_id){
+        return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$user_id' LIMIT 2");
+    }
+
     public function user_reference_code($reference_code){
         return $this->connection->query("SELECT * FROM `tbl_user` WHERE `reference_code` = '$reference_code'");
     }
+
+    public function user_wallet_edit($amount,$type){
+        $id = $this->user()->id;
+        $prev_wallet = $this->user_get($id)->wallet;
+        if($type == 1){
+            $wallet = $prev_wallet + $amount;
+        }else if($type == 0){
+            $wallet = $prev_wallet - $amount;
+        }
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_user` SET 
+        `wallet` = '$wallet',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+
+    }
+
 
     // ----------- end USERS ------------------------------------------------------------------------------------------
      // ----------- start VALIDATION_CODE ------------------------------------------------------------------------------------------
@@ -447,8 +470,34 @@ class Action
     {
         return $this->table_list("tbl_slider");
     }
-     // ----------- end SLIDER ------------------------------------------------------------------------------------------
+    // ----------- end SLIDER ------------------------------------------------------------------------------------------
  
+    // ----------- start WALLETlOG ------------------------------------------------------------------------------------------
+    public function wallet_log_add($action,$amount,$type,$payment_id)
+    {
+        $user_id = $this->user()->id;
+        $result = $this->connection->query("INSERT INTO `tbl_wallet_log`
+        (`user_id`,`action`,`amount`,`type`,`payment_id`) 
+        VALUES
+        ('$user_id','$action','$amount','$type','$payment_id')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+    // ----------- end WALLETLOG------------------------------------------------------------------------------------------
+
+    // ----------- start PAYMENT ------------------------------------------------------------------------------------------
+    public function payment_add($amount,$cart_number,$reference_code,$status)
+    {
+        $now = time();
+        $user_id = $this->user()->id;
+        $result = $this->connection->query("INSERT INTO `tbl_payment`
+        (`user_id`,`amount`,`cart_number`,`reference_code`,`date`,`status`) 
+        VALUES
+        ('$user_id','$action','$amount','$type','$payment_id','$now','$status')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+    // ----------- end PAYMENT ------------------------------------------------------------------------------------------
 }
 
 // ----------- end Action class ----------------------------------------------------------------------------------------
