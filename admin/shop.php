@@ -42,12 +42,34 @@ if (isset($_POST['submit'])) {
     $longitude = $action->request('longitude');
     $latitude = $action->request('latitude');
     $status = $action->request('status');
+    $icon = ($edit ? $row->image : "");
+    
+    if($_FILES["icon"]["name"]){
+
+        $target_dir = "images/shops/";
+        $target_file = $target_dir . basename($_FILES["icon"]["name"]);
+
+        // Select file type
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+        // Valid file extensions
+        $extensions_arr = array("jpg","jpeg","png","gif");
+
+        // Check extension
+        if( in_array($imageFileType,$extensions_arr) ){
+            $name = $action -> get_token(10) . "." . $imageFileType;
+            // Upload file
+            move_uploaded_file($_FILES['icon']['tmp_name'],$target_dir.$name);
+            $icon = $name;
+
+        } 
+    }
 
     // send query
     if ($edit) {
-        $command = $action->shop_edit($id,$category_id, $title, $phone, $fax, $city_id, $address, $longitude, $latitude, $status);
+        $command = $action->shop_edit($id,$category_id, $title,$icon,$phone, $fax, $city_id, $address, $longitude, $latitude, $status);
     } else {
-        $command = $action->shop_add($category_id,$title, $phone, $fax, $city_id, $address, $longitude, $latitude, $status);
+        $command = $action->shop_add($category_id,$title,$icon, $phone, $fax, $city_id, $address, $longitude, $latitude, $status);
     }
 
     // check errors
@@ -239,6 +261,11 @@ include('header.php'); ?>
                                            required>
                                 </div>
 
+                                <div>
+                                        <label for="icon" class="btn btn-dark btn-block m-0">انتخاب عکس</label>
+                                        <input type="file" name="icon" id="icon" style="visibility:hidden;">
+                                </div>
+
                                 <div class="form-actions">
 
                                     <label class="float-right">
@@ -260,8 +287,15 @@ include('header.php'); ?>
                     </div>
                 </div>
                 <!-- ----------- end row of fields ----------------------------------------------------------- -->
-
+                
             </div>
+            <? if($edit && $row->image) { ?>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <img src="images/shops/<?= $row->image ?>">
+                        </div>
+                    </div>
+            <? } ?>
         </div>
     </div>
     <!-- ----------- end main container ------------------------------------------------------------------------ -->
