@@ -436,11 +436,15 @@ class Action
    
    // ----------- start CATEGORIES ------------------------------------------------------------------------------------------
     public function category_ordered_list(){
-        return $this->connection->query("SELECT * FROM `tbl_category` ORDER BY ord ASC");
+        return $this->connection->query("SELECT * FROM `tbl_category` ORDER BY ord ASC ");
     }
 
     public function category_shops_list($category_id){
         return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id' ");
+    }
+
+    public function category_shops_list_limited($category_id){
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id' LIMIT 4 ");
     }
    
    // ----------- end CATEGORIES ------------------------------------------------------------------------------------------
