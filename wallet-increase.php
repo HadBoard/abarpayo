@@ -25,24 +25,26 @@
             </h4>
             <div class="row wallet_increasement">
                 <div class="col-4">
-                    <a class="main_btn wallet_btn">50000 تومان</a>
+                    <a class="main_btn wallet_btn" onclick="changeValue(5000)">50000 تومان</a>
                 </div>
                 <div class="col-4">
-                    <a class="main_btn wallet_btn">100000 تومان</a>
+                    <a class="main_btn wallet_btn" onclick="changeValue(100000)">100000 تومان</a>
                 </div>
                 <div class="col-4">
-                    <a class="main_btn wallet_btn">200000 تومان</a>
+                    <a class="main_btn wallet_btn" onclick="changeValue(200000)">200000 تومان</a>
                 </div>
 
-                <form action="wallet-request.php">
-                    <input name="amount" placeholder="مبلغ را وارد کنید">
+                <form action="wallet-request.php" method="post">
+                    <input name="amount" id="amount" placeholder="مبلغ را وارد کنید">
                     <input name="wallet_increase" type="submit" value="پرداخت" class="main_btn middle_btn">
                 </form>
             </div>
         </div>
     </div>
-    <!-- <div class="profile_left">
-        
-    </div> -->
 </div>
+<script>
+   function changeValue(amount){
+     document.getElementById('amount').value= amount;
+    }
+</script>
 

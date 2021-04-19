@@ -22,9 +22,21 @@
     <div class="wallet_table">
         
         <table>
-            
-            
-            <tr>
+        <?
+            $transactions = $action->user_get_payment($user_id);
+            while($transaction = $transactions->fetch_object()){
+                $type = $transaction->type;
+        ?>  
+                <tr>
+                    <td <?= ($type == 1) ? 'class="dec_wallet"': 'class="inc_wallet"' ?>> <?= ($type == 1) ? "-".$transaction->amount : "+".$transaction->amount ?></td>
+                    <td><?= $action->time_to_shamsi($transaction->date)?></td>
+                    <td><?= $transaction->cart_number?></td>
+                </tr>
+        <?
+            }
+        ?>    
+                        
+            <!-- <tr>
                 <td class="inc_wallet"> +5000 تومان</td>
                 <td>شنبه 10 بهمن</td>
                 <td>22:00</td>
@@ -77,7 +89,7 @@
                 <td>شنبه 10 بهمن</td>
                 <td>22:00</td>
                 <td>224561235</td>
-            </tr>
+            </tr> -->
 
         </table> 
     </div>

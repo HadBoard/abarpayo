@@ -294,6 +294,10 @@ class Action
     public function user_get_phone($phone){
         return $this->connection->query("SELECT * FROM `tbl_user` WHERE `phone` = '$phone'");
     }
+    public function user_get_payment(){
+        $id = $this->user()->id;
+        return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id' LIMIT 3");
+    }
 
     public function user_add($first_name,$last_name,$phone,$reference_id)
     {
@@ -491,9 +495,9 @@ class Action
         $now = time();
         $user_id = $this->user()->id;
         $result = $this->connection->query("INSERT INTO `tbl_payment`
-        (`user_id`,`amount`,`cart_number`,`reference_code`,`date`,`status`) 
+        (`user_id`,`amount`,`cart_number`,`refrence_code`,`date`,`status`) 
         VALUES
-        ('$user_id','$action','$amount','$type','$payment_id','$now','$status')");
+        ('$user_id','$amount','$cart_number','$reference_code','$now','$status')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }

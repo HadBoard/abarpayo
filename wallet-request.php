@@ -1,18 +1,18 @@
-<?
+<?php
 if(isset($_POST['wallet_increase'])){
-    include('functions/database.php'); 
-    $user_id = $action->user()->id; 
-    $increase_amount = $_POST['amount'];
-    $_SESSION['increase_amount'] = $increase_amount;
-    
+    require_once "functions/database.php";
+    $action = new Action();
+    $amount = $action->request('amount');
+    $_SESSION['increase_amount'] = $amount;
+    $Amount = $amount;
 $MerchantID = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'; //Required
 //$Amount = $_SESSION['cost']/1000; //Amount will be based on Toman - Required
-$Amount = $increase_amount;
-$Description = 'افزایش موجودی'; // Required
+// $Amount = 10000;
+$Description = ' افزایش موجودی کیف پول'; // Required
 $Email = 'UserEmail@Mail.Com'; // Optional
 $Mobile = "0000"; // Optional
-$CallbackURL = 'http://abarpaya.com/site/wallet-verify.php'; // Required
-// $CallbackURL = 'http://parsinsu.com/profile.php';
+$CallbackURL = 'http://localhost/abarpaya/wallet-verify.php'; // Required
+
 $client = new SoapClient('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', ['encoding' => 'UTF-8']);
 
 $result = $client->PaymentRequest(
@@ -26,11 +26,9 @@ $result = $client->PaymentRequest(
     ]
 );
 
-}//Redirect to URL You can do it also by creating a form
 if ($result->Status == 100) {
     Header('Location: https://sandbox.zarinpal.com/pg/StartPay/'.$result->Authority);
 } else {
   
 }
-
-
+}

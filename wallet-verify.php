@@ -1,10 +1,11 @@
 <?php
-include('functions/database.php');   
+require_once "functions/database.php";
+$action = new Action();
+   
 $MerchantID = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX';
-$increase_amount = $_SESSION['increase_amount']; //Amount will be based on Toman
+// $Amount = 10000; //Amount will be based on Toman
+$Amount =$_SESSION['increase_amount'];
 $Authority = $_GET['Authority'];
-$user_id = $action->user()->id;
-//die($Amount);
 
 if ($_GET['Status'] == 'OK') {
 
@@ -19,16 +20,15 @@ $result = $client->PaymentVerification(
 );
 
 if ($result->Status == 100) {
-//echo 'Transation success. RefID:'.$result->RefID;
-    $command = $action->payment_add($amount,$cart_number,$reference_code,$status);
-    $action->wallet_log_add("increase wallet by user",$increase_amount,1,$command);
-    $action->user_wallet_edit($increase_amount,1);
-    echo "<script> location.href='profile.php?wallet'; </script>";
+// echo '<br>Transation success. RefID:'.$result->RefID;
+$command = $action->payment_add($Amount,123,1234,1);
+$action->wallet_log_add("increase wallet by user",$Amount,1,$command);
+$action->user_wallet_edit($Amount,1);
+echo "<script> location.href='profile.php?wallet'; </script>";
+
 } else {
-    echo 'Transation failed. Status:'.$result->Status;
-   
+      echo 'Transation failed. Status:'.$result->Status;
 }
-} else {
-// echo 'Transaction canceled by user';
-    echo "<script> location.href='profile.php?wallet'; </script>";
+} else {    
+    echo 'Transaction canceled by user';
 }
