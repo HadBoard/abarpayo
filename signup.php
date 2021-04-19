@@ -24,10 +24,15 @@ unset($_SESSION['fromValidation']);
             header("Location: index.php");
         }else{
             ?>
-            <div class="alert alert-danger">
-             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-             <strong>ناموفق!</strong>دوباره تلاش کنید.
-           </div> 
+          <div class="modal">
+                    <div class="alert alert-fail">
+                        <span class="close_alart">×</span>
+                        <p>
+                              ثبت نام ناموفق بود!
+                        </p>
+                    </div>
+           </div>
+            <script src="assets/js/alert.js"></script>
            <?
         }
     }

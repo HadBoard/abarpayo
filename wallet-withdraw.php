@@ -1,6 +1,38 @@
 <?
     $user_id = $action->user()->id;
     $wallet = $action->user_get($user_id)->wallet;
+
+    if(isset($_POST['withdraw_wallet'])){
+        $amount = $action->request('amount');
+        if($amount > $wallet){
+            ?>
+            <div class="modal">
+                    <div class="alert alert-fail">
+                        <span class="close_alart">×</span>
+                        <p>
+                            مبلغ درخواست شده بیشتر از موجودی کیف پول شما است!
+                        </p>
+                    </div>
+                </div>
+                <script src="assets/js/alert.js"></script>
+            <?
+        }else{
+            // $command  = $action->request_add();
+            if($command){
+                ?> 
+                <div class="modal">
+                    <div class="alert alert-suc">
+                        <span class="close_alart">×</span>
+                        <p>
+                            درخواست برداشت از کیف پول با موفقیت ثبت شد!
+                        </p>
+                    </div>
+                </div>
+                <script src="assets/js/alert.js"></script>
+                <?
+            }
+        }
+    }
 ?>
           
 <div class="edit_profile_div">

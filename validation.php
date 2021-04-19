@@ -28,10 +28,15 @@ $title = "ثبت نام";
             } 
         }else{
           ?>
-           <div class="alert alert-danger">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>ناموفق!</strong>کد وارد شده نامعتبر است.
-          </div> 
+           <div class="modal">
+                    <div class="alert alert-fail">
+                        <span class="close_alart">×</span>
+                        <p>
+                              کد وارد شده نامعتبر است!
+                        </p>
+                    </div>
+                </div>
+                <script src="assets/js/alert.js"></script>
           <?
         }
     }
