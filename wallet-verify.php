@@ -21,7 +21,7 @@ $result = $client->PaymentVerification(
 
 if ($result->Status == 100) {
 // echo '<br>Transation success. RefID:'.$result->RefID;
-$command = $action->payment_add($Amount,$cart_number,$result->RefID,1);
+$command = $action->payment_add($Amount,123,1234,1);
 $action->wallet_log_add("increase wallet by user",$Amount,1,$command);
 $action->user_wallet_edit($Amount,1);
 echo "<script> location.href='profile.php?wallet'; </script>";

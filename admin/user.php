@@ -203,7 +203,7 @@ include('header.php'); ?>
                                            required>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control " name="province" id="province" required>
+                                    <select class="form-control select2" name="province" id="province" required>
                                         <option>استان را انتخاب فرمایید .</option>
                                         <?
                                         $option_result = $action->province_list();
@@ -221,7 +221,7 @@ include('header.php'); ?>
                                 </div>
                                 <div class="form-group">
                                    
-                                    <select class="form-control " name="city" id="city" required>
+                                    <select class="form-control select2" name="city" id="city" required>
                                         <option>شهرستان را انتخاب فرمایید .</option>
                                         <?
                                         $option_result =  $action->province_city_list($province_id);

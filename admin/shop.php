@@ -16,7 +16,6 @@ if (isset($_GET['edit'])) {
     $edit = true;
     $id = $action->request('edit');
     $row = $action->shop_get($id);
-    $province_id = $action->city_get($row->city_id)->province_id;
 }
 // ----------- get data from database when action is edit --------------------------------------------------------------
 
@@ -37,7 +36,7 @@ if (isset($_POST['submit'])) {
     $title = $action->request('title');
     $phone = $action->request('phone');
     $fax = $action->request('fax');
-    $city_id = $action->request('city');
+    $city_id = $action->request('city_id');
     $address = $action->request('address');
     $longitude = $action->request('longitude');
     $latitude = $action->request('latitude');
@@ -148,7 +147,7 @@ include('header.php'); ?>
                         <div class="basic-form">
                             <form action="" method="post" enctype="multipart/form-data">
                             <div class="form-group">
-                                    <select class="form-control" name="category_id" required>
+                                    <select class="form-control select2" name="category_id" required>
                                         <option>دسته بندی را انتخاب فرمایید .</option>
                                         <?
                                         $option_result = $action->category_list();
@@ -183,40 +182,9 @@ include('header.php'); ?>
                                 </div>
 
                                 <div class="form-group">
-                                    <select class="form-control " name="province" id="province" required>
-                                        <option>استان را انتخاب فرمایید .</option>
-                                        <?
-                                        $option_result = $action->province_list();
-                                        while ($option = $option_result->fetch_object()) {
-                                            echo '<option value="';
-                                            echo $option->id;
-                                            echo '"';
-                                            if ($option->id == $province_id) echo "selected";
-                                            echo '>';
-                                            echo $option->name;
-                                            echo '</option>';
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                   
-                                    <select class="form-control " name="city" id="city" required>
-                                        <option>شهرستان را انتخاب فرمایید .</option>
-                                        <?
-                                        $option_result =  $action->province_city_list($province_id);
-                                        while ($option = $option_result->fetch_object()) {
-                                            echo '<option value="';
-                                            echo $option->id;
-                                            echo '"';
-                                            if ($option->id == $row->city_id) echo "selected";
-                                            echo '>';
-                                            echo $option->name;
-                                            echo '</option>';
-                                        }
-                                        ?>
-                                    </select>
-                                
+                                    <input type="text" name="city_id" class="form-control input-default "
+                                           placeholder="استان"
+                                           value="<?= ($edit) ? $row->city_id : "" ?>" required>
                                 </div>
 
                                 <div class="form-group">
@@ -265,21 +233,7 @@ include('header.php'); ?>
         </div>
     </div>
     <!-- ----------- end main container ------------------------------------------------------------------------ -->
+
 </div>
-<script>
- document.getElementById('province').onchange=function(){
-       var province_id=document.getElementById('province').value;
-       console.log(province_id);
-       $.ajax({
-            url:'ajax/get_city.php',
-            type:'post',
-            data:{province_id:province_id},
-            success:function(response){
-        		$("#city").html(response);
-            }
-       })
-       
-   }
-</script>
 <? include('footer.php'); ?>
 
