@@ -424,6 +424,26 @@ class Action
         return $this->table_counter("tbl_user");
     }
 
+    public function wallet_withdraw($user_id,$amount){
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_user` SET 
+        `wallet` = '$amount',
+        `updated_at`='$now'
+        WHERE `id` ='$user_id'");
+        if (!$this->result($result)) return false;
+        return $user_id;
+    }
+
+    public function wallet_log_add($user_id,$action,$amount,$type,$payment_id)
+    {
+        $result = $this->connection->query("INSERT INTO `tbl_wallet_log`
+        (`user_id`,`action`,`amount`,`type`,`payment_id`) 
+        VALUES
+        ('$user_id','$action','$amount','$type','$payment_id')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
     // ----------- end USERS -------------------------------------------------------------------------------------------
 
     // ----------- start CATEGORIES -----------------------------------------------------------------------------------------
@@ -967,16 +987,16 @@ class Action
      }
  
      // ----------- end SLIDERS -------------------------------------------------------------------------------------------
-     public function request_edit($id, $description,$paymented_at){
+     public function request_edit($id, $description,$birthday){
         $now = time();
         $status = 1;
         $result = $this->connection->query("UPDATE `tbl_request` SET 
-        `description`='$description',
-        `paymented_at` = '$paymented_at',
-        `status`='$status',
-        `updated_at`='$now',
+        `description` = '$description',
         `status` = '$status',
+        `paymented_at` = '$birthday',
+        `updated_at` = '$now'
         WHERE `id` ='$id'");
+
         if (!$this->result($result)) return false;
         return $id;
      }

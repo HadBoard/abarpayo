@@ -1,3 +1,7 @@
+
+<?
+     $user_id = $action->user()->id;
+?>
 <div class="profile_right">
     <div class="row">
         <div class="col-6">
@@ -5,8 +9,8 @@
 
         </div>
         <div class="col-6 profile_user">
-            <h3>علی علوی</h3>
-            <h5>09135244743</h5>
+            <h3><?= $action->user_get($user_id)->first_name." ".$action->user_get($user_id)->last_name ?></h3>
+            <h5><?= $action->user_get($user_id)->phone?></h5>
             <a href="?edit" class="main_btn edit_profile">
                 <i class="fa fa-edit"></i>
                 ویرایش

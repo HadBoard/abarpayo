@@ -52,7 +52,7 @@
             <h4>
                 اعتبار فعلی : 
                 <span>
-                    <?= $wallet ?> تومان
+                    <?= $wallet ? $wallet : 0 ?> تومان
                 </span>
             </h4>
             <div class="row wallet_increasement">

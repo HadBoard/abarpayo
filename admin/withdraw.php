@@ -29,29 +29,34 @@ if (isset($_SESSION['error'])) {
 // ----------- check error ---------------------------------------------------------------------------------------------
 
 // ----------- add or edit ---------------------------------------------------------------------------------------------
+$user_id  = $row->user_id;
+$amount = $row->amount;
 if (isset($_POST['submit'])) {
 
+    $prev_wallet = $action->user_get($user_id)->wallet;
+    $wallet = floatval($prev_wallet) - floatval($amount);
     // get fields
     $description = $action->request('description');
-    $paymented_at = $action->request_date('paymented_at');
-    // $status = $action->request('status');
+    $birthday = $action->request_date('birthday');
  
     // send query
     if ($edit) {
-        $command = $action->request_edit($id, $description,$paymented_at);
+        $command = $action->request_edit($id, $description,$birthday);
+        $command1 = $action->wallet_withdraw($user_id,$wallet);
+        $command2 = $action->wallet_log_add($user_id,"decrease wallet confirmed by admin",$amount,0,0);
     } else {
         // $command = $action->withdraw_add($description,$paymented_at,$status);
     }
 
     // check errors
-    if ($command) {
-        $_SESSION['error'] = 0;
+    if ($command && $command1 && $command2) {
+       $_SESSION['error'] = 0;
     } else {
-        $_SESSION['error'] = 1;
+       $_SESSION['error'] = 1;
     }
 
     // bye bye :)
-    header("Location: $main_url?edit=$command");
+   header("Location: $main_url?edit=$command");
 
 }
 // ----------- add or edit ---------------------------------------------------------------------------------------------
@@ -159,14 +164,14 @@ include('header.php'); ?>
 
                                 <div class="form-group">
                                     <textarea type="text" name="description" class="form-control input-default "
-                                           placeholder="توضیحات" 
+                                           placeholder="توضیحات" <?= ($row->status) ? "readonly" : ""?>
                                             ><?= ($edit) ? $row->description : "" ?></textarea>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="text" id="date" name="paymented_at" class="form-control"
-                                           placeholder="تاریخ واریز"
-                                           required>
+                                    <input type="text" id="date" name="birthday" class="form-control"
+                                           placeholder="تاریخ واریز" value="<?= $action->time_to_shamsi($row->paymented_at)?>"
+                                           <?= ($row->status) ? "readonly" : ""?> required>
                                 </div>
 
                                 <div class="form-actions">
@@ -177,7 +182,7 @@ include('header.php'); ?>
                                         فعال
                                     </label> -->
 
-                                    <button type="submit" name="submit" class="btn btn-success sweet-success">
+                                    <button <?= ($row->status) ? "disabled" : ""?> type="submit" name="submit" class="btn btn-success sweet-success">
                                         <i class="fa fa-check"></i> ثبت
                                     </button>
 
