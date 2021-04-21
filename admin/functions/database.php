@@ -458,24 +458,25 @@ class Action
         return $this->table_option("tbl_category", $id);
     }
 
-    public function category_add($title,$icon,$ord,$status)
+    public function category_add($title,$icon,$ord,$slag,$status)
     {
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_category`
-        (`title`,`icon`,`ord`,`status`,`created_at`) 
+        (`title`,`icon`,`ord`,`slag`,`status`,`created_at`) 
         VALUES
-        ('$title','$icon','$ord','$status','$now')");
+        ('$title','$icon','$ord','$slag','$status','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
-    public function category_edit($id, $title,$icon,$ord, $status)
+    public function category_edit($id, $title,$icon,$ord,$slag,$status)
     {
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_category` SET 
         `title`='$title',
         `icon` = '$icon',
         `ord` = '$ord',
+        `slag`='$slag',
         `status`='$status',
         `updated_at`='$now'
         WHERE `id` ='$id'");
