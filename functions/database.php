@@ -329,7 +329,7 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function user_profile_edit($first_name, $last_name,$national_code,$birthday)
+    public function user_profile_edit($first_name, $last_name,$national_code,$birthday,$icon)
     {
         $id = $this->user()->id;
         $now = time();
@@ -338,6 +338,7 @@ class Action
         `last_name`='$last_name',
         `national_code`='$national_code',
         `birthday` = '$birthday',
+        `profile`='$icon',
         `updated_at`='$now'
         WHERE `id` ='$id'");
         if (!$this->result($result)) return false;

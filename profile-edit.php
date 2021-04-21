@@ -3,6 +3,8 @@
         header("Location: phone.php");
     }
     $user_id = $action->user()->id;
+    $icon = $action->user_get($user_id)->profile; 
+    $icon = ($icon ? $icon : "");  
     if(isset($_POST['submit'])){
         $phone = $action->request('phone');
         $first_name = $action->request('name');
@@ -10,7 +12,28 @@
         $national_code = $action->request('national_code');
         $birthday = $action->request_date('birthday');
         $user_phone = $action->user_get($user_id)->phone;
-        $command= $action->user_profile_edit($first_name, $last_name,$national_code,$birthday);
+
+        if($_FILES["pic"]["name"]){
+    
+            $target_dir = "admin/users/";
+            $target_file = $target_dir . basename($_FILES["pic"]["name"]);
+    
+            // Select file type
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    
+            // Valid file extensions
+            $extensions_arr = array("jpg","jpeg","png","gif");
+    
+            // Check extension
+            if( in_array($imageFileType,$extensions_arr) ){
+                $name = $action -> get_token(10) . "." . $imageFileType;
+                // Upload file
+                move_uploaded_file($_FILES['pic']['tmp_name'],$target_dir.$name);
+                $icon = $name;
+    
+            } 
+        }
+        $command= $action->user_profile_edit($first_name, $last_name,$national_code,$birthday,$icon);
         if($command){
             ?>
             <div class="modal">
@@ -44,17 +67,16 @@
 
     <div class="profile_header">
         <div class="profile_heade_inn">
-            <div class="profile_header_img"><img src="https://webmaz.ir/sanyar/images/woman-5.jpg">
+            <div class="profile_header_img"><img src=<?= $icon ? "admin/users/$icon" :"https://webmaz.ir/sanyar/images/woman-5.jpg"?>>
             </div>
         </div>
-
+    <form action="" method="post"  enctype="multipart/form-data">
         <label for="pic">ویرایش تصویر</label>
             <input type="file" style="
                 display: none;
             " name="pic">
     </div>
     <div class="profile_left">
-    <form action="" method="post">
             <div class="form-group">
                 <label for="name">نام</label>
                 <input type="text" id="first_name" name="name" value="<?= $action->user_get($user_id)->first_name?>" placeholder="فقط حروف فارسی">
@@ -79,7 +101,7 @@
                         required value="<?= ($action->user_get($user_id)->birthday) ? $action->time_to_shamsi($action->user_get($user_id)->birthday) : "" ?>">
             </div>
 
-            <button name="submit" class="main_btn middle_btn " id="form_submit" >ادامه</button>
+            <button name="submit" class="main_btn middle_btn " id="form_submit" >ذخیره</button>
 
         </form>
     </div>

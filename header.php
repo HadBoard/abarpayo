@@ -140,46 +140,6 @@ $action = new Action();
                             <?
                                 }
                             ?>
-                            <!-- <a href="#">
-                                <img src="assets/images/shop.png">
-                                <h5>رستوران و کافی شاپ</h5>
-
-                            </a>
-                            <a href="#">
-                                <img src="assets/images/playground.png">
-                                <h5>تفریحی ورزشی</h5>
-
-                            </a>
-                            <a href="#">
-                                <img src="assets/images/Group 272.png">
-                                <h5>سلامتی و پزشکی</h5>
-
-                            </a>
-                            <a href="#">
-                                <img src="assets/images/theatre.png">
-                                <h5>هنر و تئاتر</h5>
-
-                            </a>
-                            <a href="#">
-                                <img src="assets/images/presentation (1).png">
-                                <h5>آموزش</h5>
-
-                            </a>
-                            <a href="#">
-                                <img src="assets/images/mascara (1).png">
-                                <h5>زیبایی و آرایشی</h5>
-
-                            </a>
-                            <a href="#">
-                                <img src="assets/images/sunset.png">
-                                <h5>تور و سفر</h5>
-
-                            </a>
-                            <a href="#">
-                                <img src="assets/images/technical-support.png">
-                                <h5>خدمات</h5>
-
-                            </a> -->
 
                         </div>
                     </li>
