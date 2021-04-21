@@ -764,3 +764,9 @@ margin: 0 20px 20px 0;
     padding-top: 0;
     margin-top: -40px;
 }
+.wallet_info.wallet_info_btns select {
+    width: 77%;
+    padding: 7.5px;
+    font-weight: bold;
+    margin-top: 8px;
+}
