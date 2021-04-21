@@ -21,6 +21,7 @@ unset($_SESSION['fromValidation']);
         $command = $action->user_add($first_name,$last_name,$phone,$reference_id);    
         if($command){
             unset($_SESSION['phone']);
+            $_SESSION['user_id'] = $command;
             header("Location: index.php");
         }else{
             ?>

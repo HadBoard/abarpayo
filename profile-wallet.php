@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <?
-                        $carts = $action->user_get_cart($user_id);
+                        $carts = $action->user_get_cart_limited();
                         while($cart = $carts->fetch_object()){
                     ?>  
                             <tr>
@@ -82,7 +82,7 @@
                         </div>
                     </div>
                     <?
-                        $transactions = $action->user_get_payment($user_id);
+                        $transactions = $action->user_get_payment_limited();
                         while($transaction = $transactions->fetch_object()){
                             $type = $transaction->type;
                     ?>  
@@ -93,8 +93,20 @@
                             </tr>
                     <?
                         }
-                        
-                    ?>    
+                       
+                        $withdraws = $action->user_get_requests_limited();
+                        while($withdraw = $withdraws->fetch_object()){
+                    ?>  
+
+                        <tr>
+                            <td class="dec_wallet"> <?= "-".$withdraw->amount ?></td>
+                            <td><?= $action->time_to_shamsi($withdraw->paymented_at)?></td>
+                            <td><?= $action->user_get_cart($withdraw->cart_id)->cart_number?></td>
+                        </tr>
+
+                    <?
+                        }
+                    ?>  
                     
                     <!-- <tr>
                         <td class="inc_wallet"> +5000 تومان</td>

@@ -68,24 +68,32 @@ if(isset($_POST['function'])) {
         echo $json;
     }
 
-    if($_POST['function'] == 'dashboard'){
+    if($_POST['function'] == 'sliders'){
         $obj = null;
-        $categories = [];
         $sliders = [];
-        $shops = [];
-        
         $result = $action->slider_list();
         while ($row = $result->fetch_object()) {
-            $obj_in -> title = $row -> title;
-            $obj_in -> link = "http://abarpayo.com/site/admin/images/slider/$row->image";
+            $obj_in -> sendLink = "http://abarpayo.com/site/$row->link";
+            $obj_in -> link = "http://abarpayo.com/site/admin/images/sliders/$row->image";
             $sliders[] = $obj_in;
             $obj_in = null;
         }
-
+        $obj -> sliders = $sliders;
+        $json = json_encode($obj);
+        echo $json;
+    }
+        
+    
+    if($_POST['function'] == 'categories'){
+        $obj = null;
+        $categories = [];
+        $shops = [];
+    
         $categories_list = $action -> category_ordered_list();
         while ($category = $categories_list->fetch_object()) {
             $obj_in -> c_id = $category->id;
             $obj_in -> title = $category->title;
+            $obj_in -> icon = "http://abarpayo.com/site/admin/images/categoryIcons/$row->icon";
             
             $shops_list = $action->category_shops_list($category->id);
             while ($shop = $shops_list->fetch_object()) {
@@ -103,9 +111,37 @@ if(isset($_POST['function'])) {
         }
 
         $obj -> categories = $categories;
-        $obj -> sliders = $sliders;
         $json = json_encode($obj);
         echo $json;
     }
+
+    if($_POST['function'] == 'cities'){
+        $result = $action->province_list();
+        while($row = $result->fetch_object()){
+            $id = $row->id;
+            $name = $row->name;
+            $city=[];
+            $cresult = $action->province_city_list($row->id);
+            while($crow = $cresult->fetch_object()){
+              $cid = $crow->id;
+              $cname = $crow->name;
+                $city[] = [
+                    c_id=> $cid,
+                    text => $cname
+               ];
+            }
+            $province[] = [
+                p_id => $id ,
+                text => $name,
+                cities=>$city
+           ];
+        }
+        $obj -> cities = $province;
+        $json = json_encode($obj);
+        echo $json;
+        
+    }
+
+   
 }
 
