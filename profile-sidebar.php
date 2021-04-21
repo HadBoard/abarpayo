@@ -28,20 +28,5 @@
             <h4>کیف پول</h4>
             <img src="assets/images/006-right-arrow.svg">
         </a>
-        <a class="main_btn profile_btn">
-            <i class="fa fa-user"></i>
-            <h4>مدیریت آدرس ها</h4>
-            <img src="assets/images/006-right-arrow.svg">
-        </a>
-        <a class="main_btn profile_btn">
-            <i class="fa fa-user"></i>
-            <h4>اعضای خانواده</h4>
-            <img src="assets/images/006-right-arrow.svg">
-        </a>
-        <a class="main_btn profile_btn">
-            <i class="fa fa-user"></i>
-            <h4>کسب درآمد ها</h4>
-            <img src="assets/images/006-right-arrow.svg    ">
-        </a>
     </div>
 </div>

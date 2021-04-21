@@ -11,7 +11,7 @@
             
     </div>
     <div class="row profile_title">
-        <a class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
+        <a href="?wallet" class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
     
         <h3 style="width: 50%;float: right;">کیف پول</h3>
 

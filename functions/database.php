@@ -393,7 +393,30 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function user_get_cart(){
+    public function cart_edit($id,$bank_id,$title,$cart_number,$account_number,$iban,$validation)
+    {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_user_cart` SET 
+        `bank_id`= '$bank_id',
+        `title` = '$title',
+        `cart_number` = '$cart_number',
+        `account_number` = '$account_number',
+        `iban` = '$iban',
+        `validation`= '$validation',
+        `updated_at` = '$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    
+
+    public function cart_get($id)
+    {
+        return $this->get_data("tbl_user_cart", $id);
+    }
+
+    public function user_cart_list(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$id'");
     }
@@ -498,6 +521,12 @@ class Action
         return $this->get_data("tbl_city", $id);
     }
 
+    public function shop_get($id)
+    {
+        return $this->get_data("tbl_shop", $id);
+    }
+
+
     // ----------- end PROVINCE ------------------------------------------------------------------------------------------
 
      // ----------- start SLIDER ------------------------------------------------------------------------------------------
@@ -536,6 +565,16 @@ class Action
         ('$user_id','$amount','$cart_number','$reference_code','$now','$status')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
+    }
+
+    public function bank_list()
+    {
+        return $this->table_list("tbl_bank");
+    }
+
+    public function bank_get($id)
+    {
+        return $this->get_data("tbl_bank", $id);
     }
     // ----------- end PAYMENT ------------------------------------------------------------------------------------------
 }

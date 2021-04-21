@@ -4,6 +4,7 @@
 
     if(isset($_POST['withdraw_wallet'])){
         $amount = $action->request('amount');
+        $cart = $action->request('cart');
         if($amount > $wallet){
             ?>
             <div class="modal">
@@ -17,7 +18,7 @@
                 <script src="assets/js/alert.js"></script>
             <?
         }else{
-            $command  = $action->request_add($cart_id,$amount);
+            $command  = $action->request_add($cart,$amount);
             if($command){
                 ?> 
                 <div class="modal">
@@ -43,7 +44,7 @@
             
     </div>
     <div class="row profile_title">
-        <a class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
+        <a class="profile_title_icon" href="?wallet"><img src="assets/images/006-right-arrow.svg"></a>
     
         <h3 style="width: 50%;float: right;">درخواست تسویه</h3>
 
@@ -55,6 +56,24 @@
                     <?= $wallet ? $wallet : 0 ?> تومان
                 </span>
             </h4>
+            <form action="" method="post">
+            <div class="form-group">
+                <select name="cart">
+                    <option>کارت را انتخاب فرمایید .</option>
+                    <?
+                    $option_result =  $action->user_cart_list();
+                    while ($option = $option_result->fetch_object()) {
+                        echo '<option value="';
+                        echo $option->id;
+                        echo '"';
+                        if ($option->id == $row->cart_id) echo "selected";
+                        echo '>';
+                        echo $option->cart_number;
+                        echo '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
             <div class="row wallet_increasement">
                 <div class="col-4">
                     <a class="main_btn wallet_btn" onclick="changeValue(5000)">50000 تومان</a>
@@ -65,10 +84,8 @@
                 <div class="col-4">
                     <a class="main_btn wallet_btn" onclick="changeValue(200000)">200000 تومان</a>
                 </div>
-
-                <form action="" method="post">
                     <input name="amount" id="amount" placeholder="مبلغ را وارد کنید">
-                    <input name="withdraw_wallet" type="submit" value="پرداخت" class="main_btn middle_btn">
+                    <input name="withdraw_wallet" type="submit" value="ثبت درخواست" class="main_btn middle_btn">
                 </form>
             </div>
         </div>

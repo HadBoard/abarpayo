@@ -1,6 +1,20 @@
 <?
     $user_id = $action->user()->id;
     $wallet = $action->user_get($user_id)->wallet;
+
+    if(isset($_SESSION['successful_pay'])){
+        ?>
+            <div class="modal">
+                    <div class="alert alert-suc">
+                        <span class="close_alart">×</span>
+                        <p>
+                            پرداخت موفق بود!
+                        </p>
+                    </div>
+                </div>
+                <script src="assets/js/alert.js"></script>
+        <?
+    }
 ?>
     <div class="edit_profile_div">
 
@@ -49,7 +63,7 @@
                     ?>  
                             <tr>
                                 <td><?= $cart->title ?></td>
-                                <td><?= $cart->account_number?></td>
+                                <td><?=  $action->bank_get($cart->bank_id)->name?></td>
                                 <td><?= $cart->cart_number?></td>
                             </tr>
                     <?

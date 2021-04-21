@@ -24,6 +24,7 @@ if ($result->Status == 100) {
 $command = $action->payment_add($Amount,$cart_number,$result->RefID,1);
 $action->wallet_log_add("increase wallet by user",$Amount,1,$command);
 $action->user_wallet_edit($Amount,1);
+$_SESSION['successful_pay'] = 'true';
 echo "<script> location.href='profile.php?wallet'; </script>";
 
 } else {
