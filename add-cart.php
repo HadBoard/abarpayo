@@ -21,29 +21,26 @@
         $cart_number = $action->request('cart_number');
         $iban = $action->request('iban');
         if($edit){
-            $command= $action->cart_edit($id,$bank_id,$name,$cart_number,$account_number,$iban,0);
+            $command= $action->cart_edit($id,$bank_id,$name,$cart_number,$account_number,$iban,$validation);
         }else{
-            $command= $action->cart_add($bank_id,$name,$cart_number,$account_number,$iban,0);
+            $command= $action->cart_add($bank_id,$name,$cart_number,$account_number,$iban,$validation);
         }
-
         if ($command) {
             $_SESSION['error'] = 0;
         } else {
             $_SESSION['error'] = 1;
         }
-    
-        echo '<script>location.href = "add-cart.php?id='.$command.'</script>';
-       
+        echo '<script>location.href = "?add-cart&id='.$command.'"</script>';
     } 
 ?>
 
 <? if ($error) {
             if ($error_val) { ?>
             <div class="modal">
-                    <div class="alert alert-suc">
+                    <div class="alert alert-fail">
                         <span class="close_alart">×</span>
                         <p>
-                            عملیات موفق بود!
+                            عملیات ناموفق بود!
                         </p>
                     </div>
                 </div>
@@ -52,10 +49,10 @@
             <? } else { ?>
 
                 <div class="modal">
-                    <div class="alert alert-fail">
+                    <div class="alert alert-suc">
                         <span class="close_alart">×</span>
                         <p>
-                              عملیات ناموفق بود!
+                              عملیات موفق بود!
                         </p>
                     </div>
                 </div>

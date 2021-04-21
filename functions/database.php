@@ -401,13 +401,13 @@ class Action
     {
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_user_cart` SET 
-        `bank_id`= '$bank_id',
-        `title` = '$title',
-        `cart_number` = '$cart_number',
-        `account_number` = '$account_number',
-        `iban` = '$iban',
-        `validation`= '$validation',
-        `updated_at` = '$now'
+        `bank_id` = '$bank_id',
+        `title`='$title',
+        `cart_number`='$cart_number',
+        `account_number`='$account_number',
+        `iban`='$iban',
+        `validation`='$validation',
+        `updated_at`='$now'
         WHERE `id` ='$id'");
         if (!$this->result($result)) return false;
         return $id;
