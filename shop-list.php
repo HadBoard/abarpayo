@@ -6,8 +6,8 @@ include_once "header.php"
 ?>
   <!-- main part of shop list page -->
   <div class="container">
-      <div class="shop_list_header">
-            <div class="row">
+      <!-- <div class="shop_list_header"> -->
+            <!-- <div class="row">
                 <div class="col-3">
                     <div class="city_header shop_list_select">
                         <select>
@@ -41,12 +41,17 @@ include_once "header.php"
                       search
                       </span></button>
                 </div>
-            </div>
-            <div class="row">
+            </div> -->
+            <!-- <div class="row">
                 <button class="main_btn middle_btn shop_list_btn">
                     <i class="fa fa-play"></i>
                     فروشگاه های نزدیک من
                 </button>
+            </div> -->
+      <!-- </div> -->
+      <div class="shop_list_header">
+            <div class="cat_shop">
+                <h3>رستوران و کافی شاپ</h3>
             </div>
       </div>
   </div>
@@ -55,20 +60,20 @@ include_once "header.php"
     <section class="container">
 
         <!-- buttons -->
-    <div class="tab_index">
+    <!-- <div class="tab_index">
         <?
             $result = $action->category_ordered_list();
             while($row = $result->fetch_object()){
         ?>
             <button class="tablinks"><?= $row->title ?></button>
-        <?  } ?>
+        <?  } ?> -->
         <!-- <button class="tablinks active_tablink">رستوران و کافی شاپ</button>
         <button class="tablinks" >تفریحی ورزشی</button>
         <button class="tablinks" >آرایشی  و بهداشتی</button>
         <button class="tablinks" >پزشکی و سلامتی</button>
         <button class="tablinks" >فرهنگی و هنری</button>
         <button class="tablinks" >کالا و خدمات</button> -->
-    </div>
+    <!-- </div> -->
         <!-- eof btns -->
         <!--tabs content  -->
     <?
