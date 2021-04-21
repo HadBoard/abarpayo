@@ -36,7 +36,7 @@
         <h3>انتخاب شهر</h3>
         <img src="assets/images/Group 462.svg">
     </div>
-    <div class="profile_left">
+    <div class="profile_left mp">
 
    <form action="" method="post">
         <h3>انتخاب شهر و استان</h3>
@@ -74,7 +74,7 @@
                 ?>
             </select>
         </div>
-        <div class="form-group">
+        <div style="margin-right:20px" class="form-group">
                 <label for="postal_code">کدپستی</label>
                 <input type="text" id="postal_code" name="postal_code" placeholder=""  value="<?= $action->user_get($user_id)->postal_code?>">
         </div>
