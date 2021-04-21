@@ -35,6 +35,7 @@ if (isset($_POST['submit'])) {
     $title = $action->request('title');
     $status = $action->request('status');
     $ord = $action->request('ord');
+    $slag = $action->request('slag');
     $icon = ($edit ? $row->icon : "");
     
     if($_FILES["icon"]["name"]){
@@ -59,9 +60,9 @@ if (isset($_POST['submit'])) {
 
     // send query
     if ($edit) {
-        $command = $action->category_edit($id, $title,$icon,$ord,$status);
+        $command = $action->category_edit($id, $title,$icon,$ord,$slag,$status);
     } else {
-        $command = $action->category_add($title,$icon,$ord,$status);
+        $command = $action->category_add($title,$icon,$ord,$slag,$status);
     }
 
     // check errors
@@ -172,6 +173,12 @@ include('header.php'); ?>
                                     <input type="text" name="ord" class="form-control input-default "
                                            placeholder="ترتیب"
                                            value="<?= ($edit) ? $row->ord : "" ?>" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="slag" class="form-control input-default "
+                                           placeholder="slag"
+                                           value="<?= ($edit) ? $row->slag : "" ?>" required>
                                 </div>
 
                                 <div>

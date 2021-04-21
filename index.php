@@ -157,9 +157,9 @@ include_once "header.php"
             ?>
 
             <!--  -->
-            <a href="#" class="main_btn">
+            <a href="shop-list.php" class="main_btn">
                  
-                    <i class="fa fa-reply"></i>
+                <i class="fa fa-reply"></i>
                
                 بیشتر
             </a>
