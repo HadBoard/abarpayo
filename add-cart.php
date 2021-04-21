@@ -32,7 +32,7 @@
             $_SESSION['error'] = 1;
         }
     
-        // bye bye :)
+        echo '<script>location.href = "add-cart.php?id='.$command.'</script>';
        
     } 
 ?>
@@ -73,8 +73,8 @@
 </div>
 <div class="row profile_title">
     <a href="?carts"class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
-
-    <h3 style="width: 50%;float: right;">افزودن کارت</h3>
+   
+    <h3 style="width: 50%;float: right;"><?= ($edit) ? "ویرایش کارت" : "افزودن کارت" ?></h3>
 
     <img src="assets/images/Group 465.svg">
     <!-- <div class="wallet_info wallet_info_btns">
