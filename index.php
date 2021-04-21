@@ -124,17 +124,17 @@ include_once "header.php"
             ?>
             <div class="index_shop">
                 <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
+                    <a href="#" >
                         <img src="admin/images/shops/<?= $shop->image?>">
                         <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
+                     </a>
+                    <a href="#" class="shop_content">
                         <h4><?= $shop->title ?></h4>
                         <h6>
                             <i class="fa fa-map"></i>
                              <?= $shop->address?>
                         </h6>
-                    </div>
+                    </a>
                     <div class="shop_star">
                         <div class="row">
                             <div class="col-3">
@@ -157,7 +157,7 @@ include_once "header.php"
             ?>
 
             <!--  -->
-            <a href="#" class="main_btn" style="width:100%">
+            <a href="#" class="main_btn">
                  
                     <i class="fa fa-reply"></i>
                
