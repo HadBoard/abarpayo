@@ -744,3 +744,16 @@ margin: 0 20px 20px 0;
 }
 
 .cat_shop h3 {padding: 10px 20px;color: var(--yellow_a);font-size: 23px;font-weight: 900;line-height: 36px;background-color: #fff;border: 1px solid rgba(0, 0, 0, 0.1);border-radius: 3px;padding: 7px 15px;-webkit-transform: translateY(-50%);transform: translateY(-50%);background-color: #ffffff;}
+
+.profile_left textarea {
+    padding: 9px 15px 7px;
+    text-align: right;
+    border: none;
+    box-shadow: rgb(0 0 0 / 28%) 1px 1px 3px 1px;
+    border-radius: 9px;
+    width: 70%;
+    float: right;
+    resize: none;
+    margin-right: 20px;
+    height: 101px;
+}
