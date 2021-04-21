@@ -1,11 +1,13 @@
 
 <?
-     $user_id = $action->user()->id;
+    $user_id = $action->user()->id;
+    $icon = $action->user_get($user_id)->profile; 
+    $icon = ($icon ? $icon : "");  
 ?>
 <div class="profile_right">
     <div class="row">
         <div class="col-6">
-            <div class="profile_right_img"><img src="https://webmaz.ir/sanyar/images/woman-5.jpg"></div>
+            <div class="profile_right_img"><img src=<?= $icon ? "admin/users/$icon" :"https://webmaz.ir/sanyar/images/woman-5.jpg"?>></div>
 
         </div>
         <div class="col-6 profile_user">
