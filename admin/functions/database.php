@@ -1015,6 +1015,54 @@ class Action
      {
          return $this->remove_data("tbl_request", $id);
      }
+
+    // ----------- start MARKETER -----------------------------------------------------------------------------------------
+
+    public function marketer_list()
+    {
+        return $this->table_list("tbl_bazarsaz");
+    }
+    public function marketer_add($title,$link,$image,$status)
+    {
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_bazarsaz`
+         (`title`,`link`,`image`,`status`,`created_at`) 
+         VALUES
+         ('$title','$link','$image','$status','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function marketer_edit($id, $title,$link,$image, $status)
+    {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_bazarsaz` SET 
+         `title`='$title',
+         `link` = '$link',
+         `image` = '$image',
+         `status`='$status',
+         `updated_at`='$now'
+         WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    public function marketer_remove($id)
+    {
+        return $this->remove_data("tbl_bazarsaz", $id);
+    }
+
+    public function marketer_status($id)
+    {
+        return $this->change_status('tbl_bazarsaz', $id);
+    }
+
+    public function marketer_get($id)
+    {
+        return $this->get_data("tbl_bazarsaz", $id);
+    }
+
+    // ----------- end MARKETER -------------------------------------------------------------------------------------------
 }
 
 // ----------- end Action class ----------------------------------------------------------------------------------------
