@@ -22,13 +22,14 @@ $result = $client->PaymentVerification(
 if ($result->Status == 100) {
 // echo '<br>Transation success. RefID:'.$result->RefID;
 $command = $action->payment_add($Amount,$cart_number,$result->RefID,1);
-$action->wallet_log_add("increase wallet by user",$Amount,1,$command);
+$action->wallet_log_add("افزایش موجودی کیف پول",$Amount,1,$command);
 $action->user_wallet_edit($Amount,1);
 $_SESSION['successful_pay'] = 'true';
 echo "<script> location.href='profile.php?wallet'; </script>";
 
 } else {
-      echo 'Transation failed. Status:'.$result->Status;
+    $_SESSION['successful_pay'] = 'false';
+    echo "<script> location.href='profile.php?wallet'; </script>";
 }
 } else {    
     echo 'Transaction canceled by user';

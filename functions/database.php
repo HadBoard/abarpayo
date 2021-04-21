@@ -299,6 +299,10 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id'");
     }
 
+    public function payment_get_action($payment_id){
+        return $this->connection->query("SELECT * FROM `tbl_wallet_log` WHERE `payment_id` = '$payment_id'");
+    }
+
     public function user_get_payment_limited(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id' LIMIT 2");
@@ -425,6 +429,10 @@ class Action
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$id' LIMIT 2");
     }
+    public function user_get_cart(){
+        $id = $this->user()->id;
+        return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$id'");
+    }
 
     public function user_reference_code($reference_code){
         return $this->connection->query("SELECT * FROM `tbl_user` WHERE `reference_code` = '$reference_code'");
@@ -481,7 +489,14 @@ class Action
     public function category_ordered_list(){
         return $this->connection->query("SELECT * FROM `tbl_category` ORDER BY ord ASC ");
     }
+    public function category_ordered_list_limited(){
+        return $this->connection->query("SELECT * FROM `tbl_category` ORDER BY ord ASC LIMIT 7 ");
+    }
 
+    public function category_get($id)
+    {
+        return $this->get_data("tbl_category", $id);
+    }
     public function category_shops_list($category_id){
         return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id' ");
     }

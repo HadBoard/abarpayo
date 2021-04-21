@@ -2,7 +2,7 @@
     $user_id = $action->user()->id;
     $wallet = $action->user_get($user_id)->wallet;
 
-    if(isset($_SESSION['successful_pay'])){
+    if($_SESSION['successful_pay'] == 'true'){
         ?>
             <div class="modal">
                     <div class="alert alert-suc">
@@ -14,6 +14,22 @@
                 </div>
                 <script src="assets/js/alert.js"></script>
         <?
+        unset($_SESSION['successful_pay']);
+    }
+
+    if($_SESSION['successful_pay'] == 'false'){
+        ?>
+            <div class="modal">
+                    <div class="alert alert-suc">
+                        <span class="close_alart">×</span>
+                        <p>
+                            پرداخت موفق بود!
+                        </p>
+                    </div>
+                </div>
+                <script src="assets/js/alert.js"></script>
+        <?
+        unset($_SESSION['successful_pay']);
     }
 ?>
     <div class="edit_profile_div">
@@ -98,12 +114,15 @@
                     <?
                         $transactions = $action->user_get_payment_limited();
                         while($transaction = $transactions->fetch_object()){
+                            $payments = $action->payment_get_action($transaction->id);
+                            $payment = $payments->fetch_object();
                             $type = $transaction->type;
                     ?>  
                             <tr>
                                 <td <?= ($type == 1) ? 'class="dec_wallet"': 'class="inc_wallet"' ?>> <?= ($type == 1) ? "-".$transaction->amount : "+".$transaction->amount ?></td>
                                 <td><?= $action->time_to_shamsi($transaction->date)?></td>
                                 <td><?= $transaction->cart_number?></td>
+                                <td><?= $transaction->action?></td>
                             </tr>
                     <?
                         }
@@ -116,6 +135,7 @@
                             <td class="dec_wallet"> <?= "-".$withdraw->amount ?></td>
                             <td><?= $action->time_to_shamsi($withdraw->paymented_at)?></td>
                             <td><?= $action->user_get_cart($withdraw->cart_id)->cart_number?></td>
+                            <td>برداشت از حساب</td>
                         </tr>
 
                     <?

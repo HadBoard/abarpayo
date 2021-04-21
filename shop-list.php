@@ -2,56 +2,17 @@
 require_once "functions/database.php";
 $action = new Action();
 $title = "فروشگاه ها" ;
-include_once "header.php"
+include_once "header.php";
+if(isset($_GET['category'])){
+    $id = $action->request('category');
+}
 ?>
   <!-- main part of shop list page -->
   <div class="container">
-      <!-- <div class="shop_list_header"> -->
-            <!-- <div class="row">
-                <div class="col-3">
-                    <div class="city_header shop_list_select">
-                        <select>
-                            <option>همه استان ها</option>
-                            <option>یزد-یزد</option>
-                            <option>یزد-یزد</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="city_header shop_list_select">
-                        <select>
-                            <option>همه شهر ها</option>
-                            <option>یزد-یزد</option>
-                            <option>یزد-یزد</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="city_header shop_list_select">
-                        <select>
-                            <option>همه دسته بندی ها</option>
-                            <option>یزد-یزد</option>
-                            <option>یزد-یزد</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-3 search_header shop_list_search">
-                    <input placeholder="جستجو : باشگاه ها ، کافه ها">
-                    <button><span class="material-icons">
-                      search
-                      </span></button>
-                </div>
-            </div> -->
-            <!-- <div class="row">
-                <button class="main_btn middle_btn shop_list_btn">
-                    <i class="fa fa-play"></i>
-                    فروشگاه های نزدیک من
-                </button>
-            </div> -->
-      <!-- </div> -->
+    
       <div class="shop_list_header">
             <div class="cat_shop">
-                <h3>رستوران و کافی شاپ</h3>
+                <h3><?= $action->category_get($id)->title ?></h3>
             </div>
       </div>
   </div>
@@ -60,26 +21,9 @@ include_once "header.php"
     <section class="container">
 
         <!-- buttons -->
-    <!-- <div class="tab_index">
-        <?
-            $result = $action->category_ordered_list();
-            while($row = $result->fetch_object()){
-        ?>
-            <button class="tablinks"><?= $row->title ?></button>
-        <?  } ?> -->
-        <!-- <button class="tablinks active_tablink">رستوران و کافی شاپ</button>
-        <button class="tablinks" >تفریحی ورزشی</button>
-        <button class="tablinks" >آرایشی  و بهداشتی</button>
-        <button class="tablinks" >پزشکی و سلامتی</button>
-        <button class="tablinks" >فرهنگی و هنری</button>
-        <button class="tablinks" >کالا و خدمات</button> -->
-    <!-- </div> -->
-        <!-- eof btns -->
-        <!--tabs content  -->
+    <div class="tab_index">
     <?
-        $result = $action->category_ordered_list();
-        while($row = $result->fetch_object()){
-            $shops = $action->category_shops_list($row->id)
+        $shops = $action->category_shops_list($id);
     ?>
         <div  class="tabcontent">
         <?
@@ -88,15 +32,19 @@ include_once "header.php"
             <div class="index_shop">
                 <div class="index_shop_inner">
                     <div style="width: 100%;position: relative;">
+                    <a href="shop.php?id=<?$shop->id ?>" >
                         <img src="admin/images/shops/<?= $shop->image?>">
                         <div class="shop_off">23%</div>
+                    </a>
                     </div>
                     <div class="shop_content">
+                    <a href="shop.php?id=<?=$shop->id?>" class="shop_content">
                         <h4><?= $shop->title ?></h4>
                         <h6>
                             <i class="fa fa-map"></i>
                              <?= $shop->address?>
                         </h6>
+                    </a>
                     </div>
                     <div class="shop_star">
                         <div class="row">
@@ -128,9 +76,6 @@ include_once "header.php"
                 </button>
 
         </div>
-    <?
-        }
-    ?>
 
         <!-- eof tabs -->
     </section>

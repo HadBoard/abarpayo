@@ -28,5 +28,15 @@
             <h4>کیف پول</h4>
             <img src="assets/images/006-right-arrow.svg">
         </a>
+        <a href="?carts" class="main_btn profile_btn">
+            <i class="fa fa-user"></i>
+            <h4>لیست کارت ها</h4>
+            <img src="assets/images/006-right-arrow.svg">
+        </a>
+        <a href="?transactions" class="main_btn profile_btn">
+            <i class="fa fa-user"></i>
+            <h4> لیست تراکنش ها</h4>
+            <img src="assets/images/006-right-arrow.svg">
+        </a>
     </div>
 </div>

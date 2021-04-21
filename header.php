@@ -133,7 +133,7 @@ $action = new Action();
                                 $result = $action->category_ordered_list();
                                 while($row = $result->fetch_object()){
                             ?>
-                                <a href="#">
+                                <a href="shop-list.php?category=<?=$row->id?>">
                                     <img src="admin/images/categoryIcons/<?= $row->icon ?>">
                                     <h5><?= $row->title ?></h5>
                                 </a>

@@ -93,7 +93,7 @@ include_once "header.php"
         <!-- buttons -->
         <div class="tab_index">
         <?
-            $result = $action->category_ordered_list();
+            $result = $action->category_ordered_list_limited();
             while($row = $result->fetch_object()){
         ?>
             <button class="tablinks"><?= $row->title ?></button>
@@ -101,16 +101,6 @@ include_once "header.php"
             }
         ?>
         </div>
-        <!-- <div class="tab_index">
-            <button class="tablinks active_tablink">رستوران و کافی شاپ</button>
-            <button class="tablinks">تفریحی ورزشی</button>
-            <button class="tablinks">آرایشی و بهداشتی</button>
-            <button class="tablinks">پزشکی و سلامتی</button>
-            <button class="tablinks">فرهنگی و هنری</button>
-            <button class="tablinks">کالا و خدمات</button>
-        </div> -->
-        <!-- eof btns -->
-        <!--tabs content  -->
         <?
             $result = $action->category_ordered_list();
             while($row = $result->fetch_object()){
@@ -124,11 +114,11 @@ include_once "header.php"
             ?>
             <div class="index_shop">
                 <div class="index_shop_inner">
-                    <a href="#" >
+                    <a href="shop.php?id=<?=$shop->id ?>" >
                         <img src="admin/images/shops/<?= $shop->image?>">
                         <div class="shop_off">23%</div>
                      </a>
-                    <a href="#" class="shop_content">
+                    <a href="shop.php?id=<?=$shop->id?>" class="shop_content">
                         <h4><?= $shop->title ?></h4>
                         <h6>
                             <i class="fa fa-map"></i>
@@ -142,7 +132,6 @@ include_once "header.php"
                             </div>
                             <div class="col-9 sell_card">
                                 <i class="fas fa-shopping-cart"></i>
-
                                 <p>
                                     <span>256</span>
                                     خرید
@@ -157,7 +146,7 @@ include_once "header.php"
             ?>
 
             <!--  -->
-            <a href="shop-list.php" class="main_btn">
+            <a href="shop-list.php?category=<?= $row->id ?>" class="main_btn">
                  
                 <i class="fa fa-reply"></i>
                
