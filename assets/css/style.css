@@ -377,12 +377,14 @@ ul {
     border-radius: 120px;
 }
 
-.profile_header a {
+.profile_header a,.profile_header label {
     color: var(--yellow_a);
     bottom: -88%;
     right: 42%;
     position: absolute;
     font-weight: 500;
+    z-index: 9999;
+    cursor: pointer;
 }
 .profile_header_img ,.profile_header_img_2{
     background: #fff;
@@ -756,4 +758,8 @@ margin: 0 20px 20px 0;
     resize: none;
     margin-right: 20px;
     height: 101px;
+}
+.profile_left.mp {
+    padding-top: 0;
+    margin-top: -40px;
 }

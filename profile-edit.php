@@ -48,7 +48,10 @@
             </div>
         </div>
 
-        <a>ویرایش تصویر</a>
+        <label for="pic">ویرایش تصویر</label>
+            <input type="file" style="
+                display: none;
+            " name="pic">
     </div>
     <div class="profile_left">
     <form action="" method="post">
@@ -81,22 +84,10 @@
         </form>
     </div>
 </div>
-<!-- <script>
- document.getElementById('code_submit').onclick=function(){
-    var code=document.getElementById('code').value;
-       $.ajax({
-            url:'ajax/code.php',
-            type:'post',
-            data:{code:code},
-            success:function(data){
-                console.log(data)
-        		if(data==-1){
-                        alert("دوباره تلاش کنید.");
-                }
-                if(data==1){
-                    alert("1");
-                }
-            }
-       })
-   }
-</script> -->
+<script>
+$("label[for='pic']").click(function(){
+    console.log('hello')
+    $("input[name=pic]").click();
+})
+
+</script>
