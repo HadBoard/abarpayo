@@ -30,6 +30,10 @@ include_once "header.php";
                     include_once "profile-transactions.php";
                 else if(isset($_GET['wallet-withdraw']))
                     include_once "wallet-withdraw.php";
+                else if(isset($_GET['carts']))
+                    include_once "profile-carts.php";
+                else if(isset($_GET['add-cart']))
+                    include_once "add-cart.php";
                 else
                    include_once "profile-edit.php";
                 ?>
