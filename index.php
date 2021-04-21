@@ -157,12 +157,12 @@ include_once "header.php"
             ?>
 
             <!--  -->
-            <button class="main_btn">
-                <a>
+            <a href="#" class="main_btn" style="width:100%">
+                 
                     <i class="fa fa-reply"></i>
-                </a>
+               
                 بیشتر
-            </button>
+            </a>
 
         </div>
         <?

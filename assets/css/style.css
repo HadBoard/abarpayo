@@ -671,7 +671,7 @@ margin: 0 20px 20px 0;
 
 .profile_left form {
     border-radius: 10px;
-    box-shadow: 0 1.5px 3px 0 rgba(0, 0, 0, 0.16);
+    /* box-shadow: 0 1.5px 3px 0 rgba(0, 0, 0, 0.16); */
     background-color: #ffffff;
     padding: 17px 0;
     margin-top: 30px;
@@ -705,4 +705,16 @@ margin: 0 20px 20px 0;
 .close_alart ,.close_alart:hover{
   margin: -8px 5px 0 10px;
   color:#FFF
+}
+
+.form-group select {
+    width: 62%;
+    padding: 5px 12px;
+    cursor: pointer;
+    width: 62%;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    box-shadow: rgb(213 209 209) -1px 1px 3px 1px;
+    background: #ffffff;
+    color: gray;
 }
