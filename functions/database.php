@@ -345,6 +345,25 @@ class Action
         return $id;
     }
 
+    public function app_profile_edit($user_id,$first_name, $last_name,$national_code,$birthday,$address,$postal_code,$city_id)
+    {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_user` SET 
+        `first_name`='$first_name',
+        `last_name`='$last_name',
+        `national_code`='$national_code',
+        `birthday` = '$birthday',
+        `address`='$address',
+        `postal_code` = '$postal_code',
+        `city_id` = '$city_id',
+        `updated_at`='$now'
+        WHERE `id` ='$user_id'");
+        if (!$this->result($result)) return false;
+        return $user_id;
+    }
+
+
+
     public function user_phone_edit($first_name,$last_name,$national_code,$phone,$birthday)
     {
         $id = $this->user()->id;
@@ -591,6 +610,10 @@ class Action
     public function bank_get($id)
     {
         return $this->get_data("tbl_bank", $id);
+    }
+
+    public function lazyLoad($category_id,$cur_index){
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id' ORDER BY id LIMIT $cur_index,8 ");
     }
     // ----------- end PAYMENT ------------------------------------------------------------------------------------------
 }

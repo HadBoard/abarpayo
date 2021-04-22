@@ -19,11 +19,10 @@ if(isset($_GET['category'])){
 
   <!-- stores -->
     <section class="container">
-
         <!-- buttons -->
     <div class="tab_index">
     <?
-        $shops = $action->category_shops_list($id);
+        $shops = $action->category_shops_list_limited($id);
     ?>
         <div  class="tabcontent">
         <?
@@ -32,7 +31,7 @@ if(isset($_GET['category'])){
             <div class="index_shop">
                 <div class="index_shop_inner">
                     <div style="width: 100%;position: relative;">
-                    <a href="shop.php?id=<?$shop->id ?>" >
+                    <a href="shop.php?id=<?=$shop->id?>" >
                         <img src="admin/images/shops/<?= $shop->image?>">
                         <div class="shop_off">23%</div>
                     </a>
@@ -66,20 +65,37 @@ if(isset($_GET['category'])){
             <?
             }
             ?>
-         
-                <button class="main_btn">
-                    
-                    <a>
-                        <i class="fa fa-reply"></i>
-                    </a>
-                    بیشتر
-                </button>
-
         </div>
-
+        <button id="lazyload" class="main_btn">      
+                    <!-- <a> -->
+                        <i class="fa fa-reply"></i>
+                    <!-- </a> -->
+                    بیشتر
+        </button>
         <!-- eof tabs -->
     </section>
-
+<script>
+ var cur_index = 4;
+ var id = "<?php echo $id ?>";
+ $('#lazyload').click(function(){
+     console.log("id",id);
+     console.log("index",cur_index);
+    $.ajax({
+        url: "ajax/lazyLoader.php",
+        type:'post',
+        data: {cur_index:cur_index,category_id:id},
+        success: function(response){
+            cur_index += 8;
+            if(response){
+                $(".tabcontent").append(response);
+                // $('div#loadmoreajaxloader').hide();
+            }else{
+                // $('div#loadmoreajaxloader').html('<center>No more posts to show.</center>');
+            }
+        }
+    });
+});
+</script>
 <script>
     let tab_btns = document.querySelectorAll('.tablinks')
     let tab_content = document.querySelectorAll('.tabcontent')

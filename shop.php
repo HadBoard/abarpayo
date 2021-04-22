@@ -3,7 +3,9 @@ require_once "functions/database.php";
 $action = new Action();
 $title = "فروشگاه ها" ;
 include_once "header.php";
-$id = $_GET['id'];
+if(isset($_GET['id'])){
+    $id = $action->request('id');
+}
 $shop  = $action-> shop_get($id);
 ?>
 
@@ -17,7 +19,7 @@ $shop  = $action-> shop_get($id);
               </div>
               <div class="col-md-6">
                   <div class="shop_right">
-                      <h2><?= $shop->title ?></h2>
+                      <h2><?= $shop->title?></h2>
                       <p><?= $shop->address?></p>
                   </div>
               </div>
@@ -225,7 +227,7 @@ $shop  = $action-> shop_get($id);
         <?
         $result = $action->category_ordered_list();
         while($row = $result->fetch_object()){
-            $shops = $action->category_shops_list($row->id)
+            $shops = $action->category_shops_list_limited($row->id)
     ?>
         <div  class="tabcontent">
         <?

@@ -85,7 +85,7 @@ $action = new Action();
             <? if ($action->auth()) { ?>
                 <div class="col-md-4 active_header_user ">
                     <div class="user_header user_signout">
-                        <a href="profile.php">
+                        <a href="logout.php">
                             <img src="assets/images/logout.png">
                         </a>
 
