@@ -299,6 +299,10 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id'");
     }
 
+    public function payment_get_action($payment_id){
+        return $this->connection->query("SELECT * FROM `tbl_wallet_log` WHERE `payment_id` = '$payment_id'");
+    }
+
     public function user_get_payment_limited(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id' LIMIT 2");
@@ -325,7 +329,7 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function user_profile_edit($first_name, $last_name,$national_code,$birthday)
+    public function user_profile_edit($first_name, $last_name,$national_code,$birthday,$icon)
     {
         $id = $this->user()->id;
         $now = time();
@@ -334,6 +338,7 @@ class Action
         `last_name`='$last_name',
         `national_code`='$national_code',
         `birthday` = '$birthday',
+        `profile`='$icon',
         `updated_at`='$now'
         WHERE `id` ='$id'");
         if (!$this->result($result)) return false;
@@ -397,13 +402,13 @@ class Action
     {
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_user_cart` SET 
-        `bank_id`= '$bank_id',
-        `title` = '$title',
-        `cart_number` = '$cart_number',
-        `account_number` = '$account_number',
-        `iban` = '$iban',
-        `validation`= '$validation',
-        `updated_at` = '$now'
+        `bank_id` = '$bank_id',
+        `title`='$title',
+        `cart_number`='$cart_number',
+        `account_number`='$account_number',
+        `iban`='$iban',
+        `validation`='$validation',
+        `updated_at`='$now'
         WHERE `id` ='$id'");
         if (!$this->result($result)) return false;
         return $id;
@@ -424,6 +429,10 @@ class Action
     public function user_get_cart_limited(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$id' LIMIT 2");
+    }
+    public function user_get_cart(){
+        $id = $this->user()->id;
+        return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$id'");
     }
 
     public function user_reference_code($reference_code){
@@ -481,7 +490,14 @@ class Action
     public function category_ordered_list(){
         return $this->connection->query("SELECT * FROM `tbl_category` ORDER BY ord ASC ");
     }
+    public function category_ordered_list_limited(){
+        return $this->connection->query("SELECT * FROM `tbl_category` ORDER BY ord ASC LIMIT 7 ");
+    }
 
+    public function category_get($id)
+    {
+        return $this->get_data("tbl_category", $id);
+    }
     public function category_shops_list($category_id){
         return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id' ");
     }

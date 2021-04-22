@@ -214,17 +214,11 @@ $shop  = $action-> shop_get($id);
         <!-- buttons -->
         <div class="tab_index">
         <?
-            $result = $action->category_ordered_list();
+            $result = $action->category_ordered_list_limited();
             while($row = $result->fetch_object()){
         ?>
             <button class="tablinks"><?= $row->title ?></button>
         <?  } ?>
-        <!-- <button class="tablinks active_tablink">رستوران و کافی شاپ</button>
-        <button class="tablinks" >تفریحی ورزشی</button>
-        <button class="tablinks" >آرایشی  و بهداشتی</button>
-        <button class="tablinks" >پزشکی و سلامتی</button>
-        <button class="tablinks" >فرهنگی و هنری</button>
-        <button class="tablinks" >کالا و خدمات</button> -->
     </div>
         <!-- eof btns -->
         <!--tabs content  -->
@@ -239,17 +233,17 @@ $shop  = $action-> shop_get($id);
         ?>
             <div class="index_shop">
                 <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
+                    <a href="shop.php?id=<?=$shop->id ?>" >
                         <img src="admin/images/shops/<?= $shop->image?>">
                         <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
+                     </a>
+                     <a href="shop.php?id=<?=$shop->id?>" class="shop_content">
                         <h4><?= $shop->title ?></h4>
                         <h6>
                             <i class="fa fa-map"></i>
                              <?= $shop->address?>
                         </h6>
-                    </div>
+                    </a>
                     <div class="shop_star">
                         <div class="row">
                             <div class="col-3">
@@ -270,15 +264,11 @@ $shop  = $action-> shop_get($id);
             <?
             }
             ?>
-         
-                <button class="main_btn">
-                    
-                    <a>
-                        <i class="fa fa-reply"></i>
-                    </a>
-                    بیشتر
-                </button>
-
+         <a href="shop-list.php?category=<?= $row->id ?>" class="main_btn">    
+                 <i class="fa fa-reply"></i>
+                
+                 بیشتر
+             </a>
         </div>
     <?
         }

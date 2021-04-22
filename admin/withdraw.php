@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
     if ($edit) {
         $command = $action->request_edit($id, $description,$birthday);
         $command1 = $action->wallet_withdraw($user_id,$wallet);
-        $command2 = $action->wallet_log_add($user_id,"decrease wallet confirmed by admin",$amount,0,0);
+        $command2 = $action->wallet_log_add($user_id,"برداشت از حساب",$amount,0,0);
     } else {
         // $command = $action->withdraw_add($description,$paymented_at,$status);
     }

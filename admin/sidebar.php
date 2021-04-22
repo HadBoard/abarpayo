@@ -41,6 +41,16 @@ $action = new Action();
 
     <hr class="m-0">
 
+
+    <li>
+        <a class="has-arrow" href="marketer-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">بازارسازان</span>
+        </a>
+    </li>
+
+    <hr class="m-0">
+
     <li>
         <a class="has-arrow" href="category-list.php" aria-expanded="false">
             <i class="fa fa-user"></i>

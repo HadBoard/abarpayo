@@ -14,7 +14,14 @@
     <a href="?wallet" class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
 
     <h3 style="width: 50%;float: right;">کارت های من</h3>
+    <div class="row">
+        <div class="col-3">
+        <a href="?add-cart"class="main_btn wallet_btn">افزودن کارت</a>
+        </div>
+    </div>
+    
     <img src="assets/images/Group 465.svg">
+  
     
 </div>
 <div class="profile_left">
