@@ -151,6 +151,7 @@ class Action
     public function request_date($name)
     {
         $name = $this->request('birthday', false);
+        if(!$name) return 0;
         $name = $this->shamsi_to_miladi($name);
         return strtotime($name);
     }
@@ -614,6 +615,9 @@ class Action
 
     public function lazyLoad($category_id,$cur_index){
         return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id' ORDER BY id LIMIT $cur_index,8 ");
+    }
+    public function app_lazyLoad($category_id,$cur_index){
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id' ORDER BY id LIMIT $cur_index,10 ");
     }
     // ----------- end PAYMENT ------------------------------------------------------------------------------------------
 }

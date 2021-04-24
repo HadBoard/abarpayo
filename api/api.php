@@ -87,30 +87,39 @@ if(isset($_POST['function'])) {
     if($_POST['function'] == 'categories'){
         $obj = null;
         $categories = [];
-        $shops = [];
-    
         $categories_list = $action -> category_ordered_list();
         while ($category = $categories_list->fetch_object()) {
             $obj_in -> c_id = $category->id;
-            $obj_in -> title = $category->title;
-            $obj_in -> icon = "http://abarpayo.com/site/admin/images/categoryIcons/$row->icon";
-            
-            $shops_list = $action->category_shops_list($category->id);
-            while ($shop = $shops_list->fetch_object()) {
-                $obj_inner -> s_id = $shop -> id;
-                $obj_inner -> name = $shop -> title;
-                $obj_inner -> address = $shop -> address;
-                $shops[] = $obj_inner;
-                $obj_inner = null;
-            }
-
-            $obj_in -> shops = $shops;
+            $obj_in -> c_text = $category->title;
+            $obj_in -> c_image = "http://abarpayo.com/site/admin/images/categoryIcons/$row->icon";
             $categories[] = $obj_in;
             $obj_in = null;
-            $shops = [];
         }
 
         $obj -> categories = $categories;
+        $json = json_encode($obj);
+        echo $json;
+    }
+    
+    if($_POST['function'] == 'shops'){
+        $obj = null;
+        $category_id = $action->request('category_id');
+        $shops = [];
+        $shops_list = $action->category_shops_list($category_id);
+        while ($shop = $shops_list->fetch_object()) {
+            $obj_inner -> s_id = $shop -> id;
+            $obj_inner -> name = $shop -> title;
+            $obj_inner -> img = "http://abarpayo.com/site/admin/images/shops/$shop->image";
+            $obj_inner -> address = $shop -> address;
+            $obj_inner -> off = "off";
+            $obj_inner -> rate = "rate";
+            $obj_inner -> buy_counter = "buy_counter";
+            $obj_inner -> phone = $shop -> phone;
+            $shops[] = $obj_inner;
+            $obj_inner = null;
+        }
+
+        $obj -> shops = $shops;
         $json = json_encode($obj);
         echo $json;
     }
@@ -136,12 +145,45 @@ if(isset($_POST['function'])) {
                 cities=>$city
            ];
         }
-        $obj -> cities = $province;
+        $obj -> province = $province;
         $json = json_encode($obj);
         echo $json;
         
     }
-
-   
+    
+    if($_POST['function'] == 'userInfo'){
+        $id = $action->request('user_id');
+        $obj -> first_name = $action->user_get($id)->first_name;
+        $obj -> last_name = $action->user_get($id)->last_name;
+        $obj -> phone = $action->user_get($id)->phone;
+        $obj -> national_code = $action->user_get($id)->national_code;
+        $obj -> address = $action->user_get($id)->address;
+        $obj -> postal_code = $action->user_get($id)->postal_code;
+        $obj -> city_id = $action->user_get($id)->city_id;
+        $obj ->province_id = $action->city_get($action->user_get($id)->city_id)->province_id;
+        $timestamp = $action->user_get($id)->birthday;
+        $obj -> birthday = $timestamp;
+        $json = json_encode($obj);
+        echo $json;
+    }
+    
+    if($_POST['function'] == 'userEdit'){
+        $obj = null;
+        $obj->result = 0;
+        $id = $action->request('user_id');
+        $first_name = $action->request('first_name');
+        $last_name = $action->request('last_name');
+        $national_code = $action->request('national_code');
+        $address = $action->request('address');
+        $postal_code = $action->request('postal_code');
+        $city_id = $action->request('city_id');
+        // $birthday = $action->request_date('birthday');
+        $command = $action->app_profile_edit($id,$first_name, $last_name,$national_code,$birthday,$address,$postal_code,$city_id);
+        if($command){
+            $obj->result = 1;
+        }
+        $json = json_encode($obj);
+        echo $json;
+    }
 }
 

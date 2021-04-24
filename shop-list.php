@@ -52,7 +52,6 @@ if(isset($_GET['category'])){
                             </div>
                             <div class="col-9 sell_card">
                                 <i class="fas fa-shopping-cart"></i>
-
                                 <p>
                                     <span>256</span>
                                     خرید

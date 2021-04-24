@@ -83,7 +83,7 @@
                     placeholder="آدرس"
                     ><?= $action->user_get($user_id)->address ?></textarea>
         </div>
-        <input name="submit" type="submit" class="main_btn middle_btn " value="ادامه">            
+        <input name="submit" type="submit" class="main_btn middle_btn " value="ذخیره">            
     </form>
 </div>
 </div>
