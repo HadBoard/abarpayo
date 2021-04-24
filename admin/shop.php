@@ -265,7 +265,6 @@ include('header.php'); ?>
                                         <label for="icon" class="btn btn-dark btn-block m-0">انتخاب عکس</label>
                                         <input type="file" name="icon" id="icon" style="visibility:hidden;">
                                 </div>
-
                                 <div class="form-actions">
 
                                     <label class="float-right">

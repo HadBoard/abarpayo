@@ -1,7 +1,4 @@
 <?
-    if(!$action->auth()){
-        header("Location: phone.php");
-    }
     $user_id = $action->user()->id;
     $icon = $action->user_get($user_id)->profile; 
     $icon = ($icon ? $icon : "");  
@@ -10,7 +7,11 @@
         $first_name = $action->request('name');
         $last_name = $action->request('lname');
         $national_code = $action->request('national_code');
+        
+
         $birthday = $action->request_date('birthday');
+        
+       
         $user_phone = $action->user_get($user_id)->phone;
 
         if($_FILES["pic"]["name"]){
@@ -45,21 +46,10 @@
                     </div>
                 </div>
             <script src="assets/js/alert.js"></script>
-            <?
+            <?   
+            echo "<script>location.href='?edit'</script>";
         }
-        // if($user_phone == $phone){
-        //     $command= $action->user_profile_edit($first_name, $last_name,$national_code,$birthday);
-        // }else{
-        //     $code=rand(100000,999999);
-        //     // $action->send_sms($phone,$code);
-        //     $_SESSION['change_phone_code'] = $code;
-        //     $action->validation_code_add($user_id,$code);
-?>
-           <!-- <script> document.getElementById("myModal").style.display = "block";</script> -->
-<?
-        // }
     }
-    // $sent_code = $_SESSION['change_phone_code'];
 ?>
 
 
@@ -96,9 +86,9 @@
             
             <div class="form-group">
             <label for="birthday">تاریخ تولد</label>
-                <input type="text" id="date" name="birthday" class="form-control"
+                <input type="text" id="birthday" name="birthday" class="form-control"
                         placeholder="تاریخ تولد"
-                        required value="<?= ($action->user_get($user_id)->birthday) ? $action->time_to_shamsi($action->user_get($user_id)->birthday) : "" ?>">
+                        value="<?= ($action->user_get($user_id)->birthday) ? $action->time_to_shamsi($action->user_get($user_id)->birthday) : "" ?>">
             </div>
 
             <button name="submit" class="main_btn middle_btn " id="form_submit" >ذخیره</button>

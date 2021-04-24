@@ -163,7 +163,26 @@
         </div>
     </div>
 </footer>
-
+<script>
+    var customOptions = {
+        placeholder: "تاریخ شروع"
+        , twodigit: false
+        , closeAfterSelect: true
+        , nextButtonIcon: "fa fa-arrow-circle-right"
+        , previousButtonIcon: "fa fa-arrow-circle-left"
+        , buttonsColor: "black"
+        , forceFarsiDigits: true
+        , markToday: true
+        , markHolidays: true
+        , highlightSelectedDay: true
+        , sync: true
+        , gotoToday: true
+    }
+    kamaDatepicker('date', customOptions);
+    kamaDatepicker('date_start', customOptions);
+    kamaDatepicker('date_end', customOptions);
+    kamaDatepicker('birthday', customOptions);
+</script>
 
 
 </body>

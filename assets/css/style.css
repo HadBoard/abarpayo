@@ -443,6 +443,8 @@ td {
     color: #363636;
     font-weight: 500;
     font-size: 14px;
+    max-width: 20%;
+    width: 18%;
 }
 
 tr {
@@ -459,6 +461,10 @@ tr {
 td:first-child {
     font-size: 17px;
 }
+tr td:last-child {
+    width: 22%;
+}
+
 table{width: 100%;}
 td:last-child {
     text-align: left;

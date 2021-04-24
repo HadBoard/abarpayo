@@ -25,6 +25,10 @@ $action = new Action();
     <script src='assets/js/fontAwsome.js'></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+    <link rel="stylesheet" href="admin/css/jquery.Bootstrap-PersianDateTimePicker.css"/>
+    <link type="text/css" rel="stylesheet" href="admin/css/kamadatepicker.css"/>
+    <script src="admin/js/kamadatepicker.js"></script>
+
 
 </head>
 

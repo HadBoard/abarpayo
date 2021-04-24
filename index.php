@@ -12,7 +12,7 @@ include_once "header.php"
                 $result = $action->slider_list();
                 while ($row = $result->fetch_object()) {
              ?>
-                <a class="carousel-cell"><img src="admin/images/sliders/<?= $row->image ?>"></a>
+                <a href="<?= $row->link ?>" class="carousel-cell"><img src="admin/images/sliders/<?= $row->image ?>"></a>
             <?
                 }
             ?>
