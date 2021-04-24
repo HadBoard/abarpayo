@@ -782,3 +782,18 @@ margin: 0 20px 20px 0;
     margin: auto;
     cursor: pointer;
 }
+.nomore-item {
+    width: 50%;
+    background: linear-gradient(45deg, #00000017, #00000008);
+    display: table;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 20px auto;
+    text-align: center;
+    box-shadow: 0px 1px 2px 0px var(--yellow_a);
+}
+
+.nomore-item p {
+    color: var(--yellow_a);
+    font-weight: bold;
+}
