@@ -24,7 +24,7 @@ $action = new Action();
     <script src='assets/js/jquery.js'></script>
     <script src='assets/js/fontAwsome.js'></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="admin/css/jquery.Bootstrap-PersianDateTimePicker.css"/>
     <link type="text/css" rel="stylesheet" href="admin/css/kamadatepicker.css"/>
     <script src="admin/js/kamadatepicker.js"></script>
