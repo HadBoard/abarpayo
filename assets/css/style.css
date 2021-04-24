@@ -797,3 +797,201 @@ margin: 0 20px 20px 0;
     color: var(--yellow_a);
     font-weight: bold;
 }
+
+/* comment */
+.comment_container {
+    box-shadow: 0px 4px 11px 3px #0000001f;
+    background: #fff;
+    border-radius: 15px;
+    padding: 10px 20px;
+    padding-bottom: 40px;
+}
+
+.comment_area {
+    width: 98%;
+    margin: auto;
+}
+
+.comment_top {
+    width: 90%;
+    margin: auto;
+    padding: 10px;
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    float: right;
+    background-image:url('http://sanyarlms.ir/organs/?do=download&file=content%2Fgroup%20teacher.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 50px;
+}
+
+.info_comment {
+    display: table;
+    width: 100%;
+}
+
+.info_comment h5 {
+    font-size: 17px;
+    margin: 16px 9px;
+    float: right;
+}
+
+.comment_top textarea {
+    width: 90%;
+    border: 1px solid gray;
+    border-radius: 5px;
+    resize: vertical;
+    margin-top: 20px;
+    border: none;
+    box-shadow: rgb(0 0 0 / 28%) 1px 1px 3px 1px;
+    padding: 10px;
+    min-height: 120px;
+}
+
+.comment_bottom {
+    width: 90%;
+    /* margin: auto; */
+    display: table;
+    padding-top: 30px;
+}
+
+.comment_bottom h3 ,.comment_area h3{
+    color: var(--yellow_a);
+    margin: 10px 12px 20px 10px;
+    border-bottom: 1px solid;
+    width: 10%;
+    text-align: center;
+}
+
+.comment_info {
+    width: 90%;
+    display: table;
+    border-bottom: 1px dashed gray;
+    margin: auto;
+    padding: 17px 0 5px 0;
+}
+
+.comment_item_info h4 {
+    float: right;
+    max-width: 60%;
+    padding-left: 20px;
+}
+
+.date {
+    margin-right: 20px;
+    max-width: 40%;
+}
+
+.date p {padding-top: 4px;font-weight: 400;color: gray;}
+
+.commentp {
+    width: 100%;
+    margin: 10px 0;
+    color: darkgray;
+}
+
+.comment_reply_icon {
+    background: gray;
+    text-align: center;
+    width: 5%;
+    border-radius: 6px;
+    float: left;
+    padding: 0;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: 0.3s ease-in-out all;
+    border: 1px solid gray;
+}
+.comment_reply_icon i {
+    color: #fff;
+    margin-top: 8px;
+}
+.comment_reply_icon:hover{
+    background:transparent;
+}
+.comment_reply_icon:hover i{
+    color:gray;
+}
+.comment_info.comment_reply {
+    background: #80808014;
+    padding: 17px 50px 5px 6px;
+}
+/* stars */
+.container-x{
+  place-items: center;
+  text-align: center;
+  position: relative;
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  float: left;
+  margin-top: 5px;
+  text-align: left;
+  transform: rotateY(180deg);
+  }
+  .container-x .post{
+  display: none;
+  }
+  .container-x .text{
+  font-size: 25px;
+  color: #666;
+  font-weight: 500;
+  }
+  .container-x .edit{
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 16px;
+  color: #666;
+  font-weight: 500;
+  cursor: pointer;
+  }
+  .container-x .edit:hover{
+  text-decoration: underline;
+  }
+  .container-x .star-widget input{
+  display: none;
+  }
+  .star-widget label{
+  font-size: 17px;
+  color: #444;
+  padding: 3px;
+  float: right;
+  transition: all 0.2s ease;
+  }
+  input:not(:checked) ~ label:hover,
+  input:not(:checked) ~ label:hover ~ label{
+  color: #fd4;
+  }
+  input:checked ~ label{
+  color: #fd4;
+  }
+  /* input#rate-5:checked ~ label{ */
+  /* color: #fe7; */
+  /* text-shadow: 0 0 20px #952; */
+  /* } */
+  
+  .container-x form{
+  display: none;
+  }
+  input:checked ~ form{
+  display: block;
+  }
+  
+  
+  .stars {
+    width: 80%;
+    float: left;
+    padding-top: 21px;
+}
+
+.star-widget label {
+    cursor: pointer;
+}
+  /* stars */
