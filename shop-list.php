@@ -20,7 +20,7 @@ if(isset($_GET['category'])){
   <!-- stores -->
     <section class="container">
         <!-- buttons -->
-    <div class="tab_index">
+    <div class="tab_index" style="border-bottom:none;">
     <?
         $shops = $action->category_shops_list_limited($id);
     ?>
@@ -71,6 +71,13 @@ if(isset($_GET['category'])){
                     <!-- </a> -->
                     بیشتر
         </button>
+        <div class="row more-item">
+            <div class="nomore-item">      
+                    
+                    <p>مورد دیگری برای نمایش موجود نمی باشد . </p>
+            </div>
+        </div>
+        
         <!-- eof tabs -->
     </section>
 <script>
