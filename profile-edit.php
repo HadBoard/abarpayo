@@ -108,8 +108,10 @@
 </div>
 <script>
 $("label[for='pic']").click(function(){
-    console.log('hello')
+    console.log('1')
     $("input[name=pic]").click();
 })
-
+$("input[type=file]").click(function(){
+    console.log($("input[name=pic]").file())
+});
 </script>
