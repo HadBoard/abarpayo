@@ -71,6 +71,12 @@ if(isset($_GET['category'])){
                     <!-- </a> -->
                     بیشتر
         </button>
+        <button id="lazyload" class="main_btn">      
+                    <!-- <a> -->
+                        <i style="" class="fa fa-frown-o"></i>
+                    <!-- </a> -->
+                    مورد دیگری برای نمایش موجود نمی باشد . 
+        </button>
         <!-- eof tabs -->
     </section>
 <script>
