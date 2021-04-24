@@ -44,10 +44,10 @@ $shop  = $action-> shop_get($id);
         <div class="carousel"
             data-flickity='{ "wrapAround": true }'>
             <?
-                $result = $action->slider_list();
-                while ($shop = $result->fetch_object()) {
+                $pics = $action->shop_pics_get($id);
+                while ($pic = $pics->fetch_object()) {
              ?>
-                <img class="carousel-cell" src="admin/images/sliders/<?= $shop->image ?> ">
+                <img class="carousel-cell" src="admin/images/shops/<?= $pic->image ?> ">
             <?
                 }
             ?>

@@ -12,7 +12,6 @@ date_default_timezone_set("Asia/Tehran");
 // ----------- start DB class ------------------------------------------------------------------------------------------
 class DB
 {
-
     // ----------- properties
     protected $_DB_HOST = 'localhost';
     protected $_DB_USER = 'root';
@@ -578,6 +577,22 @@ class Action
         ('$category_id','$title','$icon','$phone','$fax','$city_id','$address','$longitude','$latitude','$status','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
+    }
+
+    public function shop_pics_add($shop_id,$pic)
+    {
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_shop_pics`
+        (`shop_id`,`image`,`created_at`) 
+        VALUES
+        ('$shop_id','$pic','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function shop_pics_get($shop_id)
+    {
+        return $this->connection->query("SELECT * FROM `tbl_shop_pics` WHERE `shop_id` = '$shop_id'");
     }
 
     public function shop_edit($id,$category_id,$title,$icon, $phone, $fax, $city_id, $address, $longitude, $latitude, $status)
