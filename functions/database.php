@@ -521,6 +521,11 @@ class Action
     public function category_shops_list($category_id){
         return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id' ");
     }
+    
+    public function shop_pics_get($shop_id)
+    {
+        return $this->connection->query("SELECT * FROM `tbl_shop_pics` WHERE `shop_id` = '$shop_id'");
+    }
 
     public function category_shops_list_limited($category_id){
         return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id' LIMIT 4 ");

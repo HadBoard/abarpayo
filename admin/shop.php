@@ -65,6 +65,32 @@ if (isset($_POST['submit'])) {
         } 
     }
 
+    if($edit){
+    // Count the number of uploaded files in array
+    $total_count = count($_FILES['upload']['name']);
+    // Loop through every file
+    for( $i=0 ; $i < $total_count ; $i++ ) {
+        $target_dir = "images/shops/";
+        $target_file = $target_dir . basename($_FILES["upload"]["name"][$i]);
+
+        // Select file type
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+        // Valid file extensions
+        $extensions_arr = array("jpg","jpeg","png","gif");
+
+        // Check extension
+        if( in_array($imageFileType,$extensions_arr) ){
+            $name = $action -> get_token(10) . "." . $imageFileType;
+            // Upload file
+            move_uploaded_file($_FILES['upload']['tmp_name'][$i],$target_dir.$name);
+            $pic = $name;
+            $command1 = $action->shop_pics_add($id,$pic);
+        } 
+    }
+}
+
+
     // send query
     if ($edit) {
         $command = $action->shop_edit($id,$category_id, $title,$icon,$phone, $fax, $city_id, $address, $longitude, $latitude, $status);
@@ -265,6 +291,14 @@ include('header.php'); ?>
                                         <label for="icon" class="btn btn-dark btn-block m-0">انتخاب عکس</label>
                                         <input type="file" name="icon" id="icon" style="visibility:hidden;">
                                 </div>
+                                <?if($edit){?>
+                                <div class="input_fields_wrap form-group">
+                                    <button class="add_field_button"><i class="fas fa-plus"></i></button>
+                                    <label class="btn btn-dark btn-block m-0">انتخاب عکس
+                                    <input type="file" name="upload[]" style="visibility:hidden;">
+                                    </label>
+                                </div>
+                                <? } ?>
                                 <div class="form-actions">
 
                                     <label class="float-right">
@@ -280,7 +314,6 @@ include('header.php'); ?>
                                     <a href="<?= $list_url ?>"><span name="back" class="btn btn-inverse">بازگشت به لیست</span></a>
 
                                 </div>
-
                             </form>
                         </div>
                     </div>
@@ -293,6 +326,16 @@ include('header.php'); ?>
                         <div class="card">
                             <img src="images/shops/<?= $row->image ?>">
                         </div>
+                        <?
+                            $pictures = $action->shop_pics_get($id);
+                            while ($picture = $pictures->fetch_object()) {
+                                ?>
+                                <div class="card">
+                                    <img src="images/shops/<?= $picture->image ?>">
+                                </div>
+                                <?
+                            }
+                        ?>
                     </div>
             <? } ?>
         </div>
@@ -310,9 +353,30 @@ include('header.php'); ?>
             success:function(response){
         		$("#city").html(response);
             }
-       })
-       
+       })   
    }
 </script>
+<? if($edit){?>
+<script>
+$(document).ready(function() {
+	var max_fields      = 5; //maximum input boxes allowed
+	var wrapper   		= $(".input_fields_wrap"); //Fields wrapper
+	var add_button      = $(".add_field_button"); //Add button ID
+	
+	var x = 1; //initlal text box count
+	$(add_button).click(function(e){ //on add input button click
+		e.preventDefault();
+		if(x < max_fields){ //max input box allowed
+			x++; //text box increment
+			$(wrapper).append('<div><label class="btn btn-dark btn-block m-0">انتخاب عکس<input type="file" name="upload[]" style="visibility:hidden;"></label><a href="#" class="remove_field"><i class="fas fa-minus"></i></a></div>'); //add input box
+		}
+	});
+
+	$(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+		e.preventDefault(); $(this).parent('div').remove(); x--;
+	})
+});
+</script>
+<?}?>
 <? include('footer.php'); ?>
 
