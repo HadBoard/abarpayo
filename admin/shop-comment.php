@@ -37,10 +37,10 @@ if (isset($_POST['submit'])) {
     $text = $action->request('text');
     $confirm = $action->request('confirm');
     $shop_id = $row->shop_id;
-    $user_id = $row->user_id;
+    $admin_id = $action->admin()->id;
     // send query
     if ($edit) {
-        $command = $action->shop_comment_add($shop_id,$user_id,$id,$text);
+        $command = $action->shop_comment_add($shop_id,$admin_id,$id,$text);
         if($confirm){
             $command1 = $action->shop_comment_confirm($id);
         }
@@ -84,7 +84,7 @@ include('header.php'); ?>
                         خانه
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="<?= $list_url ?>"> نظرات فروشگاه ها</a></li>
+                <li class="breadcrumb-item"><a href=<?= $list_url."?shop=".$row->shop_id ?>> نظرات فروشگاه ها</a></li>
                 <?php if ($edit) { ?>
                     <li class="breadcrumb-item"><a href="javascript:void(0)">پاسخ</a></li>
                 <?php } else { ?>
@@ -150,8 +150,10 @@ include('header.php'); ?>
 
                                 <div class="form-group">
                                     <textarea type="text" name="text" class="form-control input-default "
-                                           placeholder="متن پاسخ" value="<?= ($reply) ? $reply->text : "" ?>"
-                                          required></textarea>
+                                           placeholder="متن پاسخ"
+                                          >
+                                          <?= ($reply) ? $reply->text : "" ?>
+                                          </textarea>
                                 </div>
                                
                                 <div class="form-actions">
@@ -166,7 +168,7 @@ include('header.php'); ?>
                                         <i class="fa fa-check"></i> ثبت
                                     </button>
 
-                                    <a href="<?= $list_url ?>"><span name="back" class="btn btn-inverse">بازگشت به لیست</span></a>
+                                    <a href="<?= $list_url."?shop=".$row->shop_id ?>"><span name="back" class="btn btn-inverse">بازگشت به لیست</span></a>
 
                                 </div>
                             </form>

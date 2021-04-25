@@ -646,6 +646,45 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `parent` = '$comment_id' ");
     }
 
+    public function marketer_get_phone($phone){
+        return $this->connection->query("SELECT * FROM `tbl_marketer` WHERE `phone` = '$phone'");
+    }
+
+    public function marketer_add($first_name,$last_name,$phone,$package_id,$payment_type,$national_code,$reference_id)
+    {
+        $now = time();
+        $reference_code = $this->get_token(6);
+        $result = $this->connection->query("INSERT INTO `tbl_marketer`
+        (`first_name`,`last_name`,`phone`,`reference_code`,`reference_id`,`national_code`,`package_id`,`payment_type`,`created_at`,`status`) 
+        VALUES
+        ('$first_name','$last_name','$phone','$reference_code','$reference_id','$national_code','$package_id','$payment_type','$now',0)");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function marketer_change_status($id){
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_marketer` SET 
+        `status` =  1,
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+
+    }
+    public function marketer_payment_add($marketer_id,$Amount,$reference_code,$status){
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_marketer_payment`
+        (`marketer_id`,`amount`,`reference_code`,`date`,`status`) 
+        VALUES
+        ('$marketer_id','$amount','$reference_code','$now','$status')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+    public function marketer_reference_code($reference_code){
+        return $this->connection->query("SELECT * FROM `tbl_marketer` WHERE `reference_code` = '$reference_code'");
+    }
+
 }
 
 // ----------- end Action class ----------------------------------------------------------------------------------------

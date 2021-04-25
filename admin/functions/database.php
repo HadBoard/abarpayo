@@ -919,7 +919,7 @@ class Action
 
       public function shop_comment_list($shop_id)
       {
-        return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = $shop_id");
+        return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = '$shop_id' AND `parent` = 0");
       }
   
       public function shop_comment_confirm($id)

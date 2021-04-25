@@ -2,7 +2,37 @@
 require_once "functions/database.php";
 $action = new Action();
 $title = "ابر پایو";
-include_once "header.php"
+include_once "header.php";
+
+    if($_SESSION['successful_pay'] == 'true'){
+        ?>
+            <div class="modal">
+                    <div class="alert alert-suc">
+                        <span class="close_alart">×</span>
+                        <p>
+                            پرداخت موفق بود!
+                        </p>
+                    </div>
+                </div>
+                <script src="assets/js/alert.js"></script>
+        <?
+        unset($_SESSION['successful_pay']);
+    }
+
+    if($_SESSION['successful_pay'] == 'false'){
+        ?>
+            <div class="modal">
+                    <div class="alert alert-suc">
+                        <span class="close_alart">×</span>
+                        <p>
+                            پرداخت موفق بود!
+                        </p>
+                    </div>
+                </div>
+                <script src="assets/js/alert.js"></script>
+        <?
+        unset($_SESSION['successful_pay']);
+    }
 ?>
 
     <section class="main_slider">
