@@ -434,6 +434,11 @@ class Action
         return $id;
     }
 
+    public function admin_get($id)
+    {
+        return $this->get_data("tbl_admin", $id);
+    }
+
     
 
     public function cart_get($id)
@@ -636,14 +641,14 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function shop_comments_list($shop_id){
+    public function shop_comments_list($id){
         $user_id = $this->user()->id;
-        // return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = '$shop_id' AND `confirm` = 1 AND `user_id` != '$user_id' ");
-        return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = '$shop_id'");
+        return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = '$id' AND `confirm` = 1");
     }
 
     public function shop_comments_replys_list($comment_id){
         return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `parent` = '$comment_id' ");
+        
     }
 
     public function marketer_get_phone($phone){

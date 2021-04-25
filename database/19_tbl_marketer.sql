@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Apr 25, 2021 at 10:38 AM
--- Server version: 10.3.28-MariaDB-cll-lve
--- PHP Version: 7.3.26
+-- Host: 127.0.0.1
+-- Generation Time: Apr 25, 2021 at 02:22 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `abarpayo_db`
+-- Database: `hamitech`
 --
 
 -- --------------------------------------------------------
@@ -30,20 +29,26 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tbl_marketer` (
   `id` int(11) NOT NULL,
-  `fname` varchar(50) NOT NULL,
-  `lname` varchar(50) NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
   `phone` varchar(20) NOT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  `good_id` int(11) NOT NULL,
-  `code` varchar(50) NOT NULL,
-  `ref` varchar(100) NOT NULL,
-  `price` varchar(50) NOT NULL,
-  `codemeli` varchar(20) NOT NULL,
-  `refcode` int(11) NOT NULL,
+  `package_id` int(11) NOT NULL,
+  `payment_id` int(11) NOT NULL,
+  `reference_code` varchar(50) NOT NULL,
+  `reference_id` int(11) DEFAULT NULL,
+  `national_code` varchar(20) NOT NULL,
   `status` int(11) NOT NULL,
-  `cdate` bigint(20) NOT NULL,
-  `type` tinyint(1) NOT NULL DEFAULT 0
+  `created_at` bigint(20) NOT NULL,
+  `updated_at` bigint(20) DEFAULT NULL,
+  `payment_type` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_marketer`
+--
+
+INSERT INTO `tbl_marketer` (`id`, `first_name`, `last_name`, `phone`, `package_id`, `payment_id`, `reference_code`, `reference_id`, `national_code`, `status`, `created_at`, `updated_at`, `payment_type`) VALUES
+(8, 'زکیه', 'امیری', '09130898272', 1, 0, 'U5kafh', 0, '876543', 1, 1619351593, 1619351598, 1);
 
 --
 -- Indexes for dumped tables
@@ -63,7 +68,7 @@ ALTER TABLE `tbl_marketer`
 -- AUTO_INCREMENT for table `tbl_marketer`
 --
 ALTER TABLE `tbl_marketer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

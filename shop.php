@@ -339,18 +339,18 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
                     </div> 
                 </div>
                 
-                    <textarea name="mycomment"></textarea>
+                    <textarea name="mycomment" required></textarea>
                     <input name="submit" type="submit" class="main_btn middle_btn " value="ارسال نظر">
                 </form>
             </div><!-- end of write comment -->
             <div class="comment_bottom">
                 <h3>نظرات</h6>
                     <!--  -->
+                <?
+                $comments = $action->shop_comments_list($id);
+                while($comment = $comments->fetch_object()){
+                ?>
                 <div class="comment_info ">
-                    <?
-                    $comments = $action->shop_comments_list($id);
-                    while($comment = $comments->fetch_object()){
-                    ?>
                     <div class="row">
                         <div class="col-1">
                             <div class="avatar"></div>
@@ -377,7 +377,6 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
 
                         </div>
                     </div>
-                    <? } ?>
                 </div>
                     <!--  -->
                     <div class="comment_info comment_reply">
@@ -392,7 +391,7 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
                             <div class="col-11">
                                 <div class="comment_item">
                                     <div class="comment_item_info">
-                                        <h4> علوی</h4>
+                                        <h4><?= $action->admin_get($reply->user_id)->first_name." ".$action->admin_get($reply->user_id)->last_name?></h4>
                                         <div class="date">
                                             <p><?= $action->time_to_shamsi($reply->created_at);?></p>
                                         </div>
@@ -402,14 +401,15 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
                                             <?= $reply->text ?>                             
                                         </p>
                                     </div>
-                                    <!-- <div class="comment_reply_icon">
+                                    <div class="comment_reply_icon">
                                         <i class="fa fa-reply"></i>
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     <? } ?>
                     </div>
+                <?}?>
             </div>
         </div>
     </div>
