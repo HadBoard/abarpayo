@@ -919,18 +919,31 @@ class Action
 
       public function shop_comment_list($shop_id)
       {
-         return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = $shop_id");
+        return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = $shop_id");
       }
   
-      public function shop_comment_status($id,$old_status)
+      public function shop_comment_confirm($id)
       {
-        $status = !$old_status;
         $result = $this->connection->query("UPDATE `tbl_shop_comment` SET 
-         `status`='$status'
+         `confirm`= 1
          WHERE `id` ='$id'");
          if (!$this->result($result)) return false;
          return $id;
       }
+
+    public function shop_comment_add($shop_id,$user_id,$parent,$text){
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_shop_comment`
+        (`shop_id`,`user_id`,`parent`,`text`,`score`,`created_at`,`confirm`) 
+        VALUES
+        ('$shop_id','$user_id', $parent ,'$text', 0 ,'$now', 0 )");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function shop_comment_reply($id){
+        return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `parent` = $id");
+    }
 
       public function shop_comment_remove($id)
       {

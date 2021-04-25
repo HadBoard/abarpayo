@@ -625,6 +625,27 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id' ORDER BY id LIMIT $cur_index,10 ");
     }
     // ----------- end PAYMENT ------------------------------------------------------------------------------------------
+    public function shop_comment_add($shop_id,$user_id,$text,$score){
+        if($user_id == 0) return;
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_shop_comment`
+        (`shop_id`,`user_id`,`parent`,`text`,`score`,`created_at`,`confirm`) 
+        VALUES
+        ('$shop_id','$user_id', 0 ,'$text','$score','$now',0 )");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function shop_comments_list($shop_id){
+        $user_id = $this->user()->id;
+        // return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = '$shop_id' AND `confirm` = 1 AND `user_id` != '$user_id' ");
+        return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = '$shop_id'");
+    }
+
+    public function shop_comments_replys_list($comment_id){
+        return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `parent` = '$comment_id' ");
+    }
+
 }
 
 // ----------- end Action class ----------------------------------------------------------------------------------------

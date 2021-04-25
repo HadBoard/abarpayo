@@ -1,5 +1,4 @@
 <? require_once "functions/database.php";
-
 $database = new DB();
 $connection = $database->connect();
 $action = new Action();
@@ -7,39 +6,20 @@ $action = new Action();
 // ----------- urls ----------------------------------------------------------------------------------------------------
 // main url for add , edit
 $main_url = "shop-comment.php";
+// main url for remove , change status
+$list_url = "shop-comment-list.php";
 // ----------- urls ----------------------------------------------------------------------------------------------------
 
-// ----------- get data ------------------------------------------------------------------------------------------------
-$counter = 1;
-if (isset($_GET['shop'])) {
-    $shop_id = $action->request('shop');
-    $result = $action->shop_comment_list($shop_id);
+// ----------- get data from database when action is edit --------------------------------------------------------------
+$edit = false;
+if (isset($_GET['edit'])) {
+    $edit = true;
+    $id = $action->request('edit');
+    $row = $action->shop_comment_get($id);
+    $replys = $action->shop_comment_reply($id);
+    $reply = $replys->fetch_object();
 }
-// ----------- get data ------------------------------------------------------------------------------------------------
-
-// ----------- delete --------------------------------------------------------------------------------------------------
-if (isset($_GET['remove']) && isset($_GET['shop'])) {
-    $remove_id = $action->request('remove');
-    $shop_id = $action->request('shop');
-    $_SESSION['error'] = !$action->shop_comment_remove($remove_id);
-    header("Location: $main_url?shop=$shop_id");
-    return;
-}
-// ----------- delete --------------------------------------------------------------------------------------------------
-
-// ----------- validate -------------------------------------------------------------------------------------------
-if (isset($_GET['shop']) && isset($_GET['status'])) {
-    $shop_id = $action->request('shop');
-    $result = $action->shop_comment_list($shop_id);
-
-    $id = $action->request('status');
-    $old_status = $action->shop_comment_get($id)->status;
-    $_SESSION['error'] = !$action->shop_comment_status($id,$old_status);
-    header("Location: $main_url?shop=$shop_id");
-    return;
-}
-// ----------- validate -------------------------------------------------------------------------------------------
-
+// ----------- get data from database when action is edit --------------------------------------------------------------
 
 // ----------- check error ---------------------------------------------------------------------------------------------
 $error = false;
@@ -50,15 +30,52 @@ if (isset($_SESSION['error'])) {
 }
 // ----------- check error ---------------------------------------------------------------------------------------------
 
-// ----------- start html :) -------------------------------------------------------------------------------------------
+// ----------- add or edit ---------------------------------------------------------------------------------------------
+if (isset($_POST['submit'])) {
+
+    // get fields
+    $text = $action->request('text');
+    $confirm = $action->request('confirm');
+    $shop_id = $row->shop_id;
+    $user_id = $row->user_id;
+    // send query
+    if ($edit) {
+        $command = $action->shop_comment_add($shop_id,$user_id,$id,$text);
+        if($confirm){
+            $command1 = $action->shop_comment_confirm($id);
+        }
+    } 
+    // check errors
+    if ($command) {
+        $_SESSION['error'] = 0;
+    } else {
+        $_SESSION['error'] = 1;
+    }
+
+    // bye bye :)
+    header("Location: $main_url?edit=$id");
+
+}
+// ----------- add or edit ---------------------------------------------------------------------------------------------
+
+// ----------- start html :) ------------------------------------------------------------------------------------------
 include('header.php'); ?>
 
 <div class="page-wrapper">
 
     <div class="row page-titles">
-        <!-- ----------- start breadcrumb ---------------------------------------------------------------------- -->
+
+        <!-- ----------- start title --------------------------------------------------------------------------- -->
         <div class="col-md-12 align-self-center text-right">
-            <h3 class="text-primary">نظرات فروشگاه ها</h3></div>
+            <?php if (!isset($_GET['action'])) { ?>
+                <h3 class="text-primary">ثبت پاسخ</h3>
+            <?php } else { ?>
+                <h3 class="text-primary">ویرایش پاسخ </h3>
+            <?php } ?>
+        </div>
+        <!-- ----------- end title ----------------------------------------------------------------------------- -->
+
+        <!-- ----------- start breadcrumb ---------------------------------------------------------------------- -->
         <div class="col-md-12 align-self-center text-right">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
@@ -67,14 +84,19 @@ include('header.php'); ?>
                         خانه
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="shop-list.php">فروشگاه ها</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0)">نظرات</a></li>
+                <li class="breadcrumb-item"><a href="<?= $list_url ?>"> نظرات فروشگاه ها</a></li>
+                <?php if ($edit) { ?>
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">پاسخ</a></li>
+                <?php } else { ?>
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">پاسخ</a></li>
+                <?php } ?>
             </ol>
         </div>
         <!-- ----------- end breadcrumb ------------------------------------------------------------------------ -->
 
     </div>
 
+    <!-- ----------- start main container ---------------------------------------------------------------------- -->
     <div class="container-fluid">
 
         <!-- ----------- start error list ---------------------------------------------------------------------- -->
@@ -91,67 +113,73 @@ include('header.php'); ?>
         } ?>
         <!-- ----------- end error list ------------------------------------------------------------------------ -->
 
-        <!-- ----------- add button ---------------------------------------------------------------------------- -->
-        <!-- ----------- add button ---------------------------------------------------------------------------- -->
-
-        <!-- ----------- start row of table -------------------------------------------------------------------- -->
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
+
+                <!-- ----------- start history ----------------------------------------------------------------- -->
+                <? if ($edit) { ?>
+                    <div class="row m-b-0">
+                        <div class="col-lg-6">
+                            <p class="text-right m-b-0">
+                                تاریخ ثبت :
+                                <?= $action->time_to_shamsi($row->created_at) ?>
+                            </p>
+                        </div>
+                        <? if ($row->updated_at) { ?>
+                            <div class="col-lg-6">
+                                <p class="text-right m-b-0">
+                                    آخرین ویرایش :
+                                    <?= $action->time_to_shamsi($row->updated_at) ?>
+                                </p>
+                            </div>
+                        <? } ?>
+                    </div>
+                <? } ?>
+                <!-- ----------- end history ------------------------------------------------------------------- -->
+
+                <!-- ----------- start row of fields ----------------------------------------------------------- -->
                 <div class="card">
                     <div class="card-body">
+                        <div class="basic-form">
+                            <form action="" method="post">
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-default "
+                                           placeholder="عنوان"
+                                           value="<?= ($edit) ? $row->text : "" ?>" readonly>
+                                </div>
 
-                        <div class="table-responsive m-t-5">
-                            <table id="example23" class="display nowrap table table-hover table-striped"
-                                   cellspacing="0" width="100%">
-                                <thead>
-                                <tr>
-                                    <th class="text-center">ردیف</th>
-                                    <th class="text-center">کاربر</th>
-                                    <th class="text-center">فروشگاه</th>
-                                    <th class="text-center">توضیحات</th>
-                                    <th class="text-center">امتیاز</th>
-                                    <th class="text-center">تاریخ ثبت</th>
-                                    <th class="text-center">تایید</th>
-                                    <th class="text-center">حذف</th>
-                                </tr>
-                                </thead>
+                                <div class="form-group">
+                                    <textarea type="text" name="text" class="form-control input-default "
+                                           placeholder="متن پاسخ" value="<?= ($reply) ? $reply->text : "" ?>"
+                                          required></textarea>
+                                </div>
+                               
+                                <div class="form-actions">
 
-                                <tbody class="text-center">
-                                <? while ($row = $result->fetch_object()) { ?>
-                                    <tr class="text-center">
+                                    <label class="float-right">
+                                        <input type="checkbox" class="float-right m-1" name="confirm" value="1"
+                                            <? if ($edit && $row->confirm) echo "checked"; ?> >
+                                        تایید نظر کاربر
+                                    </label>
 
-                                        <td class="text-center"><?= $counter++ ?></td>
-                                        <td class="text-center"><?= $action->user_get($row->user_id)->last_name ?></td>
-                                        <td class="text-center"><?= $action->shop_get($row->shop_id)->title ?></td>
-                                        <td class="text-center"><?= $row->text ?></td>
-                                        <td class="text-center"><?= $row->score ?></td>
-                                        <td class="text-center"><?= $action->time_to_shamsi($row->created_at) ?></td>
-                                        <td class="text-center">
-                                            <a href="<?= $main_url?>?shop=<?= $row->shop_id?>&status=<?= $row->id ?>">
-                                                <?
-                                                if ($row->status) echo "<status-indicator positive pulse></status-indicator>";
-                                                else echo "<status-indicator negative pulse></status-indicator>";
-                                                ?>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="<?= $main_url ?>?shop=<?= $row->shop_id?>&remove=<?= $row->id ?>">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                        </td>
+                                    <button type="submit" name="submit" class="btn btn-success sweet-success">
+                                        <i class="fa fa-check"></i> ثبت
+                                    </button>
 
-                                    </tr>
-                                <? } ?>
-                                </tbody>
-                            </table>
+                                    <a href="<?= $list_url ?>"><span name="back" class="btn btn-inverse">بازگشت به لیست</span></a>
+
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
+                <!-- ----------- end row of fields ----------------------------------------------------------- -->
+                
             </div>
         </div>
-        <!-- ----------- end row of table ---------------------------------------------------------------------- -->
-
     </div>
+    <!-- ----------- end main container ------------------------------------------------------------------------ -->
 </div>
 
 <? include('footer.php'); ?>
+

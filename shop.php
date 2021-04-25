@@ -6,7 +6,30 @@ include_once "header.php";
 if(isset($_GET['id'])){
     $id = $action->request('id');
 }
+
 $shop  = $action-> shop_get($id);
+$user_id = $action->user()->id;
+$name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)->last_name;
+
+    if(isset($_POST['submit'])){
+        $mycomment  = $action->request('mycomment');
+        $score = $action->request('rate');
+        $command  = $action->shop_comment_add($id,$user_id,$mycomment,$score);
+
+        if($command){
+            ?> 
+            <div class="modal">
+                <div class="alert alert-suc">
+                    <span class="close_alart">×</span>
+                    <p>
+                          کامنت شما با موفقیت ثبت شد!
+                    </p>
+                </div>
+            </div>
+            <script src="assets/js/alert.js"></script>
+        <?
+        }
+    }
 ?>
 
   <!-- shop first-container -->
@@ -278,6 +301,121 @@ $shop  = $action-> shop_get($id);
 
         <!-- eof tabs -->
     </section>
+
+      <!-- comment -->
+    <?
+    if($action->auth()){
+    ?>
+      <div class="container comment_container">
+        <div class="comment_area">
+            <h3>نظر دهید</h6>
+            <div class="comment_top">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="info_comment">
+                            <div class="avatar"><img></div>
+                            <h5><?= $name ?></h6>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                    <form action="" method="post">
+                        <div class="stars">
+                            <div class="container-x">
+                                <div class="star-widget">
+                                    <input type="radio" name="rate" id="rate-5" value=1>
+                                    <label for="rate-5" class="fas fa-star" aria-hidden="true"></label>
+                                    <input type="radio" name="rate" id="rate-4"  value=2>
+                                    <label for="rate-4" class="fas fa-star" aria-hidden="true"></label>
+                                    <input type="radio" name="rate" id="rate-3" checked=""  value=3>
+                                    <label for="rate-3" class="fas fa-star" aria-hidden="true"></label>
+                                    <input type="radio" name="rate" id="rate-2" checked=""  value=4>
+                                    <label for="rate-2" class="fas fa-star" aria-hidden="true"></label>
+                                    <input type="radio" name="rate" id="rate-1" checked=""  value=5>
+                                    <label for="rate-1" class="fas fa-star" aria-hidden="true"></label>
+                                </div>
+                            </div>
+                                       
+                        </div>
+                    </div> 
+                </div>
+                
+                    <textarea name="mycomment"></textarea>
+                    <input name="submit" type="submit" class="main_btn middle_btn " value="ارسال نظر">
+                </form>
+            </div><!-- end of write comment -->
+            <div class="comment_bottom">
+                <h3>نظرات</h6>
+                    <!--  -->
+                <div class="comment_info ">
+                    <?
+                    $comments = $action->shop_comments_list($id);
+                    while($comment = $comments->fetch_object()){
+                    ?>
+                    <div class="row">
+                        <div class="col-1">
+                            <div class="avatar"></div>
+                        </div>
+                        <div class="col-11">
+                            <div class="comment_item">
+                                <div class="comment_item_info">
+                                    <h4><?= $action->user_get($comment->user_id)->first_name." ".$action->user_get($comment->user_id)->last_name?></h4>
+                                    <div class="date">
+                                        <p><?= $action->time_to_shamsi($comment->created_at)?></p>
+                                    </div>
+                                </div>
+                                <div class="commentp">
+                                    <p>
+                                        <?= $comment->text ?>
+                                    </p>
+                                </div>
+                                <a href="#" class="comment_reply_icon">
+                                    <i class="fa fa-reply"></i>
+                                </a>
+                                
+                            </div>
+                        
+
+                        </div>
+                    </div>
+                    <? } ?>
+                </div>
+                    <!--  -->
+                    <div class="comment_info comment_reply">
+                    <?
+                        $replys = $action->shop_comments_replys_list($comment->id);
+                        while($reply = $replys->fetch_object()){
+                    ?>
+                        <div class="row">
+                            <div class="col-1">
+                                <div class="avatar"></div>
+                            </div>
+                            <div class="col-11">
+                                <div class="comment_item">
+                                    <div class="comment_item_info">
+                                        <h4> علوی</h4>
+                                        <div class="date">
+                                            <p><?= $action->time_to_shamsi($reply->created_at);?></p>
+                                        </div>
+                                    </div>
+                                    <div class="commentp">
+                                        <p>
+                                            <?= $reply->text ?>                             
+                                        </p>
+                                    </div>
+                                    <!-- <div class="comment_reply_icon">
+                                        <i class="fa fa-reply"></i>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    <? } ?>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <?}?>
+
+    <!-- comment -->
 
     <script>
     let tab_btns = document.querySelectorAll('.tablinks')
