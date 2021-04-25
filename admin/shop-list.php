@@ -119,7 +119,7 @@ include('header.php'); ?>
                                             <td class="text-center"><?= $row->title ?></td>
                                             <td class="text-center"><?= $action->category_get($row->category_id)->title ?></td>
                                             <td class="text-center"><?= $row->phone ?></td>
-                                            <td class="text-center"><a href="shop-comment.php?shop=<?= $row->id?>"><i class="fas fa-comment"></i></a></td>
+                                            <td class="text-center"><a href="shop-comment-list.php?shop=<?= $row->id?>"><i class="fas fa-comment"></i></a></td>
 
                                             <td class="text-center">
                                                 <a href="<?= $list_url ?>?status=<?= $row->id ?>">
