@@ -71,7 +71,7 @@ if(isset($_GET['category'])){
                     <!-- </a> -->
                     بیشتر
         </button>
-        <div class="row more-item">
+        <div class="row more-item" style="display: none;">
             <div class="nomore-item">      
                     
                     <p>مورد دیگری برای نمایش موجود نمی باشد . </p>
@@ -82,7 +82,7 @@ if(isset($_GET['category'])){
     </section>
 <script>
  var cur_index = 4;
- var id = "<?php echo $id ?>";
+ var id = "<?= $id ?>";
  $('#lazyload').click(function(){
      console.log("id",id);
      console.log("index",cur_index);
@@ -94,9 +94,10 @@ if(isset($_GET['category'])){
             cur_index += 8;
             if(response){
                 $(".tabcontent").append(response);
-                // $('div#loadmoreajaxloader').hide();
+                $('.more-item').hide();
             }else{
-                // $('div#loadmoreajaxloader').html('<center>No more posts to show.</center>');
+                $('.more-item').show();
+                $('#lazyload').hide();
             }
         }
     });
