@@ -295,9 +295,9 @@ include('header.php'); ?>
                                 <div class="input_fields_wrap form-group">
                                     <h5 class="title_add">انتخاب عکس گالری فروشگاه</h5>
                                     <button class="add_field_button"><i class="fas fa-plus"></i></button>
-                                    <label class="btn btn-dark btn-block m-0 add-pic-btn">انتخاب عکس</label>
+                                    <label class="btn btn-dark btn-block m-0 add-pic-btn">انتخاب عکس
                                     <input type="file" name="upload[]" style="visibility:hidden;">
-                                    
+                                    </label>
                                 </div>
                                 <? } ?>
                                 <div class="form-actions">
@@ -331,9 +331,13 @@ include('header.php'); ?>
                             $pictures = $action->shop_pics_get($id);
                             while ($picture = $pictures->fetch_object()) {
                                 ?>
+                                <div class="row">
+                                <div class="clog-lg-3">
                                 <div class="card">
                                     <img src="images/shops/<?= $picture->image ?>">
                                 </div>
+                                </div>
+                                <div>
                                 <?
                             }
                         ?>
@@ -369,7 +373,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		if(x < max_fields){ //max input box allowed
 			x++; //text box increment
-			$(wrapper).append('<div style="margin-bottom: 10px;"><label class="btn btn-dark btn-block m-0 add-pic-btn">انتخاب عکس</label><input type="file" name="upload[]" style="visibility:hidden;"><a href="#" class="remove_field"><i class="fas fa-times"></i></a></div>'); //add input box
+			$(wrapper).append('<div style="margin-bottom: 10px;"><label class="btn btn-dark btn-block m-0 add-pic-btn">انتخاب عکس<input type="file" name="upload[]" style="visibility:hidden;"></label><a href="#" class="remove_field"><i class="fas fa-times"></i></a></div>'); //add input box
 		}
 	});
 

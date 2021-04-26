@@ -327,14 +327,14 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_request` WHERE `user_id` = '$id' AND `status` = 1 LIMIT 2");
     }
 
-    public function user_add($first_name,$last_name,$phone,$reference_id)
+    public function user_add($first_name,$last_name,$phone,$reference_id,$platform)
     {
         $now = time();
         $reference_code = $this->get_token(6);
         $result = $this->connection->query("INSERT INTO `tbl_user`
-        (`first_name`,`last_name`,`phone`,`reference_code`,`reference_id`,`created_at`) 
+        (`first_name`,`last_name`,`phone`,`reference_code`,`reference_id`,`platform`,`created_at`) 
         VALUES
-        ('$first_name','$last_name','$phone','$reference_code','$reference_id','$now')");
+        ('$first_name','$last_name','$phone','$reference_code','$reference_id','$platform','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }

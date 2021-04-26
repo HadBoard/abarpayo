@@ -367,14 +367,14 @@ class Action
         return $this->table_list("tbl_user");
     }
 
-    public function user_add($first_name, $last_name, $national_code, $phone,$city_id,$address,$postal_code,$birthday,$icon,$score,$wallet,$iban,$status)
+    public function user_add($first_name, $last_name, $national_code, $phone,$city_id,$address,$postal_code,$birthday,$icon,$score,$wallet,$iban,$status,$platform)
     {
         $now = time();
         $reference_code = $this->get_token(6);
         $result = $this->connection->query("INSERT INTO `tbl_user`
-        (`first_name`,`last_name`,`national_code`,`phone`,`city_id`,`address`,`postal_code`,`reference_code`,`birthday`,`profile`,`score`,`wallet`,`iban`,`status`,`created_at`) 
+        (`first_name`,`last_name`,`national_code`,`phone`,`city_id`,`address`,`postal_code`,`reference_code`,`birthday`,`profile`,`score`,`wallet`,`iban`,`status`,`created_at`,`platform`) 
         VALUES
-        ('$first_name','$last_name','$national_code','$phone','$city_id','$address','$postal_code','$reference_code','$birthday','$icon','$score','$wallet','$iban','$status','$now')");
+        ('$first_name','$last_name','$national_code','$phone','$city_id','$address','$postal_code','$reference_code','$birthday','$icon','$score','$wallet','$iban','$status','$now','$platform')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
@@ -1050,25 +1050,29 @@ class Action
     {
         return $this->table_list("tbl_marketer");
     }
-    public function marketer_add($title,$link,$image,$status)
+    public function marketer_add($first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id)
     {
         $now = time();
+        $reference_code = $this->get_token(6);
         $result = $this->connection->query("INSERT INTO `tbl_marketer`
-         (`title`,`link`,`image`,`status`,`created_at`) 
-         VALUES
-         ('$title','$link','$image','$status','$now')");
+        (`first_name`,`last_name`,`phone`,`reference_code`,`reference_id`,`national_code`,`package_id`,`payment_type`,`created_at`,`status`) 
+        VALUES
+        ('$first_name','$last_name','$phone','$reference_code','$reference_id','$national_code','$package_id','$payment_type','$now',1)");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
-    public function marketer_edit($id, $title,$link,$image, $status)
+    public function marketer_edit($id,$first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id)
     {
         $now = time();
-        $result = $this->connection->query("UPDATE `tbl_bazarsaz` SET 
-         `title`='$title',
-         `link` = '$link',
-         `image` = '$image',
-         `status`='$status',
+        $result = $this->connection->query("UPDATE `tbl_marketer` SET 
+         `first_name`='$first_name',
+         `last_name` = '$last_name',
+         `phone` = '$phone',
+         `national_code` = '$national_code',
+         `package_id`='$package_id',
+         `payment_type` ='$payment_type',
+         `reference_id` = '$reference_id',
          `updated_at`='$now'
          WHERE `id` ='$id'");
         if (!$this->result($result)) return false;

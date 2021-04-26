@@ -45,6 +45,7 @@ if (isset($_POST['submit'])) {
     $address = $action->request('address');
     $city_id = $action->request('city');
     $status = $action->request('status');
+    $platform = 0;
     $icon = ($edit ? $row->profile : "");
     
     if($_FILES["icon"]["name"]){
@@ -71,7 +72,7 @@ if (isset($_POST['submit'])) {
     if ($edit) {
         $command = $action->user_edit($id, $first_name, $last_name, $national_code, $phone,$city_id,$address,$postal_code,$birthday,$icon,$score,$wallet,$iban,$status);
     } else {
-        $command = $action->user_add($first_name, $last_name, $national_code, $phone,$city_id,$address,$postal_code,$birthday,$icon,$score,$wallet,$iban,$status);
+        $command = $action->user_add($first_name, $last_name, $national_code, $phone,$city_id,$address,$postal_code,$birthday,$icon,$score,$wallet,$iban,$status,$platform);
     }
 
     // check errors
@@ -187,7 +188,7 @@ include('header.php'); ?>
                                 <div class="form-group">
                                     <input type="text" name="national_code" class="form-control"
                                            placeholder="کدملی"
-                                           value="<?= ($edit) ? $row->national_code : "" ?>" required>
+                                           value="<?= ($edit) ? $row->national_code : "" ?>" >
                                 </div>
 
                                 <div class="form-group">
@@ -203,7 +204,7 @@ include('header.php'); ?>
                                            required>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control " name="province" id="province" required>
+                                    <select class="form-control " name="province" id="province" >
                                         <option>استان را انتخاب فرمایید .</option>
                                         <?
                                         $option_result = $action->province_list();
@@ -221,7 +222,7 @@ include('header.php'); ?>
                                 </div>
                                 <div class="form-group">
                                    
-                                    <select class="form-control " name="city" id="city" required>
+                                    <select class="form-control " name="city" id="city" >
                                         <option>شهرستان را انتخاب فرمایید .</option>
                                         <?
                                         $option_result =  $action->province_city_list($province_id);
@@ -241,31 +242,31 @@ include('header.php'); ?>
                                 <div class="form-group">
                                     <input type="text"  name="postal_code" class="form-control"
                                            placeholder="کد پستی "
-                                           value="<?= ($edit) ? $row->postal_code : "" ?>" required>
+                                           value="<?= ($edit) ? $row->postal_code : "" ?>" >
                                 </div>
                                 <div class="form-group">
                                     <input type="text"  name="iban" class="form-control"
                                            placeholder="شماره شبا"
-                                           value="<?= ($edit) ? $row->iban : "" ?>" required>
+                                           value="<?= ($edit) ? $row->iban : "" ?>" >
                                 </div>
                                 <div class="form-group">
                                     <input type="text"  name="wallet" class="form-control"
                                            placeholder="کیف پول"
-                                           value="<?= ($edit) ? $row->wallet : "" ?>" required>
+                                           value="<?= ($edit) ? $row->wallet : "" ?>" >
                                 </div>
                                 <div class="form-group">
                                     <input type="text"  name="reference_code" class="form-control"
-                                           placeholder="کد رفرنس"
-                                           value="<?= ($edit) ? $row->reference_code : "" ?>" required>
+                                           placeholder="کد معرف"
+                                           value="<?= ($edit) ? $action->user_get($row->reference_id)->reference_code : "" ?>">
                                 </div>
                                 <div class="form-group">
                                     <input type="text"  name="score" class="form-control"
                                            placeholder="امتیاز"
-                                           value="<?= ($edit) ? $row->score : "" ?>" required>
+                                           value="<?= ($edit) ? $row->score : "" ?>" >
                                 </div>
                                 <div class="form-group">
                                     <textarea type="text" name="address" class="form-control input-default "
-                                           placeholder="آدرس" required
+                                           placeholder="آدرس" 
                                             ><?= ($edit) ? $row->address : "" ?></textarea>
                                 </div>
                                 <div>

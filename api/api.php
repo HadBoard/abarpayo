@@ -59,7 +59,8 @@ if(isset($_POST['function'])) {
             $reference = $result->fetch_object();
             $reference_id = $reference->id;
         }
-        $command = $action->user_add($first_name,$last_name,$phone,$reference_id);
+        $platform = 2;
+        $command = $action->user_add($first_name,$last_name,$phone,$reference_id,$platform);
         if($command){
             $obj -> result = 1;
             $obj -> user_id = $command;

@@ -401,9 +401,6 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
                                             <?= $reply->text ?>                             
                                         </p>
                                     </div>
-                                    <div class="comment_reply_icon">
-                                        <i class="fa fa-reply"></i>
-                                    </div>
                                 </div>
                             </div>
                         </div>

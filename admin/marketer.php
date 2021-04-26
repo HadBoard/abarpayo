@@ -34,6 +34,7 @@ if (isset($_POST['submit'])) {
     // get fields
     $first_name = $action->request('first_name');
     $last_name = $action->request('last_name');
+    $phone = $action->request('phone');
     $package_id = $action->request('package_id');
     $national_code = $action->request('national_code');
     $payment_type  = $action->request('payment_type');
@@ -46,9 +47,9 @@ if (isset($_POST['submit'])) {
    
     // send query
     if ($edit) {
-        $command = $action->user_edit($id, $first_name, $last_name, $national_code, $phone,$city_id,$address,$postal_code,$birthday,$icon,$score,$wallet,$iban,$status);
+        $command = $action->marketer_edit($id,$first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id);
     } else {
-        $command = $action->user_add($first_name, $last_name, $national_code, $phone,$city_id,$address,$postal_code,$birthday,$icon,$score,$wallet,$iban,$status);
+        $command = $action->marketer_add($first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id);
     }
 
     // check errors
@@ -74,9 +75,9 @@ include('header.php'); ?>
         <!-- ----------- start title --------------------------------------------------------------------------- -->
         <div class="col-md-12 align-self-center text-right">
             <?php if (!isset($_GET['action'])) { ?>
-                <h3 class="text-primary">ثبت کاربر</h3>
+                <h3 class="text-primary">ثبت بازارسار</h3>
             <?php } else { ?>
-                <h3 class="text-primary">ویرایش کاربر</h3>
+                <h3 class="text-primary">ویرایش بازارساز</h3>
             <?php } ?>
         </div>
         <!-- ----------- end title ----------------------------------------------------------------------------- -->
@@ -90,7 +91,7 @@ include('header.php'); ?>
                         خانه
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="<?= $list_url ?>">کاربران</a></li>
+                <li class="breadcrumb-item"><a href="<?= $list_url ?>">بازارسازان</a></li>
                 <?php if ($edit) { ?>
                     <li class="breadcrumb-item"><a href="javascript:void(0)">ثبت</a></li>
                 <?php } else { ?>
@@ -148,7 +149,7 @@ include('header.php'); ?>
                     <div class="card-body">
                         <div class="basic-form">
                             <form action="" method="post" enctype="multipart/form-data">
-
+                              
                                 <div class="form-group">
                                     <input type="text" name="first_name" class="form-control input-default "
                                            placeholder="نام"
@@ -172,82 +173,23 @@ include('header.php'); ?>
                                            placeholder="تلفن همراه"
                                            value="<?= ($edit) ? $row->phone : "" ?>" required>
                                 </div>
-
-                                <div class="form-group">
-                                    <input type="text" id="date" name="birthday" class="form-control"
-                                           placeholder="تاریخ تولد"
-                                           value="<?= ($edit) ? $action->time_to_shamsi($row->birthday) : "" ?>"
-                                           required>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control " name="province" id="province" required>
-                                        <option>استان را انتخاب فرمایید .</option>
-                                        <?
-                                        $option_result = $action->province_list();
-                                        while ($option = $option_result->fetch_object()) {
-                                            echo '<option value="';
-                                            echo $option->id;
-                                            echo '"';
-                                            if ($option->id == $province_id) echo "selected";
-                                            echo '>';
-                                            echo $option->name;
-                                            echo '</option>';
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                   
-                                    <select class="form-control " name="city" id="city" required>
-                                        <option>شهرستان را انتخاب فرمایید .</option>
-                                        <?
-                                        $option_result =  $action->province_city_list($province_id);
-                                        while ($option = $option_result->fetch_object()) {
-                                            echo '<option value="';
-                                            echo $option->id;
-                                            echo '"';
-                                            if ($option->id == $row->city_id) echo "selected";
-                                            echo '>';
-                                            echo $option->name;
-                                            echo '</option>';
-                                        }
-                                        ?>
-                                    </select>
-                                
-                                </div>
-                                <div class="form-group">
-                                    <input type="text"  name="postal_code" class="form-control"
-                                           placeholder="کد پستی "
-                                           value="<?= ($edit) ? $row->postal_code : "" ?>" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text"  name="iban" class="form-control"
-                                           placeholder="شماره شبا"
-                                           value="<?= ($edit) ? $row->iban : "" ?>" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text"  name="wallet" class="form-control"
-                                           placeholder="کیف پول"
-                                           value="<?= ($edit) ? $row->wallet : "" ?>" required>
-                                </div>
                                 <div class="form-group">
                                     <input type="text"  name="reference_code" class="form-control"
-                                           placeholder="کد رفرنس"
-                                           value="<?= ($edit) ? $row->reference_code : "" ?>" required>
+                                           placeholder="کد معرف"
+                                           value="<?= ($edit) ? $action->marketer_get($row->reference_id)->reference_code : "" ?>" >
                                 </div>
                                 <div class="form-group">
-                                    <input type="text"  name="score" class="form-control"
-                                           placeholder="امتیاز"
-                                           value="<?= ($edit) ? $row->score : "" ?>" required>
+                                    <select class="form-control " name="package_id" required>
+                                        <option>پکیج را انتخاب کنید.</option>
+                                        <option value=1>1</option>
+                                        <option value=2>2</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <textarea type="text" name="address" class="form-control input-default "
-                                           placeholder="آدرس" required
-                                            ><?= ($edit) ? $row->address : "" ?></textarea>
-                                </div>
-                                <div>
-                                        <label for="icon" class="btn btn-dark btn-block m-0">انتخاب عکس پروفایل </label>
-                                        <input type="file" name="icon" id="icon" style="visibility:hidden;">
+                                    <select class="form-control " name="payment_type" required>
+                                        <option>نحوه پرداخت را انتخاب کنید.</option>
+                                        <option value=0>اعتباری</option>
+                                    </select>
                                 </div>
 
                                 <div class="form-actions">
@@ -273,32 +215,10 @@ include('header.php'); ?>
                 <!-- ----------- end row of fields ----------------------------------------------------------- -->
 
             </div>
-            <? if($edit && $row->profile) { ?>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <img src="users/<?= $row->profile ?>">
-                        </div>
-                    </div>
-            <? } ?>
         </div>
     </div>
     <!-- ----------- end main container ------------------------------------------------------------------------ -->
 </div>
-<script>
- document.getElementById('province').onchange=function(){
-       var province_id=document.getElementById('province').value;
-       console.log(province_id);
-       $.ajax({
-            url:'ajax/get_city.php',
-            type:'post',
-            data:{province_id:province_id},
-            success:function(response){
-        		$("#city").html(response);
-            }
-       })
-       
-   }
-</script>
 <? include('footer.php'); ?>
 
 

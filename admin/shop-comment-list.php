@@ -24,9 +24,10 @@ if (isset($_GET['remove']) && isset($_GET['shop'])) {
     $remove_id = $action->request('remove');
     $shop_id = $action->request('shop');
     $_SESSION['error'] = !$action->shop_comment_remove($remove_id);
-    header("Location: $main_url?shop=$shop_id");
+    header("Location: $list_url?shop=$shop_id");
     return;
 }
+
 // ----------- delete --------------------------------------------------------------------------------------------------
 // ----------- check error ---------------------------------------------------------------------------------------------
 $error = false;
@@ -98,6 +99,7 @@ include('header.php'); ?>
                                     <th class="text-center">توضیحات</th>
                                     <th class="text-center">امتیاز</th>
                                     <th class="text-center">تاریخ ثبت</th>
+                                    <th class="text-center">تایید</th>
                                     <th class="text-center">حذف</th>
                                 </tr>
                                 </thead>
@@ -107,17 +109,23 @@ include('header.php'); ?>
                                     <tr class="text-center">
 
                                         <td class="text-center"><?= $counter++ ?></td>
-                                        <td class="text-center"><?= $action->user_get($row->user_id)->last_name ?></td>
+                                        <td class="text-center"><?= $action->user_get($row->user_id)->first_name."  ".$action->user_get($row->user_id)->last_name ?></td>
                                         <td class="text-center"><?= $action->shop_get($row->shop_id)->title ?></td>
                                         <td class="text-center"><?= $row->text ?></td>
                                         <td class="text-center"><?= $row->score ?></td>
                                         <td class="text-center"><?= $action->time_to_shamsi($row->created_at) ?></td>
+                                        <td class="text-center">
+                                            <?=
+                                            ($row->confirm) ? "<status-indicator positive pulse></status-indicator>" 
+                                             : "<status-indicator negative pulse></status-indicator>";
+                                            ?>
+                                        </td>
                                         <td>
                                             <a href="<?= $main_url ?>?edit=<?= $row->id ?>">
                                                 <i class="fa fa-pencil-square-o"></i>
                                             </a>
                                             |
-                                            <a href="<?= $main_url ?>?shop=<?= $row->shop_id?>&remove=<?= $row->id ?>">
+                                            <a href="<?= $list_url ?>?shop=<?= $row->shop_id?>&remove=<?= $row->id ?>">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </td>
