@@ -31,7 +31,7 @@ unset($_SESSION['MfromValidation']);
             $action->marketer_change_status($command);
             header("Location: index.php");
            }else{
-               $_SESSION['marketer_package'] = true;
+               $_SESSION['marketer_package'] = $action->package_get($package_id)->price;
                 header("Location: marketer-package-request.php");
            }
         }
@@ -86,10 +86,20 @@ unset($_SESSION['MfromValidation']);
                             </div>
                             <div class="form-group">
                                 <label for="package_id">انتخاب محصول</label>
+                                
                                 <select name="package_id">
-                                    <option value=1>1</option>
-                                    <option value=2>2</option>
-                                    <option value=3>3</option>
+                                <?
+                                $option_result = $action->package_list();
+                                while ($option = $option_result->fetch_object()) {
+                                    echo '<option value="';
+                                    echo $option->id;
+                                    echo '"';
+                                    if ($option->id == $row->package_id) echo "selected";
+                                    echo '>';
+                                    echo $option->name;
+                                    echo '</option>';
+                                }
+                                ?>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -104,7 +114,7 @@ unset($_SESSION['MfromValidation']);
                         </form>
                     </div>
                     <div class="col-md-7 left-form">
-                        <img src="assets/images/Group 494@2x.png">
+                    <img src="assets/images/Group 494@2x.png">
                     </div>
                 </div>
                 <p>با ورود یا ثبت نام در ابرپایو <a>شرایط و قوانین </a> را میپذیرید.</p>

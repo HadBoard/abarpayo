@@ -75,6 +75,13 @@ $action = new Action();
     </li>
 
     <li>
+        <a class="has-arrow" href="package-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">پکیج ها</span>
+        </a>
+    </li>
+
+    <li>
         <a class="has-arrow" href="withdraw-list.php" aria-expanded="false">
             <i class="fa fa-user"></i>
             <span class="hide-menu"> درخواست های برداشت </span>

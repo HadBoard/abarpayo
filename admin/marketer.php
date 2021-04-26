@@ -39,6 +39,7 @@ if (isset($_POST['submit'])) {
     $national_code = $action->request('national_code');
     $payment_type  = $action->request('payment_type');
     $reference_code = $action->request('reference_code');
+    $status = $action->request('status');
     if($reference_code){
         $result = $action->marketer_reference_code($reference_code);
         $reference = $result->fetch_object();
@@ -47,9 +48,9 @@ if (isset($_POST['submit'])) {
    
     // send query
     if ($edit) {
-        $command = $action->marketer_edit($id,$first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id);
+        $command = $action->marketer_edit($id,$first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id,$status);
     } else {
-        $command = $action->marketer_add($first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id);
+        $command = $action->marketer_add($first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id,$status);
     }
 
     // check errors
@@ -75,7 +76,7 @@ include('header.php'); ?>
         <!-- ----------- start title --------------------------------------------------------------------------- -->
         <div class="col-md-12 align-self-center text-right">
             <?php if (!isset($_GET['action'])) { ?>
-                <h3 class="text-primary">ثبت بازارسار</h3>
+                <h3 class="text-primary">ثبت بازارساز</h3>
             <?php } else { ?>
                 <h3 class="text-primary">ویرایش بازارساز</h3>
             <?php } ?>
@@ -93,9 +94,9 @@ include('header.php'); ?>
                 </li>
                 <li class="breadcrumb-item"><a href="<?= $list_url ?>">بازارسازان</a></li>
                 <?php if ($edit) { ?>
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">ثبت</a></li>
-                <?php } else { ?>
                     <li class="breadcrumb-item"><a href="javascript:void(0)">ویرایش</a></li>
+                <?php } else { ?>
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">ثبت</a></li>
                 <?php } ?>
             </ol>
         </div>
@@ -180,9 +181,19 @@ include('header.php'); ?>
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control " name="package_id" required>
-                                        <option>پکیج را انتخاب کنید.</option>
-                                        <option value=1>1</option>
-                                        <option value=2>2</option>
+                                    <option>پکیج را انتخاب فرمایید .</option>
+                                        <?
+                                        $option_result = $action->package_list();
+                                        while ($option = $option_result->fetch_object()) {
+                                            echo '<option value="';
+                                            echo $option->id;
+                                            echo '"';
+                                            if ($option->id == $row->package_id) echo "selected";
+                                            echo '>';
+                                            echo $option->name;
+                                            echo '</option>';
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="form-group">

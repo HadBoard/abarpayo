@@ -498,11 +498,6 @@ class Action
         return $this->get_data("tbl_category", $id);
     }
 
-    public function category_counter()
-     {
-         return $this->table_cunter("tbl_category");
-     }
-
     // ----------- end CATEGORIES -------------------------------------------------------------------------------------------
     // ----------- start CARD -----------------------------------------------------------------------------------------
 
@@ -688,11 +683,6 @@ class Action
          return $this->get_data("tbl_product", $id);
      }
  
-     public function product_counter()
-     {
-         return $this->table_cunter("tbl_product");
-     }
- 
      // ----------- end PRODUCT -------------------------------------------------------------------------------------------
     // ----------- start PROVINCE -----------------------------------------------------------------------------------------
 
@@ -749,11 +739,6 @@ class Action
              return $this->get_data("tbl_province", $id);
          }
      
-         public function province_counter()
-         {
-             return $this->table_cunter("tbl_province");
-         }
-     
          // ----------- end PROVINCE -------------------------------------------------------------------------------------------
          // ----------- start CITY -----------------------------------------------------------------------------------------
 
@@ -805,12 +790,6 @@ class Action
         {
             return $this->get_data("tbl_city", $id);
         }
-    
-        public function city_counter()
-        {
-            return $this->table_cunter("tbl_city");
-        }
- 
      // ----------- end CITY -------------------------------------------------------------------------------------------
      // ----------- start TICKETS -----------------------------------------------------------------------------------------
 
@@ -1016,6 +995,54 @@ class Action
      }
  
      // ----------- end SLIDERS -------------------------------------------------------------------------------------------
+      // ----------- start PACKAGE -----------------------------------------------------------------------------------------
+
+      public function package_list()
+      {
+          return $this->table_list("tbl_package");
+      }
+      public function package_add($name,$price,$discount,$status)
+      {
+          $now = time();
+          $result = $this->connection->query("INSERT INTO `tbl_package`
+          (`name`,`price`,`discount`,`status`,`created_at`) 
+          VALUES
+          ('$name','$price','$discount','$status','$now')");
+          if (!$this->result($result)) return false;
+          return $this->connection->insert_id;
+      }
+  
+      public function package_edit($id, $name,$price,$discount,$status)
+      {
+          $now = time();
+          $result = $this->connection->query("UPDATE `tbl_package` SET 
+          `name`='$name',
+          `price` = '$price',
+          `discount` = '$discount',
+          `status`='$status',
+          `updated_at`='$now'
+          WHERE `id` ='$id'");
+          if (!$this->result($result)) return false;
+          return $id;
+      }
+  
+      public function package_remove($id)
+      {
+          return $this->remove_data("tbl_package", $id);
+      }
+  
+      public function package_status($id)
+      {
+          return $this->change_status('tbl_package', $id);
+      }
+  
+      public function package_get($id)
+      {
+          return $this->get_data("tbl_package", $id);
+      }
+  
+      // ----------- end PACKAGES -------------------------------------------------------------------------------------------
+     
      public function request_edit($id, $description,$birthday){
         $now = time();
         $status = 1;
@@ -1050,19 +1077,19 @@ class Action
     {
         return $this->table_list("tbl_marketer");
     }
-    public function marketer_add($first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id)
+    public function marketer_add($first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id,$status)
     {
         $now = time();
         $reference_code = $this->get_token(6);
         $result = $this->connection->query("INSERT INTO `tbl_marketer`
         (`first_name`,`last_name`,`phone`,`reference_code`,`reference_id`,`national_code`,`package_id`,`payment_type`,`created_at`,`status`) 
         VALUES
-        ('$first_name','$last_name','$phone','$reference_code','$reference_id','$national_code','$package_id','$payment_type','$now',1)");
+        ('$first_name','$last_name','$phone','$reference_code','$reference_id','$national_code','$package_id','$payment_type','$now','$status')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
-    public function marketer_edit($id,$first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id)
+    public function marketer_edit($id,$first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id,$status)
     {
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_marketer` SET 
@@ -1073,6 +1100,7 @@ class Action
          `package_id`='$package_id',
          `payment_type` ='$payment_type',
          `reference_id` = '$reference_id',
+         `status` = '$status',
          `updated_at`='$now'
          WHERE `id` ='$id'");
         if (!$this->result($result)) return false;

@@ -694,7 +694,7 @@ class Action
         return $id;
 
     }
-    public function marketer_payment_add($marketer_id,$Amount,$reference_code,$status){
+    public function marketer_payment_add($marketer_id,$amount,$reference_code,$status){
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_marketer_payment`
         (`marketer_id`,`amount`,`reference_code`,`date`,`status`) 
@@ -702,6 +702,16 @@ class Action
         ('$marketer_id','$amount','$reference_code','$now','$status')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
+    }
+    public function marketer_paymentid_add($marketer_id,$payment_id){
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_marketer` SET 
+        `payment_id` = '$payment_id',
+        `updated_at`='$now'
+        WHERE `id` ='$marketer_id'");
+        if (!$this->result($result)) return false;
+        return $marketer_id;
+
     }
     public function marketer_reference_code($reference_code){
         return $this->connection->query("SELECT * FROM `tbl_marketer` WHERE `reference_code` = '$reference_code'");
@@ -725,6 +735,15 @@ class Action
     
     public function app_token_remove($id){
          return $this->remove_data("tbl_app_token", $id);
+    }
+
+    public function package_list()
+    {
+        return $this->table_list("tbl_package");
+    }
+    public function package_get($id)
+    {
+          return $this->get_data("tbl_package", $id);
     }
 
 }
