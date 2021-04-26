@@ -1048,12 +1048,12 @@ class Action
 
     public function marketer_list()
     {
-        return $this->table_list("tbl_bazarsaz");
+        return $this->table_list("tbl_marketer");
     }
     public function marketer_add($title,$link,$image,$status)
     {
         $now = time();
-        $result = $this->connection->query("INSERT INTO `tbl_bazarsaz`
+        $result = $this->connection->query("INSERT INTO `tbl_marketer`
          (`title`,`link`,`image`,`status`,`created_at`) 
          VALUES
          ('$title','$link','$image','$status','$now')");
@@ -1077,17 +1077,17 @@ class Action
 
     public function marketer_remove($id)
     {
-        return $this->remove_data("tbl_bazarsaz", $id);
+        return $this->remove_data("tbl_marketer", $id);
     }
 
     public function marketer_status($id)
     {
-        return $this->change_status('tbl_bazarsaz', $id);
+        return $this->change_status('tbl_marketer', $id);
     }
 
     public function marketer_get($id)
     {
-        return $this->get_data("tbl_bazarsaz", $id);
+        return $this->get_data("tbl_marketer", $id);
     }
 
     // ----------- end MARKETER -------------------------------------------------------------------------------------------

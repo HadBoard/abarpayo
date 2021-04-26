@@ -26,9 +26,9 @@ unset($_SESSION['MfromValidation']);
 
         if($command){
             $_SESSION['user_id'] = $command;
+            $_SESSION['user_access'] = 1;
            if($payment_type == 0){
             $action->marketer_change_status($command);
-            $_SESSION['user_access'] = 1;
             header("Location: index.php");
            }else{
                $_SESSION['marketer_package'] = true;

@@ -1,5 +1,7 @@
 <?php
 require_once "functions/database.php";
+$database = new DB();
+$connection = $database->connect();
 $action = new Action();
    
 $MerchantID = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX';

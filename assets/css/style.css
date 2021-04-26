@@ -5,8 +5,10 @@
 @font-face { font-family: IRANSans; font-style: normal; font-weight: 200; src: url("../fonts/eot/IRANSansWeb_UltraLight.eot?#iefix") format("embedded-opentype"), url("../fonts/woff2/IRANSansWeb_UltraLight.woff2") format("woff2"), url("../fonts/woff/IRANSansWeb_UltraLight.woff") format("woff"), url("../fonts/ttf/IRANSansWeb_UltraLight.ttf") format("truetype"); }
 @font-face { font-family: IRANSans; font-style: normal; font-weight: normal; src: url("../fonts/eot/IRANSansWeb.eot?#iefix") format("embedded-opentype"), url("../fonts/woff2/IRANSansWeb.woff2") format("woff2"), url("../fonts/woff/IRANSansWeb.woff") format("woff"), url("../fonts/ttf/IRANSansWeb.ttf") format("truetype"); }
 * {padding: 0px;margin: 0px;box-sizing: border-box;font-family: IRANSans;color: rgb(26, 26, 26);}
+
 body {overflow-x: hidden;height: 100vh;width: 100vw;background: #FCFCFC;}
-a { text-decoration: none; }
+a { text-decoration: none;cursor: pointer; }
+button,a{cursor: pointer;}
 :focus { outline: none; }
 .info_header { background: rgb(0, 0, 0); padding: 5px 0px; }
 .info_header span, .info_header a { color: rgb(255, 255, 255); float: right; }

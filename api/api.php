@@ -101,12 +101,14 @@ if(isset($_POST['function'])) {
         echo $json;
     }
     
-    if($_POST['function'] == 'shops'){
+    if($_POST['function'] == 'shops' ){
         $obj = null;
+        $obj -> shops = [];
+        $shops=[];
         $category_id = $action->request('category_id');
-        $shops = [];
-        $shops_list = $action->category_shops_list($category_id);
-        while ($shop = $shops_list->fetch_object()) {
+        $count = $action->request('count');
+        $result = $action->app_lazyLoad($category_id,$count);
+        while ($shop = $result->fetch_object()) {
             $obj_inner -> s_id = $shop -> id;
             $obj_inner -> name = $shop -> title;
             $obj_inner -> img = "http://abarpayo.com/site/admin/images/shops/$shop->image";
@@ -114,14 +116,13 @@ if(isset($_POST['function'])) {
             $obj_inner -> off = "off";
             $obj_inner -> rate = "rate";
             $obj_inner -> buy_counter = "buy_counter";
-            $obj_inner -> phone = $shop -> phone;
             $shops[] = $obj_inner;
             $obj_inner = null;
         }
-
-        $obj -> shops = $shops;
+         $obj -> shops = $shops;
         $json = json_encode($obj);
         echo $json;
+        
     }
 
     if($_POST['function'] == 'cities'){
@@ -184,6 +185,75 @@ if(isset($_POST['function'])) {
         }
         $json = json_encode($obj);
         echo $json;
+    }
+
+    if($_POST['function'] == 'token'){
+        $user_id = $action->request('user_id');
+        $token = rand(100000,999999);
+        $result = $action->app_token_list($user_id);
+        while($row = $result->fetch_object()){
+            $id = $row->id;
+            $action->app_token_remove($id);
+        }
+        $command = $action->app_token_add($user_id,$token);
+        if($command){
+           $obj -> token = $token; 
+        }
+         $json = json_encode($obj);
+        echo $json; 
+    }
+    
+    if($_POST['function'] == 'userWallet'){
+        $user_id = $action->request('user_id');
+        $wallet = $action->user_get($user_id)->wallet;
+        $obj->wallet = (int) $wallet;
+        $json = json_encode($obj);
+        echo $json; 
+    }
+    
+    if($_POST['function'] == 'userCarts'){
+         $user_id = $action->request('user_id');
+         $result = $action->app_user_cart_list($user_id);
+         while($row = $result->fetch_object()){
+             $obj_in -> id = $row->id;
+             $obj_in -> bank_name = $action->bank_get($row->bank_id)->name;
+             $obj_in -> cart_number = $row->cart_number;
+             $carts[] = $obj_in;
+             $obj_in = null;
+         }
+        $obj->carts = $carts;
+        $json = json_encode($obj);
+        echo $json; 
+    }
+
+    if($_POST['function'] == 'transactions'){
+        $obj -> shops = [];
+        $user_id = $action->request('user_id');
+        $transactions = $action->app_get_payment($user_id);
+        while($transaction = $transactions->fetch_object()){
+            $payments = $action->payment_get_action($transaction->id);
+            $payment = $payments->fetch_object();
+            $obj_in -> cost = $transaction->amount;
+            $obj_in -> action = $payment->action;
+            $obj_in -> pay_date = $transaction->date;
+            $obj_in -> type = 1;
+            $shops[] = $obj_in;
+            $obj_in = null;
+        }
+        
+        $withdraws = $action->app_get_requests();
+        while($withdraw = $withdraws->fetch_object()){
+            $obj_in -> cost = $withdraw->amount;
+            $obj_in -> pay_date  = $withdraw->created_at;
+            $obj_in -> action = "برداشت از کیف پول";
+            $obj_in -> type = 0;
+            $shops[] = $obj_in;
+            $obj_in = null;
+        }
+
+        $obj->shops = $shops;
+        $json = json_encode($obj);
+        echo $json; 
     }
 }
 

@@ -27,9 +27,13 @@ $action->marketer_change_status($marketer_id);
 $_SESSION['successful_pay'] = 'true';
 echo "<script> location.href='index.php'; </script>";
 } else {
+    unset($_SESSION['user_id']);
+    unset($_SESSION['user_access']);
     $_SESSION['successful_pay'] = 'false';
     echo "<script> location.href='marketer-phone.php'; </script>";
 }
-} else {    
+} else {
+    unset($_SESSION['user_id']);
+    unset($_SESSION['user_access']);
     echo "<script> location.href='marketer-phone.php'; </script>";
 }
