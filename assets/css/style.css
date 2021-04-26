@@ -54,7 +54,13 @@ header { box-shadow: rgba(0, 0, 0, 0.11) 1px 1px 3px 1px; margin-bottom: 14px; }
 .sell_card i { float: left; margin-right: 6px; }
 .tabcontent button { width: 99%; padding: 9px 0px; float: none; border: none; font-size: 16px; margin: 20px auto !important; }
 .main_slider { margin-bottom: 79px; overflow: hidden; }
-.main_slider a img{max-width: 100%;}
+/* .main_slider a img{max-width: 100%;} */
+.main_slider a img {
+    width: 100%;
+    max-height: 486px;
+    border-radius: 18px;
+    box-shadow: -3px 4px 5px 0 rgb(0 0 0 / 32%);
+}
 .index_title { margin-bottom: 20px; color: rgb(54, 54, 54); }
 .feature_cell { width: 33%; float: right; display: table; padding: 20px; }
 .index_features { width: 100%; display: table; text-align: center; margin-bottom: 60px; }
