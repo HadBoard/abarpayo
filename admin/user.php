@@ -150,6 +150,10 @@ include('header.php'); ?>
                 <? if ($edit) { ?>
                     <div class="row m-b-0">
                         <div class="col-lg-6">
+                            <p class="text-right m-b-0" style="font-size:large; margin-bottom:10px !important;">
+                                  کد معرفی:
+                                <?= $row->reference_code ?>
+                            </p>
                             <p class="text-right m-b-0">
                                 تاریخ ثبت :
                                 <?= $action->time_to_shamsi($row->created_at) ?>

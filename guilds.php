@@ -6,6 +6,21 @@
         $owner = $action->request('owner');
         $address = $action->request('address');
         $category = $action->request('category');
+
+        $command = $action->shop_request_add($category,$name,$owner,$address);
+        if($command){
+            ?> 
+            <div class="modal">
+                <div class="alert alert-suc">
+                    <span class="close_alart">×</span>
+                    <p>
+                        ثبت درخواست موفق بود!
+                    </p>
+                </div>
+            </div>
+            <script src="assets/js/alert.js"></script>
+        <? 
+        }
     }
 ?>
 
@@ -49,9 +64,18 @@
                             <div class="form-group">
                                 <label for="category">دسته بندی</label>
                                 <select name="category">
-                                    <option>یزد-یزد</option>
-                                    <option>یزد-یزد</option>
-                                    <option>یزد-یزد</option>
+                                <option>دسته بندی را انتخاب فرمایید .</option>
+                                        <?
+                                        $option_result = $action->category_list();
+                                        while ($option = $option_result->fetch_object()) {
+                                            echo '<option value="';
+                                            echo $option->id;
+                                            echo '"';
+                                            echo '>';
+                                            echo $option->title;
+                                            echo '</option>';
+                                        }
+                                        ?>
                                 </select>
                             </div>
                             <div class="form-group">

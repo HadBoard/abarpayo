@@ -574,6 +574,31 @@ class Action
         return $this->connection->insert_id;
     }
 
+    public function shop_request_list()
+    {
+        return $this->table_list("tbl_shop_request");
+    }
+
+    public function shop_request_remove($id)
+    {
+        return $this->remove_data("tbl_shop_request", $id);
+    }
+    public function shop_request_get($id)
+    {
+        return $this->get_data("tbl_shop_request", $id);
+    }
+
+    public function shop_request_status($id,$status)
+    {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_shop_request` SET 
+        `status` = '$status',
+        `confirmed_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
     public function shop_pics_add($shop_id,$pic)
     {
         $now = time();
@@ -1122,6 +1147,57 @@ class Action
         return $this->get_data("tbl_marketer", $id);
     }
 
+
+//----------------------- TEMP ------------------------------------------------------------------------------------------------------------
+    public function tmp_marketer_list()
+    {
+        return $this->table_list("tbl_bazarsaz");
+    }
+    public function tmp_marketer_add($first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id,$status)
+    {
+        $now = time();
+        $reference_code = $this->get_token(6);
+        $result = $this->connection->query("INSERT INTO `tbl_bazarsaz`
+        (`first_name`,`last_name`,`phone`,`reference_code`,`reference_id`,`national_code`,`package_id`,`payment_type`,`created_at`,`status`) 
+        VALUES
+        ('$first_name','$last_name','$phone','$reference_code','$reference_id','$national_code','$package_id','$payment_type','$now','$status')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function tmp_marketer_edit($id,$first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id,$status)
+    {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_bazarsaz` SET 
+         `first_name`='$first_name',
+         `last_name` = '$last_name',
+         `phone` = '$phone',
+         `national_code` = '$national_code',
+         `package_id`='$package_id',
+         `payment_type` ='$payment_type',
+         `reference_id` = '$reference_id',
+         `status` = '$status',
+         `updated_at`='$now'
+         WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    public function tmp_marketer_remove($id)
+    {
+        return $this->remove_data("tbl_bazarsaz", $id);
+    }
+
+    public function tmp_marketer_status($id)
+    {
+        return $this->change_status('tbl_bazarsaz', $id);
+    }
+
+    public function tmp_marketer_get($id)
+    {
+        return $this->get_data("tbl_bazarsaz", $id);
+    }
+
     // ----------- end MARKETER -------------------------------------------------------------------------------------------
     public function update_system($key,$value){
         $result = $this->connection->query("UPDATE `tbl_app` SET `value`='$value' WHERE `app_key`='$key'");
@@ -1135,6 +1211,56 @@ class Action
         $row  = $result->fetch_object(); 
         return $row->value;
     }
+
+    // ----------- start QUESTIONS -----------------------------------------------------------------------------------------
+    
+    public function frequently_asked_question_list()
+    {
+        return $this->table_list("tbl_asked_question");
+    }
+
+    public function frequently_asked_question_add($question,$solve,$status)
+    {
+        
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_asked_question`
+        (`question`,`solve`,`status`,`created_at`) 
+        VALUES
+        ('$question','$solve','$status','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function frequently_asked_question_edit($id,$question,$solve,$status)
+    {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_asked_question` SET 
+        `question` = '$question',
+        `solve` = '$solve',
+        `status`='$status',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    public function frequently_asked_question_remove($id)
+    {
+        return $this->remove_data("tbl_asked_question", $id);
+    }
+
+    public function frequently_asked_question_status($id)
+    {
+        return $this->change_status('tbl_asked_question', $id);
+    }
+
+    public function frequently_asked_question_get($id)
+    {
+        return $this->get_data("tbl_asked_question", $id);
+    }
+    
+    // ----------- end QUESTIONS -----------------------------------------------------------------------------------------
+
 
 }
 

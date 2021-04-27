@@ -127,7 +127,7 @@ include('header.php'); ?>
                                         <?if($solved){?>
                                         <td class="text-center"><?= $action->admin_get($row->admin_id)->last_name ?></td>
                                         <?}?>
-                                        <td class="text-center"><?= $action->user_get($row->user_id)->last_name ?></td>
+                                        <td class="text-center"><?= $action->user_get($row->user_id)->first_name." ".$action->user_get($row->user_id)->last_name ?></td>
                                         <td class="text-center"><?= $row->subject ?></td>
                                         <td class="text-center"><?= $action->time_to_shamsi($row->created_at) ?></td>
                                         <td class="text-center"><a href="<?= $main_url?>?id=<?= $row->id?>"><i class="fa fa-pencil-square-o"></i></a></td>

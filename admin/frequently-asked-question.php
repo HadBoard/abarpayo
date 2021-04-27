@@ -5,9 +5,9 @@ $action = new Action();
 
 // ----------- urls ----------------------------------------------------------------------------------------------------
 // main url for add , edit
-$main_url = "shop-comment.php";
+$main_url = "frequently-asked-question.php";
 // main url for remove , change status
-$list_url = "shop-comment-list.php";
+$list_url = "frequently-asked-question-list.php";
 // ----------- urls ----------------------------------------------------------------------------------------------------
 
 // ----------- get data from database when action is edit --------------------------------------------------------------
@@ -15,9 +15,7 @@ $edit = false;
 if (isset($_GET['edit'])) {
     $edit = true;
     $id = $action->request('edit');
-    $row = $action->shop_comment_get($id);
-    $replys = $action->shop_comment_reply($id);
-    $reply = $replys->fetch_object();
+    $row = $action->frequently_asked_question_get($id);
 }
 // ----------- get data from database when action is edit --------------------------------------------------------------
 
@@ -34,17 +32,17 @@ if (isset($_SESSION['error'])) {
 if (isset($_POST['submit'])) {
 
     // get fields
-    $text = $action->request('text');
-    $confirm = $action->request('confirm');
-    $shop_id = $row->shop_id;
-    $admin_id = $action->admin()->id;
+    $question = $action->request('question');
+    $solve = $action->request('solve',false);
+    $status = $action->request('status');
+   
     // send query
     if ($edit) {
-        $command = $action->shop_comment_add($shop_id,$admin_id,$id,$text);
-        if($confirm){
-            $command1 = $action->shop_comment_confirm($id);
-        }
-    } 
+        $command = $action->frequently_asked_question_edit($id,$question,$solve,$status);
+    } else {
+        $command = $action->frequently_asked_question_add($question,$solve,$status);
+    }
+
     // check errors
     if ($command) {
         $_SESSION['error'] = 0;
@@ -53,7 +51,7 @@ if (isset($_POST['submit'])) {
     }
 
     // bye bye :)
-    header("Location: $main_url?edit=$id");
+    header("Location: $main_url?edit=$command");
 
 }
 // ----------- add or edit ---------------------------------------------------------------------------------------------
@@ -68,9 +66,9 @@ include('header.php'); ?>
         <!-- ----------- start title --------------------------------------------------------------------------- -->
         <div class="col-md-12 align-self-center text-right">
             <?php if (!isset($_GET['action'])) { ?>
-                <h3 class="text-primary">ثبت پاسخ</h3>
+                <h3 class="text-primary">ثبت پرسش</h3>
             <?php } else { ?>
-                <h3 class="text-primary">ویرایش پاسخ </h3>
+                <h3 class="text-primary">ویرایش پرسش</h3>
             <?php } ?>
         </div>
         <!-- ----------- end title ----------------------------------------------------------------------------- -->
@@ -84,11 +82,11 @@ include('header.php'); ?>
                         خانه
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href=<?= $list_url."?shop=".$row->shop_id ?>> نظرات فروشگاه ها</a></li>
+                <li class="breadcrumb-item"><a href="<?= $list_url ?>">پرسش های پرتکرار</a></li>
                 <?php if ($edit) { ?>
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">پاسخ</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">ثبت</a></li>
                 <?php } else { ?>
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">پاسخ</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">ویرایش</a></li>
                 <?php } ?>
             </ol>
         </div>
@@ -142,46 +140,46 @@ include('header.php'); ?>
                     <div class="card-body">
                         <div class="basic-form">
                             <form action="" method="post">
+
                                 <div class="form-group">
-                                    <input type="text" class="form-control input-default "
-                                           placeholder="عنوان"
-                                           value="<?= ($edit) ? $row->text : "" ?>" readonly>
+                                    <input type="text" name="question" class="form-control input-default "
+                                           placeholder="سوال"
+                                           value="<?= ($edit) ? $row->question : "" ?>" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <textarea type="text" name="text" class="form-control input-default "
-                                           placeholder="متن پاسخ"
-                                          >
-                                          <?= ($reply) ? $reply->text : "" ?>
-                                          </textarea>
+                                            <textarea name="solve" id="description" class="form-control">
+                                                <?= ($edit ? $row->solve  : "پاسخ") ?>
+                                            </textarea>
                                 </div>
-                               
+
                                 <div class="form-actions">
 
                                     <label class="float-right">
-                                        <input type="checkbox" class="float-right m-1" name="confirm" value="1"
-                                            <? if ($edit && $row->confirm) echo "checked"; ?> >
-                                        تایید نظر کاربر
+                                        <input type="checkbox" class="float-right m-1" name="status" value="1"
+                                            <? if ($edit && $row->status) echo "checked"; ?> >
+                                        فعال
                                     </label>
 
-                                    <button type="submit" <?= ( $edit && $row->confirm) ? "disabled" : "" ?> name="submit" class="btn btn-success sweet-success">
+                                    <button type="submit" name="submit" class="btn btn-success sweet-success">
                                         <i class="fa fa-check"></i> ثبت
                                     </button>
 
-                                    <a href="<?= $list_url."?shop=".$row->shop_id ?>"><span name="back" class="btn btn-inverse">بازگشت به لیست</span></a>
+                                    <a href="<?= $list_url ?>"><span name="back"
+                                                                     class="btn btn-inverse">بازگشت به لیست</span></a>
 
                                 </div>
+
                             </form>
                         </div>
                     </div>
                 </div>
                 <!-- ----------- end row of fields ----------------------------------------------------------- -->
-                
             </div>
         </div>
     </div>
     <!-- ----------- end main container ------------------------------------------------------------------------ -->
-</div>
 
+</div>
 <? include('footer.php'); ?>
 

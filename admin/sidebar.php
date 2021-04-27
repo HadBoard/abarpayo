@@ -49,6 +49,13 @@ $action = new Action();
         </a>
     </li>
 
+    <li>
+        <a class="has-arrow" href="old-marketer-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">بازارسازان قدیم</span>
+        </a>
+    </li>
+
     <hr class="m-0">
 
     <li>
@@ -78,6 +85,13 @@ $action = new Action();
         <a class="has-arrow" href="package-list.php" aria-expanded="false">
             <i class="fa fa-user"></i>
             <span class="hide-menu">پکیج ها</span>
+        </a>
+    </li>
+
+    <li>
+        <a class="has-arrow" href="shop-requests.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu"> درخواست اصناف  </span>
         </a>
     </li>
 
