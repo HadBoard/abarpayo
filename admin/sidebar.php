@@ -110,6 +110,13 @@ $action = new Action();
     </li>
 
     <li>
+        <a class="has-arrow" href="frequently-asked-question-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">پرسش های پرتکرار</span>
+        </a>
+    </li>
+
+    <li>
         <a class="has-arrow" href="slider-list.php" aria-expanded="false">
             <i class="fa fa-user"></i>
             <span class="hide-menu">اسلایدر ها</span>
