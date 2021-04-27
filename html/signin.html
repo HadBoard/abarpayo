@@ -44,7 +44,14 @@
                                 <label for="name">کد معرف(اختیاری)</label>
                                 <input type="text" name="name" placeholder="فقط حروف فارسی">
                             </div>
-                            <input type="submit" class="main_btn" value="ادامه">
+                            <div class="form-group">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onclick="myFunction()">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        پذیرش 
+                                    </label>
+                                    <a href="#" id="rule-btn" class="show-rules">قوانین و مقررات</a>
+                            </div>
+                            <input id="signup" type="submit" class="main_btn" value="ادامه">
                             
                         </form>
                     </div>
@@ -52,9 +59,27 @@
                         <img src="../assets/images/Group 380@2x.png">
                     </div>
                 </div>
-                <p>با ورود یا ثبت نام در ابرپایو <a>شرایط و قوانین </a> را میپذیرید.</p>
-            </div>
+             </div>
         </div>
     </div>
+    <script>
+        function myFunction() {
+                document.getElementById("signup").disabled = true;
+                // document.getElementById("cash").disabled = true;
+                var checkBox = document.getElementById("flexCheckDefault");
+                // var sabt_btn = document.getElementById("sabt");
+                // var cash_btn = document.getElementById("chash");
+                if (checkBox.checked == true){
+                    // console.log('true')
+                    document.getElementById("signup").disabled = false;
+                    // document.getElementById("cash").disabled = false;
+                } else {
+                    document.getElementById("signup").disabled = true;
+                    // document.getElementById("cash").disabled = true;
+                }
+            }
+            myFunction()
+
+    </script>
 </body>
 </html>
