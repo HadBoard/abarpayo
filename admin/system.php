@@ -106,21 +106,21 @@ include('header.php'); ?>
                         <div class="basic-form">
                             <form action="" method="post" enctype="multipart/form-data">
                                 <div class="form-group">
-                                    <label for="name">نام سیستم</label>
+                                    <label class="float-right" for="name">نام سیستم</label>
                                     <input type="text" name="name" class="form-control"
                                            placeholder="نام سیستم"
                                            value="<?= $action->get_system('name');?>" >
                                 </div>
 
                                 <div class="form-group">
-                                <label for="about_us">درباره ما</label>
+                                <label class="float-right" for="about_us">درباره ما</label>
                                     <textarea type="text" name="about_us" class="form-control input-default "
                                            placeholder="درباره ما"
                                            ><?= $action->get_system('about_us');?></textarea>
                                 </div>
                                 
                                 <div class="form-group">
-                                <label for="rules">قوانین و مقرارت</label>
+                                <label class="float-right" for="rules">قوانین و مقرارت</label>
                                     <textarea type="text" name="rules" class="form-control input-default "
                                            placeholder="قوانین و مقررات"
                                            ><?= $action->get_system('rules'); ?></textarea>
