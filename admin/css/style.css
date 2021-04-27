@@ -8694,21 +8694,68 @@ radio input[type=radio], .radio-inline input[type=radio], .checkbox input[type=c
 }
 
 .remove_field {
-    background: red;
-    padding: 5px 11px 3px 11px;
-    color: #fff;
-    border-radius: 0 0 5px 5px;
+    background: #fff;
+    padding: 9px 11px 6px 11px;
+    color: red;
+    border-radius: 5px  0  0  5px;
     display: table;
     /* margin-top: 10px; */
     float: left;
-    margin-bottom: 20px;
+    width: 10%;
+    float: right;
+    border: 1px solid red;
+    text-align: center;
 }
 .title_add{
-    width: 100;
+    width: 80%;
     display: table;
     text-align: right;
+    color: #000;
+    float: right;
+    font-weight: 450;
+    font-size: 17px;
+    margin-top: 8px;
+    margin-bottom: 28px;
+    /* border-top: 1px dashed; */
 }
 .add-pic-btn{
     background-color: transparent;
     color: #000;
+    float: right;
+    width: 84%;
+}
+
+.shop-gallery {
+    width: 80%;
+    display: table;
+    margin-bottom: 38px;
+    border-top: 1px dashed;
+    padding-top: 20px;
+}
+
+button.add_field_button:hover {
+    color: #fff;
+    background: green;
+}
+
+button.add_field_button {
+    background: #fff;
+    color: green;
+    margin-right: -50px;
+    float: right;
+}
+
+.add-pic-shop {
+    display: table;
+}
+
+.add-pic-shop .add-pic-btn {
+    width: 85%;
+    border-left: none;
+    padding: 4px 9px;
+    border-radius: 0 5px 5px 0;
+}
+.remove_field:hover {
+    background: red;
+    color: #fff;
 }
