@@ -221,13 +221,13 @@ include('header.php'); ?>
                                 <div class="form-group">
                                     <input type="text" name="phone" class="form-control input-default "
                                            placeholder="شماره تماس"
-                                           value="<?= ($edit) ? $row->phone : "" ?>" required>
+                                           value="<?= ($edit && $row->phone != 0) ? $row->phone : "" ?>" required>
                                 </div>
 
                                 <div class="form-group">
                                     <input type="text" name="fax" class="form-control input-default "
                                            placeholder="فکس"
-                                           value="<?= ($edit) ? $row->fax : "" ?>">
+                                           value="<?= ($edit && $row->fax != 0 ) ? $row->fax : "" ?>">
                                 </div>
 
                                 <div class="form-group">
@@ -276,14 +276,14 @@ include('header.php'); ?>
                                 <div class="form-group">
                                     <input type="text" name="longitude" class="form-control input-default "
                                            placeholder="طول جغرافیایی"
-                                           value="<?= ($edit) ? $row->longitude : "" ?>"
+                                           value="<?= ($edit && $row->longitude !=0 ) ? $row->longitude : "" ?>"
                                            required>
                                 </div>
 
                                 <div class="form-group">
                                     <input type="text" name="latitude" class="form-control input-default "
                                            placeholder="عرض جغرافیایی"
-                                           value="<?= ($edit) ? $row->latitude : "" ?>"
+                                           value="<?= ($edit  && $row->latitude !=0) ? $row->latitude : "" ?>"
                                            required>
                                 </div>
 

@@ -49,6 +49,13 @@ $action = new Action();
         </a>
     </li>
 
+    <li>
+        <a class="has-arrow" href="old-marketer-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">بازارسازان قدیم</span>
+        </a>
+    </li>
+
     <hr class="m-0">
 
     <li>
@@ -82,6 +89,13 @@ $action = new Action();
     </li>
 
     <li>
+        <a class="has-arrow" href="shop-requests.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu"> درخواست اصناف  </span>
+        </a>
+    </li>
+
+    <li>
         <a class="has-arrow" href="withdraw-list.php" aria-expanded="false">
             <i class="fa fa-user"></i>
             <span class="hide-menu"> درخواست های برداشت </span>
@@ -92,6 +106,13 @@ $action = new Action();
         <a class="has-arrow" href="ticket-list.php" aria-expanded="false">
             <i class="fa fa-user"></i>
             <span class="hide-menu">تیکت ها</span>
+        </a>
+    </li>
+
+    <li>
+        <a class="has-arrow" href="frequently-asked-question-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">پرسش های پرتکرار</span>
         </a>
     </li>
 

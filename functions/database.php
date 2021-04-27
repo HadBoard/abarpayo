@@ -427,6 +427,17 @@ class Action
         return $this->connection->insert_id;
     }
 
+    public function app_cart_add($user_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation)
+    {
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_user_cart`
+        (`user_id`,`bank_id`,`title`,`cart_number`,`account_number`,`iban`,`validation`,`created_at`) 
+        VALUES
+        ('$user_id','$bank_id','$title','$cart_number','$account_number','$iban','$validation','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
     public function cart_edit($id,$bank_id,$title,$cart_number,$account_number,$iban,$validation)
     {
         $now = time();
@@ -566,6 +577,10 @@ class Action
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
+
+    public function last_request($user_id){
+        return $this->connection->query("SELECT * FROM `tbl_request` WHERE `user_id` = '$user_id' ORDER BY id DESC LIMIT 1");
+    }
      // ----------- end REQUEST ------------------------------------------------------------------------------------------
     // ----------- start PROVINCE ------------------------------------------------------------------------------------------
     public function province_list()
@@ -587,6 +602,22 @@ class Action
     public function shop_get($id)
     {
         return $this->get_data("tbl_shop", $id);
+    }
+
+    public function shop_request_get($id)
+    {
+        return $this->get_data("tbl_shop_request", $id);
+    }
+
+
+    public function shop_request_add($category,$name,$owner,$address){
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_shop_request`
+        (`category_id`,`title`,`owner`,`address`,`created_at`,`status`) 
+        VALUES
+        ('$category','$name','$owner','$address','$now',0)");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
     }
 
 
@@ -615,6 +646,16 @@ class Action
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
+
+    public function wallet_log_increase($user_id){
+        return $this->connection->query("SELECT * FROM `tbl_wallet_log` WHERE `user_id` = '$user_id' AND `type` = 1");
+    }
+
+    public function wallet_log_get_payment($id){
+        return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `id` = '$id'");
+    }
+
+
     // ----------- end WALLETLOG------------------------------------------------------------------------------------------
 
     // ----------- start PAYMENT ------------------------------------------------------------------------------------------
@@ -744,6 +785,12 @@ class Action
     public function package_get($id)
     {
           return $this->get_data("tbl_package", $id);
+    }
+
+    public function category_list()
+    {
+        return $this->table_list("tbl_category");
+
     }
 
     public function get_system($key){

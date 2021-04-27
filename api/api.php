@@ -208,6 +208,25 @@ if(isset($_POST['function'])) {
         $user_id = $action->request('user_id');
         $wallet = $action->user_get($user_id)->wallet;
         $obj->wallet = (int) $wallet;
+        $obj->arr = [];
+
+        $withdraws = $action->app_get_requests($user_id);
+        while($withdraw = $withdraws->fetch_object()){
+            //$obj_in -> wallet_date = $withdraw->paymented_at;
+            $obj_in -> amount = $withdraw->amount;
+            $obj_in -> type = 0;
+            $arr[] = $obj_in;
+            $obj_in = null;
+        }
+        $logs = $action->wallet_log_increase($user_id);
+        while($log = $logs->fetch_object()){
+            //$obj_inner -> wallet_date = $action->wallet_log_get_payment($log->payment_id)->date;
+            $obj_inner -> amount = $log->amount;
+            $obj_inner -> type = 1;
+            $arr[] = $obj_inner;
+            $obj_in = null;
+        }
+        $obj -> arr = $arr;
         $json = json_encode($obj);
         echo $json; 
     }
@@ -219,6 +238,8 @@ if(isset($_POST['function'])) {
              $obj_in -> id = $row->id;
              $obj_in -> bank_name = $action->bank_get($row->bank_id)->name;
              $obj_in -> cart_number = $row->cart_number;
+             $obj_in -> iban = $row->iban;
+             $obj_in -> account_number = $row->account_number;
              $carts[] = $obj_in;
              $obj_in = null;
          }
@@ -227,8 +248,9 @@ if(isset($_POST['function'])) {
         echo $json; 
     }
 
+ 
     if($_POST['function'] == 'transactions'){
-        $obj -> shops = [];
+        $obj -> arr = [];
         $user_id = $action->request('user_id');
         $transactions = $action->app_get_payment($user_id);
         while($transaction = $transactions->fetch_object()){
@@ -236,23 +258,92 @@ if(isset($_POST['function'])) {
             $payment = $payments->fetch_object();
             $obj_in -> cost = $transaction->amount;
             $obj_in -> action = $payment->action;
-            $obj_in -> pay_date = $transaction->date;
+            //$obj_in -> pay_date = $action->time_to_shamsi($transaction->date);
             $obj_in -> type = 1;
-            $shops[] = $obj_in;
+            $out[] = $obj_in;
             $obj_in = null;
         }
         
-        $withdraws = $action->app_get_requests();
+        $withdraws = $action->app_get_requests($user_id);
         while($withdraw = $withdraws->fetch_object()){
             $obj_in -> cost = $withdraw->amount;
-            $obj_in -> pay_date  = $withdraw->created_at;
+            //$obj_in -> pay_date  = $action->time_to_shamsi($withdraw->created_at);
             $obj_in -> action = "برداشت از کیف پول";
             $obj_in -> type = 0;
-            $shops[] = $obj_in;
+            $out[] = $obj_in;
             $obj_in = null;
         }
 
-        $obj->shops = $shops;
+        $obj-> arr = $out;
+        $json = json_encode($obj);
+        echo $json; 
+    }
+    
+    if($_POST['function'] == 'banks'){
+        $obj -> banks = [];
+        $banks = $action->bank_list();
+        while($bank = $banks->fetch_object()){
+            $obj_in -> id = $bank->id;
+            $obj_in -> name = $bank -> name;
+            $banks_list[] = $obj_in;
+            $obj_in = null;
+        }
+        $obj->banks = $banks_list;
+        $json = json_encode($obj);
+        echo $json; 
+    }
+    
+    if($_POST['function'] == 'addCart'){
+        $obj=null;
+        $obj -> result= 0;
+        $user_id = $action->request('user_id');
+        $bank_id = $action->request('bank_id');
+        $iban = $action->request('iban');
+        $owner = $action->request('owner');
+        $account_number = $action->request('account_number');
+        $cart_number = $action->request('cart_number');
+        $validation = 0;
+        $command = $action->app_cart_add($user_id,$bank_id,$owner,$cart_number,$account_number,$iban,$validation);
+        if($command){
+            $obj -> result = 1;
+        }
+        $json = json_encode($obj);
+        echo $json; 
+    }
+    
+    if($_POST['function'] == 'withdraw'){
+        $obj = null;
+        $obj -> result = 0;
+        $user_id = $action->request('user_id');
+        $amount = $action->request('amount');
+        $cart = $action->request('cart');
+        $command   = $action->app_request_add($user_id,$cart,$amount);
+        if($command){
+            $obj -> result = 1;
+        }
+        $json = json_encode($obj);
+        echo $json; 
+    }
+
+    if($_POST['function'] == 'lastWithdraw'){
+        $obj = null;
+        $obj -> result = 0;
+        $user_id = $action->request('user_id');
+        $requests  = $action->last_request($user_id);
+        $request = $requests->fetch_object();
+        $obj -> cart_number  = $action->cart_get($request->cart_id)->cart_number;
+        $obj -> request_date = $request->created_at;
+        $obj -> status = $request->status;
+        $obj -> amount = $request->amount;
+        $json = json_encode($obj);
+        echo $json; 
+    }
+
+    if($_POST['function'] == 'userCity'){
+        $obj = null;
+        $user_id = $action->request('user_id');
+        $obj -> city_id = $action->user_get($user_id)->city_id;
+        $obj ->province_id = $action->city_get($action->user_get($user_id)->city_id)->province_id;
         $json = json_encode($obj);
         echo $json; 
     }

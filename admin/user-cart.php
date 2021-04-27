@@ -211,7 +211,7 @@ include('header.php'); ?>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-body">
 
@@ -221,11 +221,8 @@ include('header.php'); ?>
                                 <thead>
                                 <tr>
                                     <th class="text-center">ردیف</th>
-                                    <th class="text-center"> بانک</th>
                                     <th class="text-center">عنوان</th>
                                     <th class="text-center">شماره کارت</th>
-                                    <th class="text-center">شماره حساب </th>
-                                    <th class="text-center">شماره شبا</th>
                                     <th class="text-center">مدیریت</th>
                                 </tr>
                                 </thead>
@@ -235,11 +232,8 @@ include('header.php'); ?>
                                     <tr class="text-center">
 
                                         <td class="text-center"><?= $counter++ ?></td>
-                                        <td class="text-center"><?= $action->bank_get($row->bank_id)->name ?></td>
                                         <td class="text-center"><?= $row->title ?></td>
                                         <td class="text-center"><?= $row->cart_number ?></td>
-                                        <td class="text-center"><?= $row->account_number ?></td>
-                                        <td class="text-center"><?= $row->iban ?></td>
                                       
                                         <td class="text-center">
                                             <a href="<?= $main_url?>?user_id=<?= $user_id?>&edit=<?= $row->id ?>">
