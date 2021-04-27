@@ -185,7 +185,7 @@ ul { list-style: none; }
 .wallet_btn { font-weight: bold; float: right; margin: 20px 0px; padding: 10px; }
 .wallet_info { width: 100%; text-align: center; display: table; }
 .wallet_info h4 { margin-bottom: 10px; font-size: 19px; }
-.wallet_table { padding: 20.5px 23.5px 35.5px; border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1.5px 3px 0px; background-color: rgb(255, 255, 255); width: 92%; margin: auto; }
+.wallet_table {padding: 20.5px 23.5px 35.5px;border-radius: 10px;box-shadow: rgb(0 0 0 / 15%) 0px 0px 5px 0px;background-color: rgb(255, 255, 255);width: 92%;margin: auto;}
 .wallet_table_title { padding: 10px 0px; }
 td { padding: 14px 5px; display: table-cell; color: rgb(54, 54, 54); font-weight: 500; font-size: 14px; max-width: 20%; width: 18%; }
 tr { border-bottom: 0.5px solid rgb(112, 112, 112); display: table; width: 100%; }
@@ -377,3 +377,97 @@ label.form-check-label {
     margin-right: -23px;
 }
 /* eof welcome-modal */
+.flip-card {
+  width: 100%;
+  height: 170px;
+  /* margin-top:-112px */
+  display: table;
+}
+.flip-card-inner {
+  position:relative;
+  width: 100%;
+  height: 100%;
+  text-align:center;
+  transition:transform .6s;
+  transform-style:preserve-3d;
+  box-shadow:0 4px 8px 0 rgba(0,0,0,0.2);
+}
+.flip-card:hover .flip-card-inner {
+  transform:rotateY(180deg)
+}
+.flip-card-front,
+.flip-card-back {
+  position:absolute;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  -webkit-backface-visibility:hidden;
+  backface-visibility:hidden;
+}
+.flip-card-front {
+  background-image: linear-gradient(45deg, rgb(213 171 122), transparent);
+  background-color: #bbb;
+  color: #fff;
+}
+
+.flip-card-back {
+  background-color:var(--dark-blue);
+  color:#fff;
+  transform:rotateY(180deg);
+  padding:20px;
+  border:1px solid var(--light-blue);
+  padding-top:30px
+}
+.flip-card-front h3 {
+    color: #fff;
+}.invation-wrapper {
+  width: 86%;
+  margin: 27px auto 0 auto;
+}
+.flip-card-back h2{
+  text-shadow: -2px 1px 2px rgb(255 142 10 / 76%);
+}
+
+.flip-card-back .col-3 a {
+  /* background: gray; */
+  /* padding: 4px 10px; */
+  /* border-radius: 32px; */
+}
+.flip-card-back h2 ,.flip-card-back h3{
+  text-shadow: -2px 1px 2px rgb(255 142 10 / 76%);
+}
+
+.flip-card-back .col-3 a {
+  /* background: gray; */
+  padding: 4px 10px;
+  border-radius: 32px;
+  width: 100%;
+  /* height: 48px; */
+  /* margin: 0 -10px; */
+}
+
+.flip-card-back .row {
+  margin: 16px auto 26px auto;
+  width: 90%;
+  
+}
+
+.flip-card-back .col-3 a i {
+  color: #fff;
+}
+.flip-card-front img {
+  margin-top: 22px;
+}
+.flip-card-back .col-3 a img {
+  max-width: 100%;
+}
+.wallet_table.inviataion_table {
+    margin-top: 50px;
+}
+
+.inviataion_table th ,.inviataion_table td {
+    text-align: right;
+    padding: 10px;
+    width: 50% !important;
+}
+
