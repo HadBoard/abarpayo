@@ -790,6 +790,7 @@ class Action
     public function category_list()
     {
         return $this->table_list("tbl_category");
+
     }
 
 }
