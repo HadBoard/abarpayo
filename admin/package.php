@@ -5,12 +5,18 @@ $action = new Action();
 
 // ----------- urls ----------------------------------------------------------------------------------------------------
 // main url for add , edit
-$main_url = "system.php";
+$main_url = "package.php";
 // main url for remove , change status
+$list_url = "package-list.php";
 // ----------- urls ----------------------------------------------------------------------------------------------------
 
 // ----------- get data from database when action is edit --------------------------------------------------------------
-
+$edit = false;
+if (isset($_GET['edit'])) {
+    $edit = true;
+    $id = $action->request('edit');
+    $row = $action->package_get($id);
+}
 // ----------- get data from database when action is edit --------------------------------------------------------------
 
 // ----------- check error ---------------------------------------------------------------------------------------------
@@ -27,23 +33,26 @@ if (isset($_POST['submit'])) {
 
     // get fields
     $name = $action->request('name');
-    $about_us = $action->request('about_us');
-    $rules = $action->request('rules');
-
-    $command = $action->update_system('name',$name);
-    $command1 = $action->update_system('about_us',$about_us);
-    $command2 = $action->update_system('rules',$rules);
+    $price = $action->request('price');
+    $discount = $action->request('discount');
+    $status = $action->request('status');
+    // send query
+    if ($edit) {
+        $command = $action->package_edit($id,$name,$price,$discount,$status);
+    } else {
+        $command = $action->package_add($name,$price,$discount,$status);
+    }
 
     // check errors
-    if ($command && $command1 && $command2) {
+    if ($command) {
         $_SESSION['error'] = 0;
     } else {
         $_SESSION['error'] = 1;
     }
 
     // bye bye :)
-    header("Location: $main_url");
-
+    header("Location: $main_url?edit=$command");
+    
 }
 // ----------- add or edit ---------------------------------------------------------------------------------------------
 
@@ -56,7 +65,11 @@ include('header.php'); ?>
 
         <!-- ----------- start title --------------------------------------------------------------------------- -->
         <div class="col-md-12 align-self-center text-right">
-            <h3 class="text-primary">ویرایش سیستم</h3>
+            <?php if (!isset($_GET['action'])) { ?>
+                <h3 class="text-primary">ثبت پکیج</h3>
+            <?php } else { ?>
+                <h3 class="text-primary">ویرایش پکیج</h3>
+            <?php } ?>
         </div>
         <!-- ----------- end title ----------------------------------------------------------------------------- -->
 
@@ -69,8 +82,12 @@ include('header.php'); ?>
                         خانه
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a">سیستم</a></li>
+                <li class="breadcrumb-item"><a href="<?= $list_url ?>">پکیج ها</a></li>
+                <?php if ($edit) { ?>
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">ثبت</a></li>
+                <?php } else { ?>
                     <li class="breadcrumb-item"><a href="javascript:void(0)">ویرایش</a></li>
+                <?php } ?>
             </ol>
         </div>
         <!-- ----------- end breadcrumb ------------------------------------------------------------------------ -->
@@ -98,6 +115,24 @@ include('header.php'); ?>
             <div class="col-lg-6">
 
                 <!-- ----------- start history ----------------------------------------------------------------- -->
+                <? if ($edit) { ?>
+                    <div class="row m-b-0">
+                        <div class="col-lg-6">
+                            <p class="text-right m-b-0">
+                                تاریخ ثبت :
+                                <?= $action->time_to_shamsi($row->created_at) ?>
+                            </p>
+                        </div>
+                        <? if ($row->updated_at) { ?>
+                            <div class="col-lg-6">
+                                <p class="text-right m-b-0">
+                                    آخرین ویرایش :
+                                    <?= $action->time_to_shamsi($row->updated_at) ?>
+                                </p>
+                            </div>
+                        <? } ?>
+                    </div>
+                <? } ?>
                 <!-- ----------- end history ------------------------------------------------------------------- -->
 
                 <!-- ----------- start row of fields ----------------------------------------------------------- -->
@@ -105,41 +140,52 @@ include('header.php'); ?>
                     <div class="card-body">
                         <div class="basic-form">
                             <form action="" method="post" enctype="multipart/form-data">
+                              
                                 <div class="form-group">
-                                    <label for="name">نام سیستم</label>
-                                    <input type="text" name="name" class="form-control"
-                                           placeholder="نام سیستم"
-                                           value="<?= $action->get_system('name');?>" >
+                                    <input type="text" name="name" class="form-control input-default "
+                                           placeholder="نام محصول"
+                                           value="<?= ($edit) ? $row->name : "" ?>" required>
                                 </div>
 
                                 <div class="form-group">
-                                <label for="about_us">درباره ما</label>
-                                    <textarea type="text" name="about_us" class="form-control input-default "
-                                           placeholder="درباره ما"
-                                           ><?= $action->get_system('about_us');?></textarea>
+                                    <input type="text" name="price" class="form-control input-default "
+                                           placeholder="قیمت"
+                                           value="<?= ($edit) ? $row->price : "" ?>" required>
                                 </div>
-                                
+
                                 <div class="form-group">
-                                <label for="rules">قوانین و مقرارت</label>
-                                    <textarea type="text" name="rules" class="form-control input-default "
-                                           placeholder="قوانین و مقررات"
-                                           ><?= $action->get_system('rules'); ?></textarea>
+                                    <input type="text" name="discount" class="form-control"
+                                           placeholder="تخفیف"
+                                           value="<?= ($edit) ? $row->discount : "" ?>" required>
                                 </div>
+
                                 <div class="form-actions">
+
+                                    <label class="float-right">
+                                        <input type="checkbox" class="float-right m-1" name="status" value="1"
+                                            <? if ($edit && $row->status) echo "checked"; ?> >
+                                        فعال
+                                    </label>
+
                                     <button type="submit" name="submit" class="btn btn-success sweet-success">
                                         <i class="fa fa-check"></i> ثبت
                                     </button>
+
+                                    <a href="<?= $list_url ?>"><span name="back" class="btn btn-inverse">بازگشت به لیست</span></a>
+
                                 </div>
+
                             </form>
                         </div>
                     </div>
                 </div>
                 <!-- ----------- end row of fields ----------------------------------------------------------- -->
-                
+
             </div>
         </div>
     </div>
     <!-- ----------- end main container ------------------------------------------------------------------------ -->
 </div>
 <? include('footer.php'); ?>
+
 

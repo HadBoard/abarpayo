@@ -18,7 +18,8 @@ unset($_SESSION['fromValidation']);
             $reference_id = $reference->id;
         } 
         $phone = $_SESSION['phone'];
-        $command = $action->user_add($first_name,$last_name,$phone,$reference_id);    
+        $platform = 1;
+        $command = $action->user_add($first_name,$last_name,$phone,$reference_id,$platform);    
         if($command){
             unset($_SESSION['phone']);
             $_SESSION['user_id'] = $command;

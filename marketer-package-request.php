@@ -2,8 +2,8 @@
 require_once "functions/database.php";
 $action = new Action();
 if(isset($_SESSION['marketer_package'])){
+    $amount = $_SESSION['marketer_package'];
     unset($_SESSION['marketer_package']);
-    $amount = 10000;
     $_SESSION['marketer_amount'] = $amount;
     $Amount = $amount;
 $MerchantID = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'; //Required

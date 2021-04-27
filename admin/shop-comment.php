@@ -164,11 +164,11 @@ include('header.php'); ?>
                                         تایید نظر کاربر
                                     </label>
 
-                                    <button type="submit" name="submit" class="btn btn-success sweet-success">
+                                    <button type="submit" <?= ( $edit && $row->confirm) ? "disabled" : "" ?> name="submit" class="btn btn-success sweet-success">
                                         <i class="fa fa-check"></i> ثبت
                                     </button>
 
-                                    <a href="<?= $list_url."?shop=".$row->shop_id ?>"><span name="back" class="btn btn-inverse">بازگشت به لیست</span></a>
+                                    <a href="<?= $list_url."?shop".$row->shop_id ?>"><span name="back" class="btn btn-inverse">بازگشت به لیست</span></a>
 
                                 </div>
                             </form>

@@ -300,6 +300,10 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id'");
     }
 
+    public function app_get_payment($id){
+        return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id'");
+    }
+
     public function payment_get_action($payment_id){
         return $this->connection->query("SELECT * FROM `tbl_wallet_log` WHERE `payment_id` = '$payment_id'");
     }
@@ -313,19 +317,24 @@ class Action
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_request` WHERE `user_id` = '$id' AND `status` = 1");
     }
+
+    public function app_get_requests($user_id){
+        return $this->connection->query("SELECT * FROM `tbl_request` WHERE `user_id` = '$user_id' AND `status` = 1");
+    }
+
     public function user_get_requests_limited(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_request` WHERE `user_id` = '$id' AND `status` = 1 LIMIT 2");
     }
 
-    public function user_add($first_name,$last_name,$phone,$reference_id)
+    public function user_add($first_name,$last_name,$phone,$reference_id,$platform)
     {
         $now = time();
         $reference_code = $this->get_token(6);
         $result = $this->connection->query("INSERT INTO `tbl_user`
-        (`first_name`,`last_name`,`phone`,`reference_code`,`reference_id`,`created_at`) 
+        (`first_name`,`last_name`,`phone`,`reference_code`,`reference_id`,`platform`,`created_at`) 
         VALUES
-        ('$first_name','$last_name','$phone','$reference_code','$reference_id','$now')");
+        ('$first_name','$last_name','$phone','$reference_code','$reference_id','$platform','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
@@ -439,8 +448,6 @@ class Action
         return $this->get_data("tbl_admin", $id);
     }
 
-    
-
     public function cart_get($id)
     {
         return $this->get_data("tbl_user_cart", $id);
@@ -546,6 +553,16 @@ class Action
         (`user_id`,`cart_id`,`amount`,`created_at`) 
         VALUES
         ('$user_id','$cart_id','$amount','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function app_request_add($user_id,$cart,$amount){
+        $now  = time();
+        $result = $this->connection->query("INSERT INTO `tbl_request`
+        (`user_id`,`cart_id`,`amount`,`created_at`) 
+        VALUES
+        ('$user_id','$cart','$amount','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
@@ -677,7 +694,7 @@ class Action
         return $id;
 
     }
-    public function marketer_payment_add($marketer_id,$Amount,$reference_code,$status){
+    public function marketer_payment_add($marketer_id,$amount,$reference_code,$status){
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_marketer_payment`
         (`marketer_id`,`amount`,`reference_code`,`date`,`status`) 
@@ -686,8 +703,47 @@ class Action
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
+    public function marketer_paymentid_add($marketer_id,$payment_id){
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_marketer` SET 
+        `payment_id` = '$payment_id',
+        `updated_at`='$now'
+        WHERE `id` ='$marketer_id'");
+        if (!$this->result($result)) return false;
+        return $marketer_id;
+
+    }
     public function marketer_reference_code($reference_code){
         return $this->connection->query("SELECT * FROM `tbl_marketer` WHERE `reference_code` = '$reference_code'");
+    }
+    public function app_token_list($user_id){
+        return $this->connection->query("SELECT * FROM `tbl_app_token` WHERE `user_id` = '$user_id'");
+    }
+    
+    public function app_token_add($user_id,$token){
+        $result = $this->connection->query("INSERT INTO `tbl_app_token`
+        (`user_id`,`token`) 
+        VALUES
+        ('$user_id','$token')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+    
+    public function app_user_cart_list($id){
+        return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$id'");
+    }
+    
+    public function app_token_remove($id){
+         return $this->remove_data("tbl_app_token", $id);
+    }
+
+    public function package_list()
+    {
+        return $this->table_list("tbl_package");
+    }
+    public function package_get($id)
+    {
+          return $this->get_data("tbl_package", $id);
     }
 
 }

@@ -129,6 +129,7 @@ $action = new Action();
                 </div>
             <? } ?>
 
+
         </div>
         <div class="row main_header-nav">
             <nav>
@@ -159,7 +160,7 @@ $action = new Action();
                     <li>
                         <a href="#">فروشگاه</a>
                     </li>
-                    <li>
+                    <li style="width:14%">
                         <a href="#">باشگاه مشتریان</a>
                     </li>
                     <li>
@@ -168,6 +169,10 @@ $action = new Action();
                     <li>
                         <a href="#">تماس با ما</a>
                     </li>
+                    <li>
+                        <a href="marketer-phone.php">بازار ساز</a>
+                    </li>
+                    
                 </ul>
             </nav>
 

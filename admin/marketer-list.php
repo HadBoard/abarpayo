@@ -108,7 +108,6 @@ include('header.php'); ?>
                                     <th class="text-center">کد بازارساز</th>
                                     <th class="text-center">معرف</th>
                                     <th class="text-center">تاریخ ثبت</th>
-                                    <th class="text-center">کد پیگیری</th>
                                     <th class="text-center">نوع ثبت</th>
                                     <th class="text-center">وضعیت</th>
                                     <th class="text-center">مدیریت</th>
@@ -120,14 +119,13 @@ include('header.php'); ?>
                                     <tr class="text-center">
 
                                         <td class="text-center"><?= $counter++ ?></td>
-                                        <td class="text-center"><?= $row->fname ?></td>
-                                        <td class="text-center"><?= $row->lname ?></td>
+                                        <td class="text-center"><?= $row->first_name ?></td>
+                                        <td class="text-center"><?= $row->last_name ?></td>
                                         <td class="text-center"><?= $row->phone ?></td>
-                                        <td class="text-center"><?= $row->code ?></td>
-                                        <td class="text-center"><?= ($row->refcode) ? $action->marketer_get($row->refcode)->fname . " " . $action->marketer_get($row->refcode)->lname : "---"?></td>
-                                        <td class="text-center"><?= $action->time_to_shamsi($row->cdate) ?></td>
-                                        <td class="text-center"><?= ($row->ref) ? $row->ref : "---" ?></td>
-                                        <td class="text-center"><?= ($row->type) ? "نقدی" : "اعتباری" ?></td>
+                                        <td class="text-center"><?= $row->reference_code ?></td>
+                                        <td class="text-center"><?= ($row->reference_id) ? $action->marketer_get($row->reference_id)->first_name . " " . $action->marketer_get($row->reference_id)->last_name : "---"?></td>
+                                        <td class="text-center"><?= $action->time_to_shamsi($row->created_at) ?></td>
+                                        <td class="text-center"><?= ($row->payment_type) ? "نقدی" : "اعتباری" ?></td>
 
                                         <td class="text-center">
                                             <a href="<?= $list_url ?>?status=<?= $row->id ?>">

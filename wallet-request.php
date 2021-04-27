@@ -1,7 +1,10 @@
 <?php
+require_once "functions/database.php";
+$database = new DB();
+$connection = $database->connect();
+$action = new Action();
+
 if(isset($_POST['wallet_increase'])){
-    require_once "functions/database.php";
-    $action = new Action();
     $amount = $action->request('amount');
     $_SESSION['increase_amount'] = $amount;
     $Amount = $amount;
