@@ -793,6 +793,13 @@ class Action
 
     }
 
+    public function get_system($key){
+        $result = $this->connection->query("SELECT * FROM tbl_app WHERE `app_key` = '$key'");
+        if (!$this->result($result)) return false;
+        $row  = $result->fetch_object(); 
+        return $row->value;
+    }
+
 }
 
 // ----------- end Action class ----------------------------------------------------------------------------------------
