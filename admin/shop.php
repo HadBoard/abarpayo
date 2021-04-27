@@ -292,12 +292,12 @@ include('header.php'); ?>
                                         <input type="file" name="icon" id="icon" style="visibility:hidden;">
                                 </div>
                                 <?if($edit){?>
-                                <div class="input_fields_wrap form-group">
-                                    <h5 class="title_add">انتخاب عکس گالری فروشگاه</h5>
+                                <div class="input_fields_wrap form-group shop-gallery" >
+                                    <h5 class="title_add">عکس های گالری فروشگاه را انتخاب نمایید</h5>
                                     <button class="add_field_button"><i class="fas fa-plus"></i></button>
-                                    <label class="btn btn-dark btn-block m-0 add-pic-btn">انتخاب عکس
+                                    <!-- <label class="btn btn-dark btn-block m-0 add-pic-btn">انتخاب عکس
                                     <input type="file" name="upload[]" style="visibility:hidden;">
-                                    </label>
+                                    </label> -->
                                 </div>
                                 <? } ?>
                                 <div class="form-actions">
@@ -373,7 +373,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		if(x < max_fields){ //max input box allowed
 			x++; //text box increment
-			$(wrapper).append('<div style="margin-bottom: 10px;"><label class="btn btn-dark btn-block m-0 add-pic-btn">انتخاب عکس<input type="file" name="upload[]" style="visibility:hidden;"></label><a href="#" class="remove_field"><i class="fas fa-times"></i></a></div>'); //add input box
+			$(wrapper).append('<div class="add-pic-shop" style="margin-bottom: 10px;"><label class="btn btn-dark btn-block m-0 add-pic-btn">انتخاب عکس<input type="file" name="upload[]" style="visibility:hidden;"></label><a href="#" class="remove_field"><i class="fas fa-times"></i></a></div>'); //add input box
 		}
 	});
 
