@@ -199,7 +199,7 @@ include('header.php'); ?>
                                 <div class="form-group">
                                     <select class="form-control " name="payment_type" required>
                                         <option>نحوه پرداخت را انتخاب کنید.</option>
-                                        <option value=0>اعتباری</option>
+                                        <option value=1>اعتباری</option>
                                     </select>
                                 </div>
 

@@ -1,8 +1,6 @@
 <?
 require_once "functions/database.php";
 $action = new Action();
-$title = "ثبت نام";
-
 ?>
 
 <?
@@ -19,8 +17,28 @@ $title = "ثبت نام";
         $action->validation_code_add($user_id,$code);
         header("Location: validation.php");
     }
-    include_once "header.php";
+   
 ?>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <title>ابرپایو</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  
+    <link rel="stylesheet" href="assets/css/swiper.css">
+    <link rel="stylesheet" href="assets/css/fontiran.css">
+    <link rel="stylesheet" href="assets/css/fontAswome.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script src='assets/js/swiper.js'></script>
+    <script src='../assets/js/jquery.js'></script>
+    <script src='assets/js/fontAwsome.js'></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+</head>
+<body>
 <div class="background_page">
     <div class="container">
         <div class="center_form">
@@ -49,5 +67,5 @@ $title = "ثبت نام";
         </div>
     </div>
 </div>
-
-<? include_once "footer.php" ?>
+</body>
+</html>

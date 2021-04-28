@@ -92,7 +92,7 @@ if(isset($_POST['function'])) {
         while ($category = $categories_list->fetch_object()) {
             $obj_in -> c_id = $category->id;
             $obj_in -> c_text = $category->title;
-            $obj_in -> c_image = "http://abarpayo.com/site/admin/images/categoryIcons/$row->icon";
+            $obj_in -> c_image = "http://abarpayo.com/site/admin/images/categoryIcons/$category->icon";
             $categories[] = $obj_in;
             $obj_in = null;
         }
@@ -293,23 +293,7 @@ if(isset($_POST['function'])) {
         echo $json; 
     }
     
-    if($_POST['function'] == 'addCart'){
-        $obj=null;
-        $obj -> result= 0;
-        $user_id = $action->request('user_id');
-        $bank_id = $action->request('bank_id');
-        $iban = $action->request('iban');
-        $owner = $action->request('owner');
-        $account_number = $action->request('account_number');
-        $cart_number = $action->request('cart_number');
-        $validation = 0;
-        $command = $action->app_cart_add($user_id,$bank_id,$owner,$cart_number,$account_number,$iban,$validation);
-        if($command){
-            $obj -> result = 1;
-        }
-        $json = json_encode($obj);
-        echo $json; 
-    }
+  
     
     if($_POST['function'] == 'withdraw'){
         $obj = null;
@@ -342,10 +326,49 @@ if(isset($_POST['function'])) {
     if($_POST['function'] == 'userCity'){
         $obj = null;
         $user_id = $action->request('user_id');
+        $obj -> first_name =  $action->user_get($user_id)->first_name;
+        $obj -> last_name =  $action->user_get($user_id)->last_name;
         $obj -> city_id = $action->user_get($user_id)->city_id;
         $obj ->province_id = $action->city_get($action->user_get($user_id)->city_id)->province_id;
         $json = json_encode($obj);
         echo $json; 
     }
+
+    if($_POST['function'] == 'addCart'){
+        $obj=null;
+        $obj -> result= 0;
+        $user_id = $action->request('user_id');
+        $bank_id = $action->request('bank_id');
+        $iban = $action->request('iban');
+        $owner = $action->request('owner');
+        $account_number = $action->request('account_number');
+        $cart_number = $action->request('cart_number');
+        $validation = 0;
+        $command = $action->app_cart_add($user_id,$bank_id,$owner,$cart_number,$account_number,$iban,$validation);
+        if($command){
+            $obj -> result = 1;
+        }
+        $json = json_encode($obj);
+        echo $json; 
+    }
+    
+    if($_POST['function'] == 'editCart'){
+        $obj=null;
+        $obj -> result= 0;
+        $id = $action->request('id');
+        $bank_id = $action->request('bank_id');
+        $iban = $action->request('iban');
+        $owner = $action->request('owner');
+        $account_number = $action->request('account_number');
+        $cart_number = $action->request('cart_number');
+        $validation = 0;
+        $command = $action->app_cart_edit($id,$bank_id,$owner,$cart_number,$account_number,$iban,$validation);
+        if($command){
+            $obj -> result = 1;
+        }
+        $json = json_encode($obj);
+        echo $json; 
+    }
+    
 }
 

@@ -25,9 +25,8 @@ unset($_SESSION['MfromValidation']);
         $command = $action->marketer_add($first_name,$last_name,$phone,$package_id,$payment_type,$national_code,$reference_id);
 
         if($command){
-            $_SESSION['user_id'] = $command;
-            $_SESSION['user_access'] = 1;
-           if($payment_type == 0){
+            $_SESSION['marketer_id'] = $command;
+           if($payment_type == 1){
             $action->marketer_change_status($command);
             header("Location: index.php");
            }else{
@@ -96,7 +95,7 @@ unset($_SESSION['MfromValidation']);
                                     echo '"';
                                     if ($option->id == $row->package_id) echo "selected";
                                     echo '>';
-                                    echo $option->name;
+                                    echo $option->name."-".$roption->price;
                                     echo '</option>';
                                 }
                                 ?>
@@ -105,8 +104,8 @@ unset($_SESSION['MfromValidation']);
                             <div class="form-group">
                                 <label for="payment_type">نحوه پرداخت</label>
                                 <select name="payment_type">
-                                    <option value=0>اعتباری</option>
-                                    <option value=1>نقدی</option>
+                                    <option value=1>اعتباری</option>
+                                    <option value=2>نقدی</option>
                                 </select>
                             </div>
                             <input name="submit" type="submit" class="main_btn" value="ثبت خرید">

@@ -4,9 +4,13 @@ $database = new DB();
 $connection = $database->connect();
 $action = new Action();
 
-if(isset($_POST['wallet_increase'])){
+if(isset($_POST['wallet_increase']) || isset($_SESSION['app'])){
+    if(isset($_SESSION['app'])){
+        $amount = $_SESSION['amount'];
+    }else{
     $amount = $action->request('amount');
     $_SESSION['increase_amount'] = $amount;
+    }
     $Amount = $amount;
 $MerchantID = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'; //Required
 //$Amount = $_SESSION['cost']/1000; //Amount will be based on Toman - Required

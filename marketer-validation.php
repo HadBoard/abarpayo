@@ -21,8 +21,7 @@ $title = "ثبت نام";
                 header("Location: marketer-signup.php");
             }
             else{ 
-                $_SESSION['user_id'] = $validated_code->user_id;
-                $_SESSION['user_access'] = 1;
+                $_SESSION['marketer_id'] = $validated_code->user_id;
                 $action->validation_code_remove($validated_code->id);
                 unset($_SESSION['phone']);
                 header("Location: index.php");

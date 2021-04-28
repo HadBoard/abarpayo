@@ -21,20 +21,18 @@ $result = $client->PaymentVerification(
 
 if ($result->Status == 100) {
 // echo '<br>Transation success. RefID:'.$result->RefID;
-$marketer_id = $_SESSION['user_id'];
+$marketer_id = $action->marketer()->id;
 $command = $action->marketer_payment_add($marketer_id,$Amount,$result->RefID,1);
 $action->marketer_paymentid_add($marketer_id,$command);
 $action->marketer_change_status($marketer_id);
 $_SESSION['successful_pay'] = 'true';
 echo "<script> location.href='index.php'; </script>";
 } else {
-    unset($_SESSION['user_id']);
-    unset($_SESSION['user_access']);
+    unset($_SESSION['marketer_id']);
     $_SESSION['successful_pay'] = 'false';
     echo "<script> location.href='marketer-phone.php'; </script>";
 }
 } else {
-    unset($_SESSION['user_id']);
-    unset($_SESSION['user_access']);
+    unset($_SESSION['marketer_id']);
     echo "<script> location.href='marketer-phone.php'; </script>";
 }

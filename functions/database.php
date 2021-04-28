@@ -241,7 +241,7 @@ class Action
     // ----------- for check access (admin access)
     public function auth()
     {
-        if (isset($_SESSION['user_id']))
+        if (isset($_SESSION['user_id']) || isset($_SESSION['marketer_id']))
             return true;
         return false;
     }
@@ -249,7 +249,7 @@ class Action
     // ----------- for check access (guest access)
     public function guest()
     {
-        if (isset($_SESSION['user_id']))
+        if (isset($_SESSION['user_id']) || isset($_SESSION['marketer_id']))
             return false;
         return true;
     }
@@ -292,6 +292,13 @@ class Action
         $id = $_SESSION['user_id'];
         return $this->user_get($id);
     }
+
+    public function marketer()
+    {
+        $id = $_SESSION['marketer_id'];
+        return $this->marketer_get($id);
+    }
+
     public function user_get_phone($phone){
         return $this->connection->query("SELECT * FROM `tbl_user` WHERE `phone` = '$phone'");
     }
@@ -500,6 +507,23 @@ class Action
 
     }
 
+    public function app_user_wallet_edit($id,$amount,$type){
+        $prev_wallet = $this->user_get($id)->wallet;
+        if($type == 1){
+            $wallet = $prev_wallet + $amount;
+        }else if($type == 0){
+            $wallet = $prev_wallet - $amount;
+        }
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_user` SET 
+        `wallet` = '$wallet',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+
+    }
+
 
     // ----------- end USERS ------------------------------------------------------------------------------------------
      // ----------- start VALIDATION_CODE ------------------------------------------------------------------------------------------
@@ -548,6 +572,9 @@ class Action
     public function shop_pics_get($shop_id)
     {
         return $this->connection->query("SELECT * FROM `tbl_shop_pics` WHERE `shop_id` = '$shop_id'");
+    }
+    public function shop_search($title){
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `title` like '%{$title}%'");
     }
 
     public function category_shops_list_limited($category_id){
@@ -647,6 +674,16 @@ class Action
         return $this->connection->insert_id;
     }
 
+    public function app_wallet_log_add($user_id,$action,$amount,$type,$payment_id)
+    {
+        $result = $this->connection->query("INSERT INTO `tbl_wallet_log`
+        (`user_id`,`action`,`amount`,`type`,`payment_id`) 
+        VALUES
+        ('$user_id','$action','$amount','$type','$payment_id')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
     public function wallet_log_increase($user_id){
         return $this->connection->query("SELECT * FROM `tbl_wallet_log` WHERE `user_id` = '$user_id' AND `type` = 1");
     }
@@ -663,6 +700,17 @@ class Action
     {
         $now = time();
         $user_id = $this->user()->id;
+        $result = $this->connection->query("INSERT INTO `tbl_payment`
+        (`user_id`,`amount`,`cart_number`,`refrence_code`,`date`,`status`) 
+        VALUES
+        ('$user_id','$amount','$cart_number','$reference_code','$now','$status')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function app_payment_add($user_id,$amount,$cart_number,$reference_code,$status)
+    {
+        $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_payment`
         (`user_id`,`amount`,`cart_number`,`refrence_code`,`date`,`status`) 
         VALUES
