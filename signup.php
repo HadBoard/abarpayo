@@ -90,7 +90,7 @@ unset($_SESSION['fromValidation']);
                     <img src="assets/images/Group 380@2x.png">
                 </div>
             </div>
-            <p>با ورود یا ثبت نام در ابرپایو <a>شرایط و قوانین </a> را میپذیرید.</p>
+            <p>با ورود یا ثبت نام در ابرپایو <a href="rules.php">شرایط و قوانین </a> را میپذیرید.</p>
         </div>
     </div>
 </div>

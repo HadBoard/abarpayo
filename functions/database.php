@@ -848,6 +848,12 @@ class Action
         return $row->value;
     }
 
+   // question
+   public function frequently_asked_question_list()
+   {
+       return $this->table_list("tbl_asked_question");
+   }
+
 }
 
 // ----------- end Action class ----------------------------------------------------------------------------------------
