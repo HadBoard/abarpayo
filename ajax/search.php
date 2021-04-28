@@ -4,8 +4,9 @@ $database = new DB();
 $connection = $database->connect();
 $action = new Action();
 
-$title = $_POST['search'];
-$shops = $action->shop_search($title);
+$search = $_POST['search'];
+
+$shops = $action->shop_search($search);
 while ($shop = $shops->fetch_object()) {
   echo $shop->title;
 }

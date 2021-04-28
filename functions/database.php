@@ -299,6 +299,17 @@ class Action
         return $this->marketer_get($id);
     }
 
+    public function marketer_get($id)
+    {
+        return $this->get_data("tbl_marketer", $id);
+    }
+
+    public function hasUnpaidPackage($marketer_id){
+        return $this->marketer_get($marketer_id)->payment_type == 2 && $this->marketer_get($marketer_id)->payment_id == 0;
+        
+    }
+
+
     public function user_get_phone($phone){
         return $this->connection->query("SELECT * FROM `tbl_user` WHERE `phone` = '$phone'");
     }
@@ -574,7 +585,7 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_shop_pics` WHERE `shop_id` = '$shop_id'");
     }
     public function shop_search($title){
-        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `title` like '%{$title}%'");
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `title` like '%$title%'");
     }
 
     public function category_shops_list_limited($category_id){

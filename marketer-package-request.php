@@ -1,9 +1,10 @@
 <?php
 require_once "functions/database.php";
 $action = new Action();
-if(isset($_SESSION['marketer_package'])){
+if(isset($_SESSION['marketer_package']) || isset($_POST['pay_factor'])){
     $amount = $_SESSION['marketer_package'];
     unset($_SESSION['marketer_package']);
+    $amount = $action->request('package');
     $_SESSION['marketer_amount'] = $amount;
     $Amount = $amount;
 $MerchantID = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'; //Required

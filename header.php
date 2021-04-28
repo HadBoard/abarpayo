@@ -153,7 +153,7 @@ $action = new Action();
                         </div>
                     </li>
                     <li>
-                        <a href="#">صفحه اصلی</a>
+                        <a href="index.php">صفحه اصلی</a>
                     </li>
                     <li>
                         <a href="#">فروشگاه</a>
@@ -162,10 +162,10 @@ $action = new Action();
                         <a href="#">باشگاه مشتریان</a>
                     </li>
                     <li>
-                        <a href="#">درباره ما</a>
+                        <a href="about-us.php">درباره ما</a>
                     </li>
                     <li>
-                        <a href="#">تماس با ما</a>
+                        <a href="contact-us.php">تماس با ما</a>
                     </li>
                     <li>
                         <a href="marketer-phone.php">بازار ساز</a>

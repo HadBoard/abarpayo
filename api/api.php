@@ -239,6 +239,7 @@ if(isset($_POST['function'])) {
              $obj_in -> bank_name = $action->bank_get($row->bank_id)->name;
              $obj_in -> cart_number = $row->cart_number;
              $obj_in -> iban = $row->iban;
+             $obj_in -> title = $row->title;
              $obj_in -> account_number = $row->account_number;
              $carts[] = $obj_in;
              $obj_in = null;
