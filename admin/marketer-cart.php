@@ -6,35 +6,35 @@ $action = new Action();
 
 // ----------- urls ----------------------------------------------------------------------------------------------------
 // main url for add , edit
-$main_url = "user-cart.php";
+$main_url = "marketer-cart.php";
 // ----------- urls ----------------------------------------------------------------------------------------------------
 
 // ----------- get data ------------------------------------------------------------------------------------------------
-if (isset($_GET['user_id'])) {
-    $user_id = $action->request('user_id');
+if (isset($_GET['id'])) {
+    $marketer_id = $action->request('id');
     $counter = 1;
-    $result = $action->user_get_cart($user_id);
+    $result = $action->marketer_cart_list($marketer_id);
 }
 // ----------- get data ------------------------------------------------------------------------------------------------
 
 // ----------- delete --------------------------------------------------------------------------------------------------
-if (isset($_GET['remove']) && isset($_GET['user_id'])) {
-    $user_id = $action->request('user_id');
+if (isset($_GET['remove']) && isset($_GET['id'])) {
+    $marketer_id = $action->request('id');
     $id = $action->request('remove');
-    $_SESSION['error'] = !$action->cart_remove($id);
-    header("Location: $main_url?user_id=$user_id");
+    $_SESSION['error'] = !$action->marketer_cart_remove($id);
+    header("Location: $main_url?id=$marketer_id");
     return;
 }
 // ----------- delete --------------------------------------------------------------------------------------------------
 
 // ----------- edit mode -------------------------------------------------------------------------------------------
-if (isset($_GET['edit'])  && isset($_GET['user_id'])) {
-    $user_id = $action->request('user_id');
+if (isset($_GET['edit'])  && isset($_GET['id'])) {
+    $marketer_id = $action->request('id');
     $edit_id = $action->request('edit');
-    $edit_row = $action->cart_get($edit_id);
+    $edit_row = $action->marketer_cart_get($edit_id);
 
     $counter = 1;
-    $result = $action->user_get_cart($user_id);
+    $result = $action->marketer_cart_list($marketer_id);
 }
 // ----------- edit mode -------------------------------------------------------------------------------------------
 
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 
     // get fields
     $bank_id = $action->request('bank_id');
-    $title = $action->request('title');
+    $name = $action->request('title');
     $cart_number = $action->request('cart_number');
     $account_number = $action->request('account_number');
     $iban = $action->request('iban');
@@ -61,9 +61,9 @@ if (isset($_POST['submit'])) {
 
     // send query
     if ($edit_id) {
-        $command = $action->cart_edit($edit_id,$user_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation);
+        $command = $action->marketer_cart_edit($edit_id,$bank_id,$name,$cart_number,$account_number,$iban,$validation);
     } else {
-        $command = $action->cart_add($user_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation);
+        $command = $action->marketer_cart_add($marketer_id,$bank_id,$name,$cart_number,$account_number,$iban,$validation);
     }
 
     // check errors
@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
     }
 
     // bye bye :)
-    header("Location: $main_url?user_id=$user_id");
+    header("Location: $main_url?id=$marketer_id");
 
 }
 // ----------- add or edit ---------------------------------------------------------------------------------------------
@@ -87,7 +87,7 @@ include('header.php'); ?>
     <div class="row page-titles">
         <!-- ----------- start breadcrumb ---------------------------------------------------------------------- -->
         <div class="col-md-12 align-self-center text-right">
-            <h3 class="text-primary">کارت های کاربران</h3></div>
+            <h3 class="text-primary">کارت های بازارسازان</h3></div>
         <div class="col-md-12 align-self-center text-right">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
@@ -96,7 +96,7 @@ include('header.php'); ?>
                         خانه
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="user-list.php">کاربران</a></li>
+                <li class="breadcrumb-item"><a href="marketer-list.php">بازارسازان</a></li>
                 <li class="breadcrumb-item"><a href="javascript:void(0)">کارت ها</a></li>
             </ol>
         </div>
@@ -236,11 +236,11 @@ include('header.php'); ?>
                                         <td class="text-center"><?= $row->cart_number ?></td>
                                       
                                         <td class="text-center">
-                                            <a href="<?= $main_url?>?user_id=<?= $user_id?>&edit=<?= $row->id ?>">
+                                            <a href="<?= $main_url?>?id=<?= $marketer_id?>&edit=<?= $row->id ?>">
                                                 <i class="fa fa-pencil-square-o"></i>
                                             </a>
                                             |
-                                            <a href="<?= $main_url ?>?user_id=<?= $user_id?>&remove=<?= $row->id ?>">
+                                            <a href="<?= $main_url ?>?id=<?= $marketer_id?>&remove=<?= $row->id ?>">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </td>

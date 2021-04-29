@@ -107,8 +107,8 @@ include('header.php'); ?>
                                     <th class="text-center">شماره تماس</th>
                                     <th class="text-center">کد بازارساز</th>
                                     <th class="text-center">معرف</th>
-                                    <th class="text-center">تاریخ ثبت</th>
                                     <th class="text-center">نوع ثبت</th>
+                                    <th class="text-center">کارت ها</th>
                                     <th class="text-center">وضعیت</th>
                                     <th class="text-center">مدیریت</th>
                                 </tr>
@@ -124,8 +124,12 @@ include('header.php'); ?>
                                         <td class="text-center"><?= $row->phone ?></td>
                                         <td class="text-center"><?= $row->reference_code ?></td>
                                         <td class="text-center"><?= ($row->reference_id) ? $action->marketer_get($row->reference_id)->first_name . " " . $action->marketer_get($row->reference_id)->last_name : "---"?></td>
-                                        <td class="text-center"><?= $action->time_to_shamsi($row->created_at) ?></td>
-                                        <td class="text-center"><?= ($row->payment_type) ? "نقدی" : "اعتباری" ?></td>
+                                        <td class="text-center"><?= ($row->payment_type == 1) ? "نقدی" : "اعتباری" ?></td>
+                                        <td class="text-center">
+                                            <a href="marketer-cart.php?id=<?= $row->id ?>">
+                                                <i class="fa fa-credit-card-alt"></i>
+                                            </a>
+                                        </td>
 
                                         <td class="text-center">
                                             <a href="<?= $list_url ?>?status=<?= $row->id ?>">

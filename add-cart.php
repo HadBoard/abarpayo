@@ -98,7 +98,7 @@ margin-top: -68px;" >
         <form action="" method="post">
             <div class="form-group">
                 <label for="bank">نام بانک</label>
-                <select name="bank">
+                <select name="bank" required>
                     <option>بانک را انتخاب فرمایید .</option>
                     <?
                     $option_result =  $action->bank_list();
@@ -116,19 +116,19 @@ margin-top: -68px;" >
             </div>
             <div class="form-group">
                 <label for="name">نام دارنده حساب</label>
-                <input type="text" name="name" placeholder="فقط حروف فارسی" value="<?= $row->title ?>">
+                <input type="text" name="name" placeholder="فقط حروف فارسی" value="<?= $row->title ?>" required>
             </div>
             <div class="form-group">
                 <label for="account_number">شماره حساب</label>
-                <input type="text" name="account_number" placeholder="فقط حروف فارسی" value="<?= $row->account_number?>">
+                <input type="text" name="account_number" placeholder="فقط حروف فارسی" value="<?= $row->account_number?>" required>
             </div>
             <div class="form-group">
                 <label for="cart_number">شماره کارت</label>
-                <input type="text" name="cart_number" placeholder="فقط حروف فارسی" value="<?= $row->cart_number?>" >
+                <input type="text" name="cart_number" placeholder="فقط حروف فارسی" value="<?= $row->cart_number?>" required>
             </div>
                 <div class="form-group">
                 <label for="iban">شماره شبا</label>
-                <input type="text" name="iban" placeholder="فقط حروف فارسی" value="<?= $row->iban?>">
+                <input type="text" name="iban" placeholder="فقط حروف فارسی" value="<?= $row->iban?>" required>
             </div>
             <input name="submit" type="submit" class="main_btn middle_btn " value="ذخیره">
             

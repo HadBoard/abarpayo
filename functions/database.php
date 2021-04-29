@@ -542,7 +542,7 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$id'");
     }
 
-    public function marketer_get_cart($id){
+    public function marketer_cart_list($id){
         return $this->connection->query("SELECT * FROM `tbl_marketer_cart` WHERE `marketer_id` = '$id'");
     }
 
@@ -634,8 +634,20 @@ class Action
     {
         return $this->connection->query("SELECT * FROM `tbl_shop_pics` WHERE `shop_id` = '$shop_id'");
     }
-    public function shop_search($title){
-        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `title` like '%".$title."%'");
+    public function shop_search($title,$cur_index){
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `title` like '%".$title."%' ORDER BY id LIMIT $cur_index,8 ");
+    }
+
+    public function advance_search($input,$category,$city){
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `city_id` = '$city' AND `category_id` = '$category' AND `title` like '%".$input."%'");
+
+    }
+
+    public function shop_search_counter($title)
+    {
+        $result = $this->connection->query("SELECT * FROM `tbl_shop` WHERE `title` like '%".$title."%' ");
+        if (!$this->result($result)) return false;
+        return $result->num_rows;
     }
 
     public function category_shops_list_limited($category_id){

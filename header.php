@@ -73,8 +73,10 @@ $action = new Action();
 
             </div>
             <div class="col-md-4 search_header">
-                <input id="search" placeholder="لطفا کلمه مورد نظر خود را جستجو کنید">
-                <button id="search_button"><span class="material-icons">search</span></button> 
+                <form action="search-results.php" method="post">
+                <input name="search"  placeholder="لطفا کلمه مورد نظر خود را جستجو کنید">
+                <button type="submit"name="search_button"><span class="material-icons">search</span></button> 
+                </form>
             </div>
             <div class="col-md-3 city_header">
                 <select>
@@ -180,20 +182,19 @@ $action = new Action();
 <!-- eof header -->
 <script>
 
- $('#search_button').click(function(){
-     var search = $('#search').val();
-     console.log(search);
-    $.ajax({
-        url: "ajax/search.php",
-        type:'post',
-        data: {search:search},
-        success: function(response){
-            if(response){
-               console.log(response);
-            }else{
+//  $('#search_button').click(function(){
+//      var search = $('#search').val();
+//      console.log(search);
+//     $.ajax({
+//         url: "search-results.php",
+//         type:'post',
+//         data: {search:search},
+//         success: function(response){
+//             if(response){
+//             }else{
                 
-            }
-        }
-    });
-});
+//             }
+//         }
+//     });
+// });
 </script>

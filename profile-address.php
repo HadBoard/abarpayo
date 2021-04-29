@@ -1,11 +1,10 @@
 <?  
     if($action->user()){
         $city =  $action->user_get($id)->city_id;
-        $province = $action->city_get($city)->province_id;
     }else if($action->marketer()){
         $city =  $action->marketer_get($id)->city_id;
-        $province = $action->city_get($acity)->province_id;
     }
+    $province = $action->city_get($city)->province_id;
     
     if(isset($_POST['submit'])){
         $city_id = $action->request('city');

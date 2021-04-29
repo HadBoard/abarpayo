@@ -6,8 +6,9 @@ $action = new Action();
 
 $search = $_POST['search'];
 
-$shops = $action->shop_search($search);
-while ($shop = $shops->fetch_object()) {
+$result = $action->shop_search($search);
+while ($shop = $result->fetch_object()) {
   echo $shop->title;
 }
+
 ?>

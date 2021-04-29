@@ -1147,6 +1147,49 @@ class Action
         return $this->get_data("tbl_marketer", $id);
     }
 
+    public function marketer_cart_add($id,$bank_id,$name,$cart_number,$account_number,$iban,$validation)
+    {
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_marketer_cart`
+        (`marketer_id`,`bank_id`,`title`,`cart_number`,`account_number`,`iban`,`validation`,`created_at`) 
+        VALUES
+        ('$id','$bank_id','$name','$cart_number','$account_number','$iban','$validation','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function marketer_cart_edit($cart_id,$bank_id,$name,$cart_number,$account_number,$iban,$validation)
+    {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_marketer_cart` SET 
+        `bank_id` = '$bank_id',
+        `title`='$name',
+        `cart_number`='$cart_number',
+        `account_number`='$account_number',
+        `iban`='$iban',
+        `validation`='$validation',
+        `updated_at`='$now'
+        WHERE `id` ='$cart_id'");
+        if (!$this->result($result)) return false;
+        return $cart_id;
+    }
+    public function marketer_cart_get($id)
+    {
+        return $this->get_data("tbl_marketer_cart", $id);
+    }
+
+    public function marketer_cart_list($id)
+    {
+        return $this->connection->query("SELECT * FROM `tbl_marketer_cart` WHERE `marketer_id` = $id"); 
+    }
+
+    public function marketer_cart_remove($id)
+    {
+        return $this->remove_data("tbl_marketer_cart", $id);
+    }
+
+
+
 
 //----------------------- TEMP ------------------------------------------------------------------------------------------------------------
     public function tmp_marketer_list()

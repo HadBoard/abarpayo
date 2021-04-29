@@ -28,7 +28,7 @@
             if($action->user()){
                 $carts = $action->user_get_cart();
             }else if($action -> marketer()){
-                $carts = $action->marketer_get_cart($id);
+                $carts = $action->marketer_cart_list($id);
             }
             while($cart = $carts->fetch_object()){
         ?>  
