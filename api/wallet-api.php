@@ -4,13 +4,13 @@ $database = new DB();
 $connection = $database->connect();
 $action = new Action();
 
-if(isset($_GET['function'])) {
+if(isset($_GET['f'])) {
 
-    if($_GET['function'] == "wallet") {
+    if($_GET['f'] == "w") {
         
-        $user_id = $_GET['user_id'];
-        $amount = $_GET['amount'];
-        $token = $_GET['token'];
+        $user_id = $_GET['u'];
+        $amount = $_GET['a'];
+        $token = $_GET['t'];
      
         $_SESSION['user_id'] = $user_id;
         $_SESSION['amount'] = $amount;

@@ -18,7 +18,7 @@ $MerchantID = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'; //Required
 $Description = ' افزایش موجودی کیف پول'; // Required
 $Email = 'UserEmail@Mail.Com'; // Optional
 $Mobile = "0000"; // Optional
-$CallbackURL = 'http://localhost/abarpaya/wallet-verify.php'; // Required
+$CallbackURL = 'http://abarpayo.com/site/wallet-verify.php'; // Required
 
 $client = new SoapClient('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', ['encoding' => 'UTF-8']);
 
@@ -36,6 +36,7 @@ $result = $client->PaymentRequest(
 if ($result->Status == 100) {
     Header('Location: https://sandbox.zarinpal.com/pg/StartPay/'.$result->Authority);
 } else {
+    echo "invalid";
   
 }
 }

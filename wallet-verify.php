@@ -3,10 +3,16 @@ require_once "functions/database.php";
 $database = new DB();
 $connection = $database->connect();
 $action = new Action();
-   
+
+
 $MerchantID = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX';
 // $Amount = 10000; //Amount will be based on Toman
-$Amount =$_SESSION['increase_amount'];
+ if(isset($_SESSION['app'])){
+    $Amount =$_SESSION['amount'];
+}else{
+    $Amount =$_SESSION['increase_amount'];
+}
+
 $Authority = $_GET['Authority'];
 
 if ($_GET['Status'] == 'OK') {
@@ -23,6 +29,10 @@ $result = $client->PaymentVerification(
 
 if ($result->Status == 100) {
 // echo '<br>Transation success. RefID:'.$result->RefID;
+ if(isset($_SESSION['app'])){
+     $_SESSION['app-wallet'] = 'success';
+    echo "<script> location.href='http://abarpayo.com/site/return.php'; </script>";
+}
 $command = $action->payment_add($Amount,$cart_number,$result->RefID,1);
 $action->wallet_log_add("افزایش موجودی کیف پول",$Amount,1,$command);
 $action->user_wallet_edit($Amount,1);
@@ -30,9 +40,17 @@ $_SESSION['successful_pay'] = 'true';
 echo "<script> location.href='profile.php?wallet'; </script>";
 
 } else {
+     if(isset($_SESSION['app'])){
+    $_SESSION['app-wallet'] = 'fail';
+    echo "<script> location.href='http://abarpayo.com/site/return.php'; </script>";
+}
     $_SESSION['successful_pay'] = 'false';
     echo "<script> location.href='profile.php?wallet'; </script>";
 }
 } else {    
-    echo 'Transaction canceled by user';
+  if(isset($_SESSION['app'])){
+    $_SESSION['app-wallet'] = 'cancel';
+   echo "<script> location.href='http://abarpayo.com/site/return.php'; </script>";
+}
+    echo "<script> location.href='profile.php?wallet'; </script>";
 }

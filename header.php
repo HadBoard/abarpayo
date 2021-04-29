@@ -181,7 +181,7 @@ $action = new Action();
 <script>
 
  $('#search_button').click(function(){
-     var search = $('#search').text();
+     var search = $('#search').val();
      console.log(search);
     $.ajax({
         url: "ajax/search.php",
