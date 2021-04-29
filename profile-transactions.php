@@ -1,7 +1,4 @@
-<?
-    $user_id = $action->user()->id;
-?>
-           
+       
 <div class="edit_profile_div">
 
 
@@ -58,58 +55,4 @@
                 <td>22:00</td>
                 <td>224561235</td>
             </tr>
-            <tr>
-                <td class="dec_wallet"> +5000 تومان</td>
-                <td>شنبه 10 بهمن</td>
-                <td>22:00</td>
-                <td>224561235</td>
-            </tr>
-            <tr>
-                <td class="dec_wallet"> +5000 تومان</td>
-                <td>شنبه 10 بهمن</td>
-                <td>22:00</td>
-                <td>224561235</td>
-            </tr>
-            <tr>
-                <td class="dec_wallet"> +5000 تومان</td>
-                <td>شنبه 10 بهمن</td>
-                <td>22:00</td>
-                <td>224561235</td>
-            </tr>
-            <tr>
-                <td class="dec_wallet"> +5000 تومان</td>
-                <td>شنبه 10 بهمن</td>
-                <td>22:00</td>
-                <td>224561235</td>
-            </tr>
-            <tr>
-                <td class="dec_wallet"> +5000 تومان</td>
-                <td>شنبه 10 بهمن</td>
-                <td>22:00</td>
-                <td>224561235</td>
-            </tr>
-            <tr>
-                <td class="dec_wallet"> +5000 تومان</td>
-                <td>شنبه 10 بهمن</td>
-                <td>22:00</td>
-                <td>224561235</td>
-            </tr>
-            <tr>
-                <td class="dec_wallet"> +5000 تومان</td>
-                <td>شنبه 10 بهمن</td>
-                <td>22:00</td>
-                <td>224561235</td>
-            </tr>
-            <tr>
-                <td class="inc_wallet"> +5000 تومان</td>
-                <td>شنبه 10 بهمن</td>
-                <td>22:00</td>
-                <td>224561235</td>
-            </tr> -->
-
-        </table> 
-    </div>
-</div>
-</div>
-            
-       
+         

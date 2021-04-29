@@ -420,17 +420,18 @@ class Action
         if (!$this->result($result)) return false;
         return $id;
     }
-    // public function user_phone_edit($phone)
-    // {
-    //     $id = $this->user()->id;
-    //     $now = time();
-    //     $result = $this->connection->query("UPDATE `tbl_user` SET 
-    //     `phone`='$phone',
-    //     `updated_at`='$now'
-    //     WHERE `id` ='$id'");
-    //     if (!$this->result($result)) return false;
-    //     return $id;
-    // }
+    public function marketer_address_edit($id,$city_id,$postal_code,$address)
+    {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_marketer` SET 
+        `postal_code`='$postal_code',
+        `address`='$address',
+        `city_id` = '$city_id',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
 
     public function user_address_edit($city_id,$postal_code,$address)
     {
@@ -454,6 +455,17 @@ class Action
         (`user_id`,`bank_id`,`title`,`cart_number`,`account_number`,`iban`,`validation`,`created_at`) 
         VALUES
         ('$user_id','$bank_id','$title','$cart_number','$account_number','$iban','$validation','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function marketer_cart_add($id,$bank_id,$name,$cart_number,$account_number,$iban,$validation)
+    {
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_marketer_cart`
+        (`marketer_id`,`bank_id`,`title`,`cart_number`,`account_number`,`iban`,`validation`,`created_at`) 
+        VALUES
+        ('$id','$bank_id','$name','$cart_number','$account_number','$iban','$validation','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
@@ -485,6 +497,22 @@ class Action
         return $id;
     }
 
+    public function marketer_cart_edit($cart_id,$bank_id,$name,$cart_number,$account_number,$iban,$validation)
+    {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_marketer_cart` SET 
+        `bank_id` = '$bank_id',
+        `title`='$name',
+        `cart_number`='$cart_number',
+        `account_number`='$account_number',
+        `iban`='$iban',
+        `validation`='$validation',
+        `updated_at`='$now'
+        WHERE `id` ='$cart_id'");
+        if (!$this->result($result)) return false;
+        return $cart_id;
+    }
+
     public function admin_get($id)
     {
         return $this->get_data("tbl_admin", $id);
@@ -493,6 +521,11 @@ class Action
     public function cart_get($id)
     {
         return $this->get_data("tbl_user_cart", $id);
+    }
+
+    public function marketer_cart_get($id)
+    {
+        return $this->get_data("tbl_marketer_cart", $id);
     }
 
     public function user_cart_list(){
@@ -507,6 +540,10 @@ class Action
     public function user_get_cart(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$id'");
+    }
+
+    public function marketer_get_cart($id){
+        return $this->connection->query("SELECT * FROM `tbl_marketer_cart` WHERE `marketer_id` = '$id'");
     }
 
     public function user_reference_code($reference_code){
@@ -803,6 +840,8 @@ class Action
         `first_name`= '$first_name',
         `last_name` = '$last_name',
         `national_code`= '$national_code',
+        `birthday`= '$birthday',
+        `profile`='$icon',
         `updated_at`='$now'
         WHERE `id` ='$id'");
         if (!$this->result($result)) return false;

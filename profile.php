@@ -5,6 +5,11 @@ $title = "پروفایل";
 if(!$action->auth()){
     header("Location: phone.php");
 }
+if($action->user()){
+    $id = $action->user()->id;
+}else if($action->marketer()){
+    $id = $action->marketer()->id;
+}
 include_once "header.php";
 ?>
 

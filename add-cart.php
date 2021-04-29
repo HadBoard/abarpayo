@@ -1,10 +1,13 @@
 <?
-    $user_id = $action->user()->id;
     $edit = false;
     if(isset($_GET['id'])){
         $edit = true;
-        $id = $action->request('id');
-        $row  = $action->cart_get($id);
+        $cart_id = $action->request('id');
+        if($action->user()){
+            $row  = $action->cart_get($cart_id);
+        }else if($action->marketer()){
+            $row = $action->marketer_cart_get($cart_id);
+        }
     }
 
     $error = false;
@@ -21,9 +24,18 @@
         $cart_number = $action->request('cart_number');
         $iban = $action->request('iban');
         if($edit){
-            $command= $action->cart_edit($id,$bank_id,$name,$cart_number,$account_number,$iban,$validation);
+            if($action->user()){
+                $command= $action->cart_edit($cart_id,$bank_id,$name,$cart_number,$account_number,$iban,$validation);
+            }else if($action->marketer()){  
+                $command= $action->marketer_cart_edit($cart_id,$bank_id,$name,$cart_number,$account_number,$iban,$validation);
+            }
+            
         }else{
-            $command= $action->cart_add($bank_id,$name,$cart_number,$account_number,$iban,$validation);
+            if($action->user()){
+                $command= $action->cart_add($bank_id,$name,$cart_number,$account_number,$iban,$validation);
+            }else if($action->marketer()){  
+                $command= $action->marketer_cart_add($id,$bank_id,$name,$cart_number,$account_number,$iban,$validation);
+            }
         }
         if ($command) {
             $_SESSION['error'] = 0;
@@ -104,7 +116,7 @@ margin-top: -68px;" >
             </div>
             <div class="form-group">
                 <label for="name">نام دارنده حساب</label>
-                <input type="text" name="name" placeholder="فقط حروف فارسی" value="<?= $action->user_get($row->user_id)->first_name."  ".$action->user_get($row->user_id)->last_name ?>">
+                <input type="text" name="name" placeholder="فقط حروف فارسی" value="<?= $row->title ?>">
             </div>
             <div class="form-group">
                 <label for="account_number">شماره حساب</label>

@@ -1,9 +1,4 @@
-<?
-    $user_id = $action->user()->id;
-?>
-           
 <div class="edit_profile_div">
-
 
 <div class="profile_header">
     <div class="profile_heade_inn">
@@ -30,7 +25,11 @@
         
         <table>
         <?
-            $carts = $action->user_get_cart();
+            if($action->user()){
+                $carts = $action->user_get_cart();
+            }else if($action -> marketer()){
+                $carts = $action->marketer_get_cart($id);
+            }
             while($cart = $carts->fetch_object()){
         ?>  
                 <tr>

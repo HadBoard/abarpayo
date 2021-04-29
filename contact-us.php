@@ -1,8 +1,13 @@
-
-  <?
+ <?
 require_once "functions/database.php";
 $action = new Action();
 $title = "تماس با ما";
+if(isset($_POST['submit'])){
+    $name  = $action->request('name');
+    $phone = $action->request('phone');
+    $title = $action->request('title');
+    $description = $action->request('description');
+}
 include_once "header.php";
 ?>
 <div class="contact">
@@ -26,24 +31,24 @@ include_once "header.php";
             <!--  -->
 
             <div class="row">
-                <form>
+                <form action="" method="post">
                     <div class="form-group">
                         <label for="name">نام و نام خانوادگی</label>
                         <input type="text" name="name" placeholder="فقط حروف فارسی">
                     </div>
                     <div class="form-group">
-                        <label for="lname">شماره موبایل</label>
-                        <input type="text" name="lname" placeholder="فقط حروف فارسی">
+                        <label for="phone">شماره موبایل</label>
+                        <input type="text" name="phone" placeholder="فقط حروف فارسی">
                     </div>
                     <div class="form-group">
-                        <label for="lname">موضوع</label>
-                        <input type="text" name="lname" placeholder="فقط حروف فارسی">
+                        <label for="title">موضوع</label>
+                        <input type="text" name="title" placeholder= "">
                     </div>
                     <div class="form-group">
-                        <label for="name">متن درخواست</label>
-                        <textarea></textarea>
+                        <label for="description">متن درخواست</label>
+                        <textarea name="description"></textarea>
                     </div>
-                    <input style="float: none;font-size: 15px;" type="submit" class="main_btn" value="ثبت درخواست">
+                    <input style="float: none;font-size: 15px;" name="submit" type="submit" class="main_btn" value="ثبت درخواست">
                 </form>
             </div>
             <!--  -->
@@ -59,9 +64,9 @@ include_once "header.php";
                                <div class="col-10">
                                    <h4>اطلاعات تماس</h4>
                                    <p>
-                                        38282173
+                                   <?= $action->get_system('phone')?>
                                    </br>
-                                        38562894
+                                        <!-- 38562894 -->
                                    </p>
                                </div>
                            </div>
@@ -75,9 +80,9 @@ include_once "header.php";
                             <div class="col-10">
                                 <h4>اطلاعات تماس</h4>
                                 <p>
-                                     38282173
+                                    <?= $action->get_system('phone')?>
                                 </br>
-                                     38562894
+                                     <!-- 38562894 -->
                                 </p>
                             </div>
                         </div>
@@ -91,8 +96,7 @@ include_once "header.php";
                             <div class="col-10">
                                 <h4>آدرس ابرپایو</h4>
                                 <p>
-                                    دفتر مرکزی ابرپایو
-                                    یزد, یزد - کوی وحدت مجتمع نگین فارس طبقه مثبت یک جنب فروشگاه سر و سامان
+                                <?= $action->get_system('address')?>
                                 </p>
                             </div>
                         </div>
