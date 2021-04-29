@@ -71,16 +71,16 @@ unset($_SESSION['fromValidation']);
                     <form action="" method="post">
                         <div class="form-group">
                             <label for="first_name">نام</label>
-                            <input type="text" name="first_name" placeholder="فقط حروف فارسی">
+                            <input type="text" name="first_name" placeholder="فقط حروف فارسی" required>
                         </div>
                         <div class="form-group">
                             <label for="last_name">نام خانوادگی</label>
-                            <input type="text" name="last_name" placeholder="فقط حروف فارسی">
+                            <input type="text" name="last_name" placeholder="فقط حروف فارسی" required>
                         </div>
                     
                         <div class="form-group">
                             <label for="reference_code">کد معرف(اختیاری)</label>
-                            <input type="text" name="reference_code" placeholder="فقط حروف فارسی">
+                            <input type="text" name="reference_code">
                         </div>
                         <input name="submit" type="submit" class="main_btn" value="ادامه">
 

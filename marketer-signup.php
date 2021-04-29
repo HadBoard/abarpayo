@@ -69,11 +69,11 @@ unset($_SESSION['MfromValidation']);
                         <form action="" method="post">
                             <div class="form-group">
                                 <label for="first_name">نام</label>
-                                <input type="text" name="first_name" placeholder="فقط حروف فارسی">
+                                <input type="text" name="first_name" placeholder="فقط حروف فارسی" required>
                             </div>
                             <div class="form-group">
                                 <label for="last_name">نام خانوادگی</label>
-                                <input type="text" name="last_name" placeholder="فقط حروف فارسی">
+                                <input type="text" name="last_name" placeholder="فقط حروف فارسی" required>
                             </div>
                             <div class="form-group">
                                 <label for="national_code">کد ملی</label>
@@ -81,12 +81,12 @@ unset($_SESSION['MfromValidation']);
                             </div>
                             <div class="form-group">
                                 <label for="reference_code">کد معرف(اختیاری)</label>
-                                <input type="text" name="reference_code" placeholder="فقط حروف فارسی">
+                                <input type="text" name="reference_code" >
                             </div>
                             <div class="form-group">
                                 <label for="package_id">انتخاب محصول</label>
                                 
-                                <select name="package_id">
+                                <select name="package_id" required>
                                 <?
                                 $option_result = $action->package_list();
                                 while ($option = $option_result->fetch_object()) {
@@ -103,7 +103,7 @@ unset($_SESSION['MfromValidation']);
                             </div>
                             <div class="form-group">
                                 <label for="payment_type">نحوه پرداخت</label>
-                                <select name="payment_type">
+                                <select name="payment_type" required>
                                     <option value=1>اعتباری</option>
                                     <option value=2>نقدی</option>
                                 </select>

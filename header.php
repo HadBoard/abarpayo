@@ -182,6 +182,7 @@ $action = new Action();
 
  $('#search_button').click(function(){
      var search = $('#search').text();
+     console.log(search);
     $.ajax({
         url: "ajax/search.php",
         type:'post',

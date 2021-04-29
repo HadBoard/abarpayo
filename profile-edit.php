@@ -1,18 +1,22 @@
 <?
-    $user_id = $action->user()->id;
-    $icon = $action->user_get($user_id)->profile; 
+    if($action->user()){
+
+        $id = $action->user()->id;
+        $icon = $action->user_get($id)->profile;
+
+    }else if($action->marketer()){
+
+        $id = $action->marketer()->id;
+    }
+
+    
     $icon = ($icon ? $icon : "");  
     if(isset($_POST['submit'])){
         $phone = $action->request('phone');
         $first_name = $action->request('name');
         $last_name = $action->request('lname');
         $national_code = $action->request('national_code');
-        
-
         $birthday = $action->request_date('birthday');
-        
-       
-        $user_phone = $action->user_get($user_id)->phone;
 
         if($_FILES["pic"]["name"]){
     
@@ -34,7 +38,12 @@
     
             } 
         }
-        $command= $action->user_profile_edit($first_name, $last_name,$national_code,$birthday,$icon);
+        if($action->user()){
+            $command= $action->user_profile_edit($first_name, $last_name,$national_code,$birthday,$icon);
+        }else if($action->marketer()){
+            $command= $action->marketer_profile_edit($id,$first_name, $last_name,$national_code,$birthday,$icon);
+        }
+       
         if($command){
             ?>
             <div class="modal">
@@ -47,7 +56,7 @@
                 </div>
             <script src="assets/js/alert.js"></script>
             <?   
-            echo "<script>location.href='?edit'</script>";
+            // echo "<script>location.href='?edit'</script>";
         }
     }
 ?>
@@ -69,26 +78,34 @@
     <div class="profile_left">
             <div class="form-group">
                 <label for="name">نام</label>
-                <input type="text" id="first_name" name="name" value="<?= $action->user_get($user_id)->first_name?>" placeholder="فقط حروف فارسی">
+                <input type="text" id="first_name" name="name" value="<?= ($action->user()) ? $action->user_get($id)->first_name : $action->marketer_get($id)->first_name?>" placeholder="فقط حروف فارسی">
             </div>
             <div class="form-group">
                 <label for="lname">نام خانوادگی</label>
-                <input type="text" id="last_name" name="lname" value="<?= $action->user_get($user_id)->last_name?>"  placeholder="فقط حروف فارسی">
+                <input type="text" id="last_name" name="lname" value="<?= ($action->user()) ? $action->user_get($id)->last_name : $action->marketer_get($id)->last_name?>"  placeholder="فقط حروف فارسی">
             </div>
             <div class="form-group">
                 <label for="national_code">کدملی</label>
-                <input type="text" id="national_code" name="national_code" value="<?= $action->user_get($user_id)->national_code?>">
+                <input type="text" id="national_code" name="national_code" value="<?=($action->user()) ? $action->user_get($id)->national_code : $action->marketer_get($id)->national_code?>">
             </div>
             <div class="form-group">
                 <label for="phone">شماره موبایل</label>
-                <input type="text" id="phone" name="phone" placeholder="*******09" value="<?= $action->user_get($user_id)->phone?>"readonly>
+                <input type="text" id="phone" name="phone" placeholder="*******09" value="<?= ($action->user()) ? $action->user_get($id)->phone : $action->marketer_get($id)->phone?>"readonly>
             </div>
             
             <div class="form-group">
             <label for="birthday">تاریخ تولد</label>
                 <input type="text" id="birthday" name="birthday" class="form-control"
                         placeholder="تاریخ تولد"
-                        value="<?= ($action->user_get($user_id)->birthday) ? $action->time_to_shamsi($action->user_get($user_id)->birthday) : "" ?>">
+                        value="<? 
+                            if($action->user() && $action->user_get($id)->birthday){
+                                echo $action->time_to_shamsi($action->user_get($id)->birthday);
+                            }else if($action->marketer() && $action->marketer_get($id)->birthday){
+                                echo $action->time_to_shamsi($action->marketer_get($id)->birthday);
+                            }else {
+                                echo "";
+                            }
+                        ?>">
             </div>
 
             <button name="submit" class="main_btn middle_btn " id="form_submit" >ذخیره</button>

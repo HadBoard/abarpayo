@@ -1,10 +1,16 @@
 <?
 require_once "functions/database.php";
 if(!isset($_SESSION['MfromPhone'])){
-    header("Location: phone.php");
+    header("Location: marketer-phone.php");
 }
-unset($_SESSION['MfromPhone']);
 $action = new Action();
+
+$error = false;
+if (isset($_SESSION['error'])) {
+    $error = true;
+    $error_val = $_SESSION['error'];
+    unset($_SESSION['error']);
+}
 
 ?>
 <?
@@ -14,6 +20,7 @@ $action = new Action();
         $validated_code = $result->fetch_object();
         if($validated_code){
             unset($_SESSION['code']);
+            unset($_SESSION['MfromPhone']);
             $_SESSION['MfromValidation'] = 'true';
             if($validated_code->user_id == 0){
                 $action->validation_code_remove($validated_code->id);
@@ -26,21 +33,11 @@ $action = new Action();
                 header("Location: index.php");
             } 
         }else{
-          ?>
-           <div class="modal">
-                    <div class="alert alert-fail">
-                        <span class="close_alart">×</span>
-                        <p>
-                              کد وارد شده نامعتبر است!
-                        </p>
-                    </div>
-                </div>
-                <script src="assets/js/alert.js"></script>
-          <?
+            $_SESSION['error'] = 1;
+            header("Location: marketer-validation.php");
         }
     }
     $code_correct = $_SESSION['code'];
-    include_once "header.php";
 ?>
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
@@ -67,6 +64,19 @@ $action = new Action();
             <div class="row">
                 <div class="col-md-5 right-form mobile_validiation">
                     <div class="form_top">
+                    <? if ($error) {
+            if ($error_val) { ?>
+            <div class="modal">
+                    <div class="alert alert-fail">
+                        <span class="close_alart">×</span>
+                        <p>
+                              کد وارد شده نامعتبر است!
+                        </p>
+                    </div>
+                </div>
+                <script src="assets/js/alert.js"></script>
+               
+            <? }} ?>
                         <img src="assets/images/logo.png">
                         <h4>ثبت نام / ورود </h4>
                     </div>
@@ -74,11 +84,11 @@ $action = new Action();
                     <form action="" method="post">
                         <div class="form-group">
                             <label for="code">کد تایید را وارد کنید.</label>
-                            <input type="text" name="code" placeholder="">
+                            <input type="text" name="code" placeholder="" required>
                         </div>
                         <div class="form-group">
                             <label for="code">کد تایید را وارد کنید.</label>
-                            <input type="text" name="code" placeholder="" value="<?=$code_correct?>">
+                            <input type="text" placeholder="" value="<?=$code_correct?>" >
                         </div>
                         <p id="resent_code_form"  class="resent_code_form">
                                 ارسال مجدد کد تا 

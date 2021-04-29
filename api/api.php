@@ -363,10 +363,21 @@ if(isset($_POST['function'])) {
         $account_number = $action->request('account_number');
         $cart_number = $action->request('cart_number');
         $validation = 0;
-        $command = $action->app_cart_edit($id,$bank_id,$owner,$cart_number,$account_number,$iban,$validation);
+        $command = $action->cart_edit($id,$bank_id,$owner,$cart_number,$account_number,$iban,$validation);
         if($command){
             $obj -> result = 1;
         }
+        $json = json_encode($obj);
+        echo $json; 
+    }
+
+    if($_POST['function'] == 'shop'){
+        $id = $action->request('id');
+        $obj -> name = $action->shop_get($id)->title;
+        $obj -> address = $action->shop_get($id)->address;
+        $obj -> phone = $action->shop_get($id)->phone;
+        $image  = $action->shop_get($id)->image;
+        $obj -> image = "http://abarpayo.com/site/admin/images/shops/$image";
         $json = json_encode($obj);
         echo $json; 
     }

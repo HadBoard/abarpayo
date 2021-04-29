@@ -187,24 +187,37 @@ class Action
     }
 
     // ----------- for send sms to mobile number
-    public function send_sms($mobile, $textMessage)
-    {
-        $webServiceURL = "";
-        $webServiceSignature = "";
-        $webServiceNumber = "";
-        $textMessage = mb_convert_encoding($textMessage, "UTF-8");
-        $parameters['signature'] = $webServiceSignature;
-        $parameters['toMobile'] = $mobile;
-        $parameters['smsBody'] = $textMessage;
-        $parameters['retStr'] = ""; // return reference send status and mobile and report code for delivery
-        try {
-            $con = new SoapClient($webServiceURL);
-            $responseSTD = (array)$con->Send($parameters);
-            $responseSTD['retStr'] = (array)$responseSTD['retStr'];
-        } catch (SoapFault $ex) {
-            echo $ex->faultstring;
-        }
-    }
+   
+    public function send_sms($mobile,$textMessage){
+	    
+		$webServiceURL  = "http://login.parsgreen.com/Api/SendSMS.asmx?WSDL";  
+		$webServiceSignature = "86D08235-C008-4C53-8EEA-CE2284FD66F4";  
+
+		 $textMessage= mb_convert_encoding($textMessage,"UTF-8"); // encoding to utf-8
+		
+
+		     $parameters['signature'] = $webServiceSignature;
+		     $parameters['toMobile' ]  = $mobile;
+		     $parameters['smsBody' ]=$textMessage;
+		     $parameters[ 'retStr'] = ""; // return refrence send status and mobile and report code for delivery
+		  
+		 
+		try 
+		{
+		    $con = new SoapClient($webServiceURL);  
+
+		    $responseSTD = (array) $con ->Send($parameters); 
+		 
+		    $responseSTD['retStr'] = (array) $responseSTD['retStr'];
+		    
+		 
+		}
+		catch (SoapFault $ex) 
+		{
+		    echo $ex->faultstring;  
+		}
+
+	}
 
     // ----------- create random token
     public function get_token($length)
@@ -585,7 +598,7 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_shop_pics` WHERE `shop_id` = '$shop_id'");
     }
     public function shop_search($title){
-        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `title` like '%$title%'");
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `title` like '%".$title."%'");
     }
 
     public function category_shops_list_limited($category_id){
@@ -782,6 +795,18 @@ class Action
         ('$first_name','$last_name','$phone','$reference_code','$reference_id','$national_code','$package_id','$payment_type','$now',0)");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
+    }
+
+    public function marketer_profile_edit($id,$first_name, $last_name,$national_code,$birthday,$icon){
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_marketer` SET 
+        `first_name`= '$first_name',
+        `last_name` = '$last_name',
+        `national_code`= '$national_code',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
     }
 
     public function marketer_change_status($id){

@@ -52,7 +52,7 @@ $action = new Action();
                     <form action="" method="post">
                         <div class="form-group">
                             <label for="phone">شماره موبایل خود را وارد کنید.</label>
-                            <input type="text" name="phone" placeholder="*******09">
+                            <input type="text" name="phone" placeholder="*******09" required>
                         </div>
                         <input name="submit" type="submit" class="main_btn" value="ادامه">
                     </form>
