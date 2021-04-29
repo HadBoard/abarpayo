@@ -1,16 +1,23 @@
 <?  
-    if(!$action->auth()){
-        header("Location: phone.php");
+    if($action->user()){
+        $city =  $action->user_get($id)->city_id;
+        $province = $action->city_get($city)->province_id;
+    }else if($action->marketer()){
+        $city =  $action->marketer_get($id)->city_id;
+        $province = $action->city_get($acity)->province_id;
     }
-    $user_id = $action->user()->id;
-    $province_id = $action->city_get($action->user_get($user_id)->city_id)->province_id;
-    // $province_id = 2;
     
     if(isset($_POST['submit'])){
         $city_id = $action->request('city');
         $postal_code = $action->request('postal_code');
         $address = $action->request('address');
-        $command = $action->user_address_edit($city_id,$postal_code,$address);
+
+        if($action->user()){
+            $command = $action->user_address_edit($city_id,$postal_code,$address);
+        }else if($action->marketer()){
+            $command = $action->marketer_address_edit($id,$city_id,$postal_code,$address);
+        }
+
         if($command){
             ?> 
                 <div class="modal">
@@ -49,7 +56,7 @@
                 echo '<option value="';
                 echo $option->id;
                 echo '"';
-                if ($option->id == $province_id) echo "selected";
+                if ($option->id == $province) echo "selected";
                 echo '>';
                 echo $option->name;
                 echo '</option>';
@@ -61,12 +68,12 @@
             <select name="city" id="city">
                 <option>شهرستان را انتخاب فرمایید .</option>
                 <?
-                $option_result =  $action->province_city_list($province_id);
+                $option_result =  $action->province_city_list($province);
                 while ($option = $option_result->fetch_object()) {
                     echo '<option value="';
                     echo $option->id;
                     echo '"';
-                    if ($option->id == $action->user_get($user_id)->city_id) echo "selected";
+                    if ($option->id == $city) echo "selected";
                     echo '>';
                     echo $option->name;
                     echo '</option>';
@@ -76,12 +83,12 @@
         </div>
         <div style="margin-right:20px" class="form-group">
                 <label for="postal_code">کدپستی</label>
-                <input type="text" id="postal_code" name="postal_code" placeholder=""  value="<?= $action->user_get($user_id)->postal_code?>">
+                <input type="text" id="postal_code" name="postal_code" placeholder=""  value="<?= ($action->user()) ? $action->user_get($id)->postal_code : $action->marketer_get($id)->postal_code ?>">
         </div>
         <div class="form-group">
             <textarea type="text" name="address" class="form-control"
                     placeholder="آدرس"
-                    ><?= $action->user_get($user_id)->address ?></textarea>
+                    ><?= ($action->user()) ? $action->user_get($id)->address : $action->marketer_get($id)->address  ?></textarea>
         </div>
         <input name="submit" type="submit" class="main_btn middle_btn " value="ذخیره">            
     </form>

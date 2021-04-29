@@ -1,15 +1,11 @@
 <?
     if($action->user()){
-
-        $id = $action->user()->id;
         $icon = $action->user_get($id)->profile;
 
     }else if($action->marketer()){
-
-        $id = $action->marketer()->id;
+        $icon = $action->marketer_get($id)->profile;
     }
 
-    
     $icon = ($icon ? $icon : "");  
     if(isset($_POST['submit'])){
         $phone = $action->request('phone');

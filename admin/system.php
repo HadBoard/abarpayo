@@ -29,13 +29,17 @@ if (isset($_POST['submit'])) {
     $name = $action->request('name');
     $about_us = $action->request('about_us');
     $rules = $action->request('rules');
+    $phone = $action->request('phone');
+    $address = $action->request('address');
 
     $command = $action->update_system('name',$name);
     $command1 = $action->update_system('about_us',$about_us);
     $command2 = $action->update_system('rules',$rules);
+    $command3 = $action->update_system('phone',$phone);
+    $command4 = $action->update_system('address',$address);
 
     // check errors
-    if ($command && $command1 && $command2) {
+    if ($command && $command1 && $command2 && $command3 && $command4) {
         $_SESSION['error'] = 0;
     } else {
         $_SESSION['error'] = 1;
@@ -111,7 +115,18 @@ include('header.php'); ?>
                                            placeholder="نام سیستم"
                                            value="<?= $action->get_system('name');?>" >
                                 </div>
-
+                                <div class="form-group">
+                                    <label class="float-right" for="phone">شماره تماس</label>
+                                    <input type="text" name="phone" class="form-control"
+                                           placeholder="شماره تماس"
+                                           value="<?= $action->get_system('phone');?>" >
+                                </div>
+                                <div class="form-group">
+                                <label class="float-right" for="address">آدرس</label>
+                                    <textarea type="text" name="address" class="form-control input-default "
+                                           placeholder="آدرس"
+                                           ><?= $action->get_system('address');?></textarea>
+                                </div>
                                 <div class="form-group">
                                 <label class="float-right" for="about_us">درباره ما</label>
                                     <textarea type="text" name="about_us" class="form-control input-default "

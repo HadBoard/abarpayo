@@ -373,11 +373,19 @@ if(isset($_POST['function'])) {
 
     if($_POST['function'] == 'shop'){
         $id = $action->request('id');
+        $image  = $action->shop_get($id)->image;
         $obj -> name = $action->shop_get($id)->title;
         $obj -> address = $action->shop_get($id)->address;
         $obj -> phone = $action->shop_get($id)->phone;
-        $image  = $action->shop_get($id)->image;
+        $obj -> longitude =  (double)$action->shop_get($id)->longitude;
+        $obj -> latitude =  (double)$action->shop_get($id)->latitude;
         $obj -> image = "http://abarpayo.com/site/admin/images/shops/$image";
+        $pics = array();
+        $shop_pics  = $action->shop_pics_get($id);
+        while($pic = $shop_pics->fetch_object()){
+            array_push($pics,"http://abarpayo.com/site/admin/images/shops/$pic->image");
+        }
+        $obj -> $pics = $pics;
         $json = json_encode($obj);
         echo $json; 
     }
