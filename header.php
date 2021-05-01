@@ -79,11 +79,21 @@ $action = new Action();
                 </form>
             </div>
             <div class="col-md-3 city_header">
-                <select>
-                    <option>یزد-یزد</option>
-                    <option>یزد-یزد</option>
-                    <option>یزد-یزد</option>
-                </select>
+            <select id="default_city">
+            <?
+            $city = (isset($_SESSION['default_city'])) ? $_SESSION['default_city'] : 117;
+            $option_result =  $action->city_list();
+            while ($option = $option_result->fetch_object()) {
+                echo '<option value="';
+                echo $option->id;
+                echo '"';
+                if ($option->id == $city) echo "selected";
+                echo '>';
+                echo $option->name;
+                echo '</option>';
+            }
+            ?>
+            </select>
             </div>
 
             <? if ($action->auth()) { ?>
@@ -157,9 +167,9 @@ $action = new Action();
                     <li>
                         <a href="index.php">صفحه اصلی</a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="#">فروشگاه</a>
-                    </li>
+                    </li> -->
                     <li style="width:14%">
                         <a href="#">باشگاه مشتریان</a>
                     </li>
@@ -181,20 +191,16 @@ $action = new Action();
 </header>
 <!-- eof header -->
 <script>
-
-//  $('#search_button').click(function(){
-//      var search = $('#search').val();
-//      console.log(search);
-//     $.ajax({
-//         url: "search-results.php",
-//         type:'post',
-//         data: {search:search},
-//         success: function(response){
-//             if(response){
-//             }else{
-                
-//             }
-//         }
-//     });
-// });
+document.getElementById('default_city').onchange=function(){
+       var city_id=document.getElementById('default_city').value;
+       console.log(city_id);
+       $.ajax({
+            url:'ajax/set-city.php',
+            type:'post',
+            data:{city_id:city_id},
+            success:function(response){
+        		location.reload(true); 
+            }
+       })
+   }
 </script>

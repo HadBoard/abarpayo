@@ -7,6 +7,22 @@ if(isset($_POST['submit'])){
     $phone = $action->request('phone');
     $title = $action->request('title');
     $description = $action->request('description');
+
+    $command  = $action->contact_add($name,$phone,$title,$description);
+
+    if($command){
+        ?>
+        <div class="modal">
+        <div class="alert alert-suc">
+            <span class="close_alart">×</span>
+            <p>
+                عملیات موفق بود!
+            </p>
+        </div>
+    </div>
+    <script src="assets/js/alert.js"></script>
+    <?
+    }
 }
 include_once "header.php";
 ?>

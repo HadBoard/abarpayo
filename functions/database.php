@@ -47,12 +47,13 @@ class Action
 
     // ----------- properties
     public $connection;
-
+    //public $city = 426;
     // ----------- constructor
     public function __construct()
     {
         $db = new DB();
         $this->connection = $db->connect();
+        
     }
 
     // ----------- start main methods ----------------------------------------------------------------------------------
@@ -344,6 +345,11 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id' LIMIT 2");
     }
 
+    public function marketer_get_payment_limited($id){
+        $id = $this->user()->id;
+        return $this->connection->query("SELECT * FROM `tbl_marketer_payment` WHERE `marketer_id` = '$id' LIMIT 2");
+    }
+
     public function user_get_requests(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_request` WHERE `user_id` = '$id' AND `status` = 1");
@@ -356,6 +362,11 @@ class Action
     public function user_get_requests_limited(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_request` WHERE `user_id` = '$id' AND `status` = 1 LIMIT 2");
+    }
+
+    public function marketer_get_requests_limited(){
+        $id = $this->user()->id;
+        return $this->connection->query("SELECT * FROM `tbl_marketer_request` WHERE `marketer_id` = '$id' AND `status` = 1 LIMIT 2");
     }
 
     public function user_add($first_name,$last_name,$phone,$reference_id,$platform)
@@ -384,6 +395,10 @@ class Action
         WHERE `id` ='$id'");
         if (!$this->result($result)) return false;
         return $id;
+    }
+
+    public function user_invitations_list($id){
+        return $this->connection->query("SELECT * FROM `tbl_user` WHERE `reference_id` = '$id'");
     }
 
     public function app_profile_edit($user_id,$first_name, $last_name,$national_code,$birthday,$address,$postal_code,$city_id)
@@ -537,6 +552,11 @@ class Action
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$id' LIMIT 2");
     }
+
+    public function marketer_get_cart_limited($id){
+        return $this->connection->query("SELECT * FROM `tbl_marketer_cart` WHERE `marketer_id` = '$id' LIMIT 2");
+    }
+
     public function user_get_cart(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$id'");
@@ -560,6 +580,23 @@ class Action
         }
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_user` SET 
+        `wallet` = '$wallet',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+
+    }
+
+    public function marketer_wallet_edit($id,$amount,$type){
+        $prev_wallet = $this->marketer_get($id)->wallet;
+        if($type == 1){
+            $wallet = $prev_wallet + $amount;
+        }else if($type == 0){
+            $wallet = $prev_wallet - $amount;
+        }
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_marketer` SET 
         `wallet` = '$wallet',
         `updated_at`='$now'
         WHERE `id` ='$id'");
@@ -638,20 +675,29 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `title` like '%".$title."%' ORDER BY id LIMIT $cur_index,8 ");
     }
 
-    public function advance_search($input,$category,$city){
-        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `city_id` = '$city' AND `category_id` = '$category' AND `title` like '%".$input."%'");
-
+    public function advance_search($input,$category,$city,$cur_index){
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE  `category_id` = '$category' AND `city_id` = '$city' AND `title` like '%".$input."%' LIMIT $cur_index,8 ");
     }
 
-    public function shop_search_counter($title)
-    {
-        $result = $this->connection->query("SELECT * FROM `tbl_shop` WHERE `title` like '%".$title."%' ");
-        if (!$this->result($result)) return false;
-        return $result->num_rows;
+    public function advance_search_not_city($input,$category,$cur_index){
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE  `category_id` = '$category' AND `title` like '%".$input."%' LIMIT $cur_index,8 ");
+    }
+
+    public function advance_search_not_input($city,$category,$cur_index){
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category' AND `city_id` = '$city' LIMIT $cur_index,8 ");
+    }
+    public function advance_search_not_category($input,$city,$cur_index){
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE  `city` = '$city' AND `title` like '%".$input."%' LIMIT $cur_index,8 ");
     }
 
     public function category_shops_list_limited($category_id){
-        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id' LIMIT 4 ");
+        if(isset($_SESSION['default_city'])){
+            $city_id = $_SESSION['default_city'];
+        }else{
+            // $city_id = $GLOBALS['city'];
+            $city_id = 426;
+        }
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id'AND `city_id` = '$city_id' LIMIT 4 ");
     }
    
    // ----------- end CATEGORIES ------------------------------------------------------------------------------------------
@@ -666,6 +712,17 @@ class Action
         ('$user_id','$cart_id','$amount','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
+    }
+
+    public function marketer_request_add($id,$cart_id,$amount){
+        $now  = time();
+        $result = $this->connection->query("INSERT INTO `tbl_marketer_request`
+        (`marketer_id`,`cart_id`,`amount`,`created_at`) 
+        VALUES
+        ('$id','$cart_id','$amount','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+
     }
 
     public function app_request_add($user_id,$cart,$amount){
@@ -686,6 +743,12 @@ class Action
     public function province_list()
     {
         return $this->table_list("tbl_province");
+
+    }
+
+    public function city_list()
+    {
+        return $this->table_list("tbl_city");
 
     }
 
@@ -747,6 +810,16 @@ class Action
         return $this->connection->insert_id;
     }
 
+    public function marketer_wallet_log_add($marketer_id,$action,$amount,$type,$payment_id)
+    {
+        $result = $this->connection->query("INSERT INTO `tbl_marketer_wallet_log`
+        (`marketer_id`,`action`,`amount`,`type`,`payment_id`) 
+        VALUES
+        ('$marketer_id','$action','$amount','$type','$payment_id')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
     public function app_wallet_log_add($user_id,$action,$amount,$type,$payment_id)
     {
         $result = $this->connection->query("INSERT INTO `tbl_wallet_log`
@@ -803,10 +876,13 @@ class Action
     }
 
     public function lazyLoad($category_id,$cur_index){
-        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id' ORDER BY id LIMIT $cur_index,8 ");
-    }
-    public function app_lazyLoad($category_id,$cur_index){
-        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id' ORDER BY id LIMIT $cur_index,10 ");
+        if(isset($_SESSION['default_city'])){
+            $city_id = $_SESSION['default_city'];
+        }else{
+            //$city_id = $GLOBALS['city'];
+            $city_id = 426;
+        }
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id'AND `city_id` = '$city_id' ORDER BY id LIMIT $cur_index,8 ");
     }
     // ----------- end PAYMENT ------------------------------------------------------------------------------------------
     public function shop_comment_add($shop_id,$user_id,$text,$score){
@@ -821,7 +897,7 @@ class Action
     }
 
     public function shop_comments_list($id){
-        $user_id = $this->user()->id;
+        // $user_id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = '$id' AND `confirm` = 1");
     }
 
@@ -892,6 +968,11 @@ class Action
     public function marketer_reference_code($reference_code){
         return $this->connection->query("SELECT * FROM `tbl_marketer` WHERE `reference_code` = '$reference_code'");
     }
+
+    public function marketer_invitations_list($id){
+        return $this->connection->query("SELECT * FROM `tbl_marketer` WHERE `reference_id` = '$id'");
+    }
+
     public function app_token_list($user_id){
         return $this->connection->query("SELECT * FROM `tbl_app_token` WHERE `user_id` = '$user_id'");
     }
@@ -939,6 +1020,17 @@ class Action
    public function frequently_asked_question_list()
    {
        return $this->table_list("tbl_asked_question");
+   }
+
+   public function contact_add($name,$phone,$title,$description)
+   {
+    $now = time();
+    $result = $this->connection->query("INSERT INTO `tbl_contact`
+    (`fullname`,`phone`,`title`,`description`,`created_at`,`status`) 
+    VALUES
+    ('$name','$phone','$title','$description','$now',1)");
+    if (!$this->result($result)) return false;
+    return $this->connection->insert_id;
    }
 
 }

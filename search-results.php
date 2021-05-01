@@ -8,13 +8,22 @@ if(isset($_POST['advanced_search'])){
     $search = $action->request('input');
     $city = $action->request('city');
     $category = $action->request($category);
-    $result = $action->advance_search($search,$category,$city);
+    
+    if(!$city){
+        $result = $action->advance_search_not_city($search,$category,0);
+    }else if(!$category){
+        $result = $action->advance_search_not_category($search,$city,0);
+    }else if(!$input){
+        $result = $action->advance_search_not_input($search,$category,0);
+    }else{
+        $result = $action->advance_search($search,$category,$city,0);
+    }
 }
 
 if(isset($_POST['search_button'])){
     $search = $action->request('search');
 }
-$count = $action->shop_search_counter($search);
+$count = $result->num_rows;
 $result = $action->shop_search($search,0);
 
 ?>
@@ -150,6 +159,9 @@ while ($shop = $result->fetch_object()) {
 <? } ?>           
      
     </div>
+    <?
+        if($count){
+    ?>
     <button id="lazyload"class="main_btn">
                 
                 <a>
@@ -157,6 +169,9 @@ while ($shop = $result->fetch_object()) {
                 </a>
                 بیشتر
     </button>
+    <?
+        }
+    ?>
     <div class="row more-item" style="display: none;">
             <div class="nomore-item">      
                     
@@ -167,7 +182,7 @@ while ($shop = $result->fetch_object()) {
     </section>
 
 <script>
- var cur_index = 4;
+ var cur_index = 8;
  var title = "<?= $search ?>";
  $('#lazyload').click(function(){
     // console.log("id",id);

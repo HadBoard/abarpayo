@@ -3,7 +3,6 @@ require_once "functions/database.php";
 $action = new Action();
 $title = "ابر پایو";
 include_once "header.php";
-
     if($_SESSION['successful_pay'] == 'true'){
         ?>
             <div class="modal">
@@ -176,12 +175,17 @@ include_once "header.php";
             ?>
 
             <!--  -->
+            <?
+                $count = $shops->num_rows;
+                if($count){
+            ?>
             <a href="shop-list.php?category=<?= $row->id ?>" class="main_btn">
                  
                 <i class="fa fa-reply"></i>
                
                 بیشتر
             </a>
+            <?}?>
 
         </div>
         <?

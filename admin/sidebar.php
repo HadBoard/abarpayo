@@ -103,9 +103,24 @@ $action = new Action();
     </li>
 
     <li>
+        <a class="has-arrow" href="marketer-withdraw-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">برداشت های بازارساز</span>
+        </a>
+    </li>
+
+
+    <li>
         <a class="has-arrow" href="ticket-list.php" aria-expanded="false">
             <i class="fa fa-user"></i>
             <span class="hide-menu">تیکت ها</span>
+        </a>
+    </li>
+
+    <li>
+        <a class="has-arrow" href="contact-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">تماس با ما</span>
         </a>
     </li>
 

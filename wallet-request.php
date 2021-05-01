@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 require_once "functions/database.php";
 $database = new DB();
 $connection = $database->connect();
@@ -8,8 +8,8 @@ if(isset($_POST['wallet_increase']) || isset($_SESSION['app'])){
     if(isset($_SESSION['app'])){
         $amount = $_SESSION['amount'];
     }else{
-    $amount = $action->request('amount');
-    $_SESSION['increase_amount'] = $amount;
+        $amount = $action->request('amount');
+        $_SESSION['increase_amount'] = $amount;
     }
     $Amount = $amount;
 $MerchantID = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'; //Required
@@ -18,7 +18,8 @@ $MerchantID = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'; //Required
 $Description = ' افزایش موجودی کیف پول'; // Required
 $Email = 'UserEmail@Mail.Com'; // Optional
 $Mobile = "0000"; // Optional
-$CallbackURL = 'http://abarpayo.com/site/wallet-verify.php'; // Required
+// $CallbackURL = 'http://abarpayo.com/site/wallet-verify.php'; // Required
+$CallbackURL = 'http://localhost/abarpaya/wallet-verify.php';
 
 $client = new SoapClient('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', ['encoding' => 'UTF-8']);
 

@@ -1,6 +1,12 @@
 <?
-    $user_id = $action->user()->id;
-    $wallet = $action->user_get($user_id)->wallet;
+
+    if($action -> user()){
+        $wallet = $action->user_get($id)->wallet;
+        $option_result =  $action->user_cart_list();
+    }else if($action->marketer()){
+        $wallet = $action->marketer_get($id)->wallet;
+        $option_result =  $action->marketer_cart_list($id);
+    }
 
     if(isset($_POST['withdraw_wallet'])){
         $amount = $action->request('amount');
@@ -18,7 +24,13 @@
                 <script src="assets/js/alert.js"></script>
             <?
         }else{
-            $command  = $action->request_add($cart,$amount);
+
+            if($action -> user()){
+                $command  = $action->request_add($cart,$amount);
+            }else if($action -> marketer()){
+                $command  = $action->marketer_request_add($id,$cart,$amount);
+            }
+            
             if($command){
                 ?> 
                 <div class="modal">
@@ -61,7 +73,6 @@
                 <select name="cart">
                     <option>کارت را انتخاب فرمایید .</option>
                     <?
-                    $option_result =  $action->user_cart_list();
                     while ($option = $option_result->fetch_object()) {
                         echo '<option value="';
                         echo $option->id;

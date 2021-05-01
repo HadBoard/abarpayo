@@ -78,7 +78,9 @@ if (isset($_SESSION['error'])) {
                
             <? }} ?>
                     <div class="form_top">
-                        <img src="assets/images/logo.png">
+                    <a href="index.php">
+                    <img src="assets/images/logo.png">
+                   </a>
                         <h4>ثبت نام / ورود </h4>
                     </div>
 

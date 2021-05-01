@@ -65,12 +65,19 @@ if(isset($_GET['category'])){
             }
             ?>
         </div>
+        <?
+            $count = $shops->num_rows;
+            if($count){
+        ?>
         <button id="lazyload" class="main_btn">      
                     <!-- <a> -->
                         <i class="fa fa-reply"></i>
                     <!-- </a> -->
                     بیشتر
         </button>
+        <?
+            }
+        ?>
         <div class="row more-item" style="display: none;">
             <div class="nomore-item">      
                     

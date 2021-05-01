@@ -39,6 +39,8 @@ include_once "header.php";
                     include_once "profile-carts.php";
                 else if(isset($_GET['add-cart']))
                     include_once "add-cart.php";
+                else if(isset($_GET['invitation']))
+                    include_once "profile-invitation.php";
                 else if(isset($_GET['package']))
                     include_once "package.php";
                 else

@@ -433,12 +433,33 @@ class Action
         return $user_id;
     }
 
+    
+    public function marketer_wallet_withdraw($marketer_id,$wallet){
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_marketer` SET 
+        `wallet` = '$wallet',
+        `updated_at`='$now'
+        WHERE `id` ='$marketer_id'");
+        if (!$this->result($result)) return false;
+        return $marketer_id;
+    }
+
     public function wallet_log_add($user_id,$action,$amount,$type,$payment_id)
     {
         $result = $this->connection->query("INSERT INTO `tbl_wallet_log`
         (`user_id`,`action`,`amount`,`type`,`payment_id`) 
         VALUES
         ('$user_id','$action','$amount','$type','$payment_id')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function marketer_wallet_log_add($marketer_id,$action,$amount,$type,$payment_id)
+    {
+        $result = $this->connection->query("INSERT INTO `tbl_marketer_wallet_log`
+        (`marketer_id`,`action`,`amount`,`type`,`payment_id`) 
+        VALUES
+        ('$marketer_id','$action','$amount','$type','$payment_id')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
@@ -1082,13 +1103,36 @@ class Action
         return $id;
      }
 
+     public function marketer_request_edit($id, $description,$birthday){
+        $now = time();
+        $status = 1;
+        $result = $this->connection->query("UPDATE `tbl_marketer_request` SET 
+        `description` = '$description',
+        `status` = '$status',
+        `paymented_at` = '$birthday',
+        `updated_at` = '$now'
+        WHERE `id` ='$id'");
+
+        if (!$this->result($result)) return false;
+        return $id;
+     }
+
      public function request_list(){
         return $this->table_list("tbl_request");
+     }
+
+     public function marketer_request_list(){
+        return $this->table_list("tbl_marketer_request");
      }
 
      public function request_get($id)
      {
          return $this->get_data("tbl_request", $id);
+     }
+
+     public function marketer_request_get($id)
+     {
+         return $this->get_data("tbl_marketer_request", $id);
      }
 
      public function request_remove($id)
@@ -1304,7 +1348,33 @@ class Action
     
     // ----------- end QUESTIONS -----------------------------------------------------------------------------------------
 
+    public function solved_contact_list()
+    {
+        return $this->connection->query("SELECT * FROM `tbl_contact` WHERE `status` = 0"); 
+    }
 
+    public function not_solved_contact_list()
+    {
+        return $this->connection->query("SELECT * FROM `tbl_contact` WHERE `status` = 1"); 
+    }
+
+    public function contact_status($id,$status){
+        $result = $this->connection->query("UPDATE `tbl_contact` SET 
+        `status`='$status'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    public function contact_remove($id)
+    {
+        return $this->remove_data("tbl_contact", $id);
+    }
+
+    public function contact_get($id)
+    {
+        return $this->get_data("tbl_contact", $id);
+    }
 }
 
 // ----------- end Action class ----------------------------------------------------------------------------------------

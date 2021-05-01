@@ -77,7 +77,9 @@ if (isset($_SESSION['error'])) {
                 <script src="assets/js/alert.js"></script>
                
             <? }} ?>
-                        <img src="assets/images/logo.png">
+                <a href="index.php">
+                    <img src="assets/images/logo.png">
+                </a>
                         <h4>ثبت نام / ورود </h4>
                     </div>
 

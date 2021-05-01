@@ -64,7 +64,9 @@ unset($_SESSION['fromValidation']);
             <div class="row">
                 <div class="col-md-5 right-form">
                     <div class="form_top">
-                        <img src="assets/images/logo.png">
+                    <a href="index.php">
+                    <img src="assets/images/logo.png">
+                    </a>
                         <h4>ثبت نام در ابرپایو</h4>
                     </div>
 

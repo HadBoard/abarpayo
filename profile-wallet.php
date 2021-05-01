@@ -1,6 +1,16 @@
 <?
-    $user_id = $action->user()->id;
-    $wallet = $action->user_get($user_id)->wallet;
+    if($action->user()){
+        $wallet = $action->user_get($id)->wallet;
+        $carts = $action->user_get_cart_limited();
+        $transactions = $action->user_get_payment_limited();
+        $withdraws = $action->user_get_requests_limited();
+    }else if($action -> marketer()){
+        $wallet = $action->marketer_get($id)->wallet;
+        $carts = $action->marketer_get_cart_limited($id);
+        $transactions = $action->marketer_get_payment_limited($id);
+        $withdraws = $action->marketer_get_requests_limited($id);
+    }
+   
 
     if($_SESSION['successful_pay'] == 'true'){
         ?>
@@ -74,7 +84,6 @@
                         </div>
                     </div>
                     <?
-                        $carts = $action->user_get_cart_limited();
                         while($cart = $carts->fetch_object()){
                     ?>  
                             <tr>
@@ -85,16 +94,6 @@
                     <?
                         }
                     ?>                  
-                    <!-- <tr>
-                        <td>ملی</td>
-                        <td>25654564564564654</td>
-                        <td>25654564564564654132564456231</td>
-                    </tr>
-                    <tr>
-                        <td>ملی</td>
-                        <td>25654564564564654</td>
-                        <td>25654564564564654132564456231</td>
-                    </tr> -->
 
                 </table>
 
@@ -112,7 +111,6 @@
                         </div>
                     </div>
                     <?
-                        $transactions = $action->user_get_payment_limited();
                         while($transaction = $transactions->fetch_object()){
                             $payments = $action->payment_get_action($transaction->id);
                             $payment = $payments->fetch_object();
@@ -127,7 +125,6 @@
                     <?
                         }
                        
-                        $withdraws = $action->user_get_requests_limited();
                         while($withdraw = $withdraws->fetch_object()){
                     ?>  
 
@@ -141,20 +138,6 @@
                     <?
                         }
                     ?>  
-                    
-                    <!-- <tr>
-                        <td class="inc_wallet"> +5000 تومان</td>
-                        <td>شنبه 10 بهمن</td>
-                        <td>22:00</td>
-                        <td>224561235</td>
-                    </tr>
-                    <tr>
-                        <td class="dec_wallet"> +5000 تومان</td>
-                        <td>شنبه 10 بهمن</td>
-                        <td>22:00</td>
-                        <td>224561235</td>
-                    </tr> -->
-
                 </table>                
             </div>
         </div>

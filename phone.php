@@ -45,7 +45,9 @@ $action = new Action();
             <div class="row">
                 <div class="col-md-5 right-form mobile_validiation">
                     <div class="form_top">
-                        <img src="assets/images/logo.png">
+                    <a href="index.php">
+                    <img src="assets/images/logo.png">
+                    </a>
                         <h4>ثبت نام / ورود </h4>
                     </div>
 

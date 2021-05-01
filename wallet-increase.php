@@ -1,6 +1,10 @@
 <?
-    $user_id = $action->user()->id;
-    $wallet = $action->user_get($user_id)->wallet;
+    if($action->user()){
+        $wallet = $action->user_get($id)->wallet;
+    }else if($action->marketer()){
+        $wallet = $action->marketer_get($id)->wallet;
+    }
+    
 ?>
 
 <div class="edit_profile_div">

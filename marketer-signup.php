@@ -62,7 +62,9 @@ unset($_SESSION['MfromValidation']);
                 <div class="row">
                     <div class="col-md-5 right-form">
                         <div class="form_top">
-                            <!-- <img src="../assets/images/logo.png"> -->
+                        <a href="index.php">
+                        <img src="assets/images/logo.png">
+                       </a>
                             <h4>ثبت نام بازارسازان</h4>
                         </div>
                         
