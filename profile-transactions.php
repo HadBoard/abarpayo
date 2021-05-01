@@ -1,7 +1,13 @@
-       
+<?
+    if($action->user()){
+        $transactions = $action->user_get_payment();
+        $withdraws = $action->user_get_requests();
+    }else if($action->marketer()){
+        $transactions = $action->marketer_get_payment($id);
+        $withdraws = $action->marketer_get_requests($id);
+    }
+?> 
 <div class="edit_profile_div">
-
-
 <div class="profile_header">
     <div class="profile_heade_inn">
         <div class="profile_header_img_2"><img src="assets/images/Path 710.svg"></div></div>
@@ -19,10 +25,13 @@
         
         <table>
         <?
-            $transactions = $action->user_get_payment();
             while($transaction = $transactions->fetch_object()){
                 $type = $transaction->type;
-                $payments = $action->payment_get_action($transaction->id);
+                if($action->user()){
+                    $payments = $action->payment_get_action($transaction->id);
+                }else if($action->marketer()){
+                    $payments = $action->marketer_payment_get_action($transaction->id);
+                }
                 $payment = $payments->fetch_object();
         ?>  
                 <tr>
@@ -33,11 +42,8 @@
                 </tr>
         <?
             }
-
-            $withdraws = $action->user_get_requests();
             while($withdraw = $withdraws->fetch_object()){
         ?>  
-
             <tr>
                 <td class="dec_wallet"> <?= "-".$withdraw->amount ?></td>
                 <td><?= $action->time_to_shamsi($withdraw->paymented_at)?></td>
@@ -48,11 +54,7 @@
         <?
             }
         ?>  
-                        
-            <!-- <tr>
-                <td class="inc_wallet"> +5000 تومان</td>
-                <td>شنبه 10 بهمن</td>
-                <td>22:00</td>
-                <td>224561235</td>
-            </tr>
-         
+        </table>
+    </div>
+</div>
+</div>

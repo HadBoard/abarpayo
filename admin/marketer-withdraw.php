@@ -170,7 +170,7 @@ include('header.php'); ?>
 
                                 <div class="form-group">
                                     <input type="text" id="date" name="birthday" class="form-control"
-                                           placeholder="تاریخ واریز" value="<?= $action->time_to_shamsi($row->paymented_at)?>"
+                                           placeholder="تاریخ واریز" value="<?= ($row->paymented_at) ? $action->time_to_shamsi($row->paymented_at) : ""?>"
                                            <?= ($row->status) ? "readonly" : ""?> required>
                                 </div>
 

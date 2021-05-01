@@ -43,7 +43,6 @@
     }
 ?>
     <div class="edit_profile_div">
-
     
         <div class="profile_header">
             <div class="profile_heade_inn">
@@ -112,7 +111,12 @@
                     </div>
                     <?
                         while($transaction = $transactions->fetch_object()){
-                            $payments = $action->payment_get_action($transaction->id);
+                            if($action->user()){
+                                $payments = $action->payment_get_action($transaction->id);
+                            }else if($action->marketer()){
+                                $payments = $action->marketer_payment_get_action($transaction->id);
+                            }
+                           
                             $payment = $payments->fetch_object();
                             $type = $transaction->type;
                     ?>  
@@ -120,7 +124,7 @@
                                 <td <?= ($type == 1) ? 'class="dec_wallet"': 'class="inc_wallet"' ?>> <?= ($type == 1) ? "-".$transaction->amount : "+".$transaction->amount ?></td>
                                 <td><?= $action->time_to_shamsi($transaction->date)?></td>
                                 <td><?= $transaction->cart_number?></td>
-                                <td><?= $transaction->action?></td>
+                                <td><?= $payment->action?></td>
                             </tr>
                     <?
                         }

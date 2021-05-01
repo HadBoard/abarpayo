@@ -120,11 +120,11 @@ margin-top: -68px;" >
             </div>
             <div class="form-group">
                 <label for="account_number">شماره حساب</label>
-                <input type="text" name="account_number" placeholder="فقط حروف فارسی" value="<?= $row->account_number?>" required>
+                <input type="text" name="account_number" value="<?= $row->account_number?>" required>
             </div>
             <div class="form-group">
                 <label for="cart_number">شماره کارت</label>
-                <input type="text" name="cart_number" placeholder="فقط حروف فارسی" value="<?= $row->cart_number?>" required>
+                <input type="text" name="cart_number" value="<?= $row->cart_number?>" required>
             </div>
                 <div class="form-group">
                 <label for="iban">شماره شبا</label>

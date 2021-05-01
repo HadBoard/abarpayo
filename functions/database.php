@@ -340,14 +340,21 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_wallet_log` WHERE `payment_id` = '$payment_id'");
     }
 
+    public function marketer_payment_get_action($payment_id){
+        return $this->connection->query("SELECT * FROM `tbl_marketer_wallet_log` WHERE `payment_id` = '$payment_id'");
+    }
+
     public function user_get_payment_limited(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id' LIMIT 2");
     }
 
     public function marketer_get_payment_limited($id){
-        $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_marketer_payment` WHERE `marketer_id` = '$id' LIMIT 2");
+    }
+
+    public function marketer_get_payment($id){
+        return $this->connection->query("SELECT * FROM `tbl_marketer_payment` WHERE `marketer_id` = '$id'");
     }
 
     public function user_get_requests(){
@@ -367,6 +374,11 @@ class Action
     public function marketer_get_requests_limited(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_marketer_request` WHERE `marketer_id` = '$id' AND `status` = 1 LIMIT 2");
+    }
+
+    public function marketer_get_requests(){
+        $id = $this->user()->id;
+        return $this->connection->query("SELECT * FROM `tbl_marketer_request` WHERE `marketer_id` = '$id' AND `status` = 1");
     }
 
     public function user_add($first_name,$last_name,$phone,$reference_id,$platform)
@@ -946,12 +958,12 @@ class Action
         return $id;
 
     }
-    public function marketer_payment_add($marketer_id,$amount,$reference_code,$status){
+    public function marketer_payment_add($marketer_id,$amount,$cart_number,$reference_code,$status){
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_marketer_payment`
-        (`marketer_id`,`amount`,`reference_code`,`date`,`status`) 
+        (`marketer_id`,`amount`,`cart_number`,`reference_code`,`date`,`status`) 
         VALUES
-        ('$marketer_id','$amount','$reference_code','$now','$status')");
+        ('$marketer_id','$amount','$cart_number','$reference_code','$now','$status')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
