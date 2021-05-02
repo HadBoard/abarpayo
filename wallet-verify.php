@@ -1,5 +1,6 @@
 <?php
 require_once "functions/database.php";
+require_once "const-values.php";
 $database = new DB();
 $connection = $database->connect();
 $action = new Action();
@@ -40,9 +41,13 @@ if ($result->Status == 100) {
 
     if($action->user()){
 
+        $id = $action->user()->id;
         $command = $action->payment_add($Amount,$cart_number,$result->RefID,1);
         $action->wallet_log_add("افزایش موجودی کیف پول",$Amount,1,$command);
         $action->user_wallet_edit($Amount,1);
+
+        $action->score_log_add($id,$wallet_increase_score,$wallet_increase_action,1);
+        $action->score_edit($id,$wallet_increase_score,1);
 
     }else if($action->marketer()){
 
@@ -50,6 +55,9 @@ if ($result->Status == 100) {
         $command = $action->marketer_payment_add($id,$Amount,$cart_number,$result->RefID,1);
         $action->marketer_wallet_log_add($id,"افزایش موجودی کیف پول",$Amount,1,$command);
         $action->marketer_wallet_edit($id,$Amount,1);
+
+        $action->marketer_score_log_add($id,$marketer_wallet_increase_score,$wallet_increase_action,1);
+        $action->marketer_score_edit($id,$marketer_wallet_increase_score,1);
     }
     
     $_SESSION['successful_pay'] = 'true';

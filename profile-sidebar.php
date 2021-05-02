@@ -45,6 +45,16 @@
             <h4>لینک دعوت</h4>
             <img src="assets/images/006-right-arrow.svg">
         </a>
+        <a href="?guilds" class="main_btn profile_btn">
+            <i class="fa fa-user"></i>
+            <h4>معرفی اصناف</h4>
+            <img src="assets/images/006-right-arrow.svg">
+        </a>
+        <a href="?scores" class="main_btn profile_btn">
+            <i class="fa fa-user"></i>
+            <h4>تاریخچه امتیازات</h4>
+            <img src="assets/images/006-right-arrow.svg">
+        </a>
         <? if($action->marketer()){?>
         <a href="?package" class="main_btn profile_btn">
         <i class="fa fa-user"></i>

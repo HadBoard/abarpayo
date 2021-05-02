@@ -53,7 +53,7 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
                         </h3>
                         <div class="star_card star_card_shop">
                             <i class="fa fa-star" aria-hidden="true"></i>
-                            عملکرد : <span>3.8</span> از 5
+                            عملکرد : <span><?= $shop->score ?></span> از 5
                         </div>
                   </div>
               </div>
@@ -215,7 +215,7 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
                     </div>
                     <!--  -->
                     <div class="shop_map">
-                        <iframe src="https://maps.google.com/maps?q=31.890901,54.354093&amp;hl=fa&amp;z=15&amp;output=embed" width="600" height="400" frameborder="0" style="border-radius: 5px;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                    <iframe src="https://maps.google.com/maps?q=<?= $shop->latitude?>,<?= $shop->longitude ?>&amp;hl=fa&amp;z=15&amp;output=embed" width="600" height="400" frameborder="0" style="border-radius: 5px;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
                     </div>
     
                     <div class="row">

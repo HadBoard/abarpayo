@@ -423,6 +423,58 @@ class Action
         return $this->table_counter("tbl_user");
     }
 
+    public function score_log_add($id,$score,$action,$type){
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_score_log`
+        (`user_id`,`score`,`action`,`type`,`created_at`) 
+        VALUES
+        ('$id','$score','$action','$type','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function score_edit($id,$amount,$type){
+        $prev_score = $this->user_get($id)->score;
+        if($type == 1){
+            $score = $prev_score + $amount;
+        }else if($type == 0){
+            $score = $prev_score - $amount;
+        }
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_user` SET 
+        `score` = '$score',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    public function marketer_score_log_add($id,$score,$action,$type){
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_marketer_score_log`
+        (`marketer_id`,`score`,`action`,`type`,`created_at`) 
+        VALUES
+        ('$id','$score','$action','$type','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function marketer_score_edit($id,$amount,$type){
+        $prev_score = $this->marketer_get($id)->score;
+        if($type == 1){
+            $score = $prev_score + $amount;
+        }else if($type == 0){
+            $score = $prev_score - $amount;
+        }
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_marketer` SET 
+        `score` = '$score',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
     public function wallet_withdraw($user_id,$amount){
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_user` SET 
@@ -581,6 +633,22 @@ class Action
     public function shop_option($id)
     {
         return $this->table_option("tbl_shop", $id);
+    }
+
+    public function update_shop_score($shop_id){
+        $sum = 0;
+        $result = $this->shop_comment_list($shop_id);
+        while($row = $result->fetch_object()){
+            $sum += $row->score;
+        }
+        $count = $result->num_rows;
+        $score = $sum/$count;
+
+        $result = $this->connection->query("UPDATE `tbl_shop` SET 
+        `score` = '$score',
+        WHERE `id` ='$shop_id'");
+        if (!$this->result($result)) return false;
+        return $shop_id;
     }
 
     public function shop_add($category_id,$title,$icon,$phone, $fax, $city_id, $address, $longitude, $latitude, $status)

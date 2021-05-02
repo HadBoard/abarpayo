@@ -1,5 +1,6 @@
 <?
 require_once "functions/database.php";
+require_once "const-values.php";
 if(!isset($_SESSION['MfromValidation'])){
     header("Location: marketer-phone.php");
 }
@@ -20,11 +21,15 @@ unset($_SESSION['MfromValidation']);
             $result = $action->marketer_reference_code($reference_code);
             $reference = $result->fetch_object();
             $reference_id = $reference->id;
+            $action->marketer_score_log_add($reference_id,$marketer_invitation_score,$invitation_action,1);
+            $action->marketer_score_edit($reference_id,$marketer_invitation_score,1);
         }
         $phone = $_SESSION['phone'];
         $command = $action->marketer_add($first_name,$last_name,$phone,$package_id,$payment_type,$national_code,$reference_id);
 
         if($command){
+            $action->marketer_score_log_add($command,$register_score,$register_action,1);
+            $action->marketer_score_edit($command,$register_score,1);
             $_SESSION['marketer_id'] = $command;
            if($payment_type == 1){
             $action->marketer_change_status($command);

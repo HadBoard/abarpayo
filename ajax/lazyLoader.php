@@ -36,7 +36,9 @@ while ($shop = $result->fetch_object()) {
         <div class="shop_star">
             <div class="row">
                 <div class="col-3">
-                    <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
+                    <div class="star_card"><i class="fa fa-star"></i>';
+    echo $shop->score;
+    echo '</div>
                 </div>
                 <div class="col-9 sell_card">
                     <i class="fas fa-shopping-cart"></i>

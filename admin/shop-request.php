@@ -1,4 +1,5 @@
 <? require_once "functions/database.php";
+ require_once "../const-values.php";
 $database = new DB();
 $connection = $database->connect();
 $action = new Action();
@@ -36,13 +37,23 @@ if (isset($_POST['submit'])) {
         $command1 = $action->shop_request_status($id,$status);
         $icon = "";
         $command = $action->shop_add($row->category_id,$row->title,$icon,0,0,0, $row->address,0,0,$status);
-       
-    } else {
-      
-    }
-
+    } 
     // check errors
     if ($command && $command1) {
+
+        if($row -> access == 0){
+
+            $user_id = $row -> user_id;
+            $action->score_log_add($user_id,$guilds_score,$guilds_action,1);
+            $action->score_edit($user_id,$guilds_score,1);
+
+        }else if($row -> access == 1){
+
+            $user_id = $row -> user_id;
+            $action->marketer_score_log_add($user_id,$guilds_score,$guilds_action,1);
+            $action->marketer_score_edit($user_id,$guilds_score,1);
+        }
+       
        $_SESSION['error'] = 0;
     } else {
        $_SESSION['error'] = 1;

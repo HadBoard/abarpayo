@@ -43,6 +43,10 @@ include_once "header.php";
                     include_once "profile-invitation.php";
                 else if(isset($_GET['package']))
                     include_once "package.php";
+                else if(isset($_GET['guilds']))
+                    include_once "profile-guilds.php";
+                else if(isset($_GET['scores']))
+                    include_once "profile-scores.php";
                 else
                    include_once "profile-edit.php";
                 ?>
