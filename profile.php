@@ -22,6 +22,13 @@ include_once "header.php";
             </div>
 
             <div class="col-md-8 profile_col">
+
+            <? if($action->marketer() && $action->hasUnpaidPackage($id)){?>
+            <div class="profile-warning">
+            شما یک پکیج در انتظار پرداخت دارید.
+            </div>
+            
+            <?}?>
                 <?
                 if (isset($_GET['address']))
                     include_once "profile-address.php";

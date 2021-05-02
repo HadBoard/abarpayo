@@ -26,10 +26,9 @@
         if($edit){
             if($action->user()){
                 $command= $action->cart_edit($cart_id,$bank_id,$name,$cart_number,$account_number,$iban,$validation);
-            }else if($action->marketer()){  
+            }else if($action->marketer()){
                 $command= $action->marketer_cart_edit($cart_id,$bank_id,$name,$cart_number,$account_number,$iban,$validation);
-            }
-            
+            }    
         }else{
             if($action->user()){
                 $command= $action->cart_add($bank_id,$name,$cart_number,$account_number,$iban,$validation);
@@ -95,7 +94,7 @@ margin-top: -68px;" >
     <div class="add_card">
 
         
-        <form action="" method="post">
+        <form action="" method="post" id="form">
             <div class="form-group">
                 <label for="bank">نام بانک</label>
                 <select name="bank" required>
@@ -120,15 +119,15 @@ margin-top: -68px;" >
             </div>
             <div class="form-group">
                 <label for="account_number">شماره حساب</label>
-                <input type="text" name="account_number" value="<?= $row->account_number?>" required>
+                <input type="text" id="account_number" name="account_number" value="<?= $row->account_number?>" required>
             </div>
             <div class="form-group">
                 <label for="cart_number">شماره کارت</label>
-                <input type="text" name="cart_number" value="<?= $row->cart_number?>" required>
+                <input type="text" id="cart_number" name="cart_number" value="<?= $row->cart_number?>" required>
             </div>
                 <div class="form-group">
                 <label for="iban">شماره شبا</label>
-                <input type="text" name="iban" placeholder="فقط حروف فارسی" value="<?= $row->iban?>" required>
+                <input type="text" id="iban" name="iban" placeholder="فقط حروف فارسی" value="<?= $row->iban?>" required>
             </div>
             <input name="submit" type="submit" class="main_btn middle_btn " value="ذخیره">
             
@@ -136,18 +135,26 @@ margin-top: -68px;" >
     </div>
 </div>
 </div>
-<!-- $('#form').validate({
+<script>
+// $('#form').submit(function (e) {
+//   e.preventDefault();
+//   var account_number = $("#account_number").val();
+//   var cart_number = $("#cart_number").val();
+//   var iban = $("#iban").val();
 
-... your validation rules come here,
-
-submitHandler: function(form) {
-    $.ajax({
-        url: form.action,
-        type: form.method,
-        data: $(form).serialize(),
-        success: function(response) {
-            $('#answers').html(response);
-        }            
-    });
-}
-}); -->
+//   $.ajax({
+//     type: 'POST',
+//     url: 'ajax/validation.php',
+//     data: {iban:iban,account_number:account_number,cart_number:cart_number},
+//     success: function (response) {
+//         if(response == 1){
+//             alert(1);
+//             // $('#form').submit();
+//         }else{
+//             alert(-1);
+//             // $('#answers').html(response);
+//         }
+//     },
+//   });
+// });
+</script>

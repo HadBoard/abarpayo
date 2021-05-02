@@ -59,11 +59,17 @@ if (isset($_POST['submit'])) {
     $iban = $action->request('iban');
     $validation = $action->request('validation');
 
+    $validate = $action->account_number_validate($account_number,1);
+    $validate1 = $action->iban_validate($iban) && $action->iban_unique($iban,1);
+    $validate2 = $action->cart_number_validate($cart_number,1);
+
     // send query
     if ($edit_id) {
         $command = $action->cart_edit($edit_id,$user_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation);
     } else {
-        $command = $action->cart_add($user_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation);
+        if($validate && $validate1 && $validate2){
+            $command = $action->cart_add($user_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation);
+        }
     }
 
     // check errors

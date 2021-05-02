@@ -74,7 +74,7 @@ $action = new Action();
             </div>
             <div class="col-md-4 search_header">
                 <form action="search-results.php" method="post">
-                <input name="search"  placeholder="لطفا کلمه مورد نظر خود را جستجو کنید">
+                <input name="search" required placeholder="لطفا کلمه مورد نظر خود را جستجو کنید">
                 <button type="submit"name="search_button"><span class="material-icons">search</span></button> 
                 </form>
             </div>

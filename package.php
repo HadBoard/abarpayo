@@ -4,11 +4,7 @@
     $title = "پکیج ها";
    $marketer_id = $action->marketer()->id;
 ?>
-<? if( $action->hasUnpaidPackage($marketer_id)) {?>
-<div class="profile-warning">
-   شما یک پکیج در انتظار پرداخت دارید.
-</div>
-<? } ?>
+
 <div class="edit_profile_div">
 
 

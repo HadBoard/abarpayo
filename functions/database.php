@@ -744,7 +744,12 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_shop_pics` WHERE `shop_id` = '$shop_id'");
     }
     public function shop_search($title,$cur_index){
-        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `title` like '%".$title."%' ORDER BY id LIMIT $cur_index,8 ");
+        if(isset($_SESSION['default_city'])){
+            $city_id = $_SESSION['default_city'];
+        }else{
+            $city_id = 426;
+        }
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `title` like '%".$title."%' AND `city_id` = '$city_id'  ORDER BY id LIMIT $cur_index,8 ");
     }
 
     public function advance_search($input,$category,$city,$cur_index){
@@ -1103,6 +1108,70 @@ class Action
     if (!$this->result($result)) return false;
     return $this->connection->insert_id;
    }
+
+   //VALIDATE CART-----------------------------------------------------------------------------------------
+   
+   public function iban_validate($code){
+    $shaba=substr($code,2)."1827".$code[0].$code[1];
+    return bcmod($shaba, '97');
+}
+
+public function iban_unique($iban,$isUser){
+    if($isUser == 1){
+        $result = $this->cart_list();
+    }else{
+        $result = $this->marketer_carts();
+    }
+    
+    while($row = $result->fetch_object()){
+        if($row->iban == $iban){
+            return false;
+        }
+    }
+   
+    return true;
+}
+
+public function account_number_validate($account_number,$isUser){
+
+    if($isUser == 1){
+        $result = $this->cart_list();
+    }else{
+        $result = $this->marketer_carts();
+    }
+    
+    while($row = $result->fetch_object()){
+        if($row->account_number == $account_number){
+            return false;
+        }
+    }
+
+    return true;
+    
+}
+
+public function cart_number_validate($cart_number,$isUser){
+
+    if($isUser == 1){
+        $result = $this->cart_list();
+    }else{
+        $result = $this->marketer_carts();
+    }
+    $result = $this->cart_list();
+    while($row = $result->fetch_object()){
+        if($row->cart_number == $cart_number){
+            return false;
+        }
+    }
+
+    $length = strlen($cart_number);
+
+    if($length != 16){
+        return false;
+    }
+    
+    return true;
+}
 
 }
 

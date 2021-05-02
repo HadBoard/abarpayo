@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
         }
     } 
     // check errors
-    if ($command ) {
+    if ($command ||  $command1) {
         $_SESSION['error'] = 0;
     } else {
         $_SESSION['error'] = 1;

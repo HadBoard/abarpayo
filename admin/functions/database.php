@@ -2,6 +2,9 @@
 // ----------- start config methods ------------------------------------------------------------------------------------
 //ini_set('display_errors', 1);
 //ini_set('display_startup_errors', 1);
+
+//use JetBrains\PhpStorm\Internal\ReturnTypeContract;
+
 error_reporting(E_ERROR);
 
 session_start();
@@ -578,6 +581,8 @@ class Action
     {
         return $this->table_list("tbl_user_cart");
     }
+
+
 
     public function user_get_cart($user_id){
         return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$user_id'");
@@ -1305,7 +1310,10 @@ class Action
         return $this->remove_data("tbl_marketer_cart", $id);
     }
 
-
+    public function marketer_carts()
+    {
+        return $this->table_list("tbl_marketer_cart");
+    }
 
 
 //----------------------- TEMP ------------------------------------------------------------------------------------------------------------
@@ -1447,6 +1455,68 @@ class Action
     public function contact_get($id)
     {
         return $this->get_data("tbl_contact", $id);
+    }
+
+    public function iban_validate($code){
+        $shaba=substr($code,2)."1827".$code[0].$code[1];
+        return bcmod($shaba, '97');
+    }
+
+    public function iban_unique($iban,$isUser){
+        if($isUser == 1){
+            $result = $this->cart_list();
+        }else{
+            $result = $this->marketer_carts();
+        }
+        
+        while($row = $result->fetch_object()){
+            if($row->iban == $iban){
+                return false;
+            }
+        }
+       
+        return true;
+    }
+
+    public function account_number_validate($account_number,$isUser){
+
+        if($isUser == 1){
+            $result = $this->cart_list();
+        }else{
+            $result = $this->marketer_carts();
+        }
+        
+        while($row = $result->fetch_object()){
+            if($row->account_number == $account_number){
+                return false;
+            }
+        }
+    
+        return true;
+        
+    }
+
+    public function cart_number_validate($cart_number,$isUser){
+
+        if($isUser == 1){
+            $result = $this->cart_list();
+        }else{
+            $result = $this->marketer_carts();
+        }
+        $result = $this->cart_list();
+        while($row = $result->fetch_object()){
+            if($row->cart_number == $cart_number){
+                return false;
+            }
+        }
+
+        $length = strlen($cart_number);
+
+        if($length != 16){
+            return false;
+        }
+        
+        return true;
     }
 }
 
