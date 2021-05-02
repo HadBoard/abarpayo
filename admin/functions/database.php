@@ -643,9 +643,9 @@ class Action
         }
         $count = $result->num_rows;
         $score = $sum/$count;
-
+        
         $result = $this->connection->query("UPDATE `tbl_shop` SET 
-        `score` = '$score',
+       `score` = '$score'
         WHERE `id` ='$shop_id'");
         if (!$this->result($result)) return false;
         return $shop_id;

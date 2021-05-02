@@ -43,11 +43,11 @@ if (isset($_POST['submit'])) {
         $command = $action->shop_comment_add($shop_id,$admin_id,$id,$text);
         if($confirm){
             $command1 = $action->shop_comment_confirm($id);
-            $action->update_shop_score($shop_id);
+            $command2 = $action->update_shop_score($shop_id);
         }
     } 
     // check errors
-    if ($command) {
+    if ($command ) {
         $_SESSION['error'] = 0;
     } else {
         $_SESSION['error'] = 1;
