@@ -136,4 +136,18 @@ margin-top: -68px;" >
     </div>
 </div>
 </div>
-         
+<!-- $('#form').validate({
+
+... your validation rules come here,
+
+submitHandler: function(form) {
+    $.ajax({
+        url: form.action,
+        type: form.method,
+        data: $(form).serialize(),
+        success: function(response) {
+            $('#answers').html(response);
+        }            
+    });
+}
+}); -->

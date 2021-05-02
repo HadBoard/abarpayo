@@ -6,11 +6,11 @@ if(!isset($_SESSION['MfromValidation'])){
 }
 $action = new Action();
 $title = "ثبت نام";
-unset($_SESSION['MfromValidation']);
 ?>
 
 <?
     if(isset($_POST['submit'])){
+        unset($_SESSION['MfromValidation']);
         $first_name = $action->request('first_name');
         $last_name = $action->request('last_name');
         $package_id = $action->request('package_id');

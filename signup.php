@@ -5,10 +5,10 @@ if(!isset($_SESSION['fromValidation'])){
     header("Location: phone.php");
 }
 $action = new Action();
-unset($_SESSION['fromValidation']);
 ?>
 <?
     if(isset($_POST['submit'])){
+        unset($_SESSION['fromValidation']);
         $first_name = $action->request('first_name');
         $last_name = $action->request('last_name');
         $reference_code = $action->request('reference_code');
