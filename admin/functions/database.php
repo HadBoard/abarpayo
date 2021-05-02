@@ -637,7 +637,7 @@ class Action
 
     public function update_shop_score($shop_id){
         $sum = 0;
-        $result = $this->shop_comment_list($shop_id);
+        $result = $this->shop_comment_confirmed_list($shop_id);
         while($row = $result->fetch_object()){
             $sum += $row->score;
         }
@@ -1013,6 +1013,11 @@ class Action
       public function shop_comment_list($shop_id)
       {
         return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = '$shop_id' AND `parent` = 0");
+      }
+
+      public function shop_comment_confirmed_list($shop_id)
+      {
+        return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = '$shop_id' AND `parent` = 0 AND `confirm` = 1");
       }
   
       public function shop_comment_confirm($id)

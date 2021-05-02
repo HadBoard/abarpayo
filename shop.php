@@ -70,7 +70,7 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
                 $pics = $action->shop_pics_get($id);
                 while ($pic = $pics->fetch_object()) {
              ?>
-                <img class="carousel-cell" src="admin/images/shops/<?= $pic->image ?> ">
+                <a class="carousel-cell"><img src="admin/images/shops/<?= $pic->image ?>"></a>
             <?
                 }
             ?>
@@ -304,7 +304,7 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
 
       <!-- comment -->
     <?
-    if($action->auth()){
+    if($action->user()){
     ?>
       <div class="container comment_container">
         <div class="comment_area">
