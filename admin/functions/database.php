@@ -2,6 +2,9 @@
 // ----------- start config methods ------------------------------------------------------------------------------------
 //ini_set('display_errors', 1);
 //ini_set('display_startup_errors', 1);
+
+//use JetBrains\PhpStorm\Internal\ReturnTypeContract;
+
 error_reporting(E_ERROR);
 
 session_start();
@@ -423,6 +426,58 @@ class Action
         return $this->table_counter("tbl_user");
     }
 
+    public function score_log_add($id,$score,$action,$type){
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_score_log`
+        (`user_id`,`score`,`action`,`type`,`created_at`) 
+        VALUES
+        ('$id','$score','$action','$type','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function score_edit($id,$amount,$type){
+        $prev_score = $this->user_get($id)->score;
+        if($type == 1){
+            $score = $prev_score + $amount;
+        }else if($type == 0){
+            $score = $prev_score - $amount;
+        }
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_user` SET 
+        `score` = '$score',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    public function marketer_score_log_add($id,$score,$action,$type){
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_marketer_score_log`
+        (`marketer_id`,`score`,`action`,`type`,`created_at`) 
+        VALUES
+        ('$id','$score','$action','$type','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function marketer_score_edit($id,$amount,$type){
+        $prev_score = $this->marketer_get($id)->score;
+        if($type == 1){
+            $score = $prev_score + $amount;
+        }else if($type == 0){
+            $score = $prev_score - $amount;
+        }
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_marketer` SET 
+        `score` = '$score',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
     public function wallet_withdraw($user_id,$amount){
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_user` SET 
@@ -527,6 +582,8 @@ class Action
         return $this->table_list("tbl_user_cart");
     }
 
+
+
     public function user_get_cart($user_id){
         return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$user_id'");
     }
@@ -581,6 +638,22 @@ class Action
     public function shop_option($id)
     {
         return $this->table_option("tbl_shop", $id);
+    }
+
+    public function update_shop_score($shop_id){
+        $sum = 0;
+        $result = $this->shop_comment_confirmed_list($shop_id);
+        while($row = $result->fetch_object()){
+            $sum += $row->score;
+        }
+        $count = $result->num_rows;
+        $score = $sum/$count;
+        
+        $result = $this->connection->query("UPDATE `tbl_shop` SET 
+       `score` = '$score'
+        WHERE `id` ='$shop_id'");
+        if (!$this->result($result)) return false;
+        return $shop_id;
     }
 
     public function shop_add($category_id,$title,$icon,$phone, $fax, $city_id, $address, $longitude, $latitude, $status)
@@ -946,6 +1019,11 @@ class Action
       {
         return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = '$shop_id' AND `parent` = 0");
       }
+
+      public function shop_comment_confirmed_list($shop_id)
+      {
+        return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = '$shop_id' AND `parent` = 0 AND `confirm` = 1");
+      }
   
       public function shop_comment_confirm($id)
       {
@@ -1232,7 +1310,10 @@ class Action
         return $this->remove_data("tbl_marketer_cart", $id);
     }
 
-
+    public function marketer_carts()
+    {
+        return $this->table_list("tbl_marketer_cart");
+    }
 
 
 //----------------------- TEMP ------------------------------------------------------------------------------------------------------------
@@ -1374,6 +1455,68 @@ class Action
     public function contact_get($id)
     {
         return $this->get_data("tbl_contact", $id);
+    }
+
+    public function iban_validate($code){
+        $shaba=substr($code,2)."1827".$code[0].$code[1];
+        return bcmod($shaba, '97');
+    }
+
+    public function iban_unique($iban,$isUser){
+        if($isUser == 1){
+            $result = $this->cart_list();
+        }else{
+            $result = $this->marketer_carts();
+        }
+        
+        while($row = $result->fetch_object()){
+            if($row->iban == $iban){
+                return false;
+            }
+        }
+       
+        return true;
+    }
+
+    public function account_number_validate($account_number,$isUser){
+
+        if($isUser == 1){
+            $result = $this->cart_list();
+        }else{
+            $result = $this->marketer_carts();
+        }
+        
+        while($row = $result->fetch_object()){
+            if($row->account_number == $account_number){
+                return false;
+            }
+        }
+    
+        return true;
+        
+    }
+
+    public function cart_number_validate($cart_number,$isUser){
+
+        if($isUser == 1){
+            $result = $this->cart_list();
+        }else{
+            $result = $this->marketer_carts();
+        }
+        $result = $this->cart_list();
+        while($row = $result->fetch_object()){
+            if($row->cart_number == $cart_number){
+                return false;
+            }
+        }
+
+        $length = strlen($cart_number);
+
+        if($length != 16){
+            return false;
+        }
+        
+        return true;
     }
 }
 

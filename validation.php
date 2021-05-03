@@ -4,6 +4,8 @@ if(!isset($_SESSION['fromPhone'])){
     header("Location: phone.php");
 }
 $action = new Action();
+$code_correct = $_SESSION['code'];
+$phone = $_SESSION['phone'];
 
 $error = false;
 if (isset($_SESSION['error'])) {
@@ -37,7 +39,6 @@ if (isset($_SESSION['error'])) {
             header("Location: validation.php");
         }
     }
-    $code_correct = $_SESSION['code'];
 ?>
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
@@ -117,8 +118,8 @@ down_expired();
 
 var min,sec;
     function down_expired(){
-        min =0;
-         sec = 5;
+        min = 1;
+        sec = 30;
         document.getElementById('resent_btn').style.display = 'none';
         document.getElementById('resent_code_form').style.display='block';
         var x= setInterval(
@@ -157,6 +158,15 @@ var min,sec;
         
     }
     document.getElementById('resent_btn').onclick = function(){
+        var phone = <?= $phone ?>;
+        var code  = <?= $code_correct ?>;
+        $.ajax({
+            url:"ajax/resend-code.php",
+            method:"post",
+            data:{phone:phone,code:code},
+            success:function(data){
+            }
+        });
         down_expired()
     }
 </script> 

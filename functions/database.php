@@ -340,6 +340,66 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_wallet_log` WHERE `payment_id` = '$payment_id'");
     }
 
+    public function score_log_add($id,$score,$action,$type){
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_score_log`
+        (`user_id`,`score`,`action`,`type`,`created_at`) 
+        VALUES
+        ('$id','$score','$action','$type','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function score_edit($id,$amount,$type){
+        $prev_score = $this->user_get($id)->score;
+        if($type == 1){
+            $score = $prev_score + $amount;
+        }else if($type == 0){
+            $score = $prev_score - $amount;
+        }
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_user` SET 
+        `score` = '$score',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+    
+    public function marketer_score_log_add($id,$score,$action,$type){
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_marketer_score_log`
+        (`marketer_id`,`score`,`action`,`type`,`created_at`) 
+        VALUES
+        ('$id','$score','$action','$type','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function marketer_score_edit($id,$amount,$type){
+        $prev_score = $this->marketer_get($id)->score;
+        if($type == 1){
+            $score = $prev_score + $amount;
+        }else if($type == 0){
+            $score = $prev_score - $amount;
+        }
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_marketer` SET 
+        `score` = '$score',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    public function score_logs_list($id){
+        return $this->connection->query("SELECT * FROM `tbl_score_log` WHERE `user_id` = '$id'");
+    }
+
+    public function marketer_score_logs_list($id){
+        return $this->connection->query("SELECT * FROM `tbl_marketer_score_log` WHERE `marketer_id` = '$id'");
+    }
+
     public function marketer_payment_get_action($payment_id){
         return $this->connection->query("SELECT * FROM `tbl_marketer_wallet_log` WHERE `payment_id` = '$payment_id'");
     }
@@ -684,7 +744,12 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_shop_pics` WHERE `shop_id` = '$shop_id'");
     }
     public function shop_search($title,$cur_index){
-        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `title` like '%".$title."%' ORDER BY id LIMIT $cur_index,8 ");
+        if(isset($_SESSION['default_city'])){
+            $city_id = $_SESSION['default_city'];
+        }else{
+            $city_id = 426;
+        }
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `title` like '%".$title."%' AND `city_id` = '$city_id'  ORDER BY id LIMIT $cur_index,8 ");
     }
 
     public function advance_search($input,$category,$city,$cur_index){
@@ -706,7 +771,6 @@ class Action
         if(isset($_SESSION['default_city'])){
             $city_id = $_SESSION['default_city'];
         }else{
-            // $city_id = $GLOBALS['city'];
             $city_id = 426;
         }
         return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id'AND `city_id` = '$city_id' LIMIT 4 ");
@@ -785,12 +849,12 @@ class Action
     }
 
 
-    public function shop_request_add($category,$name,$owner,$address){
+    public function shop_request_add($id,$category,$name,$owner,$address,$access){
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_shop_request`
-        (`category_id`,`title`,`owner`,`address`,`created_at`,`status`) 
+        (`user_id`,`category_id`,`title`,`owner`,`address`,`access`,`created_at`,`status`) 
         VALUES
-        ('$category','$name','$owner','$address','$now',0)");
+        ('$id','$category','$name','$owner','$address',`$access`,'$now',0)");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
@@ -1044,6 +1108,70 @@ class Action
     if (!$this->result($result)) return false;
     return $this->connection->insert_id;
    }
+
+   //VALIDATE CART-----------------------------------------------------------------------------------------
+   
+   public function iban_validate($code){
+    $shaba=substr($code,2)."1827".$code[0].$code[1];
+    return bcmod($shaba, '97');
+}
+
+public function iban_unique($iban,$isUser){
+    if($isUser == 1){
+        $result = $this->cart_list();
+    }else{
+        $result = $this->marketer_carts();
+    }
+    
+    while($row = $result->fetch_object()){
+        if($row->iban == $iban){
+            return false;
+        }
+    }
+   
+    return true;
+}
+
+public function account_number_validate($account_number,$isUser){
+
+    if($isUser == 1){
+        $result = $this->cart_list();
+    }else{
+        $result = $this->marketer_carts();
+    }
+    
+    while($row = $result->fetch_object()){
+        if($row->account_number == $account_number){
+            return false;
+        }
+    }
+
+    return true;
+    
+}
+
+public function cart_number_validate($cart_number,$isUser){
+
+    if($isUser == 1){
+        $result = $this->cart_list();
+    }else{
+        $result = $this->marketer_carts();
+    }
+    $result = $this->cart_list();
+    while($row = $result->fetch_object()){
+        if($row->cart_number == $cart_number){
+            return false;
+        }
+    }
+
+    $length = strlen($cart_number);
+
+    if($length != 16){
+        return false;
+    }
+    
+    return true;
+}
 
 }
 

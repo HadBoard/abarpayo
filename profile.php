@@ -22,6 +22,13 @@ include_once "header.php";
             </div>
 
             <div class="col-md-8 profile_col">
+
+            <? if($action->marketer() && $action->hasUnpaidPackage($id)){?>
+            <div class="profile-warning">
+            شما یک پکیج در انتظار پرداخت دارید.
+            </div>
+            
+            <?}?>
                 <?
                 if (isset($_GET['address']))
                     include_once "profile-address.php";
@@ -43,6 +50,10 @@ include_once "header.php";
                     include_once "profile-invitation.php";
                 else if(isset($_GET['package']))
                     include_once "package.php";
+                else if(isset($_GET['guilds']))
+                    include_once "profile-guilds.php";
+                else if(isset($_GET['scores']))
+                    include_once "profile-scores.php";
                 else
                    include_once "profile-edit.php";
                 ?>

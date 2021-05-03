@@ -1,13 +1,14 @@
 <?
 require_once "functions/database.php";
+require_once "const-values.php";
 if(!isset($_SESSION['fromValidation'])){
     header("Location: phone.php");
 }
 $action = new Action();
-unset($_SESSION['fromValidation']);
 ?>
 <?
     if(isset($_POST['submit'])){
+        unset($_SESSION['fromValidation']);
         $first_name = $action->request('first_name');
         $last_name = $action->request('last_name');
         $reference_code = $action->request('reference_code');
@@ -15,11 +16,15 @@ unset($_SESSION['fromValidation']);
             $result = $action->user_reference_code($reference_code);
             $reference = $result->fetch_object();
             $reference_id = $reference->id;
+            $action->score_log_add($reference_id,$invitation_score,$invitation_action,1);
+            $action->score_edit($reference_id,$invitation_score,1);
         } 
         $phone = $_SESSION['phone'];
         $platform = 1;
         $command = $action->user_add($first_name,$last_name,$phone,$reference_id,$platform);    
         if($command){
+            $action->score_log_add($command,$register_score,$register_action,1);
+            $action->score_edit($command,$register_score,1);
             unset($_SESSION['phone']);
             $_SESSION['user_id'] = $command;
             header("Location: index.php");
