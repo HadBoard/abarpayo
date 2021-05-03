@@ -3,7 +3,7 @@ require_once "functions/database.php";
 $action = new Action();
 $title = "ابر پایو";
 include_once "header.php";
-    if($_SESSION['successful_pay'] == 'true'){
+    if(isset($_SESSION['successful_pay']) && $_SESSION['successful_pay'] == 'true'){
         ?>
             <div class="modal">
                     <div class="alert alert-suc">
@@ -18,13 +18,13 @@ include_once "header.php";
         unset($_SESSION['successful_pay']);
     }
 
-    if($_SESSION['successful_pay'] == 'false'){
+    if(isset($_SESSION['successful_pay']) && $_SESSION['successful_pay'] == 'false'){
         ?>
             <div class="modal">
-                    <div class="alert alert-suc">
+                    <div class="alert alert-fail">
                         <span class="close_alart">×</span>
                         <p>
-                            پرداخت موفق بود!
+                            پرداخت ناموفق بود!
                         </p>
                     </div>
                 </div>
