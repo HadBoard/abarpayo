@@ -110,7 +110,7 @@ if(isset($_POST['submit'])){
                             </label>
                             <a href="rules.php" id="rule-btn" class="show-rules">قوانین و مقررات</a>
                     </div>
-                        <input name="submit" type="submit" class="main_btn" value="ادامه">
+                        <input id="signup"  name="submit" type="submit" class="main_btn" value="ادامه">
 
                     </form>
                     </div>

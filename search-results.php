@@ -22,9 +22,9 @@ if(isset($_POST['advanced_search'])){
 
 if(isset($_POST['search_button'])){
     $search = $action->request('search');
+    $result = $action->shop_search($search,0);
 }
 $count = $result->num_rows;
-$result = $action->shop_search($search,0);
 
 ?>
  <div class="container">
@@ -120,11 +120,12 @@ $result = $action->shop_search($search,0);
             <?}?>
         </div>
  
+     
         <!-- eof btns -->
         <!--tabs content  -->
     <div  class="tabcontent" style="display: block;">
 <?
-while ($shop = $result->fetch_object()) {
+if ($count) { while ($shop = $result->fetch_object()) {
 ?>
             <div class="index_shop">
                 <div class="index_shop_inner">
@@ -156,7 +157,7 @@ while ($shop = $result->fetch_object()) {
                    </div>
                 </div>
             </div>   
-<? } ?>           
+<? } }?>           
      
     </div>
     <?
@@ -172,7 +173,7 @@ while ($shop = $result->fetch_object()) {
     <?
         }
     ?>
-    <div class="row more-item" style="display: none;">
+        <div class="row more-item" style="display: none;">
             <div class="nomore-item">      
                     
                     <p>مورد دیگری برای نمایش موجود نمی باشد . </p>

@@ -133,11 +133,19 @@ include_once "header.php";
         <?
             $result = $action->category_ordered_list();
             while($row = $result->fetch_object()){
-                $shops = $action->category_shops_list_limited($row->id)
-
+                $shops = $action->category_shops_list_limited($row->id);
+                $count = $shops->num_rows;
         ?>
         <div class="tabcontent">
-            <!--  -->
+               <? if(!$count){ ?>
+
+                <div class="row more-item">
+                    <div class="nomore-item">      
+                            
+                            <p>موردی  برای نمایش موجود نمی باشد . </p>
+                    </div>
+                </div>
+                <?}?>
             <?
             while($shop = $shops->fetch_object()){
             ?>
