@@ -73,7 +73,7 @@ if(isset($_POST['submit'])){
                     <a href="index.php">
                     <img src="assets/images/logo.png">
                     </a>
-                        <h4>ثبت نام / ورود </h4>
+                        <h4>ثبت نام / ورود بازارسازان </h4>
                     </div>
 
                     <form action="" method="post">
@@ -83,14 +83,13 @@ if(isset($_POST['submit'])){
                         </div>
                         <input name="submit" type="submit" class="main_btn" value="ادامه">
                     </form>
-                    <a class="form_ques">در ابرپایو <span>عضو</span> نیستید ؟</a>
 
                 </div>
                 <div class="col-md-7 left-form">
                     <img src="assets/images/Group 380@2x.png">
                 </div>
             </div>
-            <p>با ورود یا ثبت نام در ابرپایو <a>شرایط و قوانین </a> را میپذیرید.</p>
+            <p>با ورود یا ثبت نام در ابرپایو <a href="rules.php">شرایط و قوانین </a> را میپذیرید.</p>
         </div>
     </div>
 </div>
