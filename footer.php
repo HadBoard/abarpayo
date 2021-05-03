@@ -84,16 +84,16 @@
                         <ul>
                             <h4>ابرپایو</h4>
                             <li>
-                                <a>درباره ابرپایو</a>
+                                <a href="contact-us.php">تماس با ما</a>
                             </li>
                             <li>
-                                <a>قوانین و مقررات</a>
+                                <a href="rules.php">قوانین و مقررات</a>
                             </li>
                             <li>
-                                <a>حریم خصوصی</a>
+                                <a href="question.php">پرسش های متدوال</a>
                             </li>
                             <li>
-                                <a>ژتون در رسانه</a>
+                                <a href="ticket.php">پشتیبانی</a>
                             </li>
                         </ul>
                     </div>
