@@ -6,6 +6,13 @@
         $icon = $action->marketer_get($id)->profile;
     }
 
+$error = false;
+if (isset($_SESSION['error'])) {
+    $error = true;
+    $error_val = $_SESSION['error'];
+    unset($_SESSION['error']);
+}
+
     $icon = ($icon ? $icon : "");  
     if(isset($_POST['submit'])){
         $phone = $action->request('phone');
@@ -39,10 +46,32 @@
         }else if($action->marketer()){
             $command= $action->marketer_profile_edit($id,$first_name, $last_name,$national_code,$birthday,$icon);
         }
-       
-        if($command){
-            ?>
-            <div class="modal">
+
+        if ($command) {
+            $_SESSION['error'] = 0;
+        } else {
+            $_SESSION['error'] = 1;
+        }
+
+        echo '<script>window.location="?edit"</script>';
+    }
+?>
+
+<? if ($error) {
+            if ($error_val) { ?>
+
+                 <div class="modal">
+                    <div class="alert alert-fail">
+                        <span class="close_alart">×</span>
+                        <p>
+                            عملیات ناموفق بود!
+                        </p>
+                    </div>
+                </div>
+                <script src="assets/js/alert.js"></script>
+                
+            <? } else { ?>
+                <div class="modal">
                     <div class="alert alert-suc">
                         <span class="close_alart">×</span>
                         <p>
@@ -50,12 +79,10 @@
                         </p>
                     </div>
                 </div>
-            <script src="assets/js/alert.js"></script>
-            <?   
-            // echo "<script>location.href='?edit'</script>";
-        }
-    }
-?>
+                <script src="assets/js/alert.js"></script>
+                
+            <? }
+} ?>
 
 
 <div class="edit_profile_div">

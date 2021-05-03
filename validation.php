@@ -1,9 +1,14 @@
 <?
 require_once "functions/database.php";
+$action = new Action();
+
 if(!isset($_SESSION['fromPhone'])){
     header("Location: phone.php");
 }
-$action = new Action();
+if($action->auth()){
+    header('Location: index.php');
+}
+
 $code_correct = $_SESSION['code'];
 $phone = $_SESSION['phone'];
 
@@ -18,7 +23,7 @@ if (isset($_SESSION['error'])) {
 <?
     if(isset($_POST['submit'])){
         $code = $action->request('code');
-        $result = $action->validate_code($code);
+        $result = $action->validate_code($phone,$code);
         $validated_code = $result->fetch_object();
         if($validated_code){
             unset($_SESSION['code']);
@@ -65,6 +70,7 @@ if (isset($_SESSION['error'])) {
         <div class="center_form">
                <div class="backlink">
                     <a href="phone.php" class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
+                    <p>اصلاح شماره تماس </p>
                 </div>
             <div class="row">
                 <div class="col-md-5 right-form mobile_validiation">

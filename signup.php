@@ -1,10 +1,15 @@
 <?
 require_once "functions/database.php";
 require_once "const-values.php";
+$action = new Action();
+
 if(!isset($_SESSION['fromValidation'])){
     header("Location: phone.php");
 }
-$action = new Action();
+
+if($action->auth()){
+    header('Location: index.php');
+}
 
 if(isset($_POST['submit'])){
     unset($_SESSION['fromValidation']);

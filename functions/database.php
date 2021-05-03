@@ -697,22 +697,22 @@ class Action
 
     // ----------- end USERS ------------------------------------------------------------------------------------------
      // ----------- start VALIDATION_CODE ------------------------------------------------------------------------------------------
-     public function validation_code_add($user_id, $code)
+     public function validation_code_add($user_id,$phone, $code)
      {
          $now = time();
          $result = $this->connection->query("INSERT INTO `tbl_validation_code`
-         (`user_id`,`code`,`created_at`) 
+         (`user_id`,`phone`,`code`,`created_at`) 
          VALUES
-         ('$user_id','$code','$now')");
+         ('$user_id','$phone','$code','$now')");
          if (!$this->result($result)) return false;
          return $this->connection->insert_id;
      }
  
-     public function validate_code($code){
+     public function validate_code($phone,$code){
          $dt = new DateTime("-3 minutes");
          $dt = $dt->format("Y-m-d h:i:s"); 
          $dt = strtotime($dt);
-         return $this->connection->query("SELECT * FROM `tbl_validation_code` WHERE `code` = '$code' AND
+         return $this->connection->query("SELECT * FROM `tbl_validation_code` WHERE `code` = '$code' AND `phone` = '$phone' AND
             `created_at`> '$dt' ");
      }
 
