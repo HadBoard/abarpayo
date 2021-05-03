@@ -871,7 +871,7 @@ class Action
 
     public function slider_list()
     {
-        return $this->table_list("tbl_slider");
+        return $this->connection->query("SELECT * FROM `tbl_slider` WHERE `status` = 1 ");
     }
     // ----------- end SLIDER ------------------------------------------------------------------------------------------
  

@@ -19,6 +19,8 @@ $result = $action->slider_list();
 // ----------- delete --------------------------------------------------------------------------------------------------
 if (isset($_GET['remove'])) {
     $id = $action->request('remove');
+    $image = $action -> slider_get($id)->image;
+    unlink("images/sliders/$image");
     $_SESSION['error'] = !$action->slider_remove($id);
     header("Location: $list_url");
     return;
