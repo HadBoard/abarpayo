@@ -542,8 +542,22 @@ label.form-check-label {
     float: right;
     margin-left: 10px;
 }
+
+
 .backlink a {
   width: 28px;
   text-align: center;
+  float: right;
+}
+
+.backlink p {
+  float: right;
+  margin: 0;
+  text-align: right;
+  margin-right: 22px;
+}
+.backlink {
+  width: 100%;
+  display: table;
   margin: -20px;
 }
