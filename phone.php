@@ -74,7 +74,7 @@ if(isset($_POST['submit'])){
                     <a href="index.php">
                     <img src="assets/images/logo.png">
                     </a>
-                        <h4>ثبت نام / ورود </h4>
+                        <h4>ثبت نام / ورود کاربران </h4>
                     </div>
 
                     <form action="" method="post">
@@ -84,8 +84,6 @@ if(isset($_POST['submit'])){
                         </div>
                         <input name="submit" type="submit" class="main_btn" value="ادامه">
                     </form>
-                    <a class="form_ques">در ابرپایو <span>عضو</span> نیستید ؟</a>
-
                 </div>
                 <div class="col-md-7 left-form">
                     <img src="assets/images/Group 380@2x.png">
