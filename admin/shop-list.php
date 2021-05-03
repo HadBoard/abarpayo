@@ -19,6 +19,8 @@ $result = $action->shop_list();
 // ----------- delete --------------------------------------------------------------------------------------------------
 if (isset($_GET['remove'])) {
     $id = $action->request('remove');
+    $image = $action -> shop_get($id)->image;
+    unlink("images/shops/$image");
     $_SESSION['error'] = !$action->shop_remove($id);
     header("Location: $list_url");
     return;

@@ -104,8 +104,8 @@
                             <a class="main_btn">
                                 <p>شماره تماس : </p>
                                 <span>
-                                            035 - 8256589
-                                        </span>
+                                    <?= $action->get_system('phone') ?>
+                                </span>
                             </a>
                         </div>
                         <div class="row">

@@ -1,10 +1,15 @@
 <?
 require_once "functions/database.php";
 require_once "const-values.php";
+$action = new Action();
+
 if(!isset($_SESSION['fromValidation'])){
     header("Location: phone.php");
 }
-$action = new Action();
+
+if($action->auth()){
+    header('Location: index.php');
+}
 
 if(isset($_POST['submit'])){
     unset($_SESSION['fromValidation']);
@@ -105,7 +110,7 @@ if(isset($_POST['submit'])){
                             </label>
                             <a href="rules.php" id="rule-btn" class="show-rules">قوانین و مقررات</a>
                     </div>
-                        <input name="submit" type="submit" class="main_btn" value="ادامه">
+                        <input id="signup"  name="submit" type="submit" class="main_btn" value="ادامه">
 
                     </form>
                     </div>

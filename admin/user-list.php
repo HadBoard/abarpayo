@@ -19,6 +19,8 @@ $result = $action->user_list();
 // ----------- delete --------------------------------------------------------------------------------------------------
 if (isset($_GET['remove'])) {
     $id = $action->request('remove');
+    $image = $action -> user_get($id)->profile;
+    unlink("users/$image");
     $_SESSION['error'] = !$action->user_remove($id);
     header("Location: $list_url");
     return;

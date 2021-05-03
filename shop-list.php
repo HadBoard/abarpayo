@@ -23,7 +23,17 @@ if(isset($_GET['category'])){
     <div class="tab_index" style="border-bottom:none;">
     <?
         $shops = $action->category_shops_list_limited($id);
+        $counter = $shops -> num_rows;
     ?>
+    <? if(!$counter){ ?>
+
+<div class="row more-item">
+    <div class="nomore-item">      
+            
+            <p>موردی  برای نمایش موجود نمی باشد . </p>
+    </div>
+</div>
+<?}?>
         <div  class="tabcontent">
         <?
             while($shop = $shops->fetch_object()){

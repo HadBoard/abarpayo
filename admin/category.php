@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
     $icon = ($edit ? $row->icon : "");
     
     if($_FILES["icon"]["name"]){
-
+        unlink("images/categoryIcons/$icon");
         $target_dir = "images/categoryIcons/";
         $target_file = $target_dir . basename($_FILES["icon"]["name"]);
 

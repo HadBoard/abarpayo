@@ -15,7 +15,7 @@ if(isset($_POST['function'])) {
         $user = $result->fetch_object();
         $user_id = $user ? $user->id : 0;
         //$action->send_sms($phone,$code);
-        $command = $action->validation_code_add($user_id,$code);
+        $command = $action->validation_code_add($user_id,$phone,$code);
         if($command){
             $obj->result = $code;
         }
@@ -28,7 +28,7 @@ if(isset($_POST['function'])) {
         $obj -> result = 0;
         $phone = $action->request('phone');
         $code = $action->request('code');
-        $result = $action->validate_code($code);
+        $result = $action->validate_code($phone,$code);
         $validated_code = $result->fetch_object();
         if($validated_code){
             if($validated_code->user_id == 0){

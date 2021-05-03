@@ -19,6 +19,8 @@ $result = $action->category_list();
 // ----------- delete --------------------------------------------------------------------------------------------------
 if (isset($_GET['remove'])) {
     $id = $action->request('remove');
+    $image = $action -> category_get($id)->icon;
+    unlink("images/categoryIcons/$image");
     $_SESSION['error'] = !$action->category_remove($id);
     header("Location: $list_url");
     return;

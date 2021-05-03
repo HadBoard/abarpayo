@@ -1,10 +1,15 @@
 <?
 require_once "functions/database.php";
 require_once "const-values.php";
+$action = new Action();
+
 if(!isset($_SESSION['MfromValidation'])){
     header("Location: marketer-phone.php");
 }
-$action = new Action();
+
+if($action->auth()){
+    header('Location: index.php');
+}
 $title = "ثبت نام";
 ?>
 
@@ -121,7 +126,7 @@ $title = "ثبت نام";
                                     <option value=2>نقدی</option>
                                 </select>
                             </div>
-                            <input name="submit" type="submit" class="main_btn" value="ثبت خرید">
+                            <input id="signup"  name="submit" type="submit" class="main_btn" value="ثبت خرید">
                             
                         </form>
                     </div>
