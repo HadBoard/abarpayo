@@ -2,6 +2,10 @@
 require_once "functions/database.php";
 $action = new Action();
 
+if($action->auth()){
+    header('Location: index.php');
+}
+
 if(isset($_GET['ref'])){
 
     $invitation_code = $action->request('ref');
@@ -68,6 +72,9 @@ if(isset($_POST['submit'])){
 <div class="background_page">
     <div class="container">
         <div class="center_form">
+        <div class="backlink">
+           <a href="index.php"class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
+        </div>
             <div class="row">
                 <div class="col-md-5 right-form mobile_validiation">
                     <div class="form_top">

@@ -2,6 +2,11 @@
 require_once "functions/database.php";
 $action = new Action();
 
+if($action->auth()){
+    header('Location: index.php');
+}
+
+
 if(isset($_GET['ref'])){
 
     $invitation_code = $action->request('ref');

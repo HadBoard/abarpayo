@@ -1,9 +1,14 @@
 <?
 require_once "functions/database.php";
+$action = new Action();
+
 if(!isset($_SESSION['fromPhone'])){
     header("Location: phone.php");
 }
-$action = new Action();
+if($action->auth()){
+    header('Location: index.php');
+}
+
 $code_correct = $_SESSION['code'];
 $phone = $_SESSION['phone'];
 
