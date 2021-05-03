@@ -36,32 +36,6 @@ $action = new Action();
 
 <!-- header -->
 <header>
-    <div class="info_header">
-        <div class="container">
-            <div class='row'>
-
-                <div class="col-2">
-                    <span class="material-icons">
-                        email
-                    </span>
-                    <a href="mailto:support@lmsins.ir">
-                        <p> zhetoon@gmail.com </p>
-                    </a>
-                </div>
-
-                <div class="col-2">
-                    <span class="material-icons">
-                        call
-                        </span>
-                    <a href="tel:+98-5832226125">
-                        <p>+98-9135244859</p>
-                    </a>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
     <!-- eof info header -->
     <div class="container main_header">
         <div class="row main_header_top">
@@ -148,7 +122,7 @@ $action = new Action();
                             <span class="material-icons">
                                 menu
                             </span>
-                        <a class="category_btn" href="#">دسته بندی</a>
+                        <a class="category_btn">دسته بندی</a>
                         <div class="submenu">
                             <?
                                 $result = $action->category_ordered_list();
@@ -180,7 +154,7 @@ $action = new Action();
                         <a href="contact-us.php">تماس با ما</a>
                     </li>
                     <li>
-                        <a href="marketer-phone.php">بازار ساز</a>
+                        <a href="marketer-phone.php">بازار سازان</a>
                     </li>
                     
                 </ul>

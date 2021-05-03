@@ -55,7 +55,7 @@
                             <h3>لینک دعوت</h3>
                         </div>
                         <div class="flip-card-back">
-                            <h3><?= 'http://abarpayo.com/site/phone.php?ref='.$invitation_code ?></h3>
+                            <h3><?= 'http://abarpayo.com/abarpayo/phone.php?ref='.$invitation_code ?></h3>
                             <div class="row">
                                 <div class="col-3"><a><img src="assets/images/icons8-copy-64.png"></a></div>
                             </div>
