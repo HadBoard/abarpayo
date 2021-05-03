@@ -136,25 +136,27 @@ margin-top: -68px;" >
 </div>
 </div>
 <script>
-// $('#form').submit(function (e) {
+$('#form').submit(function (e) {
 //   e.preventDefault();
-//   var account_number = $("#account_number").val();
-//   var cart_number = $("#cart_number").val();
-//   var iban = $("#iban").val();
+  var account_number = $("#account_number").val();
+  var cart_number = $("#cart_number").val();
+  var iban = $("#iban").val();
 
-//   $.ajax({
-//     type: 'POST',
-//     url: 'ajax/validation.php',
-//     data: {iban:iban,account_number:account_number,cart_number:cart_number},
-//     success: function (response) {
-//         if(response == 1){
-//             alert(1);
-//             // $('#form').submit();
-//         }else{
-//             alert(-1);
-//             // $('#answers').html(response);
-//         }
-//     },
-//   });
-// });
+  $.ajax({
+    type: 'POST',
+    url: 'ajax/validation.php',
+    data: {iban:iban,account_number:account_number,cart_number:cart_number},
+    success: function (response) {
+        if(response == 1){
+            alert(1);
+            // $('#form').submit();
+        }else{
+            // alert(-1);
+            e.preventDefault();
+            // alert(-1);
+            // $('#answers').html(response);
+        }
+    },
+  });
+});
 </script>

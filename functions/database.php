@@ -546,13 +546,13 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function marketer_cart_add($id,$bank_id,$name,$cart_number,$account_number,$iban,$validation)
-    {
+    public function marketer_cart_add($id,$bank_id,$title,$cart_number,$account_number,$iban,$validation)
+    { 
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_marketer_cart`
         (`marketer_id`,`bank_id`,`title`,`cart_number`,`account_number`,`iban`,`validation`,`created_at`) 
         VALUES
-        ('$id','$bank_id','$name','$cart_number','$account_number','$iban','$validation','$now')");
+        ('$id','$bank_id','$title','$cart_number','$account_number','$iban','$validation','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
@@ -851,10 +851,11 @@ class Action
 
     public function shop_request_add($id,$category,$name,$owner,$address,$access){
         $now = time();
+        $status = 0;
         $result = $this->connection->query("INSERT INTO `tbl_shop_request`
         (`user_id`,`category_id`,`title`,`owner`,`address`,`access`,`created_at`,`status`) 
         VALUES
-        ('$id','$category','$name','$owner','$address',`$access`,'$now',0)");
+        ('$id','$category','$name','$owner','$address','$access','$now','$status')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }

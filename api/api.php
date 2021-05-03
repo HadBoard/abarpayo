@@ -106,9 +106,19 @@ if(isset($_POST['function'])) {
         $obj = null;
         $obj -> shops = [];
         $shops=[];
-        $category_id = $action->request('category_id');
+        $category = $action->request('category_id');
         $count = $action->request('count');
-        $result = $action->app_lazyLoad($category_id,$count);
+        $city = $action->request('cId');
+        $search = $action->request('text');
+        if(!$city){
+            $result = $action->advance_search_not_city($search,$category,$count);
+        }else if(!$category){
+            $result = $action->advance_search_not_category($search,$city,$count);
+        }else if(!$search){
+            $result = $action->advance_search_not_input($city,$category,$count);
+        }else{
+            $result = $action->advance_search($search,$category,$city,$count);
+        }
         while ($shop = $result->fetch_object()) {
             $obj_inner -> s_id = $shop -> id;
             $obj_inner -> name = $shop -> title;
@@ -386,6 +396,21 @@ if(isset($_POST['function'])) {
             array_push($pics,"http://abarpayo.com/site/admin/images/shops/$pic->image");
         }
         $obj -> $pics = $pics;
+        $json = json_encode($obj);
+        echo $json; 
+    }
+
+    if($_POST['function'] == 'guilds'){
+        $obj -> result = 0; 
+        $user_id = $action->request('user_id');
+        $name = $action->request('name');
+        $owner = $action->request('owner');
+        $category_id = $action->request('category_id');
+        $address = $action->request('address');
+        $command = $action->shop_request_add($user_id,$category_id,$name,$owner,$address,0);
+        if($command){
+            $obj->result = 1;
+        }
         $json = json_encode($obj);
         echo $json; 
     }
