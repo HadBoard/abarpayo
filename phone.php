@@ -28,7 +28,7 @@ if(isset($_POST['submit'])){
     $result = $action->user_get_phone($phone);
     $user = $result->fetch_object();
     $user_id = $user ? $user->id : 0;
-    $action->validation_code_add($user_id,$code);
+    $action->validation_code_add($user_id,$phone,$code);
     header("Location: validation.php");
 }
    
@@ -74,6 +74,7 @@ if(isset($_POST['submit'])){
         <div class="center_form">
         <div class="backlink">
            <a href="index.php"class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
+           <p>بازگشت به صفحه اصلی</p>
         </div>
             <div class="row">
                 <div class="col-md-5 right-form mobile_validiation">
