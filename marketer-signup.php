@@ -62,7 +62,7 @@ $title = "ثبت نام";
     <link rel="stylesheet" href="assets/css/fontAswome.css">
     <link rel="stylesheet" href="assets/css/bootstrap-grid.css">
     <script src='assets/js/swiper.js'></script>
-    <script src='../assets/js/jquery.js'></script>
+    <script src='assets/js/jquery.js'></script>
     <script src='assets/js/fontAwsome.js'></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> 
 </head>

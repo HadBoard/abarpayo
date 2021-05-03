@@ -17,7 +17,7 @@ if(isset($_GET['ref'])){
 if(isset($_POST['submit'])){
     $phone = $action->request('phone');
     $code=rand(100000,999999);
-    // $action->send_sms($phone,$code);
+    $action->send_sms($phone,$code);
     $_SESSION['code'] = $code;
     $_SESSION['phone'] = $phone;
     $_SESSION['fromPhone'] = 'true';

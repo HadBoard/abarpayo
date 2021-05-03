@@ -63,6 +63,9 @@ if (isset($_SESSION['error'])) {
 <div class="background_page">
     <div class="container">
         <div class="center_form">
+               <div class="backlink">
+                    <a href="phone.php" class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
+                </div>
             <div class="row">
                 <div class="col-md-5 right-form mobile_validiation">
                 <? if ($error) {

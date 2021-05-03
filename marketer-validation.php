@@ -52,7 +52,7 @@ if (isset($_SESSION['error'])) {
     <link rel="stylesheet" href="assets/css/fontAswome.css">
     <link rel="stylesheet" href="assets/css/bootstrap-grid.css">
     <script src='assets/js/swiper.js'></script>
-    <script src='../assets/js/jquery.js'></script>
+    <script src='assets/js/jquery.js'></script>
     <script src='assets/js/fontAwsome.js'></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
@@ -61,6 +61,9 @@ if (isset($_SESSION['error'])) {
 <div class="background_page">
     <div class="container">
         <div class="center_form">
+               <div class="backlink">
+                    <a href="marketer-phone.php"class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
+                </div>
             <div class="row">
                 <div class="col-md-5 right-form mobile_validiation">
                     <div class="form_top">
