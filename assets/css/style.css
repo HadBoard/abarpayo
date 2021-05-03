@@ -541,13 +541,3 @@ label.form-check-label {
     float: right;
     margin-left: 10px;
 }
-
-.backlink {
-  width: 100%;
-  display: table;
-  margin: -23px;
-}
-.backlink a {
-  width: 29px;
-  text-align: center;
-}
