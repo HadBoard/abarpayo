@@ -1,8 +1,4 @@
-<body>
-<!-- header -->
-<? include('header.php') ?>
-<!-- eof header -->
-<!-- main content -->
+<?include_once "header.php";?> 
 <div class="contact">
     <div class="contact-img"></div>
     <div class="contact-content">
@@ -16,42 +12,48 @@
         <div class="contact-middle">
             <div class="row profile_title">
                 <a class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
-
+            
                 <h3 style="width: 50%;float: right;">قوانین و مقررات</h3>
 
             </div>
             <!--  -->
             <!--  -->
             <div class="row">
-                <div class="rules-p">
+               <div class="rules-p">
+                   <p><?= $action->get_system('rules') ?></p>
+                <!-- <p>
+                     ماده 1- عضويت در سايت
+                    افراد براي عضويت در سايت ژتون و خريد از آن بايد در هنگام خريد يا در حالت عادي به قسمت عضويت مراجعه
+                    کنند. در اين مرحله با وارد کردن اطلاعات لازم مانند نام و نام خانوادگي، رمز عبور و آدرس پست
+                   .الکترونيکي،ميتوانند در سايت عضو شوند
+                </p>
+                <p>
+                    ماده 1- عضويت در سايت
+                   افراد براي عضويت در سايت ژتون و خريد از آن بايد در هنگام خريد يا در حالت عادي به قسمت عضويت مراجعه
+                   کنند. در اين مرحله با وارد کردن اطلاعات لازم مانند نام و نام خانوادگي، رمز عبور و آدرس پست
+                  .الکترونيکي،ميتوانند در سايت عضو شوند
+               </p> -->
+               <!-- <p>
+                ماده 1- عضويت در سايت
+               افراد براي عضويت در سايت ژتون و خريد از آن بايد در هنگام خريد يا در حالت عادي به قسمت عضويت مراجعه
+               کنند. در اين مرحله با وارد کردن اطلاعات لازم مانند نام و نام خانوادگي، رمز عبور و آدرس پست
+              .الکترونيکي،ميتوانند در سايت عضو شوند
+              </p>
+                   <p>
+                        .تبصره 1- تنها اشخاص حقيقي حق عضويت در سايت را دارند
+                            تبصره 2- صرف عضويت در سايت دليل بر قبول و پذيرش مفاد موافقتنامه بوده و خلاف آن به به هيچ وجه
+                        .پذيرفته نيست
+                    </p>
+                
+                   <p>
+                    تبصره1: کاربر عضو، پس از عضويت و اخذ رمز و کلمه عبور، حق خريد از سايت را دارد
 
-                    <p><?= $action->get_system('rules'); ?></p>
-                </div>
+                   </p> -->
+                  
+               </div>
             </div>
-           
+        
         </div>
     </div>
 </div>
-
-<script>
-    function checkRule() {
-        document.getElementById("signup").disabled = true;
-        var checkBox = document.getElementById("flexCheckDefault");
-        if (checkBox.checked == true) {
-            document.getElementById("signup").disabled = false;
-        } else {
-            document.getElementById("signup").disabled = true;
-        }
-    }
-
-    checkRule()
-
-    document.querySelector('.close-modal').onclick = function () {
-        $('.modal2').hide();
-    }
-</script>
-<!-- footer -->
-<? include('footer.php') ?>
-
-</body>
-</html>
+<?include_once "footer.php";?> 

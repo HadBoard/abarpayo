@@ -14,7 +14,7 @@ if(isset($_POST['function'])) {
         $result = $action->user_get_phone($phone);
         $user = $result->fetch_object();
         $user_id = $user ? $user->id : 0;
-        //$action->send_sms($phone,$code);
+        $action->send_sms($phone,$code);
         $command = $action->validation_code_add($user_id,$phone,$code);
         if($command){
             $obj->result = $code;
@@ -74,8 +74,8 @@ if(isset($_POST['function'])) {
         $sliders = [];
         $result = $action->slider_list();
         while ($row = $result->fetch_object()) {
-            $obj_in -> sendLink = "http://abarpayo.com/site/$row->link";
-            $obj_in -> link = "http://abarpayo.com/site/admin/images/sliders/$row->image";
+            $obj_in -> sendLink = "http://abarpayo.com/abarpayo/$row->link";
+            $obj_in -> link = "http://abarpayo.com/abarpayo/admin/images/sliders/$row->image";
             $sliders[] = $obj_in;
             $obj_in = null;
         }
@@ -92,7 +92,7 @@ if(isset($_POST['function'])) {
         while ($category = $categories_list->fetch_object()) {
             $obj_in -> c_id = $category->id;
             $obj_in -> c_text = $category->title;
-            $obj_in -> c_image = "http://abarpayo.com/site/admin/images/categoryIcons/$category->icon";
+            $obj_in -> c_image = "http://abarpayo.com/abarpayo/admin/images/categoryIcons/$category->icon";
             $categories[] = $obj_in;
             $obj_in = null;
         }
@@ -122,7 +122,7 @@ if(isset($_POST['function'])) {
         while ($shop = $result->fetch_object()) {
             $obj_inner -> s_id = $shop -> id;
             $obj_inner -> name = $shop -> title;
-            $obj_inner -> img = "http://abarpayo.com/site/admin/images/shops/$shop->image";
+            $obj_inner -> img = "http://abarpayo.com/abarpayo/admin/images/shops/$shop->image";
             $obj_inner -> address = $shop -> address;
             $obj_inner -> off = "off";
             $obj_inner -> rate = "rate";
@@ -222,7 +222,7 @@ if(isset($_POST['function'])) {
 
         $withdraws = $action->app_get_requests($user_id);
         while($withdraw = $withdraws->fetch_object()){
-            //$obj_in -> wallet_date = $withdraw->paymented_at;
+            $obj_in -> wallet_date = $action->time_to_shamsi($withdraw->created_at);
             $obj_in -> amount = $withdraw->amount;
             $obj_in -> type = 0;
             $arr[] = $obj_in;
@@ -230,7 +230,7 @@ if(isset($_POST['function'])) {
         }
         $logs = $action->wallet_log_increase($user_id);
         while($log = $logs->fetch_object()){
-            //$obj_inner -> wallet_date = $action->wallet_log_get_payment($log->payment_id)->date;
+            $obj_inner -> wallet_date = $action->wallet_log_get_payment($log->payment_id)->date;
             $obj_inner -> amount = $log->amount;
             $obj_inner -> type = 1;
             $arr[] = $obj_inner;
@@ -269,7 +269,7 @@ if(isset($_POST['function'])) {
             $payment = $payments->fetch_object();
             $obj_in -> cost = $transaction->amount;
             $obj_in -> action = $payment->action;
-            //$obj_in -> pay_date = $action->time_to_shamsi($transaction->date);
+            $obj_in -> pay_date = $action->time_to_shamsi($transaction->date);
             $obj_in -> type = 1;
             $out[] = $obj_in;
             $obj_in = null;
@@ -278,7 +278,7 @@ if(isset($_POST['function'])) {
         $withdraws = $action->app_get_requests($user_id);
         while($withdraw = $withdraws->fetch_object()){
             $obj_in -> cost = $withdraw->amount;
-            //$obj_in -> pay_date  = $action->time_to_shamsi($withdraw->created_at);
+            $obj_in -> pay_date  = $action->time_to_shamsi($withdraw->created_at);
             $obj_in -> action = "برداشت از کیف پول";
             $obj_in -> type = 0;
             $out[] = $obj_in;
@@ -389,11 +389,11 @@ if(isset($_POST['function'])) {
         $obj -> phone = $action->shop_get($id)->phone;
         $obj -> longitude =  (double)$action->shop_get($id)->longitude;
         $obj -> latitude =  (double)$action->shop_get($id)->latitude;
-        $obj -> image = "http://abarpayo.com/site/admin/images/shops/$image";
+        $obj -> image = "http://abarpayo.com/abarpayo/admin/images/shops/$image";
         $pics = array();
         $shop_pics  = $action->shop_pics_get($id);
         while($pic = $shop_pics->fetch_object()){
-            array_push($pics,"http://abarpayo.com/site/admin/images/shops/$pic->image");
+            array_push($pics,"http://abarpayo.com/abarpayo/admin/images/shops/$pic->image");
         }
         $obj -> $pics = $pics;
         $json = json_encode($obj);

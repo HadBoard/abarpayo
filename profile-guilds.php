@@ -1,6 +1,14 @@
 <?
     require_once "functions/database.php";
     $action = new Action();
+
+    $error = false;
+if (isset($_SESSION['error'])) {
+    $error = true;
+    $error_val = $_SESSION['error'];
+    unset($_SESSION['error']);
+}
+
     if(isset($_POST['submit'])){
         $name  = $action->request('name');
         $owner = $action->request('owner');
@@ -13,21 +21,42 @@
             $access = 1;
         }
         $command = $action->shop_request_add($id,$category,$name,$owner,$address,$access);
-        if($command){
-            ?> 
-            <div class="modal">
-                <div class="alert alert-suc">
-                    <span class="close_alart">×</span>
-                    <p>
-                        ثبت درخواست موفق بود!
-                    </p>
-                </div>
-            </div>
-            <script src="assets/js/alert.js"></script>
-        <? 
+        if ($command) {
+            $_SESSION['error'] = 0;
+        } else {
+            $_SESSION['error'] = 1;
         }
+
+        echo '<script>window.location="?guilds"</script>';
     }
 ?>
+<? if ($error) {
+            if ($error_val) { ?>
+
+                 <div class="modal">
+                    <div class="alert alert-fail">
+                        <span class="close_alart">×</span>
+                        <p>
+                            عملیات ناموفق بود!
+                        </p>
+                    </div>
+                </div>
+                <script src="assets/js/alert.js"></script>
+                
+            <? } else { ?>
+                <div class="modal">
+                    <div class="alert alert-suc">
+                        <span class="close_alart">×</span>
+                        <p>
+                            عملیات موفق بود!
+                        </p>
+                    </div>
+                </div>
+                <script src="assets/js/alert.js"></script>
+                
+            <? }
+} ?>
+
 
 <div class="edit_profile_div">
 

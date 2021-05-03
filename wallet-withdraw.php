@@ -12,17 +12,8 @@
         $amount = $action->request('amount');
         $cart = $action->request('cart');
         if($amount > $wallet){
-            ?>
-            <div class="modal">
-                    <div class="alert alert-fail">
-                        <span class="close_alart">×</span>
-                        <p>
-                            مبلغ درخواست شده بیشتر از موجودی کیف پول شما است!
-                        </p>
-                    </div>
-                </div>
-                <script src="assets/js/alert.js"></script>
-            <?
+            $_SESSION['error'] = 1;
+            echo '<script>window.location="?wallet-withdarw"</script>';
         }else{
 
             if($action -> user()){
@@ -31,23 +22,43 @@
                 $command  = $action->marketer_request_add($id,$cart,$amount);
             }
             
-            if($command){
-                ?> 
-                <div class="modal">
-                    <div class="alert alert-suc">
-                        <span class="close_alart">×</span>
-                        <p>
-                            درخواست برداشت از کیف پول با موفقیت ثبت شد!
-                        </p>
-                    </div>
-                </div>
-                <script src="assets/js/alert.js"></script>
-                <?
+            if ($command) {
+                $_SESSION['error'] = 0;
+            } else {
+                $_SESSION['error'] = 1;
             }
+    
+            echo '<script>window.location="?wallet-withdarw"</script>';
         }
     }
 ?>
-          
+<? if ($error) {
+if ($error_val) { ?>
+
+        <div class="modal">
+        <div class="alert alert-fail">
+            <span class="close_alart">×</span>
+            <p>
+                عملیات ناموفق بود!
+            </p>
+        </div>
+    </div>
+    <script src="assets/js/alert.js"></script>
+    
+<? } else { ?>
+    <div class="modal">
+        <div class="alert alert-suc">
+            <span class="close_alart">×</span>
+            <p>
+                عملیات موفق بود!
+            </p>
+        </div>
+    </div>
+    <script src="assets/js/alert.js"></script>
+    
+<? }
+} ?>
+        
 <div class="edit_profile_div">
 
     <div class="profile_header">

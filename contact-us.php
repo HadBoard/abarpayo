@@ -2,6 +2,14 @@
 require_once "functions/database.php";
 $action = new Action();
 $title = "تماس با ما";
+
+$error = false;
+if (isset($_SESSION['error'])) {
+    $error = true;
+    $error_val = $_SESSION['error'];
+    unset($_SESSION['error']);
+}
+
 if(isset($_POST['submit'])){
     $name  = $action->request('name');
     $phone = $action->request('phone');
@@ -10,9 +18,31 @@ if(isset($_POST['submit'])){
 
     $command  = $action->contact_add($name,$phone,$title,$description);
 
-    if($command){
-        ?>
+    if ($command) {
+        $_SESSION['error'] = 0;
+    } else {
+        $_SESSION['error'] = 1;
+    }
+
+    echo '<script>window.location="contact-us.php"</script>';
+}
+include_once "header.php";
+?>
+<? if ($error) {
+if ($error_val) { ?>
+
         <div class="modal">
+        <div class="alert alert-fail">
+            <span class="close_alart">×</span>
+            <p>
+                عملیات ناموفق بود!
+            </p>
+        </div>
+    </div>
+    <script src="assets/js/alert.js"></script>
+    
+<? } else { ?>
+    <div class="modal">
         <div class="alert alert-suc">
             <span class="close_alart">×</span>
             <p>
@@ -21,11 +51,10 @@ if(isset($_POST['submit'])){
         </div>
     </div>
     <script src="assets/js/alert.js"></script>
-    <?
-    }
-}
-include_once "header.php";
-?>
+    
+<? }
+} ?>
+
 <div class="contact">
     <div class="contact-img"></div>
     <div class="contact-content">

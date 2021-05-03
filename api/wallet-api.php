@@ -21,9 +21,9 @@ if(isset($_GET['f'])) {
     
         if($token == $row->token){
             $action->app_token_remove($row->id);
-            echo "<script type='text/javascript'>window.location.href = 'http://abarpayo.com/site/wallet-request.php';</script>";
+            echo "<script type='text/javascript'>window.location.href = 'http://abarpayo.com/abarpayo/wallet-request.php';</script>";
         }else{
-            echo "<script type='text/javascript'>window.location.href = 'http://abarpayo.com/site/index.php';</script>"; 
+            echo "<script type='text/javascript'>window.location.href = 'http://abarpayo.com/abarpayo/index.php';</script>"; 
         }
        
     }

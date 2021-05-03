@@ -1,10 +1,19 @@
 <?  
+
+
     if($action->user()){
         $city =  $action->user_get($id)->city_id;
     }else if($action->marketer()){
         $city =  $action->marketer_get($id)->city_id;
     }
     $province = $action->city_get($city)->province_id;
+
+$error = false;
+if (isset($_SESSION['error'])) {
+    $error = true;
+    $error_val = $_SESSION['error'];
+    unset($_SESSION['error']);
+}
     
     if(isset($_POST['submit'])){
         $city_id = $action->request('city');
@@ -17,8 +26,29 @@
             $command = $action->marketer_address_edit($id,$city_id,$postal_code,$address);
         }
 
-        if($command){
-            ?> 
+        if ($command) {
+            $_SESSION['error'] = 0;
+        } else {
+            $_SESSION['error'] = 1;
+        }
+
+        echo '<script>window.location="?address"</script>';
+    }
+?>
+<? if ($error) {
+            if ($error_val) { ?>
+
+                 <div class="modal">
+                    <div class="alert alert-fail">
+                        <span class="close_alart">×</span>
+                        <p>
+                            عملیات ناموفق بود!
+                        </p>
+                    </div>
+                </div>
+                <script src="assets/js/alert.js"></script>
+                
+            <? } else { ?>
                 <div class="modal">
                     <div class="alert alert-suc">
                         <span class="close_alart">×</span>
@@ -28,10 +58,10 @@
                     </div>
                 </div>
                 <script src="assets/js/alert.js"></script>
-            <?
-        }
-    }
-?>
+                
+            <? }
+} ?>
+
 <div class="edit_profile_div">
     <div class="profile_header">
         <div class="profile_heade_inn">

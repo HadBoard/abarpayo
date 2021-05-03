@@ -36,7 +36,7 @@ if ($result->Status == 100) {
      $action->app_wallet_log_add($user_id,"افزایش موجودی کیف پول",$Amount,1,$command);
      $action->app_user_wallet_edit($user_id,$Amount,1);
      $_SESSION['app-wallet'] = 'success';
-    echo "<script> location.href='http://abarpayo.com/site/return.php'; </script>";
+    echo "<script> location.href='http://abarpayo.com/abarpayo/return.php'; </script>";
 }
 
     if($action->user()){
@@ -66,7 +66,7 @@ if ($result->Status == 100) {
 } else {
     if(isset($_SESSION['app'])){
     $_SESSION['app-wallet'] = 'fail';
-    echo "<script> location.href='http://abarpayo.com/site/return.php'; </script>";
+    echo "<script> location.href='http://abarpayo.com/abarpayo/return.php'; </script>";
     }
     $_SESSION['successful_pay'] = 'false';
     echo "<script> location.href='profile.php?wallet'; </script>";
@@ -74,7 +74,7 @@ if ($result->Status == 100) {
 } else {    
   if(isset($_SESSION['app'])){
     $_SESSION['app-wallet'] = 'cancel';
-   echo "<script> location.href='http://abarpayo.com/site/return.php'; </script>";
+   echo "<script> location.href='http://abarpayo.com/abarpayo/return.php'; </script>";
 }
     echo "<script> location.href='profile.php?wallet'; </script>";
 }

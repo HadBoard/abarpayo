@@ -105,7 +105,7 @@ if (isset($_SESSION['error'])) {
                         </div>
                         <p id="resent_code_form"  class="resent_code_form">
                                 ارسال مجدد کد تا 
-                                <span id="countdown">02:35</span>
+                                <span id="countdown">01:30</span>
                         </p>
                         <a id="resent_btn" style="display:none">ارسال مجدد کد</a>
                         <input name="submit" type="submit" class="main_btn" value="ادامه">

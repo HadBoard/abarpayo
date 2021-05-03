@@ -1174,6 +1174,16 @@ public function cart_number_validate($cart_number,$isUser){
     return true;
 }
 
+public function ticket_add($user_id,$title,$text,$type,$view,$status){
+    $now = time();
+    $result = $this->connection->query("INSERT INTO `tbl_ticket`
+    (`user_id`,`subject`,`text`,`type`,`view`,`status`,`created_at`) 
+    VALUES
+    ('$user_id','$title','$text','$type','$view','$status','$now')");
+    if (!$this->result($result)) return false;
+    return $this->connection->insert_id;
+}
+
 }
 
 // ----------- end Action class ----------------------------------------------------------------------------------------
