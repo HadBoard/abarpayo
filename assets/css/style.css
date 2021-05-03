@@ -83,7 +83,7 @@ a, button { cursor: pointer; }
 .menu_footer ul h4 { font-weight: 400; color: rgb(255, 255, 255); font-size: 19px; margin-bottom: 15px; }
 .menu_footer ul li a { color: rgb(255, 255, 255); font-weight: 200; font-size: 14px; }
 .menu_footer ul li { list-style: none; }
-.menu_footer ul li::before { content: "â—"; color: rgb(253, 118, 0); font-weight: bold; display: inline-block; width: 1em; margin-left: -7px; }
+.menu_footer ul li::before {content: "";width:8px;height: 8px;border-radius: 50px;background: rgb(253, 118, 0);font-weight: bold;display: inline-block;/* width: 1em; */margin-left: 2px;}
 .contact_footer .main_btn { width: 100% !important; }
 .contact_footer .main_btn p, .contact_footer .main_btn span { color: rgb(255, 255, 255); }
 .contact_footer .main_btn p { float: right; margin-top: -1px; margin-right: 14px; }
