@@ -84,10 +84,12 @@ if(isset($_POST['submit'])){
             <div class="center_form">
                 <div class="row">
                     <div class="col-md-5 right-form">
-                        <div class="form_top">
-                            <img src="assets/images/logo.png">
-                            <h4>ثبت نام در ابرپایو</h4>
-                        </div>
+                    <div class="form_top">
+                    <a href="index.php">
+                    <img src="assets/images/logo.png">
+                    </a>
+                        <h4>ثبت نام در ابرپایو</h4>
+                    </div>
                         <form action="" method="post">
                         <div class="form-group">
                             <label for="first_name">نام</label>

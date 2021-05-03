@@ -7,7 +7,7 @@ $action = new Action();
 $province_id=$_POST['province_id'];
 ?>
 <select class="form-control select2" name="city" id="city">
-    <option>شهرستان را انتخاب فرمایید .</option>
+    <!-- <option>شهرستان را انتخاب فرمایید .</option> -->
     <? 
     $option_result = $action->province_city_list($province_id);
     while ($option = $option_result->fetch_object()) {

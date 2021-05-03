@@ -52,11 +52,27 @@ $action = new Action();
                 <button type="submit"name="search_button"><span class="material-icons">search</span></button> 
                 </form>
             </div>
-            <div class="col-md-3 city_header">
-            <select id="default_city">
+            <div class="col-md-4 city_header">
+            <select  name="province" id="default_province">
+                <?
+                $province_id = (isset($_SESSION['default_province'])) ? $_SESSION['default_province'] : 8;
+                $option_result = $action->province_list();
+                while ($option = $option_result->fetch_object()) {
+                    echo '<option value="';
+                    echo $option->id;
+                    echo '"';
+                    if ($option->id == $province_id) echo "selected";
+                    echo '>';
+                    echo $option->name;
+                    echo '</option>';
+                }
+                ?>
+            </select>
+            <select id="default_city" name="city">
             <?
             $city = (isset($_SESSION['default_city'])) ? $_SESSION['default_city'] : 117;
-            $option_result =  $action->city_list();
+            $province_id = (isset($_SESSION['default_province'])) ? $_SESSION['default_province'] : 8;
+            $option_result =  $action->province_city_list($province_id);
             while ($option = $option_result->fetch_object()) {
                 echo '<option value="';
                 echo $option->id;
@@ -68,8 +84,8 @@ $action = new Action();
             }
             ?>
             </select>
-            </div>
-
+              </div>
+           
             <? if ($action->auth()) { ?>
                 <div class="col-md-4 active_header_user ">
                     <div class="user_header user_signout">
@@ -176,5 +192,19 @@ document.getElementById('default_city').onchange=function(){
         		location.reload(true); 
             }
        })
+   }
+</script>
+<script>
+ document.getElementById('default_province').onchange=function(){
+       var province_id=document.getElementById('default_province').value;
+       console.log(province_id);
+       $.ajax({
+            url:'admin/ajax/get_city.php',
+            type:'post',
+            data:{province_id:province_id},
+            success:function(response){
+        		$("#default_city").html(response);
+            }
+       })   
    }
 </script>
