@@ -536,8 +536,14 @@ label.form-check-label {
 .search_title p {
   float: right;
   margin-left: 9px;
-}.search_title h2 {
+}
+.search_title h2 {
     margin-top: -9px;
     float: right;
     margin-left: 10px;
+}
+.backlink a {
+  width: 28px;
+  text-align: center;
+  margin: -20px;
 }
