@@ -1,4 +1,4 @@
- <?
+<?
 require_once "functions/database.php";
 $action = new Action();
 $title = "تماس با ما";
@@ -99,7 +99,7 @@ if ($error_val) { ?>
             <!--  -->
             <div class="row">
                <div class="contact-info">
-                   <h3>اطلاعات تماس</h3>
+                   <h3>تماس با ما</h3>
                    <div class="row">
                        <div class="contact-phone">
                            <div class="row">
@@ -117,22 +117,6 @@ if ($error_val) { ?>
                            </div>
 
                        </div>
-                       <div class="contact-phone">
-                        <div class="row">
-                            <div class="col-1">
-                                 <img src="assets/images/call.png" alt="">
-                            </div>
-                            <div class="col-10">
-                                <h4>اطلاعات تماس</h4>
-                                <p>
-                                    <?= $action->get_system('phone')?>
-                                </br>
-                                     <!-- 38562894 -->
-                                </p>
-                            </div>
-                        </div>
-
-                    </div>
                     <div class="contact-phone">
                         <div class="row">
                             <div class="col-1">
