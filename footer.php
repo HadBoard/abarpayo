@@ -184,7 +184,6 @@
     kamaDatepicker('birthday', customOptions);
 </script>
 
-
 </body>
 
 </html>

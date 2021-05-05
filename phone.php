@@ -74,7 +74,7 @@ if(isset($_POST['submit'])){
         <div class="center_form">
         <div class="backlink">
            <a href="index.php"class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
-           <p>بازگشت به صفحه اصلی</p>
+          <p>بازگشت به صفحه اصلی</p>
         </div>
             <div class="row">
                 <div class="col-md-5 right-form mobile_validiation">

@@ -7,7 +7,7 @@ $action = new Action();
 $code = $_POST['code'];
 $phone = $_POST['phone'];
 
-$result = $action->validate_code($code);
+$result = $action->validate_code($phone,$code);
 $validated_code = $result->fetch_object();
 
 if($validated_code){
@@ -21,7 +21,7 @@ if($validated_code){
     $result = $action->user_get_phone($phone);
     $user = $result->fetch_object();
     $user_id = $user ? $user->id : 0;
-    $action->validation_code_add($user_id,$code);
+    $action->validation_code_add($user_id,$phone,$code);
 
     $action->send_sms($phone,$code);
 }
