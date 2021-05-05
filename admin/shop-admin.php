@@ -1,40 +1,39 @@
 <? require_once "functions/database.php";
-
 $database = new DB();
 $connection = $database->connect();
 $action = new Action();
 
 // ----------- urls ----------------------------------------------------------------------------------------------------
 // main url for add , edit
-$main_url = "marketer-cart.php";
+$main_url = "shop-admin.php";
 // ----------- urls ----------------------------------------------------------------------------------------------------
 
 // ----------- get data ------------------------------------------------------------------------------------------------
 if (isset($_GET['id'])) {
-    $marketer_id = $action->request('id');
+    $shop_id = $action->request('id');
     $counter = 1;
-    $result = $action->marketer_cart_list($marketer_id);
+    $result = $action->shop_admin_list($shop_id);
 }
 // ----------- get data ------------------------------------------------------------------------------------------------
 
 // ----------- delete --------------------------------------------------------------------------------------------------
 if (isset($_GET['remove']) && isset($_GET['id'])) {
-    $marketer_id = $action->request('id');
+    $shop_id = $action->request('id');
     $id = $action->request('remove');
-    $_SESSION['error'] = !$action->marketer_cart_remove($id);
-    header("Location: $main_url?id=$marketer_id");
+    $_SESSION['error'] = !$action->shop_admin_remove($id);
+    header("Location: $main_url?id=$shop_id");
     return;
 }
 // ----------- delete --------------------------------------------------------------------------------------------------
 
 // ----------- edit mode -------------------------------------------------------------------------------------------
 if (isset($_GET['edit'])  && isset($_GET['id'])) {
-    $marketer_id = $action->request('id');
+    $shop_id = $action->request('id');
     $edit_id = $action->request('edit');
-    $edit_row = $action->marketer_cart_get($edit_id);
+    $edit_row = $action->shop_admin_get($edit_id);
 
     $counter = 1;
-    $result = $action->marketer_cart_list($marketer_id);
+    $result = $action->shop_admin_list($shop_id);
 }
 // ----------- edit mode -------------------------------------------------------------------------------------------
 
@@ -52,24 +51,19 @@ if (isset($_SESSION['error'])) {
 if (isset($_POST['submit'])) {
 
     // get fields
-    $bank_id = $action->request('bank_id');
-    $name = $action->request('title');
-    $cart_number = $action->request('cart_number');
-    $account_number = $action->request('account_number');
-    $iban = $action->request('iban');
-    $validation = $action->request('validation');
-
-    $validate = $action->account_number_validate($account_number,0);
-    $validate1 = $action->iban_validate($iban) && $action->iban_unique($iban,0);
-    $validate2 = $action->cart_number_validate($cart_number,0);
-
+    $first_name = $action->request('first_name');
+    $last_name = $action->request('last_name');
+    $phone = $action->request('phone');
+    $username = $action->request('username');
+    $password = $action->request('password');
+    $national_code = $action->request('national_code');
+    $status = $action->request('status');
+   
     // send query
     if ($edit_id) {
-        $command = $action->marketer_cart_edit($edit_id,$bank_id,$name,$cart_number,$account_number,$iban,$validation);
-    } else {
-        if($validate && $validate1 && $validate2){
-            $command = $action->marketer_cart_add($marketer_id,$bank_id,$name,$cart_number,$account_number,$iban,$validation);
-        }
+        $command = $action->shop_admin_edit($edit_id,$first_name,$last_name,$phone,$username,$password,$national_code,$status);
+    }else{
+        $command = $action->shop_admin_add($shop_id,$first_name,$last_name,$phone,$username,$password,$national_code,$status);
     }
 
     // check errors
@@ -80,7 +74,7 @@ if (isset($_POST['submit'])) {
     }
 
     // bye bye :)
-    header("Location: $main_url?id=$marketer_id");
+    header("Location: $main_url?id=$shop_id");
 
 }
 // ----------- add or edit ---------------------------------------------------------------------------------------------
@@ -93,7 +87,7 @@ include('header.php'); ?>
     <div class="row page-titles">
         <!-- ----------- start breadcrumb ---------------------------------------------------------------------- -->
         <div class="col-md-12 align-self-center text-right">
-            <h3 class="text-primary">کارت های بازارسازان</h3></div>
+            <h3 class="text-primary">مدیران فروشگاه</h3></div>
         <div class="col-md-12 align-self-center text-right">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
@@ -102,8 +96,8 @@ include('header.php'); ?>
                         خانه
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="marketer-list.php">بازارسازان</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0)">کارت ها</a></li>
+                <li class="breadcrumb-item"><a href="shop-list.php">فروشگاه ها</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)"> مدیران</a></li>
             </ol>
         </div>
         <!-- ----------- end breadcrumb ------------------------------------------------------------------------ -->
@@ -157,52 +151,48 @@ include('header.php'); ?>
                     <div class="card-body">
                         <div class="basic-form">
                             <form action="" method="post" enctype="multipart/form-data">
-                            <div class="form-group">
-                                    <select class="form-control" name="bank_id" required>
-                                        <option>بانک  را انتخاب فرمایید .</option>
-                                        <?
-                                        $option_result = $action->bank_list();
-                                        while ($option = $option_result->fetch_object()) {
-                                            echo '<option value="';
-                                            echo $option->id;
-                                            echo '"';
-                                            if ($option->id == $row->bank_id) echo "selected";
-                                            echo '>';
-                                            echo $option->name;
-                                            echo '</option>';
-                                        }
-                                        ?>
-                                    </select>
+                           
+                                <div class="form-group">
+                                    <input type="text" name="first_name" class="form-control input-default "
+                                           placeholder="نام"
+                                           value="<?= ($edit_id) ? $edit_row->first_name : "" ?>" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="text" name="title" class="form-control input-default "
-                                           placeholder="عنوان"
-                                           value="<?= ($edit_id) ? $edit_row->title : "" ?>" required>
+                                    <input type="text" name="last_name" class="form-control input-default "
+                                           placeholder="نام خانوادگی"
+                                           value="<?= ($edit_id) ? $edit_row->last_name : "" ?>" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="text" name="cart_number" class="form-control input-default "
-                                           placeholder="شماره کارت"
-                                           value="<?= ($edit_id) ? $edit_row->cart_number : "" ?>" required>
+                                    <input type="text" name="phone" class="form-control input-default "
+                                           placeholder="شماره تلفن "
+                                           value="<?= ($edit_id) ? $edit_row->phone : "" ?>" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="text" name="account_number" class="form-control input-default "
-                                           placeholder="شماره حساب"
-                                           value="<?= ($edit_id) ? $edit_row->account_number : "" ?>" required>
+                                    <input type="text" name="username" class="form-control input-default "
+                                           placeholder="نام کاربری"
+                                           value="<?= ($edit_id) ? $edit_row->username : "" ?>" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="text" name="iban" class="form-control input-default "
-                                           placeholder="شماره شبا"
-                                           value="<?= ($edit_id) ? $edit_row->iban : "" ?>" required>
+                                    <input type="text" name="password" class="form-control input-default "
+                                           placeholder="رمزعبور"
+                                           value="<?= ($edit_id) ? $edit_row->password : "" ?>" required>
+                                </div>
+
+                                
+                                <div class="form-group">
+                                    <input type="text" name="national_code" class="form-control input-default "
+                                           placeholder="کد ملی"
+                                           value="<?= ($edit_id) ? $edit_row->national_code : "" ?>" required>
                                 </div>
 
                                 <div class="form-actions">
                                     <label class="float-right">
                                         <input type="checkbox" class="float-right m-1" name="validation" value="1"
-                                            <? if ($edit_id && $edit_row->validation) echo "checked"; ?> >
+                                            <? if ($edit_id && $edit_row->status) echo "checked"; ?> >
                                         فعال
                                     </label>
 
@@ -227,8 +217,8 @@ include('header.php'); ?>
                                 <thead>
                                 <tr>
                                     <th class="text-center">ردیف</th>
-                                    <th class="text-center">عنوان</th>
-                                    <th class="text-center">شماره کارت</th>
+                                    <th class="text-center">نام ونام خانوادگی</th>
+                                    <th class="text-center">شماره تماس</th>
                                     <th class="text-center">مدیریت</th>
                                 </tr>
                                 </thead>
@@ -238,15 +228,15 @@ include('header.php'); ?>
                                     <tr class="text-center">
 
                                         <td class="text-center"><?= $counter++ ?></td>
-                                        <td class="text-center"><?= $row->title ?></td>
-                                        <td class="text-center"><?= $row->cart_number ?></td>
+                                        <td class="text-center"><?= $row->first_name." ".$row->last_name ?></td>
+                                        <td class="text-center"><?= $row->phone ?></td>
                                       
                                         <td class="text-center">
-                                            <a href="<?= $main_url?>?id=<?= $marketer_id?>&edit=<?= $row->id ?>">
+                                            <a href="<?= $main_url?>?id=<?= $shop_id?>&edit=<?= $row->id ?>">
                                                 <i class="fa fa-pencil-square-o"></i>
                                             </a>
                                             |
-                                            <a href="<?= $main_url ?>?id=<?= $marketer_id?>&remove=<?= $row->id ?>">
+                                            <a href="<?= $main_url ?>?id=<?= $shop_id?>&remove=<?= $row->id ?>">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </td>

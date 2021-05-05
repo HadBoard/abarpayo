@@ -93,7 +93,7 @@ class Action
     // ----------- get all fields in table
     public function table_list($table)
     {
-        $id = $this->admin()->id;
+        // $id = $this->admin()->id;
         $result = $this->connection->query("SELECT * FROM `$table` ORDER BY `id` DESC");
         if (!$this->result($result)) return false;
         return $result;
@@ -1224,19 +1224,19 @@ class Action
     {
         return $this->table_list("tbl_marketer");
     }
-    public function marketer_add($first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id,$status)
+    public function marketer_add($first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id,$support_id,$status)
     {
         $now = time();
         $reference_code = $this->get_token(6);
         $result = $this->connection->query("INSERT INTO `tbl_marketer`
-        (`first_name`,`last_name`,`phone`,`reference_code`,`reference_id`,`national_code`,`package_id`,`payment_type`,`created_at`,`status`) 
+        (`first_name`,`last_name`,`phone`,`reference_code`,`reference_id`,`support_id`,`national_code`,`package_id`,`payment_type`,`created_at`,`status`) 
         VALUES
-        ('$first_name','$last_name','$phone','$reference_code','$reference_id','$national_code','$package_id','$payment_type','$now','$status')");
+        ('$first_name','$last_name','$phone','$reference_code','$reference_id','$support_id','$national_code','$package_id','$payment_type','$now','$status')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
-    public function marketer_edit($id,$first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id,$status)
+    public function marketer_edit($id,$first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id,$support_id,$status)
     {
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_marketer` SET 
@@ -1247,11 +1247,16 @@ class Action
          `package_id`='$package_id',
          `payment_type` ='$payment_type',
          `reference_id` = '$reference_id',
+         `support_id` = '$support_id',
          `status` = '$status',
          `updated_at`='$now'
          WHERE `id` ='$id'");
         if (!$this->result($result)) return false;
         return $id;
+    }
+
+    public function marketer_reference_code($reference_code){
+        return $this->connection->query("SELECT * FROM `tbl_marketer` WHERE `reference_code` = '$reference_code'");
     }
 
     public function marketer_remove($id)
@@ -1456,6 +1461,63 @@ class Action
     {
         return $this->get_data("tbl_contact", $id);
     }
+    //SHOP ADMIN----------------------------------------------------------------------------------------
+    public function shop_admin_list($shop_id)
+    {
+        $result = $this->connection->query("SELECT * FROM `tbl_shop_admin` WHERE `shop_id`='$shop_id'");
+        if (!$this->result($result)) return false;
+        return $result;
+    }
+
+    // ----------- add an admin
+    public function shop_admin_add($shop_id,$first_name,$last_name,$phone,$username,$password,$national_code,$status)
+    {
+        
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_shop_admin`
+        (`shop_id`,`first_name`,`last_name`,`phone`,`username`,`password`,`national_code`,`status`,`created_at`) 
+        VALUES
+        ('$shop_id','$first_name','$last_name','$phone','$username','$password','$national_code','$status','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    // ----------- update admin's detail
+    public function shop_admin_edit($id,$first_name, $last_name, $phone, $username, $password,$national_code,$status)
+    {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_shop_admin` SET 
+        `first_name`='$first_name',
+        `last_name`='$last_name',
+        `phone`='$phone',
+        `username`='$username',
+        `password`='$password',
+        `national_code`='$national_code',
+        `status`='$status',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    // ----------- remove admin
+    public function shop_admin_remove($id)
+    {
+        return $this->remove_data("tbl_shop_admin", $id);
+    }
+
+    // ----------- change admin's status
+    public function shop_admin_status($id)
+    {
+        return $this->change_status('tbl_shop_admin', $id);
+    }
+
+    // ----------- get admin's data
+    public function shop_admin_get($id)
+    {
+        return $this->get_data("tbl_shop_admin", $id);
+    }
+//------------------------------------------------------------------------------------------------------------------
 
     public function iban_validate($code){
         $shaba=substr($code,2)."1827".$code[0].$code[1];

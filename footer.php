@@ -36,64 +36,64 @@
             <div class="row">
                 <div class="col-md-9">
                     <div class="menu_footer">
+                    <ul>
+                        <h4>ابرپایو</h4>
+                        <li>
+                            <a href="about-us.php">درباره ابرپایو</a>
+                        </li>
+                        <li>
+                            <a href="rules.php">قوانین و مقررات</a>
+                        </li>
+                        <li>
+                            <a href="question.php">پرسش های متداول</a>
+                        </li>
+                        <li>
+                            <a href="ticket.php">پشتیبانی</a>
+                        </li>
+                        </ul>
                         <ul>
                             <h4>ابرپایو</h4>
                             <li>
-                                <a>درباره ابرپایو</a>
+                                <a href="about-us.php">درباره ابرپایو</a>
                             </li>
                             <li>
-                                <a>قوانین و مقررات</a>
+                                <a href="rules.php">قوانین و مقررات</a>
                             </li>
                             <li>
-                                <a>حریم خصوصی</a>
+                                <a href="question.php">پرسش های متداول</a>
                             </li>
                             <li>
-                                <a>ژتون در رسانه</a>
+                                <a href="ticket.php">پشتیبانی</a>
                             </li>
                         </ul>
                         <ul>
                             <h4>ابرپایو</h4>
                             <li>
-                                <a>پاسخ به پرسش های متدوال</a>
+                                <a href="about-us.php">درباره ابرپایو</a>
                             </li>
                             <li>
-                                <a>قوانین و مقررات</a>
+                                <a href="rules.php">قوانین و مقررات</a>
                             </li>
                             <li>
-                                <a>حریم خصوصی</a>
+                                <a href="question.php">پرسش های متداول</a>
                             </li>
                             <li>
-                                <a>ژتون در رسانه</a>
-                            </li>
-                        </ul>
-                        <ul>
-                            <h4>ابرپایو</h4>
-                            <li>
-                                <a>درباره ابرپایو</a>
-                            </li>
-                            <li>
-                                <a>قوانین و مقررات</a>
-                            </li>
-                            <li>
-                                <a>حریم خصوصی</a>
-                            </li>
-                            <li>
-                                <a>ژتون در رسانه</a>
+                                <a href="ticket.php">پشتیبانی</a>
                             </li>
                         </ul>
                         <ul>
                             <h4>ابرپایو</h4>
                             <li>
-                                <a>درباره ابرپایو</a>
+                                <a href="about-us.php">درباره ابرپایو</a>
                             </li>
                             <li>
-                                <a>قوانین و مقررات</a>
+                                <a href="rules.php">قوانین و مقررات</a>
                             </li>
                             <li>
-                                <a>حریم خصوصی</a>
+                                <a href="question.php">پرسش های متداول</a>
                             </li>
                             <li>
-                                <a>ژتون در رسانه</a>
+                                <a href="ticket.php">پشتیبانی</a>
                             </li>
                         </ul>
                     </div>

@@ -2,6 +2,10 @@
 require_once "functions/database.php";
 $action = new Action();
 $title = "پشتیبانی";
+
+if(!$action->user()){
+    header("Location: phone.php");
+}
 $user_id = $action->user()->id;
 
 $error = false;
@@ -25,8 +29,8 @@ if(isset($_POST['submit'])){
         $_SESSION['error'] = 1;
     }
 
-    // header('Location : ticket.php');
-    echo '<script>window.location="ticket.php"</script>';
+    header("Location: ticket.php");
+    // echo '<script>window.location="ticket.php"</script>';
 }
 include_once "header.php"; 
 ?>
@@ -69,7 +73,7 @@ if ($error_val) { ?>
         </div>
         <div class="contact-middle">
             <div class="row profile_title">
-                <a class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
+                <a href="index.php" class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
             
                 <h3 style="width: 50%;float: right;">پشتیبانی</h3>
             </div>
@@ -84,9 +88,9 @@ if ($error_val) { ?>
                     <div class="form-group">
                         <label for="type">نوع درخواست</label>
                         <select name="type" required>
-                            <option value = 1>پیشنهاد</option>
-                            <option value = 2>سرمایه گذاری و مشارکت</option>
-                            <option value = 3>  انتقادات و پیشنهادات </option>
+                            <option value = 1>سرمایه گذاری و مشارکت</option>
+                            <option value = 2>  انتقادات و پیشنهادات </option>
+                            <option value = 3>حسابداری و مالی </option>
                         </select>
                     </div>
                     <div class="form-group">

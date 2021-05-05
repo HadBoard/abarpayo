@@ -21,8 +21,10 @@ $title = "ثبت نام";
         $package_id = $action->request('package_id');
         $national_code = $action->request('national_code');
         $payment_type  = $action->request('payment_type');
+        $support_id = 13;
         if(isset($_SESSION['invitation_code'])){
             $reference_id = $_SESSION['invitation_code'];
+            $support_id = $reference_id;
             $action->score_log_add($reference_id,$invitation_score,$invitation_action,1);
             $action->score_edit($reference_id,$invitation_score,1);
         }else{
@@ -31,12 +33,13 @@ $title = "ثبت نام";
                 $result = $action->marketer_reference_code($reference_code);
                 $reference = $result->fetch_object();
                 $reference_id = $reference->id;
+                $support_id = $reference_id;
                 $action->score_log_add($reference_id,$invitation_score,$invitation_action,1);
                 $action->score_edit($reference_id,$invitation_score,1);
             }
         }
         $phone = $_SESSION['phone'];
-        $command = $action->marketer_add($first_name,$last_name,$phone,$package_id,$payment_type,$national_code,$reference_id);
+        $command = $action->marketer_add($first_name,$last_name,$phone,$package_id,$payment_type,$national_code,$reference_id,$support_id);
 
         if($command){
             $action->marketer_score_log_add($command,$register_score,$register_action,1);

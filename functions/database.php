@@ -84,7 +84,6 @@ class Action
     // ----------- get all fields in table
     public function table_list($table)
     {
-        // $id = $this->admin()->id;
         $result = $this->connection->query("SELECT * FROM `$table` ORDER BY `id` DESC");
         if (!$this->result($result)) return false;
         return $result;
@@ -819,6 +818,7 @@ class Action
     public function province_list()
     {
         return $this->table_list("tbl_province");
+        // return $this->connection->query("SELECT * FROM `tbl_province` ORDER BY id DESC");
 
     }
 
@@ -830,7 +830,7 @@ class Action
 
     public function province_city_list($province_id)
     {
-    return $this->connection->query("SELECT * FROM `tbl_city` WHERE `province_id` = '$province_id'");
+    return $this->connection->query("SELECT * FROM `tbl_city` WHERE `province_id` = '$province_id' ORDER BY id DESC");
     }
 
     public function city_get($id)
@@ -908,7 +908,7 @@ class Action
     }
 
     public function wallet_log_increase($user_id){
-        return $this->connection->query("SELECT * FROM `tbl_wallet_log` WHERE `user_id` = '$user_id' AND `type` = 1");
+        return $this->connection->query("SELECT * FROM `tbl_wallet_log` WHERE `user_id` = '$user_id' AND `type` = 1  ORDER BY id DESC");
     }
 
     public function wallet_log_get_payment($id){
@@ -987,14 +987,14 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_marketer` WHERE `phone` = '$phone'");
     }
 
-    public function marketer_add($first_name,$last_name,$phone,$package_id,$payment_type,$national_code,$reference_id)
+    public function marketer_add($first_name,$last_name,$phone,$package_id,$payment_type,$national_code,$reference_id,$support_id)
     {
         $now = time();
         $reference_code = $this->get_token(6);
         $result = $this->connection->query("INSERT INTO `tbl_marketer`
-        (`first_name`,`last_name`,`phone`,`reference_code`,`reference_id`,`national_code`,`package_id`,`payment_type`,`created_at`,`status`) 
+        (`first_name`,`last_name`,`phone`,`reference_code`,`reference_id`,`support_id`,`national_code`,`package_id`,`payment_type`,`created_at`,`status`) 
         VALUES
-        ('$first_name','$last_name','$phone','$reference_code','$reference_id','$national_code','$package_id','$payment_type','$now',0)");
+        ('$first_name','$last_name','$phone','$reference_code','$reference_id','$support_id','$national_code','$package_id','$payment_type','$now',0)");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }

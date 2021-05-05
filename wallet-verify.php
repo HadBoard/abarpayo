@@ -37,7 +37,7 @@ if ($result->Status == 100) {
      $action->app_user_wallet_edit($user_id,$Amount,1);
      $_SESSION['app-wallet'] = 'success';
     echo "<script> location.href='http://abarpayo.com/abarpayo/return.php'; </script>";
-}
+}else{
 
     if($action->user()){
 
@@ -62,6 +62,7 @@ if ($result->Status == 100) {
     
     $_SESSION['successful_pay'] = 'true';
     echo "<script> location.href='profile.php?wallet'; </script>";
+}
 
 } else {
     if(isset($_SESSION['app'])){

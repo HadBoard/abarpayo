@@ -14,9 +14,6 @@ $action = new Action();
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <link rel='icon' type='image/png' href='assets/images/logo.png'>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" type="text/css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
     <link rel="stylesheet" href="assets/css/swiper.css">
     <link rel="stylesheet" href="assets/css/fontiran.css">
     <link rel="stylesheet" href="assets/css/fontAswome.css">
@@ -172,9 +169,11 @@ $action = new Action();
                     <li>
                         <a href="contact-us.php">تماس با ما</a>
                     </li>
+                    <? if($action->user()){ ?>
                     <li>
                         <a href="ticket.php">پشتیبانی</a>
                     </li>
+                    <?}?>
                     <li>
                         <a href="marketer-phone.php">بازار سازان</a>
                     </li>

@@ -39,18 +39,21 @@ if (isset($_POST['submit'])) {
     $national_code = $action->request('national_code');
     $payment_type  = $action->request('payment_type');
     $reference_code = $action->request('reference_code');
+    $support_id = $action->request('support_id');
     $status = $action->request('status');
+
     if($reference_code){
         $result = $action->marketer_reference_code($reference_code);
         $reference = $result->fetch_object();
         $reference_id = $reference->id;
+        $support_id = $reference_id;
     }
    
     // send query
     if ($edit) {
-        $command = $action->marketer_edit($id,$first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id,$status);
+        $command = $action->marketer_edit($id,$first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id,$support_id,$status);
     } else {
-        $command = $action->marketer_add($first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id,$status);
+        $command = $action->marketer_add($first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id,$support_id,$status);
     }
 
     // check errors
@@ -164,6 +167,15 @@ include('header.php'); ?>
                                 </div>
 
                                 <div class="form-group">
+                                   
+                                    <select class="form-control " name="support_id">
+                                        <option>پشتیبان را انتخاب فرمایید .</option>
+                                        <option value=13 >دانیال قاسمی</option>
+                                    </select>
+                                
+                                </div>
+
+                                <div class="form-group">
                                     <input type="text" name="national_code" class="form-control"
                                            placeholder="کدملی"
                                            value="<?= ($edit) ? $row->national_code : "" ?>" required>
@@ -179,6 +191,7 @@ include('header.php'); ?>
                                            placeholder="کد معرف"
                                            value="<?= ($edit) ? $action->marketer_get($row->reference_id)->reference_code : "" ?>" >
                                 </div>
+
                                 <div class="form-group">
                                     <select class="form-control " name="package_id" required>
                                     <option>پکیج را انتخاب فرمایید .</option>

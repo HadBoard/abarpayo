@@ -54,13 +54,22 @@ if (isset($_POST['submit'])) {
     // get fields
     $title = $action->request('title');
     $cart_number = $action->request('cart_number');
+    $bank_id = $action->request('bank_id');
+    $account_number = $action->request('account_number');
+    $iban=$action->request('iban');
     $validation = $action->request('validation');
+
+    $validate = $action->account_number_validate($account_number,1);
+    $validate1 = $action->iban_validate($iban) && $action->iban_unique($iban,1);
+    $validate2 = $action->cart_number_validate($cart_number,1);
 
     // send query
     if ($edit_id) {
-        $command = $action->cart_edit($edit_id,$user_id,$title,$cart_number,$validation);
+        $command = $action->cart_edit($edit_id,$user_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation);
     } else {
-        $command = $action->cart_add($user_id,$title,$cart_number,$validation);
+        if($validate && $validate1 && $validate2){
+        $command = $action->cart_add($user_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation);
+        }
     }
 
     // check errors
@@ -146,7 +155,24 @@ include('header.php'); ?>
                 <div class="card">
                     <div class="card-body">
                         <div class="basic-form">
-                            <form action="" method="post" enctype="multipart/form-data">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                    <select class="form-control" name="bank_id" required>
+                                        <option>بانک  را انتخاب فرمایید .</option>
+                                        <?
+                                        $option_result = $action->bank_list();
+                                        while ($option = $option_result->fetch_object()) {
+                                            echo '<option value="';
+                                            echo $option->id;
+                                            echo '"';
+                                            if ($option->id == $row->bank_id) echo "selected";
+                                            echo '>';
+                                            echo $option->name;
+                                            echo '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
 
                                 <div class="form-group">
                                     <input type="text" name="title" class="form-control input-default "
@@ -160,10 +186,22 @@ include('header.php'); ?>
                                            value="<?= ($edit_id) ? $edit_row->cart_number : "" ?>" required>
                                 </div>
 
+                                <div class="form-group">
+                                    <input type="text" name="account_number" class="form-control input-default "
+                                           placeholder="شماره حساب"
+                                           value="<?= ($edit_id) ? $edit_row->account_number : "" ?>" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="iban" class="form-control input-default "
+                                           placeholder="شماره شبا"
+                                           value="<?= ($edit_id) ? $edit_row->iban : "" ?>" required>
+                                </div>
+
                                 <div class="form-actions">
-                                <label class="float-right">
+                                    <label class="float-right">
                                         <input type="checkbox" class="float-right m-1" name="validation" value="1"
-                                            <? if ($edit_id && $edit_row->validation) echo "checked"; ?> required>
+                                            <? if ($edit_id && $edit_row->validation) echo "checked"; ?> >
                                         فعال
                                     </label>
 

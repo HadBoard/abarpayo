@@ -24,7 +24,7 @@ if(isset($_POST['submit'])){
         $_SESSION['error'] = 1;
     }
 
-    echo '<script>window.location="contact-us.php"</script>';
+    header("Location: contact-us.php");
 }
 include_once "header.php";
 ?>
@@ -66,7 +66,7 @@ if ($error_val) { ?>
             </div>
         </div>
         <div class="contact-middle">
-            <div class="row profile_title">
+            <div href="index.php" class="row profile_title">
                 <a class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
             
                 <h3 style="width: 50%;float: right;">تماس با ما</h3>

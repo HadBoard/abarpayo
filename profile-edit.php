@@ -138,10 +138,7 @@ if (isset($_SESSION['error'])) {
 </div>
 <script>
 $("label[for='pic']").click(function(){
-    console.log('1')
     $("input[name=pic]").click();
 })
-$("input[type=file]").click(function(){
-    console.log($("input[name=pic]").file())
-});
+
 </script>

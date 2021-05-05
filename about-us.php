@@ -15,7 +15,7 @@
         </div>
         <div class="contact-middle">
             <div class="row profile_title">
-                <a class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
+                <a href="index.php" class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
             
                 <h3 style="width: 50%;float: right;">درباره ما</h3>
 

@@ -5,6 +5,10 @@ $title = "پرسش های پر تکرار";
 include_once "header.php";
 // alse 2 links in header
 ?>
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" type="text/css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
 <style>
     .panel-group .panel{
     background-color: #fff;
@@ -90,7 +94,7 @@ include_once "header.php";
         </div>
         <div class="contact-middle">
             <div class="row profile_title">
-                <a class="profile_title_icon"><img style="margin-top: 2px;" src="assets/images/006-right-arrow.svg"></a>
+                <a href="index.php"class="profile_title_icon"><img style="margin-top: 2px;" src="assets/images/006-right-arrow.svg"></a>
             
                 <h3 style="width: 50%;float: right;">پرسش های پرتکرار</h3>
 
