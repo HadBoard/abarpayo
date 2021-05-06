@@ -158,7 +158,7 @@ include('header.php'); ?>
                         <div class="basic-form">
                             <form action="" method="post" enctype="multipart/form-data">
                             <div class="form-group">
-                                    <select class="form-control select2" name="bank_id" required>
+                                    <select class="form-control" name="bank_id" required>
                                         <option>بانک  را انتخاب فرمایید .</option>
                                         <?
                                         $option_result = $action->bank_list();
