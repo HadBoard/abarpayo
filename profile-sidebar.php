@@ -61,11 +61,21 @@
         <h4> ارتباط با حامی</h4>
         <img src="assets/images/006-right-arrow.svg    ">
         </a>
+        <a href="?ticket" class="main_btn profile_btn">
+        <i class="fa fa-user"></i>
+        <h4>پاسخ تیکت ها</h4>
+        <img src="assets/images/006-right-arrow.svg    ">
+        </a>
      <? } ?>
         <? if($action->marketer()){?>
         <a href="?package" class="main_btn profile_btn">
         <i class="fa fa-user"></i>
         <h4>پکیج </h4>
+        <img src="assets/images/006-right-arrow.svg    ">
+        </a>
+        <a href="?support" class="main_btn profile_btn">
+        <i class="fa fa-user"></i>
+        <h4>پرسش ها </h4>
         <img src="assets/images/006-right-arrow.svg    ">
         </a>
      <? } ?>
