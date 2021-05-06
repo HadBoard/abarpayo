@@ -78,7 +78,7 @@ $messages = $action->supporter_message_list($id);
             while($message = $messages->fetch_object()){
         ?>
         <button class="accordion hami_check" >
-        <span class="ticket_check"><i class="fa fa-check" aria-hidden="true"></i></span>
+        <?if($message->status == 1){ ?><span class="ticket_check"><i class="fa fa-check" aria-hidden="true"></i></span><?}?>
         <h4 id="<?= $message->from_id ?>"><?= $action->marketer_get($message->from_id)->first_name." ".$action->marketer_get($message->from_id)->last_name?></h4>
         <p><?= $action->time_to_shamsi($message->created_at) ?></p>
         </button>
