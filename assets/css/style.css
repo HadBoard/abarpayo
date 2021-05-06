@@ -243,7 +243,7 @@ td.dec_wallet { color: rgb(100, 0, 0); }
 .tabcontent a:last-child { width: 100%; margin-bottom: 30px; }
 .cat_shop { border-top: 1px solid rgba(0, 0, 0, 0.1); width: 97%; margin: auto; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; flex-direction: column; -webkit-box-align: center; align-items: center; }
 .cat_shop h3 { color: var(--yellow_a); font-size: 23px; font-weight: 900; line-height: 36px; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 3px; padding: 7px 15px; transform: translateY(-50%); background-color: rgb(255, 255, 255); }
-.profile_left textarea { padding: 9px 15px 7px; text-align: right; border: none; box-shadow: rgba(0, 0, 0, 0.28) 1px 1px 3px 1px; border-radius: 9px; width: 70%; float: right; resize: none; margin-right: 20px; height: 101px; }
+.profile_left textarea { padding: 9px 15px 7px; text-align: right; border: none; box-shadow: rgba(0, 0, 0, 0.28) 1px 1px 3px 1px; border-radius: 9px; width: 70%; float: right; resize: none; /*! margin-right: 20px; */ height: 101px; }
 .profile_left.mp { padding-top: 0px; margin-top: -40px; }
 .wallet_info.wallet_info_btns select { width: 77%; padding: 7.5px; font-weight: bold; margin-top: 8px; }
 #lazyload { width: 100%; float: none; border: none; margin: auto; cursor: pointer; }
