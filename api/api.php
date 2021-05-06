@@ -341,8 +341,14 @@ if(isset($_POST['function'])) {
         $user_id = $action->request('user_id');
         $obj -> first_name =  $action->user_get($user_id)->first_name;
         $obj -> last_name =  $action->user_get($user_id)->last_name;
-        $obj -> city_id = $action->user_get($user_id)->city_id;
-        $obj ->province_id = $action->city_get($action->user_get($user_id)->city_id)->province_id;
+        
+        $city_id = $action->user_get($user_id)->city_id;
+        $province_id = $action->city_get($city_id)->province_id;
+        
+        $obj -> city_id = $city_id;
+        $obj -> city_name = $action->city_get($city_id)->name;
+        $obj ->province_id = $province_id;
+        $obj -> province_name = $action->province_get($province_id)->name;
         $json = json_encode($obj);
         echo $json; 
     }

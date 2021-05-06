@@ -1,51 +1,183 @@
-<?
 
-$messages = $action->supporter_message_list($id);
-
-$error = false;
-if (isset($_SESSION['error'])) {
-    $error = true;
-    $error_val = $_SESSION['error'];
-    unset($_SESSION['error']);
+<style>
+    .accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: right;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+  }
+  
+  .active, .accordion:hover {
+    background-color: #ccc;
+  }
+  
+  .accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: left;
+    margin-left: 5px;
+  }
+  
+  .active:after {
+    content: "\2212";
+  }
+  
+  .panel {
+    padding: 0px 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+  }
+  .accordion h4 {
+  max-width: 40%;
+  float: right;
 }
-// GET PARENT ?????????????????
-if(isset($_POST['submit'])){
-    $text = $action->request('text');
-    $command= $action->message_add($user_id,$parent,$text,$status);
-    $command1 = $action->message_status($parent);
-    if ($command) {
-        $_SESSION['error'] = 0;
-    } else {
-        $_SESSION['error'] = 1;
+
+.accordion p {
+  max-width: 20%;
+  float: right;
+  padding-right: 16px;
+  padding-top: 2px;
+}
+
+.panel p {
+  margin: 10px 0 -2px 0;
+  width: 100%;
+  /* display: table; */
+}
+  </style>
+<body>
+<?
+$messages = $action->supporter_message_list($id);
+?>
+<div class="edit_profile_div">
+<div class="profile_header">
+<div class="profile_heade_inn">
+<div class="profile_header_img_2"><img src="assets/images/icons8-question-mark-96.png"></div></div>
+
+</div>
+<div class="row profile_title">
+        <a class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
+        <h3 style="width: 50%;float: right;">پاسخ به سوالات</h3>
+        <img src="assets/images/Group 523@2x.png">
+
+        </div>
+        <div class="profile_left profile_left2" style="padding-top: 0;">
+        <div class="hami_acc">
+
+        <!--each accordion  -->
+        <?
+            while($message = $messages->fetch_object()){
+        ?>
+        <button class="accordion hami_check" >
+        <span class="ticket_check"><i class="fa fa-check" aria-hidden="true"></i></span>
+        <h4 id="<?= $message->from_id ?>"><?= $action->marketer_get($message->from_id)->first_name." ".$action->marketer_get($message->from_id)->last_name?></h4>
+        <p><?= $action->time_to_shamsi($message->created_at) ?></p>
+        </button>
+        <div class="panel" >
+        <p id="<?= $message->id ?>"><?= $message->text ?></p>
+        <button class="ans-ticket ans-aj">پاسخ</button>
+        </div>
+        <?}?>
+        <!--  -->
+        </div>
+
+
+        </div>
+        </div>
+
+        <!-- pop up -->
+        <div class="darklayer"></div>
+        <div class="formpopup">
+        <div class="" style="width: 100%;display: table;">    <i class="close fa fa-times"></i>
+        </div>
+        <div class="pheader">
+        <p>
+        پاسخ به 
+
+        </p>
+        <h4><?= $action->marketer_get($message->from_id)->first_name." ".$action->marketer_get($message->from_id)->last_name ?></h4>
+        </div>
+        <p class="alert_text">متن پیام نمیتواند خالی باشد</p>
+        <form>
+        <textarea value="پاسخ خود را وارد نمایید">
+
+        </textarea>
+        <a id="send-answre"  class="ans-ticket">ارسال</a>
+        </form>
+
+</div>
+
+<script>
+    // accordion
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+    
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        } 
+      });
     }
 
-    echo '<script>window.location="?support"</script>';
-}
-?>
+    $('.close').click(function(){
+        $('.formpopup').fadeOut();
+        $('.darklayer').hide();
+        $('body').css('overflow','auto');
+    });
+    var user_id;
+    var question_id;
+    var support_id = <?= $id ?>;
+    var ans_btns = document.getElementsByClassName("ans-aj");
+    for (i = 0; i < ans_btns.length; i++) {
+        ans_btns[i].addEventListener("click", function() {
+            $('.darklayer').show();
+            $('html,body').scrollTop(0);
+            $('body').css('overflow','hidden');
+            $('.formpopup').fadeIn();
+            question_id = this.previousElementSibling.id;
+            user_id = this.parentElement.previousElementSibling.firstElementChild.nextElementSibling.id; 
+      });
+    }
 
-<? if ($error) {
-if ($error_val) { ?>
 
-        <div class="modal">
-        <div class="alert alert-fail">
-            <span class="close_alart">×</span>
-            <p>
-                عملیات ناموفق بود!
-            </p>
-        </div>
-    </div>
-    <script src="assets/js/alert.js"></script>
-    
-<? } else { ?>
-    <div class="modal">
-        <div class="alert alert-suc">
-            <span class="close_alart">×</span>
-            <p>
-                عملیات موفق بود!
-            </p>
-        </div>
-    </div>
-    <script src="assets/js/alert.js"></script>
-    
-<? }
-} ?>
+// answ ajax //////////////////////////////////////////////////// enter url
+    $('#send-answre').click(function(e){
+ 
+        let text = this.previousElementSibling.value;
+        console.log(text)
+        if(text == null) {
+             $('.alert_text').fadeIn();
+        }else{
+            $.ajax({
+                type : "POST",
+                url : "ajax/support-send-answer.php",
+                data:{text:text,user_id:user_id,question_id:question_id,support_id:support_id},
+                success : function(data){
+                    console.log('se')
+                     $('.formpopup').fadeOut();
+                     $('.darklayer').hide();
+                     $('.alert_text').fadeOut();
+                     $('body').css('overflow','auto');
+                      document.getElementById(user_id).previousElementSibling.style.display='block';
+
+                }
+            });
+        }
+
+    })
+     
+    </script>

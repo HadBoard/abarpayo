@@ -1,7 +1,13 @@
 
 <?
-    $user_id = $action->user()->id;
-    $icon = $action->user_get($user_id)->profile; 
+    if($action->user()){
+        $id = $action->user()->id;
+        $icon = $action->user_get($id)->profile; 
+    }else if($action->marketer()){
+        $id = $action->marketer()->id;
+        $icon = $action->marketer_get($id)->profile; 
+    }
+   
     $icon = ($icon ? $icon : "");  
 ?>
 <div class="profile_right">
@@ -11,8 +17,15 @@
 
         </div>
         <div class="col-6 profile_user">
-            <h3><?= $action->user_get($user_id)->first_name." ".$action->user_get($user_id)->last_name ?></h3>
-            <h5><?= $action->user_get($user_id)->phone?></h5>
+            <?
+                if($action->user()){
+            ?>
+            <h3><?= $action->user_get($id)->first_name." ".$action->user_get($id)->last_name ?></h3>
+            <h5><?= $action->user_get($id)->phone?></h5>
+            <?}else{?>
+            <h3><?= $action->marketer_get($id)->first_name." ".$action->marketer_get($id)->last_name ?></h3>
+            <h5><?= $action->marketer_get($id)->phone?></h5>
+            <?}?>
             <a href="?edit" class="main_btn edit_profile">
                 <i class="fa fa-edit"></i>
                 ویرایش
@@ -56,11 +69,6 @@
             <img src="assets/images/006-right-arrow.svg">
         </a>
         <? if($action->user()){?>
-        <a href="?communicate" class="main_btn profile_btn">
-        <i class="fa fa-user"></i>
-        <h4> ارتباط با حامی</h4>
-        <img src="assets/images/006-right-arrow.svg    ">
-        </a>
         <a href="?ticket" class="main_btn profile_btn">
         <i class="fa fa-user"></i>
         <h4>پاسخ تیکت ها</h4>
@@ -73,11 +81,19 @@
         <h4>پکیج </h4>
         <img src="assets/images/006-right-arrow.svg    ">
         </a>
+        <?if(!$action->marketer_get($id)->support_id){?>
         <a href="?support" class="main_btn profile_btn">
         <i class="fa fa-user"></i>
-        <h4>پرسش ها </h4>
+        <h4>پرسش های کاربران</h4>
         <img src="assets/images/006-right-arrow.svg    ">
         </a>
+        <?}else{?>
+        <a href="?communicate" class="main_btn profile_btn">
+        <i class="fa fa-user"></i>
+        <h4> ارتباط با حامی</h4>
+        <img src="assets/images/006-right-arrow.svg    ">
+        </a>
+        <?}?>
      <? } ?>
     </div>
 </div>

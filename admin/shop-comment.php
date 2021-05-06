@@ -39,8 +39,8 @@ if (isset($_POST['submit'])) {
     $shop_id = $row->shop_id;
     $admin_id = $action->admin()->id;
     // send query
-    if ($edit) {
-        if(!empty($text)){
+    if (!empty($edit)) {
+        if($text){
             $command = $action->shop_comment_add($shop_id,$admin_id,$id,$text);
         }
         if($confirm){

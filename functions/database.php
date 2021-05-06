@@ -697,12 +697,12 @@ class Action
     // ----------- end USERS ------------------------------------------------------------------------------------------
     // MESSAGES----------------------------------------------------------------------------------------------------------------------------
     
-    public function message_add($user_id,$parent,$text,$status){
+    public function message_add($from_id,$to_id,$parent,$text,$status){
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_message`
-        (`user_id`,`parent`,`text`,`status`,`created_at`) 
+        (`from_id`,`to_id`,`parent`,`text`,`status`,`created_at`) 
         VALUES
-        ('$user_id','$parent','$text','$status','$now')");
+        ('$from_id','$to_id','$parent','$text','$status','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
@@ -716,8 +716,13 @@ class Action
         return $id;
     }
 
-    public function message_list($user_id){
-        return $this->connection->query("SELECT * FROM `tbl_message` WHERE `user_id` = '$user_id' AND `parent` = 0 AND `status` = 1"); 
+    public function supporter_message_list($id){
+ 
+        return $this->connection->query("SELECT * FROM `tbl_message` WHERE `to_id` = '$id' AND `parent` = 0"); 
+    }
+
+    public function message_list($from_id){
+        return $this->connection->query("SELECT * FROM `tbl_message` WHERE `from_id` = '$from_id' "); 
     }
 
     public function message_reply_list($parent){
@@ -853,6 +858,11 @@ class Action
         return $this->table_list("tbl_province");
         // return $this->connection->query("SELECT * FROM `tbl_province` ORDER BY id DESC");
 
+    }
+
+    public function province_get($id)
+    {
+        return $this->get_data("tbl_province", $id);
     }
 
     public function city_list()
