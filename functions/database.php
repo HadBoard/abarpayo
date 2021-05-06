@@ -695,7 +695,40 @@ class Action
 
 
     // ----------- end USERS ------------------------------------------------------------------------------------------
-     // ----------- start VALIDATION_CODE ------------------------------------------------------------------------------------------
+    // MESSAGES----------------------------------------------------------------------------------------------------------------------------
+    
+    public function message_add($user_id,$parent,$text,$status){
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_message`
+        (`user_id`,`parent`,`text`,`status`,`created_at`) 
+        VALUES
+        ('$user_id','$parent','$text','$status','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function message_status($id){
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_message` SET 
+        `status`= 1
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    public function message_list($user_id){
+        return $this->connection->query("SELECT * FROM `tbl_message` WHERE `user_id` = '$user_id' AND `parent` = 0 AND `status` = 1"); 
+    }
+
+    public function message_reply_list($parent){
+        return $this->connection->query("SELECT * FROM `tbl_message` WHERE `parent` = '$parent' "); 
+    }
+
+    public function ticket_replys($user_id){
+        return $this->connection->query("SELECT * FROM `tbl_ticket` WHERE `user_id` = '$user_id' AND `admin_id` IS NOT NULL ");
+    }
+    
+    // ----------- start VALIDATION_CODE ------------------------------------------------------------------------------------------
      public function validation_code_add($user_id,$phone, $code)
      {
          $now = time();

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="utf-8">
+  <title>ابرپایو</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+  <link rel="stylesheet" href="../assets/css/swiper.css">
+  <link rel="stylesheet" href="../assets/css/fontiran.css">
+  <link rel="stylesheet" href="../assets/css/fontAswome.css">
+  <link rel="stylesheet" href="../assets/css/bootstrap-grid.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <script src='../assets/js/swiper.js'></script>
+  <script src='../assets/js/jquery.js'></script>
+  <script src='../assets/js/fontAwsome.js'></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+</head>
+<style>
+    .panel-group .panel{
+    background-color: #fff;
+    border:none;
+    box-shadow:none;
+    border-radius: 10px;
+    margin-bottom:11px;
+}
+.panel .panel-heading{
+    padding: 0;
+    border-radius:10px;
+    border: none;
+}
+.panel-heading a{
+    color:#fff !important;
+    display: block;
+    border:none;
+    padding:13px 35px 15px;
+    font-size: 17px;
+    background-image:linear-gradient(99deg, rgb(255, 142, 10) 8%, rgb(253, 118, 0) 90%);
+    font-weight:600;
+    position: relative;
+    color:#fff;
+    box-shadow:none;
+    transition:all 0.1s ease 0;
+}
+.panel-heading a:after, .panel-heading a.collapsed:after{
+    content: "\f068";
+    font-family: fontawesome;
+    text-align: center;
+    position: absolute;
+    left:-20px;
+    top: 10px;
+    color:#fff;
+    background-color:rgb(236, 87, 102);
+    border: 5px solid #fff;
+    font-size: 15px;
+    width: 40px;
+    height:40px;
+    line-height: 30px;
+    border-radius: 50%;
+    transition:all 0.3s ease 0s;
+}
+.panel-heading:hover a:after,
+.panel-heading:hover a.collapsed:after{
+    transform:rotate(360deg);
+}
+.panel-heading a.collapsed:after{
+    content: "\f067";
+}
+#accordion .panel-body{
+    background-color:#Fff;
+    color:#8C8C8C;
+    line-height: 25px;
+    padding: 10px 25px 20px 35px ;
+    border-top:none;
+    font-size:14px;
+    position: relative;
+}
+.questions {
+    width: 85%;
+    margin: auto;
+    display: table;
+    margin: 52px auto;
+}
+
+.panel-heading a:focus ,.panel-heading a:hover {
+    text-decoration: none;
+}
+.panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 16px;
+    color: inherit;
+}
+.collapse.in {
+    display: block;
+}
+.panel-default > .panel-heading {
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+}
+.collapse {
+    display: none;
+}
+.fade {
+	 opacity: 0;
+}
+ .fade.in {
+	 opacity: 1;
+}
+ .collapse {
+	 display: none;
+}
+ .collapse.in {
+	 display: block;
+}
+ tr.collapse.in {
+	 display: table-row;
+}
+ tbody.collapse.in {
+	 display: table-row-group;
+}
+ .collapsing {
+	 position: relative;
+	 height: 0;
+	 overflow: hidden;
+}
+.questions_profile .panel-heading a {
+    background-image: linear-gradient(45deg , rgb(226, 226, 226), #bbb);
+}
+
+.questions_profile .panel-heading a::after, .questions_profile .panel-heading a.collapsed::after {
+    background: var(--yellow_a);
+}
+.pq_title {
+    margin-bottom: 20px;
+}
+</style>
+<body>
+
+  <!-- header -->
+  <header>
+      <div class="info_header">
+          <div class="container">
+            <div class='row'>
+
+                <div class="col-2">
+                    <span class="material-icons">
+                        email
+                    </span>    
+                    <a href="mailto:support@lmsins.ir">
+                       <p> zhetoon@gmail.com </p>
+                    </a>
+                </div>
+                <div class="col-2">
+                    <span class="material-icons">
+                        call
+                        </span>  
+                    <a href="tel:+98-5832226125">
+                        <p>+98-9135244859</p>  
+                    </a>
+                </div>
+            </div>
+          </div>
+       
+      </div>
+      <!-- eof info header -->
+      <div class="container main_header">
+          <div class="row main_header_top">
+              <div class="col-1 logo_header" >
+                  <img src="../assets/images/logo.png">
+              </div>
+              <div class="col-md-4 search_header">
+                  <input placeholder="لطفا کلمه مورد نظر خود را جستجو کنید">
+                  <button><span class="material-icons">
+                    search
+                    </span></button>
+              </div>
+              <div class="col-md-3 city_header">
+                  <select>
+                      <option>یزد-یزد</option>
+                      <option>یزد-یزد</option>
+                      <option>یزد-یزد</option>
+                  </select>
+              </div>
+              <div class="col-md-4 active_header_user ">
+                        <div class="user_header">
+                            <a>
+                                <img src="../assets/images/user (1).png">
+                            </a>
+
+                        </div>
+                        <div class="line_header">
+                            <img src="../assets/images/Line 15.png">
+                        </div>
+                      <div class="notice_header">
+                          <a>
+                              <img src="../assets/images/Announcement.png">
+                              <span>2</span>
+
+                          </a>
+                      </div>
+                     <div class="message_header">
+                         <a>
+                            <img src="../assets/images/message.png">
+                            <span>2</span>
+
+
+                         </a>
+                     </div>
+
+              </div>
+
+          </div>
+          <div class="row main_header-nav">
+              <nav>
+                <ul class="menu_header">
+                    
+                        <li style="position: relative;">
+                            <span class="material-icons">
+                                menu
+                            </span>
+                            <a class="category_btn" href="#">دسته بندی</a>
+                            <div class="submenu">
+                                <a href="#">
+                                    <img src="../assets/images/shop.png">
+                                    <h5>رستوران و کافی شاپ</h5>
+                                    
+                                </a>
+                                <a href="#">
+                                    <img src="../assets/images/playground.png">
+                                    <h5>تفریحی ورزشی</h5>
+                                    
+                                </a>
+                                <a href="#">
+                                    <img src="../assets/images/Group 272.png">
+                                    <h5>سلامتی و پزشکی</h5>
+                                    
+                                </a>
+                                <a href="#">
+                                    <img src="../assets/images/theatre.png">
+                                    <h5>هنر و تئاتر</h5>
+                                    
+                                </a>
+                                <a href="#">
+                                    <img src="../assets/images/presentation (1).png">
+                                    <h5>آموزش</h5>
+                                    
+                                </a>
+                                <a href="#">
+                                    <img src="../assets/images/mascara (1).png">
+                                    <h5>زیبایی و آرایشی</h5>
+                                    
+                                </a>
+                                <a href="#">
+                                    <img src="../assets/images/sunset.png">
+                                    <h5>تور و سفر</h5>
+                                    
+                                </a>
+                                <a href="#">
+                                    <img src="../assets/images/technical-support.png">
+                                    <h5>خدمات</h5>
+                                    
+                                </a>
+                            
+                            </div>
+                        </li>
+
+                        <li>
+                            <a href="#">صفحه اصلی</a>
+                        </li>
+                        <li>
+                            <a href="#">فروشگاه</a>
+                        </li>
+                        <li>
+                            <a href="#">باشگاه مشتریان</a>
+                        </li>
+                        <li>
+                            <a href="#">درباره ما</a>
+                        </li>
+                        <li>
+                            <a href="#">تماس با ما</a>
+                        </li>
+                  </ul>
+              </nav>
+              
+          </div>
+      </div>
+  </header>
+  <!-- eof header -->
+
+  <main>
+      <div class="container">
+        <div class="row">
+            <div class="col-md-4 profile_col">
+                <div class="profile_right">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="profile_right_img"> <img src="https://webmaz.ir/sanyar/images/woman-5.jpg"></div>
+                           
+                        </div>
+                        <div class="col-6 profile_user">
+                            <h3>علی علوی</h3>
+                            <h5>09135244743</h5>
+                            <a class="main_btn edit_profile">
+                                <i class="fa fa-edit"></i>
+                                ویرایش
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                      <a class="main_btn profile_btn">
+                            <i class="fa fa-user"></i>
+                            <h4>انتخاب شهر</h4>
+                            <img src="../assets/images/006-right-arrow.svg">
+                      </a>
+                      <a class="main_btn profile_btn">
+                          <i class="fa fa-user"></i>    
+                          <h4>کیف پول</h4>
+                          <img src="../assets/images/006-right-arrow.svg">
+                      </a>
+                      <a class="main_btn profile_btn">
+                          <i class="fa fa-user"></i>
+                          <h4>مدیریت آدرس ها</h4>
+                          <img src="../assets/images/006-right-arrow.svg">
+                      </a>
+                      <a class="main_btn profile_btn">
+                          <i class="fa fa-user"></i>
+                          <h4>اعضای خانواده</h4>
+                          <img src="../assets/images/006-right-arrow.svg">
+                      </a>
+                      <a class="main_btn profile_btn">
+                          <i class="fa fa-user"></i>
+                          <h4>کسب درآمد ها</h4>
+                          <img src="../assets/images/006-right-arrow.svg    ">
+                      </a>
+                      <a class="main_btn profile_btn">
+                        <i class="fa fa-user"></i>
+                        <h4>ارتباط با حامی</h4>
+                        <img src="../assets/images/006-right-arrow.svg    ">
+                      </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 profile_col">
+                <div class="edit_profile_div">
+
+              
+                    <div class="profile_header">
+                        <div class="profile_heade_inn">
+                            <div class="profile_header_img_2"><img src="../assets/images/call.png"></div></div>
+                            
+                    </div>
+                    <div class="row profile_title">
+                        <a class="profile_title_icon"><img src="../assets/images/006-right-arrow.svg"></a>
+                    
+                        <h3 style="width: 50%;float: right;">ارتباط با حامی</h3>
+
+                        <img src="../assets/images/Group 523@2x.png">
+                      
+                    </div>
+                    <div class="profile_left profile_left2" style="padding-top: 0;">
+                        <div class="questions_profile">
+                            <div class="container">
+                                <h4 class="pq_title">سوالات</h4>
+                                <div class="row">
+                                    <div class="">
+                                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="headingOne">
+                                                    <h4 class="panel-title">
+                                                        <a class="first" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                            رمز موفقیت ابرپایو در چیست ؟
+                                                            <span> </span>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                    <div class="panel-body">
+                                                          <p>  ایمان ، تقوا ، عمل صالح </p>
+                                                     </div>
+                                                </div>
+                                            </div>
+                            
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="headingTwo">
+                                                    <h4 class="panel-title">
+                                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                            چرا الکل قبل از کشف آن حرام اعلام شده بود
+                                                            <span> </span>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                    <div class="panel-body">
+                                                        <p>چونکه در واقع الکل وجود داشته از قرن های گزشته و حرام بوده اما کشف فرمولی و شیمیایی آن بعدا اتفاق افتاده .</p>
+                                                     </div>
+                                                </div>
+                                            </div>
+                            
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="headingThree">
+                                                    <h4 class="panel-title">
+                                                        <a class="collapsed last" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                            جایگاه ایرانیان در آن دنیا چیست ؟
+                                                            <span> </span>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                                    <div class="panel-body">
+                                                        <p>
+                                                            تصور این بنده حقیر این هستش که ما مثلا تو اون دنیا 3 تا جهنم داریم جهنم راحت جهنم متوسط و سخت 
+                                                            حالا اگه شما جهنمی باشی خدا میگه که این تو دنیا ایران بوده پس بفرستینش جهنم سخته چون عذابای اون دوتا جهنم براش تکراریه 
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <form  action="" method="post">
+                            <h4 class="pq_title">سوال جدید بپرسید</h4>
+
+                            <div class="form-group">
+                                <label for="owner">متن سوال</label>
+                                <input type="text" name="owner" placeholder="فقط حروف فارسی">
+                            </div>
+                            <div class="form-group">
+                                <label for="category">دسته بندی</label>
+                                <select name="category">
+                                <option>دسته بندی را انتخاب فرمایید .</option>
+                                      
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">سوال</label>
+                                <textarea name="address"></textarea>
+                            </div>
+                            <input name="submit" type="submit" class="main_btn" value="ارسال ">
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      
+  </main>
+
+
+<footer>
+    <div class="newsletter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 download_app">
+                    <h5>دیافت اپلیکیشن</h5>
+                    <button class="main_btn middle_btn">
+                        <i class="fa fa-android"></i>
+                        دانلود نسخه اندروید
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <h3>اشتراک خبرنامه</h3>
+                    <p>جهت اطلاع از آخرین تخفیف های شهرستان ، آدرس ایمیل خود را وارد کنید و در خبرنامه مشترک شوید.</p>
+                    <div class="search_header email_footer">
+                        <input placeholder="ایمیل خود را وارد کنید .">
+                        <button><span >
+                          اشتراک
+                          </span></button>
+                    </div>
+                </div>      
+                <div class="col-md-3 namad_footer">
+                    <div class="namad_cell">
+                        <img src="../assets/images/samandehi@2x.png">
+                    </div>
+                    <div class="namad_cell">
+                        <img src="../assets/images/samandehi@2x.png">
+                    </div>
+                </div>
+            </div>
+        </div><!-- eof newsLetter -->
+    </div>
+        <div class="main_footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="menu_footer">
+                            <ul>
+                                <h4>ابرپایو</h4>
+                                <li>
+                                    <a>درباره ابرپایو</a>
+                                </li>
+                                <li>
+                                    <a>قوانین و مقررات</a>
+                                </li>
+                                <li>
+                                    <a>حریم خصوصی</a>
+                                </li>
+                                <li>
+                                    <a>ژتون در رسانه</a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <h4>ابرپایو</h4>
+                                <li>
+                                    <a>پاسخ به پرسش های متدوال</a>
+                                </li>
+                                <li>
+                                    <a>قوانین و مقررات</a>
+                                </li>
+                                <li>
+                                    <a>حریم خصوصی</a>
+                                </li>
+                                <li>
+                                    <a>ژتون در رسانه</a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <h4>ابرپایو</h4>
+                                <li>
+                                    <a>درباره ابرپایو</a>
+                                </li>
+                                <li>
+                                    <a>قوانین و مقررات</a>
+                                </li>
+                                <li>
+                                    <a>حریم خصوصی</a>
+                                </li>
+                                <li>
+                                    <a>ژتون در رسانه</a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <h4>ابرپایو</h4>
+                                <li>
+                                    <a>درباره ابرپایو</a>
+                                </li>
+                                <li>
+                                    <a>قوانین و مقررات</a>
+                                </li>
+                                <li>
+                                    <a>حریم خصوصی</a>
+                                </li>
+                                <li>
+                                    <a>ژتون در رسانه</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="contact_footer">
+                            <div class="row">
+                                <a class="main_btn">
+                                    <p>شماره تماس : </p>
+                                    <span>
+                                        035 - 8256589
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="row">
+                                <div class="socila_icons">
+                                    <div>
+                                        <a href="#">
+                                            <i class="fa fa-user"></i>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a href="#">
+                                            <i class="fa fa-user"></i>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a href="#">
+                                            <i class="fa fa-user"></i>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a href="#">
+                                            <i class="fa fa-user"></i>
+                                        </a>
+                                    </div>
+                                    <div class="socila_icons_availabel">
+                                        <a  href="#">
+                                            <i class="fa fa-user"></i>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a href="#">
+                                            <i class="fa fa-user"></i>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a href="#">
+                                            <i class="fa fa-user"></i>
+                                        </a>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+        <!-- eof main footer -->
+        <div class="copyright">
+            <div class="container">
+                <p>کلیه حقوق این سایت متعلق به شرکت حامی تک میبا شد . &copy copyright</p>
+            </div>
+        </div>
+</footer>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script type="text/javascript"  src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+</html>
