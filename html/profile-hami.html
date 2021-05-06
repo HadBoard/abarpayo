@@ -357,7 +357,7 @@
             پاسخ به 
             
         </p>
-        <h4>علی علوی</h4>
+        <h4 id="user_name">علی علوی</h4>
     </div>
     <p class="alert_text">متن پیام نمیتواند خالی باشد</p>
     <form>
@@ -565,29 +565,31 @@
             $('html,body').scrollTop(0);
             $('body').css('overflow','hidden');
             $('.formpopup').fadeIn();
+
             question_id = this.previousElementSibling.id;
             user_id = this.parentElement.previousElementSibling.firstElementChild.nextElementSibling.id; 
+            console.log($(user_id).val())
+           
+            $('#user_name').text( document.getElementById(user_id).innerHTML)
       });
     }
 
 
-// answ ajax //////////////////////////////////////////////////// enter url
+// answ ajax //////////////////////////////////////////////////// enter url and change type 
     $('#send-answre').click(function(e){
  
         let text = this.previousElementSibling.value;
-        console.log(text)
         if(text == null) {
              $('.alert_text').fadeIn();
         }else{
             $.ajax({
-                type : "POST",
+                // type : "POST",
                 url : "",
                 data:{text:text,user_id:user_id,question_id:question_id},
                 success : function(data){
-                    console.log('se')
-                     $('.formpopup').fadeOut();
+                     $('.formpopup').hide();
                      $('.darklayer').hide();
-                     $('.alert_text').fadeOut();
+                     $('.alert_text').hide();
                      $('body').css('overflow','auto');
                       document.getElementById(user_id).previousElementSibling.style.display='block';
 
