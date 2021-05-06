@@ -422,7 +422,7 @@ class Action
     }
 
     public function app_get_requests($user_id){
-        return $this->connection->query("SELECT * FROM `tbl_request` WHERE `user_id` = '$user_id' AND `status` = 1");
+        return $this->connection->query("SELECT * FROM `tbl_request` WHERE `user_id` = '$user_id' AND `status` = 1 ORDER BY id DESC");
     }
 
     public function user_get_requests_limited(){

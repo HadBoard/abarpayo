@@ -1,4 +1,3 @@
-
 <style>
     .accordion {
     background-color: #eee;
@@ -54,31 +53,32 @@
   /* display: table; */
 }
   </style>
-<body>
 <?
 $messages = $action->supporter_message_list($id);
 ?>
 <div class="edit_profile_div">
-<div class="profile_header">
-<div class="profile_heade_inn">
-<div class="profile_header_img_2"><img src="assets/images/icons8-question-mark-96.png"></div></div>
 
+              
+<div class="profile_header">
+    <div class="profile_heade_inn">
+        <div class="profile_header_img_2"><img src="assets/images/icons8-question-mark-96.png"></div></div>
+        
 </div>
 <div class="row profile_title">
-        <a class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
-        <h3 style="width: 50%;float: right;">پاسخ به سوالات</h3>
-        <img src="assets/images/Group 523@2x.png">
-
-        </div>
-        <div class="profile_left profile_left2" style="padding-top: 0;">
-        <div class="hami_acc">
+    <a class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
+    <h3 style="width: 50%;float: right;">پاسخ به سوالات</h3>
+    <img src="assets/images/Group 523@2x.png">
+  
+</div>
+<div class="profile_left profile_left2" style="padding-top: 0;">
+    <div class="hami_acc">
 
         <!--each accordion  -->
         <?
             while($message = $messages->fetch_object()){
         ?>
         <button class="accordion hami_check" >
-        <?if($message->status == 1){ ?><span class="ticket_check"><i class="fa fa-check" aria-hidden="true"></i></span><?}?>
+        <?if($message->status == 1){ ?><span style="display:block;" class="ticket_check"><i class="fa fa-check" aria-hidden="true"></i></span><?}?>
         <h4 id="<?= $message->from_id ?>"><?= $action->marketer_get($message->from_id)->first_name." ".$action->marketer_get($message->from_id)->last_name?></h4>
         <p><?= $action->time_to_shamsi($message->created_at) ?></p>
         </button>
@@ -88,34 +88,32 @@ $messages = $action->supporter_message_list($id);
         </div>
         <?}?>
         <!--  -->
-        </div>
+      
+    </div>
 
-
-        </div>
-        </div>
-
-        <!-- pop up -->
-        <div class="darklayer"></div>
-        <div class="formpopup">
-        <div class="" style="width: 100%;display: table;">    <i class="close fa fa-times"></i>
-        </div>
-        <div class="pheader">
+   
+</div>
+</div>
+<div class="darklayer"></div>
+<div class="formpopup">
+    <div class="" style="width: 100%;display: table;">    <i class="close fa fa-times"></i>
+    </div>
+    <div class="pheader">   
         <p>
-        پاسخ به 
-
+            پاسخ به 
+            
         </p>
-        <h4><?= $action->marketer_get($message->from_id)->first_name." ".$action->marketer_get($message->from_id)->last_name ?></h4>
-        </div>
-        <p class="alert_text">متن پیام نمیتواند خالی باشد</p>
-        <form>
+        <h4 id="user_name">علی علوی</h4>
+    </div>
+    <p class="alert_text">متن پیام نمیتواند خالی باشد</p>
+    <form>
         <textarea value="پاسخ خود را وارد نمایید">
 
         </textarea>
         <a id="send-answre"  class="ans-ticket">ارسال</a>
-        </form>
-
+    </form>
+    
 </div>
-
 <script>
     // accordion
     var acc = document.getElementsByClassName("accordion");
@@ -140,7 +138,7 @@ $messages = $action->supporter_message_list($id);
     });
     var user_id;
     var question_id;
-    var support_id = <?= $id ?>;
+    var support_id = <?= $id?>;
     var ans_btns = document.getElementsByClassName("ans-aj");
     for (i = 0; i < ans_btns.length; i++) {
         ans_btns[i].addEventListener("click", function() {
@@ -148,36 +146,35 @@ $messages = $action->supporter_message_list($id);
             $('html,body').scrollTop(0);
             $('body').css('overflow','hidden');
             $('.formpopup').fadeIn();
+
             question_id = this.previousElementSibling.id;
             user_id = this.parentElement.previousElementSibling.firstElementChild.nextElementSibling.id; 
+            console.log($(user_id).val())           
+            $('#user_name').text( document.getElementById(user_id).innerHTML)
       });
     }
 
-
-// answ ajax //////////////////////////////////////////////////// enter url
     $('#send-answre').click(function(e){
  
         let text = this.previousElementSibling.value;
-        console.log(text)
         if(text == null) {
              $('.alert_text').fadeIn();
         }else{
+            console.log(user_id);
             $.ajax({
                 type : "POST",
                 url : "ajax/support-send-answer.php",
                 data:{text:text,user_id:user_id,question_id:question_id,support_id:support_id},
                 success : function(data){
-                    console.log('se')
-                     $('.formpopup').fadeOut();
+                     $('.formpopup').hide();
                      $('.darklayer').hide();
-                     $('.alert_text').fadeOut();
+                     $('.alert_text').hide();
                      $('body').css('overflow','auto');
                       document.getElementById(user_id).previousElementSibling.style.display='block';
-
+                      location.reload(true); 
                 }
             });
         }
-
     })
      
     </script>
