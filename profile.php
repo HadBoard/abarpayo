@@ -56,6 +56,10 @@ include_once "header.php";
                     include_once "profile-scores.php";
                 else if(isset($_GET['communicate']))
                     include_once "profile-communicate.php";
+                else if(isset($_GET['ticket']))
+                    include_once "profile-ticket.php";
+                else if(isset($_GET['support']))
+                    include_once "profile-support.php";
                 else
                    include_once "profile-edit.php";
                 ?>

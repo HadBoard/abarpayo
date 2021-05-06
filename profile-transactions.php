@@ -37,7 +37,6 @@
                 <tr>
                     <td <?= ($type == 1) ? 'class="dec_wallet"': 'class="inc_wallet"' ?>> <?= ($type == 1) ? "-".$transaction->amount : "+".$transaction->amount ?></td>
                     <td><?= $action->time_to_shamsi($transaction->date)?></td>
-                    <td><?= $transaction->cart_number?></td>
                     <td><?= $payment->action ?></td>
                 </tr>
         <?
@@ -47,7 +46,6 @@
             <tr>
                 <td class="dec_wallet"> <?= "-".$withdraw->amount ?></td>
                 <td><?= $action->time_to_shamsi($withdraw->paymented_at)?></td>
-                <td><?= $action->user_get_cart($withdraw->cart_id)->cart_number?></td>
                 <td>برداشت از حساب</td>
             </tr>
 

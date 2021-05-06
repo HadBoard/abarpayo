@@ -121,6 +121,7 @@
 <?
 
 $messages = $action->message_list($id);
+$support_id = $action->marketer_get($id)->support_id;
 
 $error = false;
 if (isset($_SESSION['error'])) {
@@ -131,7 +132,7 @@ if (isset($_SESSION['error'])) {
  
 if(isset($_POST['submit'])){
     $text = $action->request('text');
-    $command= $action->message_add($user_id,$parent,$text,$status);
+    $command= $action->message_add($id,$support_id,$parent,$text,$status);
     if ($command) {
         $_SESSION['error'] = 0;
     } else {

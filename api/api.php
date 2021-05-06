@@ -231,7 +231,8 @@ if(isset($_POST['function'])) {
         }
         $logs = $action->wallet_log_increase($user_id);
         while($log = $logs->fetch_object()){
-            $obj_inner -> wallet_date = $action->time_to_shamsi($action->wallet_log_get_payment($log->payment_id)->date);
+            $payment = $action->wallet_log_get_payment($log->payment_id)->fetch_object();
+            $obj_inner -> wallet_date = $action->time_to_shamsi($payment->date);
             $obj_inner -> amount = $log->amount;
             $obj_inner -> type = 1;
             $obj_inner -> action = 'افزایش موجودی کیف پول';
@@ -341,8 +342,14 @@ if(isset($_POST['function'])) {
         $user_id = $action->request('user_id');
         $obj -> first_name =  $action->user_get($user_id)->first_name;
         $obj -> last_name =  $action->user_get($user_id)->last_name;
-        $obj -> city_id = $action->user_get($user_id)->city_id;
-        $obj ->province_id = $action->city_get($action->user_get($user_id)->city_id)->province_id;
+        
+        $city_id = $action->user_get($user_id)->city_id;
+        $province_id = $action->city_get($city_id)->province_id;
+        
+        $obj -> city_id = $city_id;
+        $obj -> city_name = $action->city_get($city_id)->name;
+        $obj ->province_id = $province_id;
+        $obj -> province_name = $action->province_get($province_id)->name;
         $json = json_encode($obj);
         echo $json; 
     }

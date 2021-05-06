@@ -5,7 +5,7 @@
 @font-face { font-family: IRANSans; font-style: normal; font-weight: 200; src: url("../fonts/eot/IRANSansWeb_UltraLight.eot?#iefix") format("embedded-opentype"), url("../fonts/woff2/IRANSansWeb_UltraLight.woff2") format("woff2"), url("../fonts/woff/IRANSansWeb_UltraLight.woff") format("woff"), url("../fonts/ttf/IRANSansWeb_UltraLight.ttf") format("truetype"); }
 @font-face { font-family: IRANSans; font-style: normal; font-weight: normal; src: url("../fonts/eot/IRANSansWeb.eot?#iefix") format("embedded-opentype"), url("../fonts/woff2/IRANSansWeb.woff2") format("woff2"), url("../fonts/woff/IRANSansWeb.woff") format("woff"), url("../fonts/ttf/IRANSansWeb.ttf") format("truetype"); }
 * { padding: 0px; margin: 0px; box-sizing: border-box; font-family: IRANSans; color: rgb(26, 26, 26); }
-body { overflow-x: hidden; height: 100vh; width: 100vw; background: rgb(252, 252, 252); }
+body { overflow-x: hidden;  background: rgb(252, 252, 252); }
 a { text-decoration: none; }
 :focus { outline: none; }
 .info_header { background: rgb(0, 0, 0); padding: 5px 0px; }
@@ -563,4 +563,100 @@ label.form-check-label {
 }
 .city_header select:first-child {
     margin: 0 10px 0 15px;
+}
+
+.ans-ticket {float: left;margin: 10px 0;padding: 5px 25px;background: #09a609;color: #fff;border: 1px solid #09a609;display: table;transition: 0.3s ease-in-out all;}
+
+.ans-ticket:hover {transform: scale(1.1);font-weight: bold;}
+
+/* profile hami.html */
+.darklayer {
+  background: rgba(31,32,41,.75);
+  width: 100%;
+  height:100%;
+  position: absolute;
+  top: 0;
+  z-index: 9;
+  display: none;
+}
+
+.formpopup {
+  background: #fff;
+  border-radius: 5px;
+  height: 350px;
+  width: 450px;
+  position: absolute;
+  top: 10%;
+  z-index: 10;
+  right: 39%;
+  padding: 0.8rem 0.2rem;
+  display: none;
+}
+
+.pheader {
+  width: 80%;
+  display: table;
+  margin: auto;
+  margin-bottom: 0;
+  padding-top: 12px;
+}
+
+.pheader button {
+  border: none;
+  background: none;
+  color: #000;
+  /* width: 100%; */
+}
+
+.pheader p {
+  float: right;
+}
+
+.pheader h4 {
+  float: right;
+  margin-right: 6px;
+}
+
+.formpopup form {
+  width: 80%;
+  margin: auto;
+  margin-top: 14px;
+}
+
+.formpopup form textarea {
+  width: 100%;
+  resize: none;
+  border: none;
+  box-shadow: rgb(0 0 0 / 28%) 1px 1px 3px 1px;
+  height: 160px;
+  border-radius: 5px;
+  padding: 5px;
+}
+.formpopup i {
+    font-size: 20px;
+ }
+ .ticket_check {
+  float: right;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  background: #30c663;
+  border-radius: 20px;
+  margin-left: 7px;
+  display: none;
+}
+
+span.ticket_check i {
+  color: #fff;
+}
+.alert_text {
+    color: red;
+    padding: 0;
+    margin-bottom: 0;
+    display: none;
+}
+
+.formpopup form a {
+    margin-top: 2px;
+    border-radius: 5px;
 }
