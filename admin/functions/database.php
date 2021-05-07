@@ -1601,17 +1601,17 @@ public function admin_log($action_id){
 
 public function user_log_list(){
     $user_id=$_SESSION['user_id'];
-     return $this->connection->query("SELECT * FROM `tbl_user_log` WHERE `user_id` = '$user_id' AND `view`=0 ");
+     return $this->connection->query("SELECT * FROM `tbl_user_log` WHERE `user_id` = '$user_id' AND `admin_view`=0 ");
 }
 public function admin_log_list(){
      return $this->connection->query("SELECT * FROM `tbl_admin_log`WHERE`view`=0 ");
 }
 public function marketer_log_list(){
     $marketer_id=$_SESSION['marketre_id'];
-     return $this->connection->query("SELECT * FROM `tbl_marketer_log` WHERE `marketer_id` = '$marketer_id' AND `view`=0 ");
+     return $this->connection->query("SELECT * FROM `tbl_marketer_log` WHERE `marketer_id` = '$marketer_id' AND `admin_view`=0 ");
 }
 public function guild_log_list(){
-  return $this->connection->query("SELECT * FROM `tbl_guild_log` WHERE `view`=0 ");
+  return $this->connection->query("SELECT * FROM `tbl_guild_log` WHERE `admin_view`=0 ");
 }
 public function action_log_get($id){
     return $this->get_data("tbl_action_log", $id);
