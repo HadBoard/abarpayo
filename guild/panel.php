@@ -58,7 +58,7 @@ include('header.php');
                                 <span><i class="fa fa-archive f-s-80 color-white"></i></span>
                             </div>
                             <div class="media-body media-text-right">
-                                <span class="text-white f-s-30"><?$action->product_counter();?></span>
+                                <span class="text-white f-s-30"><?=$action->product_counter();?></span>
                                 <br>
                                 <span class="text-white f-s-20">محصولات</span>
                             </div>
