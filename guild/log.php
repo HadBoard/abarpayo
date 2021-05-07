@@ -16,7 +16,7 @@ $result = $action->guild_log_list();
 // ----------- delete --------------------------------------------------------------------------------------------------
 if (isset($_GET['remove'])) {
     $id = $action->request('remove');
-    $_SESSION['error'] = !$action->change_view($id,3);
+    $_SESSION['error'] = !$action->change_view($id);
     header("Location: $list_url");
     return;
 }

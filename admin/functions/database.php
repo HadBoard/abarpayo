@@ -243,7 +243,7 @@ class Action
             $this->admin_update_last_login();
             $_SESSION['admin_id'] = $row->id;
             $_SESSION['admin_access'] = $row->access;
-            $this->log_action(1,1);
+            $this->log_action(1);
             return true;
         }
         return false;
@@ -288,7 +288,7 @@ class Action
         `updated_at`='$now'
         WHERE `id` ='$id'");
         if (!$this->result($result)) return false;
-        $this->log_action(2,1);
+        $this->log_action(2);
         return $id;
     }
 
@@ -1583,27 +1583,9 @@ class Action
         return true;
     }
    // ----------- start log ----------------------------------------------------------------------------
-   public function log_action($action_id,$type){
-    if($type==0){
-        $this->user_log($action_id);
-    }
-    if($type==1){
-        $this->admin_log($action_id);
-    }
-    if($type==2){
-        $this->marketer_log($action_id);
-    }
-    if($type==3){
-        $this->guild_log($action_id);
-    }
-}
-public function user_log($action_id){
-    $now = time();
-    $user_id=$_SESSION['user_id'];
-    $ip=$_SERVER['REMOTE_ADDER'];
-    $result= $this->connection->query("INSERT INTO tbl_user_log (`user_id`,`action_id`,`ip`,`created_at`)VALUES('$user_id','$action_id','$ip','$now')");  
-    if (!$this->result($result)) return false;
-    return $this->connection->insert_id;
+   public function log_action($action_id){
+    
+    $this->admin_log($action_id);
 }
 
 public function admin_log($action_id){
@@ -1615,23 +1597,6 @@ public function admin_log($action_id){
     return $this->connection->insert_id;
 }
 
-public function marketer_log($action_id){
-    $now = time();
-    $marketer_id=$_SESSION['marketer_id'];
-    $ip=$_SERVER['REMOTE_ADDER'];
-    $result= $this->connection->query("INSERT INTO tbl_marketer_log (`marketer_id`,`action_id`,`ip`,`created_at`)VALUES('$marketer_id','$action_id','$ip','$now')");  
-    if (!$this->result($result)) return false;
-    return $this->connection->insert_id;
-}
-
-public function guild_log($action_id){
-    $now = time();
-    $guild_id=$_SESSION['guild_id'];
-    $ip=$_SERVER['REMOTE_ADDER'];
-    $result= $this->connection->query("INSERT INTO tbl_guild_log (`guild_id`,`action_id`,`ip`,`created_at`)VALUES('$guild_id','$action_id','$ip','$now')");  
-    if (!$this->result($result)) return false;
-    return $this->connection->insert_id;
-}
 public function user_log_list(){
     $user_id=$_SESSION['user_id'];
      return $this->connection->query("SELECT * FROM `tbl_guild_log` WHERE `user_id` = '$user_id' AND `view`=0 ");
@@ -1649,42 +1614,21 @@ public function guild_log_list(){
 public function action_log_get($id){
     return $this->get_data("tbl_action_log", $id);
 }
-public function change_view($id,$type){
-    if($type==0){
-        $result= $this->connection->query("UPDATE tbl_user_log SET `view`='1'");  
-        if (!$this->result($result)) return false;
-        return true;
-    }
-    if($type==1){
-        $result= $this->connection->query("UPDATE tbl_admin_log SET `view`='1'");  
-        if (!$this->result($result)) return false;
-        return true;
-    }
-    if($type==2){
-        $result= $this->connection->query("UPDATE tbl_marketer_log SET `view`='1'");  
-        if (!$this->result($result)) return false;
-        return true;
-    }
-    if($type==3){
-        $result= $this->connection->query("UPDATE tbl_guild_log SET `view`='1'");  
-        if (!$this->result($result)) return false;
-        return true;
-    }
-}
+
 public function change_admin_view($id,$type){
     if($type==0){
-        $result= $this->connection->query("UPDATE tbl_user_log SET `admin_view`='1'");  
+        $result= $this->connection->query("UPDATE tbl_user_log SET `admin_view`='1' WHERE id='$id'");  
         if (!$this->result($result)) return false;
         return true;
     }
    
     if($type==2){
-        $result= $this->connection->query("UPDATE tbl_marketer_log SET `admin_view`='1'");  
+        $result= $this->connection->query("UPDATE tbl_marketer_log SET `admin_view`='1'WHERE id='$id'");  
         if (!$this->result($result)) return false;
         return true;
     }
     if($type==3){
-        $result= $this->connection->query("UPDATE tbl_guild_log SET `admin_view`='1'");  
+        $result= $this->connection->query("UPDATE tbl_guild_log SET `admin_view`='1'WHERE id='$id'");  
         if (!$this->result($result)) return false;
         return true;
     }
