@@ -170,7 +170,7 @@ class Action
     {
         return $this->miladi_to_shamsi(date('Y-m-d', $timestamp));
     }
-
+   
     // ----------- convert shamsi date to miladi date
     public function shamsi_to_miladi($date)
     {
@@ -1463,7 +1463,9 @@ class Action
     {
         return $this->get_data("tbl_contact", $id);
     }
+   
     //SHOP ADMIN----------------------------------------------------------------------------------------
+  
     public function shop_admin_list($shop_id)
     {
         $result = $this->connection->query("SELECT * FROM `tbl_shop_admin` WHERE `shop_id`='$shop_id'");
@@ -1599,14 +1601,14 @@ public function admin_log($action_id){
 
 public function user_log_list(){
     $user_id=$_SESSION['user_id'];
-     return $this->connection->query("SELECT * FROM `tbl_guild_log` WHERE `user_id` = '$user_id' AND `view`=0 ");
+     return $this->connection->query("SELECT * FROM `tbl_user_log` WHERE `user_id` = '$user_id' AND `view`=0 ");
 }
 public function admin_log_list(){
-     return $this->connection->query("SELECT * FROM `tbl_guild_log`WHERE`view`=0 ");
+     return $this->connection->query("SELECT * FROM `tbl_admin_log`WHERE`view`=0 ");
 }
 public function marketer_log_list(){
     $marketer_id=$_SESSION['marketre_id'];
-     return $this->connection->query("SELECT * FROM `tbl_guild_log` WHERE `marketer_id` = '$marketer_id' AND `view`=0 ");
+     return $this->connection->query("SELECT * FROM `tbl_marketer_log` WHERE `marketer_id` = '$marketer_id' AND `view`=0 ");
 }
 public function guild_log_list(){
   return $this->connection->query("SELECT * FROM `tbl_guild_log` WHERE `view`=0 ");
@@ -1618,6 +1620,11 @@ public function action_log_get($id){
 public function change_admin_view($id,$type){
     if($type==0){
         $result= $this->connection->query("UPDATE tbl_user_log SET `admin_view`='1' WHERE id='$id'");  
+        if (!$this->result($result)) return false;
+        return true;
+    }
+    if($type==1){
+        $result= $this->connection->query("UPDATE tbl_admin_log SET `view`='1' WHERE id='$id'");  
         if (!$this->result($result)) return false;
         return true;
     }

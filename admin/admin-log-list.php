@@ -6,17 +6,17 @@ $action = new Action();
 
 // ----------- urls ----------------------------------------------------------------------------------------------------
 // main url for remove , change status
-$list_url = "log.php";
+$list_url = "admin-log-list.php";
 // ----------- urls ----------------------------------------------------------------------------------------------------
 
 // ----------- get data ------------------------------------------------------------------------------------------------
 $counter = 1;
-$result = $action->guild_log_list();
+$result = $action->admin_log_list();
 // ----------- get data ------------------------------------------------------------------------------------------------
 // ----------- delete --------------------------------------------------------------------------------------------------
 if (isset($_GET['remove'])) {
     $id = $action->request('remove');
-    $_SESSION['error'] = !$action->change_view($id);
+    $_SESSION['error'] = !$action->change_admin_view($id,1);
     header("Location: $list_url");
     return;
 }
@@ -39,7 +39,7 @@ include('header.php'); ?>
         <div class="row page-titles">
             <!-- ----------- start breadcrumb ---------------------------------------------------------------------- -->
             <div class="col-md-12 align-self-center text-right">
-                <h3 class="text-primary">لیست لاگ ها</h3></div>
+                <h3 class="text-primary">لاگ مدیران</h3></div>
             <div class="col-md-12 align-self-center text-right">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
@@ -48,7 +48,7 @@ include('header.php'); ?>
                             خانه
                         </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">لسیت لاگ ها</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">لاگ مدیران</a></li>
                 </ol>
             </div>
             <!-- ----------- end breadcrumb ------------------------------------------------------------------------ -->
@@ -92,20 +92,22 @@ include('header.php'); ?>
                                     </thead>
 
                                     <tbody class="text-center">
-                                    <? while ($row = $result->fetch_object()) { ?>
-                                        <tr class="text-center">
+                                    <? 
+                                    if(mysqli_num_rows($result)){
+                                        while ($row = $result->fetch_object()) { ?>
+                                            <tr class="text-center">
 
-                                            <td class="text-center"><?= $counter++ ?></td>
-                                            <td class="text-center"><?= $action->admin_get($row->guild_id)->first_name." ".$action->admin_get($row->guild_id)->last_name; ?></td>
-                                            <td class="text-center"><?= $action->action_log_get($row->action_id)->text ?></td>
-                                            <td class="text-center"><?=$action->time_to_shamsi($row->created_at) ?></td>
-                                            <td class="text-center">
-                                            <a href="<?= $list_url ?>?remove=<?= $row->id ?>">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                            </td>
-                                        </tr>
-                                    <? } ?>
+                                                <td class="text-center"><?= $counter++ ?></td>
+                                                <td class="text-center"><?= $action->admin_get($row->admin_id)->first_name." ".$action->admin_get($row->admin_id)->last_name; ?></td>
+                                                <td class="text-center"><?= $action->action_log_get($row->action_id)->text ?></td>
+                                                <td class="text-center"><?=$action->time_to_shamsi($row->created_at)."</br>".date("H:i:s",$row->created_at) ?></td>
+                                                <td class="text-center">
+                                                <a href="<?= $list_url ?>?remove=<?= $row->id ?>">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                                </td>
+                                            </tr>
+                                    <? } }?>
                                     </tbody>
                                 </table>
                             </div>
