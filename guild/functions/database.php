@@ -243,6 +243,7 @@ class Action
             $this->guild_update_last_login();
             $_SESSION['guild_id'] = $row->id;
             $_SESSION['shop_id'] = $row->shop_id;
+            $this->log_action(1);
             return true;
         }
         return false;
@@ -365,7 +366,10 @@ public function shop_get($id)
     {
         return $this->table_option("tbl_product", $id);
     }
- 
+    public function product_counter()
+    {
+        return $this->table_counter("tbl_product");
+    }
      public function product_add($title,$description,$price,$discount,$score,$status)
      {
          $now = time();
@@ -455,7 +459,7 @@ public function shop_get($id)
       public function shop_comment_list()
       {
         $shop_id=$_SESSION['shop_id'];
-        return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = '5' AND `parent` = 0");
+        return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = '$shop_id' AND `parent` = 0");
       }
 
       public function shop_comment_confirmed_list()
@@ -508,7 +512,8 @@ public function shop_get($id)
       }
     // ----------- end user ----------------------------------------------------------------------------
     
-
+// ----------- province_city ----------------------------------------------------------------------------
+    
     public function city_get($id)
     {
         return $this->get_data("tbl_city", $id);
@@ -522,7 +527,42 @@ public function shop_get($id)
     {
         return $this->table_list("tbl_province");
     }
-       // ----------- end Action class ----------------------------------------------------------------------------------------
+// -----------end province_city ----------------------------------------------------------------------------
+ 
+// ----------- start log ----------------------------------------------------------------------------
+    public function log_action($action_id){
+            $this->guild_log($action_id);  
+    }
+
+    public function guild_log($action_id){
+        $now = time();
+        $guild_id=$_SESSION['guild_id'];
+        $ip=$_SERVER['REMOTE_ADDER'];
+        $result= $this->connection->query("INSERT INTO tbl_guild_log (`guild_id`,`action_id`,`ip`,`created_at`)VALUES('$guild_id','$action_id','$ip','$now')");  
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+   
+    public function guild_log_list(){
+      return $this->connection->query("SELECT * FROM `tbl_guild_log` WHERE `view`=0 ");
+    }
+    public function action_log_get($id){
+        return $this->get_data("tbl_action_log", $id);
+    }
+    public function change_view($id){
+        
+            $result= $this->connection->query("UPDATE tbl_guild_log SET `view`='1' WHERE `id`='$id'");  
+            if (!$this->result($result)) return false;
+            return true;
+        
+    }
+    
+
+// ----------- end log ----------------------------------------------------------------------------
+ 
+
+
+// ----------- end Action class ----------------------------------------------------------------------------------------
 
 
 }
