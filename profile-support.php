@@ -94,7 +94,6 @@ $messages = $action->supporter_message_list($id);
    
 </div>
 </div>
-<div class="darklayer"></div>
 <div class="formpopup">
     <div class="" style="width: 100%;display: table;">    <i class="close fa fa-times"></i>
     </div>
@@ -146,10 +145,10 @@ $messages = $action->supporter_message_list($id);
             $('html,body').scrollTop(0);
             $('body').css('overflow','hidden');
             $('.formpopup').fadeIn();
-
+            var this_item=this;
             question_id = this.previousElementSibling.id;
             user_id = this.parentElement.previousElementSibling.firstElementChild.nextElementSibling.id; 
-            console.log($(user_id).val())           
+             console.log('user id is : ',user_id)      
             $('#user_name').text( document.getElementById(user_id).innerHTML)
       });
     }

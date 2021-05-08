@@ -32,6 +32,7 @@ $action = new Action();
 </head>
 
 <body>
+<div class="darklayer"></div>
 
 <!-- header -->
 <header>
