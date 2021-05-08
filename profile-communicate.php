@@ -185,7 +185,7 @@ if(isset($_POST['submit'])){
                                          </div>
                                     </div>
                                 </div>
-                            <? $action->setMessageView($reply->id);} ?>
+                            <?if($row->status == 1){$action->setMessageView($row->id);} } ?>
                         </div>
                     </div>
                 </div>
@@ -206,3 +206,4 @@ if(isset($_POST['submit'])){
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script type="text/javascript"  src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<??>

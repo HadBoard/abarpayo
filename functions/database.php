@@ -1308,8 +1308,7 @@ public function change_view($id,$type){
         $result= $this->connection->query("UPDATE tbl_marketer_log SET `view`='1'WHERE id='$id'");  
         if (!$this->result($result)) return false;
         return true;
-    }
-   
+    }  
 }
 
 

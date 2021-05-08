@@ -168,7 +168,7 @@ $messages = $action->supporter_message_list($id);
                      $('.darklayer').hide();
                      $('.alert_text').hide();
                      $('body').css('overflow','auto');
-                     alert(user_id,question_id)
+                    //  alert(user_id,question_id)
                       document.getElementById(user_id).previousElementSibling.style.display='block';
                       location.reload(true); 
                 }
