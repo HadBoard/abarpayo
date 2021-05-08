@@ -663,13 +663,14 @@ span.ticket_check i {
 
 
 .notif_table tr:first-child td {
-  font-size: 16px;
+  font-size: 15px;
   color: rgb(26, 26, 26);
-  font-weight: bold;
+  font-weight: 600;
 }
 .notif_table td {
   color: rgb(34, 51, 66);
   font-size: 15px;
+  font-weight: 400;
 }
 .notif_table tr:last-child {
   border-bottom: none;
@@ -694,11 +695,17 @@ span.ticket_check i {
 }
 
 .notif_table td:first-child {
-  width: 70%;
+  width: 5%;
   max-width: 60%;
 }
 
-.notif_table td:nth-child(2n) {
+.notif_table td:nth-child(2) {
+  width: 50%;
+  max-width: 50%;
+  padding-right: 30px;
+}
+
+.notif_table td:nth-child(3) {
   width: 20%;
   max-width: 20%;
 }
