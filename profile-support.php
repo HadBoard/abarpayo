@@ -146,12 +146,8 @@ $messages = $action->supporter_message_list($id);
             $('html,body').scrollTop(0);
             $('body').css('overflow','hidden');
             $('.formpopup').fadeIn();
-
-            question_id = this.previousElementSibling.id;
             user_id = this.parentElement.previousElementSibling.firstElementChild.nextElementSibling.id; 
-            alert(user_id,question_id)
-
-
+            question_id = this.previousElementSibling.id;
             $('#user_name').text( document.getElementById(user_id).innerHTML)
       });
     }

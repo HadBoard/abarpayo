@@ -32,6 +32,7 @@ $action = new Action();
 </head>
 
 <body>
+<div class="darklayer"></div>
 
 <!-- header -->
 <header>
@@ -107,7 +108,16 @@ $action = new Action();
                     <div class="notice_header">
                         <a href="notification.php">
                             <img src="assets/images/Announcement.png">
-                            <span>2</span>
+                            <?
+                                if($action->user()){
+                                    $id = $action->user()->id;
+                                    $isUser= 1;
+                                }else if($action->marketer()){
+                                    $id = $action->marketer()->id;
+                                    $isUser = 0;
+                                }
+                            ?>
+                            <span><?= $action->notification_counter($id,$isUser) ?></span>
                         </a>
                     </div>
                     <?if($action->marketer()){?>

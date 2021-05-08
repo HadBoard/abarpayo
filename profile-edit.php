@@ -84,7 +84,9 @@ if (isset($_SESSION['error'])) {
             <? }
 } ?>
 
-
+<head>
+    <link rel="stylesheet" href="assets/css/persian-datepicker.css">
+</head>
 <div class="edit_profile_div">
 
     <div class="profile_header">
@@ -118,7 +120,7 @@ if (isset($_SESSION['error'])) {
             
             <div class="form-group">
             <label for="birthday">تاریخ تولد</label>
-                <input type="text" id="birthday" name="birthday" class="form-control"
+                <input type="text" id="birthday" name="birthday" class="form-control observer-example"
                         placeholder="تاریخ تولد"
                         value="<? 
                             if($action->user() && $action->user_get($id)->birthday){
@@ -140,5 +142,18 @@ if (isset($_SESSION['error'])) {
 $("label[for='pic']").click(function(){
     $("input[name=pic]").click();
 })
+</script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="assets/js/persian-date.js"></script>
+  <script src="assets/js/persian-datepicker.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+            $('.observer-example').persianDatepicker({
+        observer: true,
+        format: 'YYYY/MM/DD',
+        altField: '.observer-example-alt'
+    });
+     })
 
 </script>

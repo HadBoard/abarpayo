@@ -144,7 +144,14 @@ $action = new Action();
             <span class="hide-menu">مدیریت سیستم</span>
         </a>
     </li>
-
+    <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fas fa-user "></i><span class="hide-menu">لاگ سنتر</span></a>
+        <ul aria-expanded="false" class="collapse">
+            <li><a href="admin-log-list.php">لاگ مدیران</a></li>
+            <li><a href="marketer-log-list.php">لاگ بازاریابان</a></li>
+            <li><a href="user-log-list.php">لاگ کاربران</a></li>
+            <li><a href="guild-log-list.php">لاگ اصناف</a></li>
+        </ul>
+    </li>
     <li>
         <a class="has-arrow" href="province-list.php" aria-expanded="false">
             <i class="fa fa-user"></i>

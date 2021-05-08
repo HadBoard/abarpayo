@@ -121,10 +121,7 @@ include('header.php'); ?>
                                             ?>
                                         </td>
                                         <td>
-                                            <a href="<?= $main_url ?>?edit=<?= $row->id ?>">
-                                                <i class="fa fa-pencil-square-o"></i>
-                                            </a>
-                                            |
+                                            
                                             <a href="<?= $list_url ?>?shop=<?= $row->shop_id?>&remove=<?= $row->id ?>">
                                                 <i class="fa fa-trash"></i>
                                             </a>

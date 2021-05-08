@@ -191,7 +191,7 @@ include('header.php'); ?>
 
                                 <div class="form-actions">
                                     <label class="float-right">
-                                        <input type="checkbox" class="float-right m-1" name="validation" value="1"
+                                        <input type="checkbox" class="float-right m-1" name="status" value="1"
                                             <? if ($edit_id && $edit_row->status) echo "checked"; ?> >
                                         فعال
                                     </label>

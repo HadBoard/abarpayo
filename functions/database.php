@@ -246,6 +246,7 @@ class Action
         if ($rowcount) {
             $this->user_update_last_login();
             $_SESSION['user_id'] = $row->id;
+            $this->log_action(1,0);
             return true;
         }
         return false;
@@ -290,6 +291,7 @@ class Action
         `updated_at`='$now'
         WHERE `id` ='$id'");
         if (!$this->result($result)) return false;
+        $this->log_action(2,0);
         return $id;
     }
 
@@ -736,6 +738,15 @@ class Action
         return $from->num_rows;
     }
 
+    public function notification_counter($id,$isUser){
+        if($isUser == 1){
+            $result =$this->connection->query("SELECT * FROM `tbl_user_log` WHERE `user_id` = '$id' AND `view` = '0' ");
+        }else{
+            $result =$this->connection->query("SELECT * FROM `tbl_marketer_log` WHERE `marketer_id` = '$id' AND `view`='0'");
+        }
+        return $result->num_rows;
+    }
+
     public function setMessageView($id){
         $result = $this->connection->query("UPDATE `tbl_message` SET 
         `user_view`= 1
@@ -1053,6 +1064,8 @@ class Action
         return $this->connection->insert_id;
     }
 
+    
+
     public function has_sub_marketer($id){
         $result =  $this->connection->query("SELECT * FROM `tbl_marketer` WHERE `support_id` = '$id' ");
         if($result->num_rows > 0) return true;
@@ -1242,6 +1255,68 @@ public function ticket_add($user_id,$title,$text,$type,$view,$status){
     if (!$this->result($result)) return false;
     return $this->connection->insert_id;
 }
+// ----------- start log ----------------------------------------------------------------------------
+public function log_action($action_id,$type){
+    if($type==0){
+        $this->user_log($action_id);
+    }
+
+    if($type==2){
+        $this->marketer_log($action_id);
+    }
+   
+}
+public function user_log($action_id){
+    $now = time();
+    $user_id=$_SESSION['user_id'];
+    $ip=$_SERVER['REMOTE_ADDER'];
+    $result= $this->connection->query("INSERT INTO tbl_user_log (`user_id`,`action_id`,`ip`,`created_at`)VALUES('$user_id','$action_id','$ip','$now')");  
+    if (!$this->result($result)) return false;
+    return $this->connection->insert_id;
+}
+
+
+public function marketer_log($action_id){
+    $now = time();
+    $marketer_id=$_SESSION['marketer_id'];
+    $ip=$_SERVER['REMOTE_ADDER'];
+    $result= $this->connection->query("INSERT INTO tbl_marketer_log (`marketer_id`,`action_id`,`ip`,`created_at`)VALUES('$marketer_id','$action_id','$ip','$now')");  
+    if (!$this->result($result)) return false;
+    return $this->connection->insert_id;
+}
+
+public function user_log_list(){
+    $user_id=$_SESSION['user_id'];
+     return $this->connection->query("SELECT * FROM `tbl_user_log` WHERE `user_id` = '$user_id' AND `view`=0 ORDER BY `id` DESC");
+}
+
+public function marketer_log_list(){
+    $marketer_id=$_SESSION['marketre_id'];
+     return $this->connection->query("SELECT * FROM `tbl_marketer_log` WHERE `marketer_id` = '$marketer_id' AND `view`=0 ORDER BY `id` DESC");
+}
+
+public function action_log_get($id){
+    return $this->get_data("tbl_action_log", $id);
+}
+public function change_view($id,$type){
+    if($type==0){
+        $result= $this->connection->query("UPDATE tbl_user_log SET `view`='1' WHERE id='$id'");  
+        if (!$this->result($result)) return false;
+        return true;
+    }
+    if($type==2){
+        $result= $this->connection->query("UPDATE tbl_marketer_log SET `view`='1'WHERE id='$id'");  
+        if (!$this->result($result)) return false;
+        return true;
+    }
+   
+}
+
+
+
+// ----------- end log ----------------------------------------------------------------------------
+
+
 
 }
 
