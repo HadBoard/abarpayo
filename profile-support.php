@@ -78,7 +78,7 @@ $messages = $action->supporter_message_list($id);
             while($message = $messages->fetch_object()){
         ?>
         <button class="accordion hami_check" >
-        <?if($message->status == 1){ ?><span style="display:block;" class="ticket_check"><i class="fa fa-check" aria-hidden="true"></i></span><?}?>
+        <span <?if($message->status == 1){ ?>style="display:block;" <?}?>class="ticket_check"><i class="fa fa-check" aria-hidden="true"></i></span>
         <h4 id="<?= $message->from_id ?>"><?= $action->marketer_get($message->from_id)->first_name." ".$action->marketer_get($message->from_id)->last_name?></h4>
         <p><?= $action->time_to_shamsi($message->created_at) ?></p>
         </button>
@@ -149,7 +149,9 @@ $messages = $action->supporter_message_list($id);
 
             question_id = this.previousElementSibling.id;
             user_id = this.parentElement.previousElementSibling.firstElementChild.nextElementSibling.id; 
-            console.log($(user_id).val())           
+            alert(user_id,question_id)
+
+
             $('#user_name').text( document.getElementById(user_id).innerHTML)
       });
     }
@@ -160,7 +162,7 @@ $messages = $action->supporter_message_list($id);
         if(text == null) {
              $('.alert_text').fadeIn();
         }else{
-            console.log(user_id);
+            
             $.ajax({
                 type : "POST",
                 url : "ajax/support-send-answer.php",
@@ -170,6 +172,7 @@ $messages = $action->supporter_message_list($id);
                      $('.darklayer').hide();
                      $('.alert_text').hide();
                      $('body').css('overflow','auto');
+                     alert(user_id,question_id)
                       document.getElementById(user_id).previousElementSibling.style.display='block';
                       location.reload(true); 
                 }

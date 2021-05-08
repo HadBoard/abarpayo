@@ -110,14 +110,14 @@ $action = new Action();
                             <span>2</span>
                         </a>
                     </div>
-
+                    <?if($action->marketer()){?>
                     <div class="message_header">
-                        <a href="message.php">
+                        <a href="profile.php?communicate">
                             <img src="assets/images/message.png">
-                            <span>2</span>
+                            <span><?= $action->new_message_counter($action->marketer()->id) ?></span>
                         </a>
                     </div>
-
+                    <?}?>
                 </div>
             <? } else { ?>
                 <div class="col-md-4">

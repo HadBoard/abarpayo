@@ -321,8 +321,6 @@ class Action
         return $this->marketer_get($marketer_id)->payment_type == 2 && $this->marketer_get($marketer_id)->payment_id == 0;
         
     }
-
-
     public function user_get_phone($phone){
         return $this->connection->query("SELECT * FROM `tbl_user` WHERE `phone` = '$phone'");
     }
@@ -708,7 +706,6 @@ class Action
     }
 
     public function message_status($id){
-        $now = time();
         $result = $this->connection->query("UPDATE `tbl_message` SET 
         `status`= 1
         WHERE `id` ='$id'");
@@ -722,7 +719,7 @@ class Action
     }
 
     public function message_list($from_id){
-        return $this->connection->query("SELECT * FROM `tbl_message` WHERE `from_id` = '$from_id' "); 
+        return $this->connection->query("SELECT * FROM `tbl_message` WHERE `from_id` = '$from_id' AND `parent` = 0 "); 
     }
 
     public function message_reply_list($parent){
@@ -731,6 +728,20 @@ class Action
 
     public function ticket_replys($user_id){
         return $this->connection->query("SELECT * FROM `tbl_ticket` WHERE `user_id` = '$user_id' AND `admin_id` IS NOT NULL ");
+    }
+
+    public function new_message_counter($marketer_id){
+
+        $from =$this->connection->query("SELECT * FROM `tbl_message` WHERE `from_id` = '$marketer_id' AND `user_view`='0' AND `status` = '1'");
+        return $from->num_rows;
+    }
+
+    public function setMessageView($id){
+        $result = $this->connection->query("UPDATE `tbl_message` SET 
+        `user_view`= 1
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
     }
     
     // ----------- start VALIDATION_CODE ------------------------------------------------------------------------------------------
@@ -1040,6 +1051,11 @@ class Action
         ('$first_name','$last_name','$phone','$reference_code','$reference_id','$support_id','$national_code','$package_id','$payment_type','$now',0)");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
+    }
+
+    public function has_sub_marketer($id){
+        $result =  $this->connection->query("SELECT * FROM `tbl_marketer` WHERE `support_id` = '$id' ");
+        if($result->num_rows > 0) return true;
     }
 
     public function marketer_profile_edit($id,$first_name, $last_name,$national_code,$birthday,$icon){

@@ -143,33 +143,6 @@ if(isset($_POST['submit'])){
 }
 ?>
 
-<? if ($error) {
-if ($error_val) { ?>
-
-        <div class="modal">
-        <div class="alert alert-fail">
-            <span class="close_alart">×</span>
-            <p>
-                عملیات ناموفق بود!
-            </p>
-        </div>
-    </div>
-    <script src="assets/js/alert.js"></script>
-    
-<? } else { ?>
-    <div class="modal">
-        <div class="alert alert-suc">
-            <span class="close_alart">×</span>
-            <p>
-                عملیات موفق بود!
-            </p>
-        </div>
-    </div>
-    <script src="assets/js/alert.js"></script>
-    
-<? }
-} ?>
-
 <div class="edit_profile_div">
 
     <div class="profile_header">
@@ -192,56 +165,6 @@ if ($error_val) { ?>
                 <div class="row">
                     <div class="">
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                            <!-- <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingOne">
-                                    <h4 class="panel-title">
-                                        <a class="first" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            رمز موفقیت ابرپایو در چیست ؟
-                                            <span> </span>
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                    <div class="panel-body">
-                                            <p>  ایمان ، تقوا ، عمل صالح </p>
-                                        </div>
-                                </div>
-                            </div>
-            
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingTwo">
-                                    <h4 class="panel-title">
-                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            چرا الکل قبل از کشف آن حرام اعلام شده بود
-                                            <span> </span>
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                    <div class="panel-body">
-                                        <p>چونکه در واقع الکل وجود داشته از قرن های گزشته و حرام بوده اما کشف فرمولی و شیمیایی آن بعدا اتفاق افتاده .</p>
-                                        </div>
-                                </div>
-                            </div>
-            
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingThree">
-                                    <h4 class="panel-title">
-                                        <a class="collapsed last" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            جایگاه ایرانیان در آن دنیا چیست ؟
-                                            <span> </span>
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                    <div class="panel-body">
-                                        <p>
-                                            تصور این بنده حقیر این هستش که ما مثلا تو اون دنیا 3 تا جهنم داریم جهنم راحت جهنم متوسط و سخت 
-                                            حالا اگه شما جهنمی باشی خدا میگه که این تو دنیا ایران بوده پس بفرستینش جهنم سخته چون عذابای اون دوتا جهنم براش تکراریه 
-                                        </p>
-                                    </div>
-                                </div>
-                            </div> -->
                             <?
                               while ($row = $messages->fetch_object()) { 
                                 $message_replys = $action->message_reply_list($row->id);
@@ -262,7 +185,7 @@ if ($error_val) { ?>
                                          </div>
                                     </div>
                                 </div>
-                            <? } ?>
+                            <? $action->setMessageView($reply->id);} ?>
                         </div>
                     </div>
                 </div>
@@ -271,18 +194,6 @@ if ($error_val) { ?>
         <!--  -->
         <form  action="" method="post">
             <h4 class="pq_title">سوال جدید بپرسید</h4>
-
-            <!-- <div class="form-group">
-                <label for="title">عنوان</label>
-                <input type="text" name="title" placeholder="فقط حروف فارسی">
-            </div> -->
-            <!-- <div class="form-group">
-                <label for="category">دسته بندی</label>
-                <select name="category">
-                <option>دسته بندی را انتخاب فرمایید .</option>
-                        
-                </select>
-            </div> -->
             <div class="form-group">
                 <label for="text">متن سوال</label>
                 <textarea name="text"></textarea>

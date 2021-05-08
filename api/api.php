@@ -423,6 +423,15 @@ if(isset($_POST['function'])) {
         $json = json_encode($obj);
         echo $json; 
     }
+
+    if($_POST['function'] == 'referenceCode'){
+        $user_id = $action->request('user_id');
+        $invitation_code =  $action->user_get($user_id)->reference_code;
+        $obj -> code = $invitation_code;
+        $obj -> link = "http://abarpayo.com/abarpayo/phone.php?ref='$invitation_code'";
+        $json = json_encode($obj);
+        echo $json; 
+    }
     
 }
 
