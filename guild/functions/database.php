@@ -263,7 +263,7 @@ class Action
     // ----------- update last login of guild (logged)
     public function guild_update_last_login()
     {
-        $id = $this->guild()->id;
+        $id = $_SESSION['guild_id'];
         $now = strtotime(date('Y-m-d H:i:s'));
         $result = $this->connection->query("UPDATE `tbl_shop_admin` SET `last_login`='$now' WHERE `id`='$id'");
         if (!$this->result($result)) return false;
@@ -274,7 +274,6 @@ class Action
     // ----------- for show all guilds
     public function guild_list()
     {
-        $id = $this->guild()->id;
         $shop_id=$_SESSION['shop_id'];
         $result = $this->connection->query("SELECT * FROM `tbl_shop_admin` WHERE `shop_id`='$shop_id'  ORDER BY `id` DESC");
         if (!$this->result($result)) return false;

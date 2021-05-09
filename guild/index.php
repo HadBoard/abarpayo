@@ -32,6 +32,10 @@ if (isset($_POST['sub1'])) {
         $_SESSION['error'] = 1;
         header("Location: index.php");
     }
+    else{
+        header("Location: panel.php");
+    
+    }
 
     // bye bye :)
 }
