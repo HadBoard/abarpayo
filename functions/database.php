@@ -244,7 +244,7 @@ class Action
         $rowcount = mysqli_num_rows($result);
         $row = $result->fetch_object();
         if ($rowcount) {
-            $this->user_update_last_login();
+            $this->user_update_last_login($row->id);
             $_SESSION['user_id'] = $row->id;
             $this->log_action(1,0);
             return true;
