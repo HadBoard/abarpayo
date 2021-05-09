@@ -173,7 +173,7 @@ if(isset($_POST['function'])) {
         $obj -> postal_code = $action->user_get($id)->postal_code;
         $obj -> city_id = $action->user_get($id)->city_id;
         $obj ->province_id = $action->city_get($action->user_get($id)->city_id)->province_id;
-        $timestamp = $action->user_get($id)->birthday;
+        $timestamp = $action->user_get($id)->birthday ? $action->time_to_shamsi($action->user_get($id)->birthday) : " ";
         $obj -> birthday = $timestamp;
         $json = json_encode($obj);
         echo $json;
@@ -189,7 +189,7 @@ if(isset($_POST['function'])) {
         $address = $action->request('address');
         $postal_code = $action->request('postal_code');
         $city_id = $action->request('city_id');
-        // $birthday = $action->request_date('birthday');
+        $birthday = $action->request_date('birthday');
         $command = $action->app_profile_edit($id,$first_name, $last_name,$national_code,$birthday,$address,$postal_code,$city_id);
         if($command){
             $obj->result = 1;
@@ -329,8 +329,8 @@ if(isset($_POST['function'])) {
         $user_id = $action->request('user_id');
         $requests  = $action->last_request($user_id);
         $request = $requests->fetch_object();
-        $obj -> cart_number  = $action->cart_get($request->cart_id)->cart_number;
-        $obj -> request_date = $request->created_at;
+        $obj -> cart_number  = $action->cart_get($request->cart_id)->title;
+        $obj -> request_date = $action->time_to_shamsi($request->created_at);
         $obj -> status = $request->status;
         $obj -> amount = $request->amount;
         $json = json_encode($obj);
@@ -429,6 +429,26 @@ if(isset($_POST['function'])) {
         $invitation_code =  $action->user_get($user_id)->reference_code;
         $obj -> code = $invitation_code;
         $obj -> link = "http://abarpayo.com/abarpayo/phone.php?ref='$invitation_code'";
+        $json = json_encode($obj);
+        echo $json; 
+    }
+
+    if($_POST['function'] == 'userProfile'){
+        $obj -> result = 0;
+        $id = $action->request('user_id');
+        // receive image as POST Parameter
+        $image = str_replace('data:image/png;base64,', '', $action->request('image'));
+        $image = str_replace(' ', '+', $image);
+        // Decode the Base64 encoded Image
+        $data = base64_decode($image);
+        // Create Image path with Image name and Extension
+        $file = '../admin/users/' . $action->get_token(10) . '.jpg';
+        // Save Image in the Image Directory
+        $success = file_put_contents($file, $data);
+        $command = $action -> user_profile($id,$file);
+        if($command){
+            $obj->result = 1;
+        }
         $json = json_encode($obj);
         echo $json; 
     }

@@ -495,7 +495,15 @@ class Action
         return $user_id;
     }
 
-
+    public function user_profile($user_id,$profile){
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_user` SET 
+        `profile`='$profile',
+        `updated_at`='$now'
+        WHERE `id` ='$user_id'");
+        if (!$this->result($result)) return false;
+        return $user_id;
+    }
 
     public function user_phone_edit($first_name,$last_name,$national_code,$phone,$birthday)
     {
@@ -1072,7 +1080,7 @@ class Action
 
     
 
-    public function has_sub_marketer($id){
+    public function isSupporter($id){
         $result =  $this->connection->query("SELECT * FROM `tbl_marketer` WHERE `support_id` = '$id' ");
         if($result->num_rows > 0) return true;
     }

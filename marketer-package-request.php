@@ -1,11 +1,15 @@
 <?php
 require_once "functions/database.php";
 $action = new Action();
+session_start();
 if(isset($_SESSION['marketer_package']) || isset($_POST['pay_factor'])){
     $amount = $_SESSION['marketer_package'];
     unset($_SESSION['marketer_package']);
-    $amount = $action->request('package');
+    if(isset($_POST['pay_factor'])){
+        $amount = $action->request('package');
+    }
     $_SESSION['marketer_amount'] = $amount;
+   
     $Amount = $amount;
 $MerchantID = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'; //Required
 //$Amount = $_SESSION['cost']/1000; //Amount will be based on Toman - Required

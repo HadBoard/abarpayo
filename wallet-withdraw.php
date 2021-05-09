@@ -85,12 +85,13 @@ if ($error_val) { ?>
                     <option>کارت را انتخاب فرمایید .</option>
                     <?
                     while ($option = $option_result->fetch_object()) {
+                        //$cart = substr($option->cart_number,-4); 
                         echo '<option value="';
                         echo $option->id;
                         echo '"';
                         if ($option->id == $row->cart_id) echo "selected";
                         echo '>';
-                        echo $option->cart_number;
+                        echo $option->title." | ". substr($option->cart_number,-4);
                         echo '</option>';
                     }
                     ?>
