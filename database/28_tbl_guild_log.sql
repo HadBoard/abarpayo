@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2021 at 11:21 AM
+-- Generation Time: May 09, 2021 at 09:50 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `tbl_guild_log` (
   `id` int(11) NOT NULL,
   `guild_id` int(11) NOT NULL,
+  `shop_id` int(11) NOT NULL,
   `action_id` int(11) NOT NULL,
   `ip` int(11) NOT NULL,
   `admin_view` int(11) NOT NULL,
@@ -41,8 +42,9 @@ CREATE TABLE `tbl_guild_log` (
 -- Dumping data for table `tbl_guild_log`
 --
 
-INSERT INTO `tbl_guild_log` (`id`, `guild_id`, `action_id`, `ip`, `admin_view`, `view`, `created_at`) VALUES
-(1, 2, 1, 0, 0, 0, 1620375853);
+INSERT INTO `tbl_guild_log` (`id`, `guild_id`, `shop_id`, `action_id`, `ip`, `admin_view`, `view`, `created_at`) VALUES
+(1, 2, 0, 1, 0, 0, 1, 1620375853),
+(2, 2, 5, 1, 0, 0, 0, 1620546108);
 
 --
 -- Indexes for dumped tables
@@ -62,7 +64,7 @@ ALTER TABLE `tbl_guild_log`
 -- AUTO_INCREMENT for table `tbl_guild_log`
 --
 ALTER TABLE `tbl_guild_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
