@@ -81,7 +81,7 @@
         <h4>پکیج </h4>
         <img src="assets/images/006-right-arrow.svg    ">
         </a>
-        <?if($action->has_sub_marketer($id)){?>
+        <?if($action->isSupporter($id)){?>
         <a href="?support" class="main_btn profile_btn">
         <i class="fa fa-user"></i>
         <h4>پرسش های کاربران</h4>

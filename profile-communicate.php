@@ -151,7 +151,7 @@ if(isset($_POST['submit'])){
             
     </div>
     <div class="row profile_title">
-        <a class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
+        <!-- <a class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a> -->
     
         <h3 style="width: 50%;float: right;">ارتباط با حامی</h3>
 

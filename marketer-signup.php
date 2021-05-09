@@ -49,7 +49,10 @@ $title = "ثبت نام";
             $action->marketer_change_status($command);
             header("Location: index.php");
            }else{
-               $_SESSION['marketer_package'] = $action->package_get($package_id)->price;
+               $price =  $action->package_get($package_id)->price;
+               $discount = $action->package_get($package_id)->discount;
+               $final = $price - ($price * $discount/100);
+               $_SESSION['marketer_package'] = $final;
                 header("Location: marketer-package-request.php");
            }
         }
@@ -116,7 +119,11 @@ $title = "ثبت نام";
                                     echo '"';
                                     if ($option->id == $row->package_id) echo "selected";
                                     echo '>';
-                                    echo $option->name."-".$roption->price;
+                                    if($option->discount){
+                                    echo $option->name." | ".$option->price."تومان"." | ".$option->discount."% تخفیف ";
+                                    }else{
+                                        echo $option->name." | ".$option->price."تومان";
+                                    }
                                     echo '</option>';
                                 }
                                 ?>

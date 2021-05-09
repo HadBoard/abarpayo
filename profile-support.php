@@ -65,7 +65,7 @@ $messages = $action->supporter_message_list($id);
         
 </div>
 <div class="row profile_title">
-    <a class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
+    <!-- <a class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a> -->
     <h3 style="width: 50%;float: right;">پاسخ به سوالات</h3>
     <img src="assets/images/Group 523@2x.png">
   
