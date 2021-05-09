@@ -72,7 +72,7 @@ include('header.php'); ?>
 
                                            
                                             <td class="text-center">
-                                                <?= ($row->last_login) ? $action->time_to_shamsi($row->last_login) : "عدم ورود" ?>
+                                                <?= ($row->updated_at) ? $action->time_to_shamsi($row->updated_at) : "عدم ورود" ?>
                                             </td>
                                         </tr>
                                     <? } ?>
