@@ -333,11 +333,11 @@ include('header.php'); ?>
                                 ?>
                                 <div class="row">
                                 <div class="clog-lg-3">
-                                <div class="card">
+                                <div class="card" style="margin:10px">
                                     <img src="images/shops/<?= $picture->image ?>">
                                 </div>
                                 </div>
-                                <div>
+                               
                                 <?
                             }
                         ?>

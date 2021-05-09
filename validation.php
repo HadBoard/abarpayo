@@ -19,8 +19,6 @@ if (isset($_SESSION['error'])) {
     unset($_SESSION['error']);
 }
 
-?>
-<?
     if(isset($_POST['submit'])){
         $code = $action->request('code');
         $result = $action->validate_code($phone,$code);
@@ -36,6 +34,8 @@ if (isset($_SESSION['error'])) {
             else{ 
                 $_SESSION['user_id'] = $validated_code->user_id;
                 $action->validation_code_remove($validated_code->id);
+                $action-> user_update_last_login( $_SESSION['user_id']);
+                $action-> log_action(1,0);
                 unset($_SESSION['phone']);
                 header("Location: index.php");
             } 

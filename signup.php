@@ -39,6 +39,8 @@ if(isset($_POST['submit'])){
         $action->score_edit($command,$register_score,1);
         unset($_SESSION['phone']);
         $_SESSION['user_id'] = $command;
+        $action-> user_update_last_login( $_SESSION['user_id']);
+        $action-> log_action(3,0);
         header("Location: index.php");
     }else{
         ?>
@@ -55,6 +57,7 @@ if(isset($_POST['submit'])){
     }
 }
 ?>
+  
 
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">

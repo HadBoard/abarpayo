@@ -11,9 +11,7 @@ if($action->auth()){
     header('Location: index.php');
 }
 $title = "ثبت نام";
-?>
 
-<?
     if(isset($_POST['submit'])){
         unset($_SESSION['MfromValidation']);
         $first_name = $action->request('first_name');
@@ -45,6 +43,8 @@ $title = "ثبت نام";
             $action->marketer_score_log_add($command,$register_score,$register_action,1);
             $action->marketer_score_edit($command,$register_score,1);
             $_SESSION['marketer_id'] = $command;
+            $action-> user_update_last_login( $_SESSION['marketer_id']);
+            $action->log_action(3,2);
            if($payment_type == 1){
             $action->marketer_change_status($command);
             header("Location: index.php");
