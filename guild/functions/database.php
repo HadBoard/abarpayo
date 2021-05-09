@@ -85,7 +85,8 @@ class Action
     // ----------- count of table's field
     public function table_counter($table)
     {
-        $result = $this->connection->query("SELECT * FROM `$table` ");
+        $shop_id=$_SESSION['shop_id'];
+        $result = $this->connection->query("SELECT * FROM `$table` WHERE shop_id='$shop_id' ");
         if (!$this->result($result)) return false;
         return $result->num_rows;
     }
@@ -274,7 +275,8 @@ class Action
     public function guild_list()
     {
         $id = $this->guild()->id;
-        $result = $this->connection->query("SELECT * FROM `tbl_shop_admin` WHERE NOT `id`='$id' ORDER BY `id` DESC");
+        $shop_id=$_SESSION['shop_id'];
+        $result = $this->connection->query("SELECT * FROM `tbl_shop_admin` WHERE `shop_id`='$shop_id'  ORDER BY `id` DESC");
         if (!$this->result($result)) return false;
         return $result;
     }
@@ -359,7 +361,10 @@ public function shop_get($id)
 
      public function product_list()
      {
-         return $this->table_list("tbl_product");
+        $shop_id=$_SESSION['shop_id'];
+        $result = $this->connection->query("SELECT * FROM `tbl_product` WHERE shop_id=' $shop_id' ORDER BY `id` DESC");
+        if (!$this->result($result)) return false;
+        return $result;
      }
 
      public function product_option($id)
@@ -537,14 +542,16 @@ public function shop_get($id)
     public function guild_log($action_id){
         $now = time();
         $guild_id=$_SESSION['guild_id'];
+        $shop_id=$_SESSION['shop_id'];
         $ip=$_SERVER['REMOTE_ADDER'];
-        $result= $this->connection->query("INSERT INTO tbl_guild_log (`guild_id`,`action_id`,`ip`,`created_at`)VALUES('$guild_id','$action_id','$ip','$now')");  
+        $result= $this->connection->query("INSERT INTO tbl_guild_log (`guild_id`,`shop_id`,`action_id`,`ip`,`created_at`)VALUES('$guild_id','$shop_id','$action_id','$ip','$now')");  
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
    
     public function guild_log_list(){
-      return $this->connection->query("SELECT * FROM `tbl_guild_log` WHERE `view`=0 ");
+      $shop_id=$_SESSION['shop_id'];
+      return $this->connection->query("SELECT * FROM `tbl_guild_log` WHERE `view`=0 AND shop_id='$shop_id'");
     }
     public function action_log_get($id){
         return $this->get_data("tbl_action_log", $id);
