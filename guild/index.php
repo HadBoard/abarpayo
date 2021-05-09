@@ -4,7 +4,7 @@ $action = new Action();
 
 // check admin access
 if ($action->auth()) {
-    // echo "<script type='text/javascript'>window.location.href = 'panel.php';</script>";
+     echo "<script type='text/javascript'>window.location.href = 'panel.php';</script>";
     return 0;
 }
 
