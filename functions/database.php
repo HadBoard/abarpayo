@@ -269,11 +269,10 @@ class Action
     }
 
     // ----------- update last login of admin (logged)
-    public function user_update_last_login()
+    public function user_update_last_login($id)
     {
-        $id = $this->user()->id;
         $now = strtotime(date('Y-m-d H:i:s'));
-        $result = $this->connection->query("UPDATE `tbl_user_id` SET `last_login`='$now' WHERE `id`='$id'");
+        $result = $this->connection->query("UPDATE `tbl_user` SET `last_login`='$now' WHERE `id`='$id'");
         if (!$this->result($result)) return false;
         return true;
     }
@@ -319,6 +318,13 @@ class Action
         return $this->get_data("tbl_marketer", $id);
     }
 
+    public function marketer_update_last_login($id)
+    {
+        $now = strtotime(date('Y-m-d H:i:s'));
+        $result = $this->connection->query("UPDATE `tbl_marketer` SET `last_login`='$now' WHERE `id`='$id'");
+        if (!$this->result($result)) return false;
+        return true;
+    }
     public function hasUnpaidPackage($marketer_id){
         return $this->marketer_get($marketer_id)->payment_type == 2 && $this->marketer_get($marketer_id)->payment_id == 0;
         

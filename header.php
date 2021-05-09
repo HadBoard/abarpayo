@@ -184,10 +184,11 @@ $action = new Action();
                         <a href="ticket.php">پشتیبانی</a>
                     </li>
                     <?}?>
+                    <? if(!$action->user()){ ?>
                     <li>
                         <a href="marketer-phone.php">بازار سازان</a>
                     </li>
-                    
+                    <?}?>
                 </ul>
             </nav>
 

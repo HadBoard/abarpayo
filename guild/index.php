@@ -4,7 +4,7 @@ $action = new Action();
 
 // check admin access
 if ($action->auth()) {
-    echo "<script type='text/javascript'>window.location.href = 'panel.php';</script>";
+     echo "<script type='text/javascript'>window.location.href = 'panel.php';</script>";
     return 0;
 }
 
@@ -32,9 +32,12 @@ if (isset($_POST['sub1'])) {
         $_SESSION['error'] = 1;
         header("Location: index.php");
     }
+    else{
+        header("Location: panel.php");
+    
+    }
 
     // bye bye :)
-    header("Location: panel.php");
 }
 // ----------- check login ---------------------------------------------------------------------------------------------
 ?>

@@ -51,7 +51,7 @@ include('header.php');
 
             
             <div class="col-md-3">
-                <a href="http://Hamitec.ir/" target="_blank">
+                <a href="product-list.php" target="_blank">
                     <div class="card p-30 bg-info">
                         <div class="media">
                             <div class="media-left meida media-middle">
