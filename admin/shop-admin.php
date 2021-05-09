@@ -64,6 +64,7 @@ if (isset($_POST['submit'])) {
         $command = $action->shop_admin_edit($edit_id,$first_name,$last_name,$phone,$username,$password,$national_code,$status);
     }else{
         $command = $action->shop_admin_add($shop_id,$first_name,$last_name,$phone,$username,$password,$national_code,$status);
+        $action->guild_log($command,$shop_id);
     }
 
     // check errors

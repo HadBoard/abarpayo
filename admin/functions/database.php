@@ -1599,6 +1599,27 @@ public function admin_log($action_id){
     return $this->connection->insert_id;
 }
 
+public function user_log($user_id){
+    $now = time();
+    $ip=$_SERVER['REMOTE_ADDER'];
+    $result= $this->connection->query("INSERT INTO tbl_user_log (`user_id`,`action_id`,`ip`,`created_at`)VALUES('$user_id','3','$ip','$now')");  
+    if (!$this->result($result)) return false;
+    return $this->connection->insert_id;
+}
+public function markete_log($marketer_id){
+    $now = time();
+    $ip=$_SERVER['REMOTE_ADDER'];
+    $result= $this->connection->query("INSERT INTO tbl_marketer_log (`marketer_id`,`action_id`,`ip`,`created_at`)VALUES('$marketer_id','3','$ip','$now')");  
+    if (!$this->result($result)) return false;
+    return $this->connection->insert_id;
+}
+public function guild_log($guild_id,$shop_id){
+    $now = time();
+    $ip=$_SERVER['REMOTE_ADDER'];
+    $result= $this->connection->query("INSERT INTO tbl_guild_log (`guild_id`,`shop_id`,`action_id`,`ip`,`created_at`)VALUES('$guild_id','$shop_id','3','$ip','$now')");  
+    if (!$this->result($result)) return false;
+    return $this->connection->insert_id;
+}
 public function user_log_list(){
 
      return $this->connection->query("SELECT * FROM `tbl_user_log` WHERE `admin_view`=0 ");

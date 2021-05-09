@@ -54,6 +54,7 @@ if (isset($_POST['submit'])) {
         $command = $action->marketer_edit($id,$first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id,$support_id,$status);
     } else {
         $command = $action->marketer_add($first_name, $last_name,$phone, $national_code,$package_id ,$payment_type,$reference_id,$support_id,$status);
+        $action->marketer_log($command);
     }
 
     // check errors

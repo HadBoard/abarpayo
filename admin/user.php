@@ -73,6 +73,8 @@ if (isset($_POST['submit'])) {
         $command = $action->user_edit($id, $first_name, $last_name, $national_code, $phone,$city_id,$address,$postal_code,$birthday,$icon,$score,$wallet,$iban,$status);
     } else {
         $command = $action->user_add($first_name, $last_name, $national_code, $phone,$city_id,$address,$postal_code,$birthday,$icon,$score,$wallet,$iban,$status,$platform);
+
+        $action->user_log($command);
     }
 
     // check errors
