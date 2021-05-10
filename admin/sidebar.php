@@ -50,6 +50,13 @@ $action = new Action();
     </li>
 
     <li>
+        <a class="has-arrow" href="vip-marketer.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">بازارسازان ویژه</span>
+        </a>
+    </li>
+
+    <li>
         <a class="has-arrow" href="old-marketer-list.php" aria-expanded="false">
             <i class="fa fa-user"></i>
             <span class="hide-menu">بازارسازان قدیم</span>
@@ -89,30 +96,24 @@ $action = new Action();
     </li>
 
     <li>
+        <a class="has-arrow" href="question-package-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">پکیج سوالات</span>
+        </a>
+    </li>
+
+    <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fas fa-user "></i><span class="hide-menu">درخواست های برداشت</span></a>
+        <ul aria-expanded="false" class="collapse">
+            <li><a href="marketer-withdraw-list.php">برداشت های بازاریابان</a></li>
+            <li><a href="withdraw-list.php"> برداشت های کاربران</a></li>
+            <li><a href="shop-withdraw-list.php"> برداشت های اصناف</a></li>
+        </ul>
+    </li>
+
+    <li>
         <a class="has-arrow" href="shop-requests.php" aria-expanded="false">
             <i class="fa fa-user"></i>
-            <span class="hide-menu"> درخواست اصناف  </span>
-        </a>
-    </li>
-
-    <li>
-        <a class="has-arrow" href="withdraw-list.php" aria-expanded="false">
-            <i class="fa fa-user"></i>
-            <span class="hide-menu">   برداشت های کاربران </span>
-        </a>
-    </li>
-
-    <li>
-        <a class="has-arrow" href="marketer-withdraw-list.php" aria-expanded="false">
-            <i class="fa fa-user"></i>
-            <span class="hide-menu">برداشت های بازارساز</span>
-        </a>
-    </li>
-
-    <li>
-        <a class="has-arrow" href="shop-withdraw-list.php" aria-expanded="false">
-            <i class="fa fa-user"></i>
-            <span class="hide-menu">برداشت های اصناف</span>
+            <span class="hide-menu"> درخواست ثبت اصناف  </span>
         </a>
     </li>
 

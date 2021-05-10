@@ -196,24 +196,36 @@ class Action
     }
 
     // ----------- for send sms to mobile number
-    public function send_sms($mobile, $textMessage)
-    {
-        $webServiceURL = "";
-        $webServiceSignature = "";
-        $webServiceNumber = "";
-        $textMessage = mb_convert_encoding($textMessage, "UTF-8");
-        $parameters['signature'] = $webServiceSignature;
-        $parameters['toMobile'] = $mobile;
-        $parameters['smsBody'] = $textMessage;
-        $parameters['retStr'] = ""; // return reference send status and mobile and report code for delivery
-        try {
-            $con = new SoapClient($webServiceURL);
-            $responseSTD = (array)$con->Send($parameters);
-            $responseSTD['retStr'] = (array)$responseSTD['retStr'];
-        } catch (SoapFault $ex) {
-            echo $ex->faultstring;
-        }
-    }
+    public function send_sms($mobile,$textMessage){
+	    
+		$webServiceURL  = "http://login.parsgreen.com/Api/SendSMS.asmx?WSDL";  
+		$webServiceSignature = "86D08235-C008-4C53-8EEA-CE2284FD66F4";  
+
+		 $textMessage= mb_convert_encoding($textMessage,"UTF-8"); // encoding to utf-8
+		
+
+		     $parameters['signature'] = $webServiceSignature;
+		     $parameters['toMobile' ]  = $mobile;
+		     $parameters['smsBody' ]=$textMessage;
+		     $parameters[ 'retStr'] = ""; // return refrence send status and mobile and report code for delivery
+		  
+		 
+		try 
+		{
+		    $con = new SoapClient($webServiceURL);  
+
+		    $responseSTD = (array) $con ->Send($parameters); 
+		 
+		    $responseSTD['retStr'] = (array) $responseSTD['retStr'];
+		    
+		 
+		}
+		catch (SoapFault $ex) 
+		{
+		    echo $ex->faultstring;  
+		}
+
+	}
 
     // ----------- create random token
     public function get_token($length)
@@ -271,6 +283,30 @@ class Action
         $id = $this->admin()->id;
         $now = strtotime(date('Y-m-d H:i:s'));
         $result = $this->connection->query("UPDATE `tbl_admin` SET `last_login`='$now' WHERE `id`='$id'");
+        if (!$this->result($result)) return false;
+        return true;
+    }
+
+    public function admin_check_per($admin, $per)
+    {
+        $result = $this->connection->query("SELECT * FROM tbl_admin_premission WHERE admin_id='$admin' AND permission_id='$per'");
+        $rowcount = $result->num_rows;
+        if ($rowcount < 1) return 0;
+        return 1;
+    }
+
+    public function admin_per_add($admin, $per)
+    {
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_admin_premission`(`admin_id`,`permission_id`,`created_at`) VALUES
+	    ('$admin','$per','$now')");
+         if (!$this->result($result)) return false;
+         return $this->connection->insert_id;
+    }
+
+    public function admin_per_remove($admin, $per)
+    {
+        $result = $this->connection->query("DELETE FROM tbl_admin_premission WHERE admin_id='$admin' AND permission_id='$per'");
         if (!$this->result($result)) return false;
         return true;
     }
@@ -488,6 +524,17 @@ class Action
         WHERE `id` ='$user_id'");
         if (!$this->result($result)) return false;
         return $user_id;
+    }
+
+    
+    public function shop_wallet_withdraw($shop_id,$amount){
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_shop` SET 
+        `wallet` = '$amount',
+        `updated_at`='$now'
+        WHERE `id` ='$shop_id'");
+        if (!$this->result($result)) return false;
+        return $shop_id;
     }
 
     
@@ -1305,6 +1352,33 @@ class Action
         return $this->get_data("tbl_marketer", $id);
     }
 
+    public function vip_marketer_list()
+    {
+        return $this->table_list("tbl_vip_marketer");
+    }
+
+    public function vip_marketer_add($id,$score){
+        $result = $this->connection->query("INSERT INTO `tbl_vip_marketer`
+        (`marketer_id`,`score`) 
+        VALUES
+        ('$id','$score')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function vip_marketer_get($id)
+    {
+        return $this->get_data("tbl_vip_marketer", $id);
+    }
+
+
+    public function vip_marketer_remove($id)
+    {
+        $result = $this->connection->query("DELETE FROM `vip_marketer` WHERE `marketer_id`='$id'");
+        if (!$this->result($result)) return false;
+        return true;
+    }
+
     public function marketer_cart_add($id,$bank_id,$name,$cart_number,$account_number,$iban,$validation)
     {
         $now = time();
@@ -1694,6 +1768,116 @@ public function change_admin_view($id,$type){
 
 // ----------- end log ----------------------------------------------------------------------------
 
+    // ----------- start EXAM -----------------------------------------------------------------------------------------
+
+    public function question_package_list()
+    {
+        return $this->table_list("tbl_question_package");
+    }
+
+    public function question_package_add($title,$type,$status)
+    {
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_question_package`
+        (`title`,`type`,`status`,`created_at`) 
+        VALUES
+        ('$title','$type','$status','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+    public function question_package_edit($id, $title,$type,$status)
+    {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_question_package` SET 
+        `title`='$title', 
+        `type`='$type',
+        `status`='$status',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    public function question_package_remove($id)
+    {
+        return $this->remove_data("tbl_question_package", $id);
+    }
+
+    public function question_package_status($id)
+    {
+        return $this->change_status('tbl_question_package', $id);
+    }
+
+    public function question_package_get($id)
+    {
+        return $this->get_data("tbl_question_package", $id);
+    }
+
+    public function question_package_counter($id){
+        $result = $this->connection->query("SELECT * FROM `tbl_question` WHERE `package_id`= '$id'");
+        return $result->num_rows;
+    }
+
+    public function question_package_removeAll($id){
+        $result = $this->connection->query("SELECT * FROM `tbl_question` WHERE `package_id`= '$id'");
+        while($row = $result->fetch_object()){
+            $this->question_remove($row->id);
+        }
+        return true;
+    }
+
+    public function question_list($id){
+        return $this->connection->query("SELECT * FROM `tbl_question` WHERE `package_id`= '$id'");
+    }
+
+    
+    public function question_get($id)
+    {
+        return $this->get_data("tbl_question", $id);
+    }
+
+    public function question_add($package,$question,$option1,$option2,$option3,$option4,$correct_answer,$status)
+    {
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_question`
+        (`package_id`,`question`,`option1`,`option2`,`option3`,`option4`,`correct_answer`,`status`,`created_at`) 
+        VALUES
+        ('$package','$question','$option1','$option2','$option3','$option4','$correct_answer','$status','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+
+    public function question_edit($id,$package,$question,$option1,$option2,$option3,$option4,$correct_answer,$status){
+        // return 1;
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_question` SET 
+        `package_id` = '$package',
+        `question`='$question', 
+        `option1`='$option1',
+        `option2`='$option2',
+        `option3`='$option3',
+        `option4`='$option4',
+        `correct_answer`='$correct_answer',
+        `status`='$status',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    public function question_remove($id){
+        return $this->remove_data("tbl_question", $id);
+    }
+
+    public function question_status($id)
+    {
+        return $this->change_status('tbl_question', $id);
+    }
+
+    // ----------- end EXAM -------------------------------------------------------------------------------------------
+    
 }
 
 // ----------- end Action class ----------------------------------------------------------------------------------------

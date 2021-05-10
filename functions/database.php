@@ -318,6 +318,20 @@ class Action
         return $this->get_data("tbl_marketer", $id);
     }
 
+
+    public function is_vip($id){
+        $result = $this->table_list("tbl_vip_marketer");
+        while($row = $result->fetch_object()){
+            if($row->marketer_id == $id) return true;
+        }
+        return false;
+    }
+
+    public function get_vip_score($id){
+        $result =  $this->connection->query("SELECT * FROM `tbl_vip_marketer` WHERE `marketer_id` = '$id'");
+        return $result->fetch_object();
+    }
+
     public function marketer_update_last_login($id)
     {
         $now = strtotime(date('Y-m-d H:i:s'));

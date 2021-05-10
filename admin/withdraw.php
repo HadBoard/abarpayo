@@ -35,6 +35,8 @@ if (isset($_POST['submit'])) {
 
     $prev_wallet = $action->user_get($user_id)->wallet;
     $wallet = floatval($prev_wallet) - floatval($amount);
+    $mobile = $action->user_get($user_id)->phone;
+    $textMessage = "کاربر عزیز مبلغ درخواستی به حساب شما واریز شد.\n abarpayo.com";
     // get fields
     $description = $action->request('description');
     $birthday = $action->request_date('birthday');
@@ -44,6 +46,7 @@ if (isset($_POST['submit'])) {
         $command = $action->request_edit($id, $description,$birthday);
         $command1 = $action->wallet_withdraw($user_id,$wallet);
         $command2 = $action->wallet_log_add($user_id,"برداشت از حساب",$amount,0,0);
+        //$action->send_sms($mobile,$textMessage);
     } else {
         // $command = $action->withdraw_add($description,$paymented_at,$status);
     }

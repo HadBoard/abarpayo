@@ -39,6 +39,10 @@ if (isset($_POST['submit'])) {
     // get fields
     $description = $action->request('description');
     $birthday = $action->request_date('birthday');
+
+    // $mobile = $action->shop_get($user_id)->phone;
+    // $textMessage = "کاربر عزیز مبلغ درخواستی به حساب شما واریز شد.\n abarpayo.com";
+    // $action->send_sms($mobile,$textMessage);
  
     // send query
     if ($edit) {

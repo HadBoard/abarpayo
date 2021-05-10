@@ -46,6 +46,20 @@ if (isset($_POST['submit'])) {
     $access = 0;
     $status = $action->request('status');
 
+    $perms = array($action->request('perms'));
+
+    if(!empty($perms)){
+        for ($i = 1 ; $i <= 3 ; $i++) {
+            $key = array_search($i, $perms);
+            if ($key > -1) {
+                if(!$action->admin_check_per($id,$i))
+                        $action -> admin_per_add($id,$i);
+            } else {
+                $action -> admin_per_remove($id,$i);
+            }
+        }
+    }
+
     // send query
     if ($edit) {
         $command = $action->admin_edit($id, $first_name, $last_name, $phone, $username, $password, $status, $access);
@@ -180,7 +194,17 @@ include('header.php'); ?>
                                            placeholder="رمز عبور"
                                            value="<?= ($edit) ? $row->password : "" ?>" required>
                                 </div>
-
+                                <div class="form-group text-right" id="per_div">
+                                <?if($edit){?>
+                                <div class="form-group">
+                                    <select class="form-control select2" name="marketer" multiple>
+                                        <option>سطوح دسترسی  را انتخاب فرمایید .</option>
+                                        <option value=1>دسته بندی ها</option>
+                                        <option value=2>فروشگاه ها</option>
+                                        <option value=3>محصولات</option>
+                                    </select>
+                                </div>
+                                <?}?>
                                 <div class="form-actions">
 
                                     <label class="float-right">
