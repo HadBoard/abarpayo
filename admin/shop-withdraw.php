@@ -1,14 +1,13 @@
 <? require_once "functions/database.php";
- require_once "../const-values.php";
 $database = new DB();
 $connection = $database->connect();
 $action = new Action();
 
 // ----------- urls ----------------------------------------------------------------------------------------------------
 // main url for add , edit
-$main_url = "shop-request.php";
+$main_url = "shop-withdraw.php";
 // main url for remove , change status
-$list_url = "shop-requests.php";
+$list_url = "shop-withdraw-list.php";
 // ----------- urls ----------------------------------------------------------------------------------------------------
 
 // ----------- get data from database when action is edit --------------------------------------------------------------
@@ -16,7 +15,7 @@ $edit = false;
 if (isset($_GET['edit'])) {
     $edit = true;
     $id = $action->request('edit');
-    $row = $action->shop_request_get($id);
+    $row = $action->shop_withdraw_get($id);
 }
 // ----------- get data from database when action is edit --------------------------------------------------------------
 
@@ -30,37 +29,34 @@ if (isset($_SESSION['error'])) {
 // ----------- check error ---------------------------------------------------------------------------------------------
 
 // ----------- add or edit ---------------------------------------------------------------------------------------------
+$shop_id  = $row->shop_id;
+$amount = $row->amount;
+
 if (isset($_POST['submit'])) {
-    $status = $action->request('status');
+
+    $prev_wallet = $action->shop_get($shop_id)->wallet;
+    $wallet = floatval($prev_wallet) - floatval($amount);
+    // get fields
+    $description = $action->request('description');
+    $birthday = $action->request_date('birthday');
+ 
     // send query
     if ($edit) {
-        $command1 = $action->shop_request_status($id,$status);
-        $icon = "";
-        $command = $action->shop_add($row->category_id,$row->title,$icon,0,0,0, $row->address,0,0,$reference_id,$status);
-    } 
+        $command = $action->shop_withdraw_edit($id, $description,$birthday);
+        $command1 = $action->shop_wallet_withdraw($shop_id,$wallet);
+    } else {
+        // $command = $action->withdraw_add($description,$paymented_at,$status);
+    }
+
     // check errors
     if ($command && $command1) {
-
-        if($row -> access == 0){
-
-            $user_id = $row -> user_id;
-            $action->score_log_add($user_id,$guilds_score,$guilds_action,1);
-            $action->score_edit($user_id,$guilds_score,1);
-
-        }else if($row -> access == 1){
-
-            $user_id = $row -> user_id;
-            $action->marketer_score_log_add($user_id,$guilds_score,$guilds_action,1);
-            $action->marketer_score_edit($user_id,$guilds_score,1);
-        }
-       
        $_SESSION['error'] = 0;
     } else {
        $_SESSION['error'] = 1;
     }
 
     // bye bye :)
-   header("Location: shop.php?edit=$command");
+   header("Location: $main_url?edit=$command");
 
 }
 // ----------- add or edit ---------------------------------------------------------------------------------------------
@@ -132,53 +128,58 @@ include('header.php'); ?>
                                 <?= $action->time_to_shamsi($row->created_at) ?>
                             </p>
                         </div>
-                        <? if ($row->confirmed_at) { ?>
+                        <? if ($row->updated_at) { ?>
                             <div class="col-lg-6">
                                 <p class="text-right m-b-0">
-                                     تاریخ تایید :
-                                    <?= $action->time_to_shamsi($row->confirmed_at) ?>
+                                    آخرین ویرایش :
+                                    <?= $action->time_to_shamsi($row->updated_at) ?>
                                 </p>
                             </div>
                         <? } ?>
                     </div>
                 <? } ?>
                 <!-- ----------- end history ------------------------------------------------------------------- -->
-
                 <!-- ----------- start row of fields ----------------------------------------------------------- -->
                 <div class="card">
                     <div class="card-body">
                         <div class="basic-form">
-                            <form action="" method="post">
+                            <form action="" method="post" enctype="multipart/form-data">
 
                                 <div class="form-group">
                                     <input type="text"  class="form-control input-default "
                                             readonly
-                                           value="<?= ($edit) ? $row->title : "" ?>" required>
+                                           value="<?= ($edit) ? $action->shop_get($row->shop_id)->title : "" ?>" required>
                                 </div>
 
                                 <div class="form-group">
                                     <input type="text" class="form-control input-default "
-                                           value="<?= ($edit) ? $row->owner : "" ?>" readonly>
+                                           value="<?= ($edit) ? $row->amount : "" ?>" readonly>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="text"  class="form-control input-default "
-                                            readonly
-                                           value="<?= ($edit) ? $action->category_get($row->category_id)->title : "" ?>" required>
+                                    <input type="text" class="form-control input-default " readonly
+                                           value="<?= ($edit) ? $action->guild_cart_get($row->cart_id)->cart_number : "" ?>" readonly>
                                 </div>
 
                                 <div class="form-group">
-                                    <textarea type="text" class="form-control input-default "
-                                        readonly><?= ($edit) ? $row->address : "" ?></textarea>
+                                    <textarea type="text" name="description" class="form-control input-default "
+                                           placeholder="توضیحات" <?= ($row->status) ? "readonly" : ""?>
+                                            ><?= ($edit) ? $row->description : "" ?></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" id="date" name="birthday" class="form-control"
+                                           placeholder="تاریخ واریز" value="<?= ($row->paymented_at) ? $action->time_to_shamsi($row->paymented_at) : ""?>"
+                                           <?= ($row->status) ? "readonly" : ""?> required>
                                 </div>
 
                                 <div class="form-actions">
 
-                                    <label class="float-right">
-                                        <input type="checkbox" class="float-right m-1" name="status" value="1" required
-                                            <? if ($edit && $row->status){echo "checked"; echo "disabled";}?> >
-                                        تایید صنف
-                                    </label>
+                                    <!-- <label class="float-right">
+                                        <input type="checkbox" class="float-right m-1" name="status" value="1"
+                                            <? //if ($edit && $row->status) echo "checked"; ?> >
+                                        فعال
+                                    </label> -->
 
                                     <button <?= ($row->status) ? "disabled" : ""?> type="submit" name="submit" class="btn btn-success sweet-success">
                                         <i class="fa fa-check"></i> ثبت

@@ -98,7 +98,7 @@ $action = new Action();
     <li>
         <a class="has-arrow" href="withdraw-list.php" aria-expanded="false">
             <i class="fa fa-user"></i>
-            <span class="hide-menu"> درخواست های برداشت </span>
+            <span class="hide-menu">   برداشت های کاربران </span>
         </a>
     </li>
 
@@ -109,6 +109,12 @@ $action = new Action();
         </a>
     </li>
 
+    <li>
+        <a class="has-arrow" href="shop-withdraw-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">برداشت های اصناف</span>
+        </a>
+    </li>
 
     <li>
         <a class="has-arrow" href="ticket-list.php" aria-expanded="false">

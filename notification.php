@@ -38,8 +38,8 @@ include_once "header.php";
                     </tr>
                     <?while($row = $result->fetch_object()){ ?>
                     <tr>
-                        <td><?= $count?></td>
-                        <td id="notif"> <?= $action->action_log_get($row->id)?> </td>
+                        <td><?= ++$count ?></td>
+                        <td id="notif"> <?= $action->action_log_get($row->id)->text?> </td>
                         <td><?= $action->time_to_shamsi($row->created_at)?></td>
                         <td><button class="delete_row"><i class="fa fa-trash-o"></i></button></td>
                     </tr>
