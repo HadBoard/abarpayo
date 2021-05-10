@@ -436,16 +436,23 @@ if(isset($_POST['function'])) {
     if($_POST['function'] == 'userProfile'){
         $obj -> result = 0;
         $id = $action->request('user_id');
-        // receive image as POST Parameter
-        $image = str_replace('data:image/png;base64,', '', $action->request('image'));
+        // $image = $action->request('image');
+        $image = 'iVBORw0KGgoAAAANSUhEUgAAAHgAAAAUAQMAAAB'
+        . '8nGuwAAAABlBMVEX///8AAP94wDzzAAAACXBIWX'
+        . 'MAAA7EAAAOxAGVKw4bAAAAgUlEQVQYlWNgIBHYM'
+        . 'TDwMDB8gDEYkkEU4wwog4HhAIx/AMqX4+c5/rDh'
+        . '4x4w4wHDAWPJ3h7DxhnPwAwDhuOJG87zsD/mOQB'
+        . 'mMDAcrt9/nv1hM88BMOMBw+EEA94GQxAfxDBgSD'
+        . 'acceYMUP8BMMOAwU6evyf9YcOHA2DGA1K9QykAA'
+        . 'NIrNwD/nKH3AAAAAElFTkSuQmCC';
+        
+        $image = str_replace('data:image/png;base64,', '', $image);
         $image = str_replace(' ', '+', $image);
-        // Decode the Base64 encoded Image
         $data = base64_decode($image);
-        // Create Image path with Image name and Extension
-        $file = '../admin/users/' . $action->get_token(10) . '.jpg';
-        // Save Image in the Image Directory
-        $success = file_put_contents($file, $data);
-        $command = $action -> user_profile($id,$file);
+        $name = $action->get_token(10) . '.jpg';
+        $file = '../admin/users/' . $name;
+        file_put_contents($file, $data);
+        $command = $action -> user_profile($id,$name);
         if($command){
             $obj->result = 1;
         }
