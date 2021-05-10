@@ -289,24 +289,31 @@ class Action
 
     public function admin_check_per($admin, $per)
     {
-        $result = $this->connection->query("SELECT * FROM tbl_admin_premission WHERE admin_id='$admin' AND permission_id='$per'");
+        $result = $this->connection->query("SELECT * FROM `tbl_admin_permission` WHERE `admin_id`='$admin' AND `permission_id`='$per'");
         $rowcount = $result->num_rows;
-        if ($rowcount < 1) return 0;
-        return 1;
+        if ($rowcount < 1) return false;
+        return true;
     }
 
     public function admin_per_add($admin, $per)
     {
         $now = time();
-        $result = $this->connection->query("INSERT INTO `tbl_admin_premission`(`admin_id`,`permission_id`,`created_at`) VALUES
-	    ('$admin','$per','$now')");
-         if (!$this->result($result)) return false;
-         return $this->connection->insert_id;
+        $result = $this->connection->query("INSERT INTO `tbl_admin_permission`
+        (`admin_id`,`permission_id`,`created_at`) 
+        VALUES
+        ('$admin','$per','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+       
+    }
+
+    public function admin_per_list($id){
+        return $result = $this->connection->query("SELECT * FROM `tbl_admin_permission` WHERE `admin_id`='$id'");
     }
 
     public function admin_per_remove($admin, $per)
     {
-        $result = $this->connection->query("DELETE FROM tbl_admin_premission WHERE admin_id='$admin' AND permission_id='$per'");
+        $result = $this->connection->query("DELETE FROM `tbl_admin_permission` WHERE `admin_id`='$admin' AND `permission_id`='$per'");
         if (!$this->result($result)) return false;
         return true;
     }
@@ -357,9 +364,9 @@ class Action
         `first_name`='$first_name',
         `last_name`='$last_name',
         `phone`='$phone',
-        `username`='$username',
+        `username` = '$username',
         `password`='$password',
-        `access`='$access',
+        `access` = '$access',
         `status`='$status',
         `updated_at`='$now'
         WHERE `id` ='$id'");
@@ -631,8 +638,6 @@ class Action
         return $this->table_list("tbl_user_cart");
     }
 
-
-
     public function user_get_cart($user_id){
         return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$user_id'");
     }
@@ -821,6 +826,58 @@ class Action
     {
         return $this->get_data("tbl_shop", $id);
     }
+
+    public function guild_cart_add($shop_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation)
+{
+    $now = time();
+    $result=$this->connection->query("SELECT *FROM tbl_guild_cart WHERE `cart_number`='$cart_number' OR `account_number`='$account_number' OR `iban`='$iban'");
+    if(mysqli_num_rows($result)){
+        return false;
+    }else{
+        $result = $this->connection->query("INSERT INTO `tbl_guild_cart`
+        (`shop_id`,`bank_id`,`title`,`cart_number`,`account_number`,`iban`,`validation`,`created_at`) 
+        VALUES
+        ('$shop_id','$bank_id','$title','$cart_number','$account_number','$iban','$validation','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+}
+public function guild_cart_edit($id,$bank_id,$title,$cart_number,$account_number,$iban,$validation)
+{
+    $now = time();
+    $result=$this->connection->query("SELECT *FROM tbl_guild_cart WHERE `cart_number`='$cart_number' OR `account_number`='$account_number' OR `iban`='$iban'");
+    if(mysqli_num_rows($result)){
+        return false;
+    }else{
+        $result = $this->connection->query("UPDATE `tbl_guild_cart` SET 
+        `bank_id` = '$bank_id',
+        `title`='$title',
+        `cart_number`='$cart_number',
+        `account_number`='$account_number',
+        `iban`='$iban',
+        `validation`='$validation',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+}
+
+public function guild_cart_get($id){
+    return $this->get_data("tbl_guild_cart", $id);
+}
+
+public function guild_cart_remove($id){
+    $result = $this->connection->query("DELETE FROM `tbl_guild_cart` WHERE id='$id'");
+    if (!$this->result($result)) return false;
+     return true;
+}
+
+
+public function guild_cart_list($shop_id){
+    return $this->connection->query("SELECT * FROM `tbl_guild_cart` WHERE `shop_id` = '$shop_id'");
+}  
+
 
     // ----------- end SHOPS -------------------------------------------------------------------------------------------
 
@@ -1372,9 +1429,9 @@ class Action
     }
 
 
-    public function vip_marketer_remove($id)
+    public function vip_marketer_remove($id,$score)
     {
-        $result = $this->connection->query("DELETE FROM `vip_marketer` WHERE `marketer_id`='$id'");
+        $result = $this->connection->query("DELETE FROM `tbl_vip_marketer` WHERE `marketer_id`='$id' AND `score`='$score'");
         if (!$this->result($result)) return false;
         return true;
     }

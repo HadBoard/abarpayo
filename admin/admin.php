@@ -45,17 +45,20 @@ if (isset($_POST['submit'])) {
     $password = $action->request('password');
     $access = 0;
     $status = $action->request('status');
+    if($edit){
 
-    $perms = array($action->request('perms'));
+        $perms = $_POST['perms'];
 
-    if(!empty($perms)){
-        for ($i = 1 ; $i <= 3 ; $i++) {
-            $key = array_search($i, $perms);
-            if ($key > -1) {
-                if(!$action->admin_check_per($id,$i))
+        if(!empty($perms)){
+            
+            for ($i = 1 ; $i < 15 ; $i++) {
+                $key = array_search($i, $perms);
+                if ($key > -1) {
+                    if(!$action->admin_check_per($id,$i))
                         $action -> admin_per_add($id,$i);
-            } else {
-                $action -> admin_per_remove($id,$i);
+                } else {
+                    $action -> admin_per_remove($id,$i);
+                }
             }
         }
     }
@@ -197,11 +200,22 @@ include('header.php'); ?>
                                 <div class="form-group text-right" id="per_div">
                                 <?if($edit){?>
                                 <div class="form-group">
-                                    <select class="form-control select2" name="marketer" multiple>
+                                    <select class="form-control select2" name="perms[]" multiple="multiple">
                                         <option>سطوح دسترسی  را انتخاب فرمایید .</option>
-                                        <option value=1>دسته بندی ها</option>
+                                        <option value=1>دسته بندی ها</option
                                         <option value=2>فروشگاه ها</option>
                                         <option value=3>محصولات</option>
+                                        <option value=4>پکیج ها</option>
+                                        <option value=5>آزمون ها</option>
+                                        <option value=6>بازارسازان</option>
+                                        <option value=7>کاربران</option>
+                                        <option value=8>درخواست های برداشت</option>
+                                        <option value=9>تیکت وتماس با ما</option>
+                                        <option value=10>بازارسازان ویژه</option>
+                                        <option value=11>لاگ سنتر</option>
+                                        <option value=12>مدیریت سیستم</option>
+                                        <option value=13>اسلایدرها</option>
+                                        <option value=14>پرسش های پرتکرار</option>
                                     </select>
                                 </div>
                                 <?}?>
@@ -234,5 +248,3 @@ include('header.php'); ?>
 
 </div>
 <? include('footer.php'); ?>
-// ----------- end html :) ---------------------------------------------------------------------------------------------
-
