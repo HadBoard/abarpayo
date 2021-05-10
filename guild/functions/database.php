@@ -85,7 +85,7 @@ class Action
     // ----------- count of table's field
     public function table_counter($table)
     {
-        $shop_id=$_SESSION['shop_id'];
+        $shop_id= $this->guild()->shop_id;;
         $result = $this->connection->query("SELECT * FROM `$table` WHERE shop_id='$shop_id' ");
         if (!$this->result($result)) return false;
         return $result->num_rows;
@@ -243,7 +243,7 @@ class Action
         if ($rowcount) {
             $this->guild_update_last_login();
             $_SESSION['guild_id'] = $row->id;
-            $_SESSION['shop_id'] = $row->shop_id;
+            $_SESSION['shop_id']= $row->shop_id;
             $this->log_action(1);
             return true;
         }
@@ -274,7 +274,7 @@ class Action
     // ----------- for show all guilds
     public function guild_list()
     {
-        $shop_id=$_SESSION['shop_id'];
+        $shop_id= $this->guild()->shop_id;;
         $result = $this->connection->query("SELECT * FROM `tbl_shop_admin` WHERE `shop_id`='$shop_id'  ORDER BY `id` DESC");
         if (!$this->result($result)) return false;
         return $result;
@@ -360,7 +360,7 @@ public function shop_get($id)
 
      public function product_list()
      {
-        $shop_id=$_SESSION['shop_id'];
+        $shop_id= $this->guild()->shop_id;;
         $result = $this->connection->query("SELECT * FROM `tbl_product` WHERE shop_id=' $shop_id' ORDER BY `id` DESC");
         if (!$this->result($result)) return false;
         return $result;
@@ -378,7 +378,7 @@ public function shop_get($id)
      {
          $now = time();
          $guild_id=$_SESSION['guild_id'];
-         $shop_id=$_SESSION['shop_id'];
+         $shop_id= $this->guild()->shop_id;;
          $category_id=$this->get_data("tbl_shop",$shop_id)->category_id;
          $result = $this->connection->query("INSERT INTO `tbl_product`
          (`guild_id`,`category_id`,`shop_id`,`title`,`discription`,`price`,`discount`,`score`,`status`,`created_at`) 
@@ -392,7 +392,7 @@ public function shop_get($id)
      {
          $now = time();
          $guild_id=$_SESSION['guild_id'];
-         $shop_id=$_SESSION['shop_id'];
+         $shop_id= $this->guild()->shop_id;;
          $category_id=$this->get_data("tbl_shop",$shop_id)->category_id;
          $result = $this->connection->query("UPDATE `tbl_product` SET 
          `guild_id`='$guild_id',
@@ -462,13 +462,13 @@ public function shop_get($id)
   
       public function shop_comment_list()
       {
-        $shop_id=$_SESSION['shop_id'];
+        $shop_id= $this->guild()->shop_id;;
         return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = '$shop_id' AND `parent` = 0");
       }
 
       public function shop_comment_confirmed_list()
       {
-        $shop_id=$_SESSION['shop_id'];
+        $shop_id= $this->guild()->shop_id;;
         return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = '$shop_id' AND `parent` = 0 AND `confirm` = 1");
       }
   
@@ -483,7 +483,7 @@ public function shop_get($id)
 
     public function shop_comment_add($user_id,$parent,$text){
         $now = time();
-        $shop_id=$_SESSION['shop_id'];
+        $shop_id= $this->guild()->shop_id;;
         $result = $this->connection->query("INSERT INTO `tbl_shop_comment`
         (`shop_id`,`user_id`,`parent`,`text`,`score`,`created_at`,`confirm`) 
         VALUES
@@ -541,7 +541,7 @@ public function shop_get($id)
     public function guild_log($action_id){
         $now = time();
         $guild_id=$_SESSION['guild_id'];
-        $shop_id=$_SESSION['shop_id'];
+        $shop_id= $this->guild()->shop_id;;
         $ip=$_SERVER['REMOTE_ADDER'];
         $result= $this->connection->query("INSERT INTO tbl_guild_log (`guild_id`,`shop_id`,`action_id`,`ip`,`created_at`)VALUES('$guild_id','$shop_id','$action_id','$ip','$now')");  
         if (!$this->result($result)) return false;
@@ -549,7 +549,7 @@ public function shop_get($id)
     }
    
     public function guild_log_list(){
-      $shop_id=$_SESSION['shop_id'];
+      $shop_id= $this->guild()->shop_id;;
       return $this->connection->query("SELECT * FROM `tbl_guild_log` WHERE `view`=0 AND shop_id='$shop_id'");
     }
     public function action_log_get($id){
@@ -566,7 +566,110 @@ public function shop_get($id)
 
 // ----------- end log ----------------------------------------------------------------------------
  
+// ----------- start finantial ----------------------------------------------------------------------------
+public function cart_add($bank_id,$title,$cart_number,$account_number,$iban,$validation)
+{
+    $shop_id= $this->guild()->shop_id;;
+    $now = time();
+    $result=$this->connection->query("SELECT *FROM tbl_guild_cart WHERE `cart_number`='$cart_number' OR `account_number`='$account_number' OR `iban`='$iban'");
+    if(mysqli_num_rows($result)){
+        return false;
+    }else{
+        $result = $this->connection->query("INSERT INTO `tbl_guild_cart`
+        (`shop_id`,`bank_id`,`title`,`cart_number`,`account_number`,`iban`,`validation`,`created_at`) 
+        VALUES
+        ('$shop_id','$bank_id','$title','$cart_number','$account_number','$iban','$validation','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+}
+public function cart_edit($id,$bank_id,$title,$cart_number,$account_number,$iban,$validation)
+{
+    $now = time();
+    $result=$this->connection->query("SELECT *FROM tbl_guild_cart WHERE `cart_number`='$cart_number' OR `account_number`='$account_number' OR `iban`='$iban'");
+    if(mysqli_num_rows($result)){
+        return false;
+    }else{
+        $result = $this->connection->query("UPDATE `tbl_guild_cart` SET 
+        `bank_id` = '$bank_id',
+        `title`='$title',
+        `cart_number`='$cart_number',
+        `account_number`='$account_number',
+        `iban`='$iban',
+        `validation`='$validation',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+}
 
+public function cart_remove($id){
+    $result = $this->connection->query("DELETE FROM `tbl_guild_cart` WHERE id='$id'");
+    if (!$this->result($result)) return false;
+     return true;
+}
+
+public function guild_get_payment(){
+   $shop_id= $this->guild()->shop_id;;
+    return $this->connection->query("SELECT * FROM `tbl_guild_payment` WHERE `shop_id` = '$shop_id'");
+}
+
+public function guild_cart_list(){
+    $shop_id= $this->guild()->shop_id;;
+    return $this->connection->query("SELECT * FROM `tbl_guild_cart` WHERE `shop_id` = '$shop_id'");
+}  
+
+function bankCardCheck($card='', $irCard=true)
+{
+    $card = (string) preg_replace('/\D/','',$card);
+    $strlen = strlen($card);
+    if($irCard==true and $strlen!=16)
+        return false;
+    if($irCard!=true and ($strlen<13 or $strlen>19))
+        return false;
+    if(!in_array($card[0],[2,4,5,6,9]))
+        return false;
+    
+    for($i=0; $i<$strlen; $i++)
+    {
+        $res[$i] = $card[$i];
+        if(($strlen%2)==($i%2))
+        {
+            $res[$i] *= 2;
+            if($res[$i]>9)
+                $res[$i] -= 9;        
+        }
+    }
+    return array_sum($res)%10==0?true:false;    
+}
+public function shaba($code){
+    $shaba=substr($code,2)."1827".$code[0].$code[1];
+    return bcmod($shaba, '97');
+}
+
+public function bank_list(){
+    return $this->table_list("tbl_bank");
+}
+
+public function bank_get($id){
+    return $this->get_data("tbl_bank", $id);
+}
+
+public function request_add($cart_id,$amount){
+    $shop_id = $this->guild()->shop_id;
+    $now  = time();
+    $result = $this->connection->query("INSERT INTO `tbl_guild_request`
+    (`shop_id`,`cart_id`,`amount`,`created_at`) 
+    VALUES
+    ('$shop_id','$cart_id','$amount','$now')");
+    if (!$this->result($result)) return false;
+    return $this->connection->insert_id;
+}
+
+
+
+// ----------- end finantial ----------------------------------------------------------------------------
 
 // ----------- end Action class ----------------------------------------------------------------------------------------
 
