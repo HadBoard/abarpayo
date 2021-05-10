@@ -63,8 +63,8 @@ if (isset($_POST['submit'])) {
 
     if($edit){
         // Count the number of uploaded files in array
-        // $total_count = count($_FILES['upload']['name']);
-        $total_count =1;
+        //  $total_count = count($_FILES['upload']['name']);
+         $total_count =5;
         // Loop through every file
         for( $i=0 ; $i < $total_count ; $i++ ) {
             $target_dir = "../admin/images/shops/";
