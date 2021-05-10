@@ -6,20 +6,20 @@ $action = new Action();
 
 // ----------- urls ----------------------------------------------------------------------------------------------------
 // main url for add , edit
-$main_url = "marketer-withdraw.php";
+$main_url = "shop-withdraw.php";
 // main url for remove , change status
-$list_url = "marketer-withdraw-list.php";
+$list_url = "shop-withdraw-list.php";
 // ----------- urls ----------------------------------------------------------------------------------------------------
 
 // ----------- get data ------------------------------------------------------------------------------------------------
 $counter = 1;
-$result = $action->marketer_request_list();
+$result = $action->shop_withdraw_list();
 // ----------- get data ------------------------------------------------------------------------------------------------
 
 // ----------- delete --------------------------------------------------------------------------------------------------
 if (isset($_GET['remove'])) {
     $id = $action->request('remove');
-    $_SESSION['error'] = !$action->request_remove($id);
+    $_SESSION['error'] = !$action->shop_withdraw_remove($id);
     header("Location: $list_url");
     return;
 }
@@ -51,7 +51,7 @@ include('header.php'); ?>
     <div class="row page-titles">
         <!-- ----------- start breadcrumb ---------------------------------------------------------------------- -->
         <div class="col-md-12 align-self-center text-right">
-            <h3 class="text-primary">درخواست های برداشت از کیف پول بازارساز</h3></div>
+            <h3 class="text-primary">درخواست های برداشت از کیف پول اصناف</h3></div>
         <div class="col-md-12 align-self-center text-right">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
@@ -99,8 +99,8 @@ include('header.php'); ?>
                                 <thead>
                                 <tr>
                                     <th class="text-center">ردیف</th>
-                                    <th class="text-center">بازارساز</th>
-                                    <th class="text-center">موجودی کیف پول</th>
+                                    <th class="text-center"> صنف</th>
+                                    <th class="text-center"> موجودی کیف پول</th>
                                     <th class="text-center">مبلغ</th>
                                     <th class="text-center">مشاهده</th>
                                     <th class="text-center">وضعیت</th>
@@ -113,11 +113,11 @@ include('header.php'); ?>
                                     <tr class="text-center">
 
                                         <td class="text-center"><?= $counter++ ?></td>
-                                        <td class="text-center"><?=  $action->marketer_get($row->marketer_id)->first_name." ".$action->marketer_get($row->marketer_id)->last_name ?></td>
-                                        <td class="text-center"><?= $action->marketer_get($row->marketer_id)->wallet?></td>
+                                        <td class="text-center"><?= $action->shop_get($row->shop_id)->title ?></td>
+                                        <td class="text-center"><?= $action->shop_get($row->shop_id)->wallet ?></td>
                                         <td class="text-center"><?= $row->amount ?></td>
                                         <td class="text-center">
-                                            <a href="marketer-withdraw.php?edit=<?= $row->id ?>">
+                                            <a href="withdraw.php?edit=<?= $row->id ?>">
                                                 <i class="fa fa-pencil-square-o"></i>
                                             </a>
                                         </td>

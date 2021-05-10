@@ -436,26 +436,35 @@ if(isset($_POST['function'])) {
     if($_POST['function'] == 'userProfile'){
         $obj -> result = 0;
         $id = $action->request('user_id');
-        // $image = $action->request('image');
-        $image = 'iVBORw0KGgoAAAANSUhEUgAAAHgAAAAUAQMAAAB'
-        . '8nGuwAAAABlBMVEX///8AAP94wDzzAAAACXBIWX'
-        . 'MAAA7EAAAOxAGVKw4bAAAAgUlEQVQYlWNgIBHYM'
-        . 'TDwMDB8gDEYkkEU4wwog4HhAIx/AMqX4+c5/rDh'
-        . '4x4w4wHDAWPJ3h7DxhnPwAwDhuOJG87zsD/mOQB'
-        . 'mMDAcrt9/nv1hM88BMOMBw+EEA94GQxAfxDBgSD'
-        . 'acceYMUP8BMMOAwU6evyf9YcOHA2DGA1K9QykAA'
-        . 'NIrNwD/nKH3AAAAAElFTkSuQmCC';
+        $image = $action->request('image');
         
         $image = str_replace('data:image/png;base64,', '', $image);
         $image = str_replace(' ', '+', $image);
         $data = base64_decode($image);
-        $name = $action->get_token(10) . '.jpg';
-        $file = '../admin/users/' . $name;
+        $name = $action->get_token(10).'.png';
+        $file = '../admin/users/'.$name;
         file_put_contents($file, $data);
         $command = $action -> user_profile($id,$name);
         if($command){
             $obj->result = 1;
         }
+        $json = json_encode($obj);
+        echo $json; 
+    }
+    
+    if($_POST['function'] == 'profile'){
+        $id = $action->request('user_id');
+        $image = $action->user_get($id)->profile;
+        $obj -> image =  "http://abarpayo.com/abarpayo/admin/users/$image";
+        $json = json_encode($obj);
+        echo $json; 
+    }
+
+    if($_POST['function'] == 'links'){
+        $obj -> rules = "http://abarpayo.com/abarpayo/rules.php";
+        $obj -> aboutUs = "http://abarpayo.com/abarpayo/about-us.php";
+        $obj -> contactUs = "http://abarpayo.com/abarpayo/contact-us.php";
+        $obj -> question = "http://abarpayo.com/abarpayo/question.php";
         $json = json_encode($obj);
         echo $json; 
     }

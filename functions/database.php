@@ -928,13 +928,13 @@ class Action
     }
 
 
-    public function shop_request_add($id,$category,$name,$owner,$address,$access){
+    public function shop_request_add($id,$category,$reference_id,$name,$owner,$address,$access){
         $now = time();
         $status = 0;
         $result = $this->connection->query("INSERT INTO `tbl_shop_request`
-        (`user_id`,`category_id`,`title`,`owner`,`address`,`access`,`created_at`,`status`) 
+        (`user_id`,`category_id`,`reference_id`,`title`,`owner`,`address`,`access`,`created_at`,`status`) 
         VALUES
-        ('$id','$category','$name','$owner','$address','$access','$now','$status')");
+        ('$id','$category','$reference_id','$name','$owner','$address','$access','$now','$status')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }

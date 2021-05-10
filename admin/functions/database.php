@@ -658,17 +658,46 @@ class Action
         return $shop_id;
     }
 
-    public function shop_add($category_id,$title,$icon,$phone, $fax, $city_id, $address, $longitude, $latitude, $status)
+    public function shop_add($category_id,$title,$icon,$phone, $fax, $city_id, $address, $longitude, $latitude,$reference_id,$status)
     {
-        
+        $reference_code = $this->get_token(10);
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_shop`
-        (`category_id`,`title`,`image`,`phone`,`fax`,`city_id`,`address`,`longitude`,`latitude`,`status`,`created_at`) 
+        (`category_id`,`title`,`image`,`phone`,`fax`,`city_id`,`address`,`longitude`,`latitude`,`reference_code`,`reference_id`,`status`,`created_at`) 
         VALUES
-        ('$category_id','$title','$icon','$phone','$fax','$city_id','$address','$longitude','$latitude','$status','$now')");
+        ('$category_id','$title','$icon','$phone','$fax','$city_id','$address','$longitude','$latitude','$reference_code','$reference_id','$status','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
+
+    public function shop_withdraw_list()
+    {
+        return $this->table_list("tbl_shop_withdraw");
+    }
+
+    public function shop_withdraw_remove($id)
+    {
+        return $this->remove_data("tbl_shop_withdraw", $id);
+    }
+
+    public function shop_withdraw_get($id)
+    {
+        return $this->get_data("tbl_shop_withdraw", $id);
+    }
+
+    public function shop_withdraw_edit($id, $description,$birthday){
+        $now = time();
+        $status = 1;
+        $result = $this->connection->query("UPDATE `tbl_shop_withdraw` SET 
+        `description` = '$description',
+        `status` = '$status',
+        `paymented_at` = '$birthday',
+        `updated_at` = '$now'
+        WHERE `id` ='$id'");
+
+        if (!$this->result($result)) return false;
+        return $id;
+     }
 
     public function shop_request_list()
     {

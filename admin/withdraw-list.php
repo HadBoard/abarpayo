@@ -51,7 +51,7 @@ include('header.php'); ?>
     <div class="row page-titles">
         <!-- ----------- start breadcrumb ---------------------------------------------------------------------- -->
         <div class="col-md-12 align-self-center text-right">
-            <h3 class="text-primary">درخواست های برداشت پول از کیف پول</h3></div>
+            <h3 class="text-primary">درخواست های برداشت از کیف پول کاربران</h3></div>
         <div class="col-md-12 align-self-center text-right">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
@@ -100,6 +100,7 @@ include('header.php'); ?>
                                 <tr>
                                     <th class="text-center">ردیف</th>
                                     <th class="text-center"> کاربر</th>
+                                    <th class="text-center"> موجودی کیف پول</th>
                                     <th class="text-center">مبلغ</th>
                                     <th class="text-center">مشاهده</th>
                                     <th class="text-center">وضعیت</th>
@@ -112,7 +113,8 @@ include('header.php'); ?>
                                     <tr class="text-center">
 
                                         <td class="text-center"><?= $counter++ ?></td>
-                                        <td class="text-center"><?= $action->user_get($row->user_id)->last_name ?></td>
+                                        <td class="text-center"><?= $action->user_get($row->user_id)->first_name." ".$action->user_get($row->user_id)->last_name ?></td>
+                                        <td class="text-center"><?= $action->user_get($row->user_id)->wallet ?></td>
                                         <td class="text-center"><?= $row->amount ?></td>
                                         <td class="text-center">
                                             <a href="withdraw.php?edit=<?= $row->id ?>">
