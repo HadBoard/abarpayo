@@ -95,7 +95,7 @@ if (isset($_POST['submit'])) {
     if ($edit) {
         $command = $action->shop_edit($id,$category_id, $title,$icon,$phone, $fax, $city_id, $address, $longitude, $latitude, $status);
     } else {
-        $command = $action->shop_add($category_id,$title,$icon, $phone, $fax, $city_id, $address, $longitude, $latitude, $status);
+        $command = $action->shop_add($category_id,$title,$icon, $phone, $fax, $city_id, $address, $longitude, $latitude,$reference_id, $status);
     }
 
     // check errors

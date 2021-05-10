@@ -23,6 +23,10 @@ $title = "ثبت نام";
         if(isset($_SESSION['invitation_code'])){
             $reference_id = $_SESSION['invitation_code'];
             $support_id = $reference_id;
+            $isVip = $action->is_vip($reference_id);
+            if($isVip){
+                $invitation_score = $action->get_vip_score($reference_id);
+            }
             $action->score_log_add($reference_id,$invitation_score,$invitation_action,1);
             $action->score_edit($reference_id,$invitation_score,1);
         }else{
@@ -32,6 +36,10 @@ $title = "ثبت نام";
                 $reference = $result->fetch_object();
                 $reference_id = $reference->id;
                 $support_id = $reference_id;
+                $isVip = $action->is_vip($reference_id);
+                if($isVip){
+                    $invitation_score = $action->get_vip_score($reference_id);
+                }
                 $action->score_log_add($reference_id,$invitation_score,$invitation_action,1);
                 $action->score_edit($reference_id,$invitation_score,1);
             }
