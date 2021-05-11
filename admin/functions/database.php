@@ -1081,6 +1081,79 @@ public function guild_cart_list($shop_id){
      // ----------- end CITY -------------------------------------------------------------------------------------------
      // ----------- start TICKETS -----------------------------------------------------------------------------------------
 
+     public function solved_shop_ticket_list()
+     {
+        return $this->connection->query("SELECT * FROM `tbl_guild_ticket` WHERE `status` = 3 ORDER BY id DESC ");
+     }
+ 
+     public function not_solved_shop_ticket_list()
+     {
+        return $this->connection->query("SELECT * FROM `tbl_guild_ticket` WHERE `status` = 0 ORDER BY id DESC ");
+     }
+
+     public function in_queue_shop_ticket_list()
+     {
+        return $this->connection->query("SELECT * FROM `tbl_guild_ticket` WHERE `status` = 1 ORDER BY id DESC ");
+     }
+
+     public function solving_shop_ticket_list(){
+        return $this->connection->query("SELECT * FROM `tbl_guild_ticket` WHERE `status` = 2 ORDER BY id DESC ");
+     }
+
+     public function shop_ticket_set_status($id,$status)
+     {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_guild_ticket` SET 
+        `status`='$status',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+     }
+ 
+     public function shop_ticket_add($shop_id,$subject,$text)
+     {
+         $now = time();
+         $result = $this->connection->query("INSERT INTO `tbl_guild_ticket`
+         (`shop_id`,`subject`,`text`,`created_at`) 
+         VALUES
+         ('$shop_id','$subject','$text','$now')");
+         if (!$this->result($result)) return false;
+         return $this->connection->insert_id;
+     }
+
+     public function shop_ticket_edit($id,$admin_id,$solve)
+     {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_guild_ticket` SET 
+        `admin_id`= '$admin_id',
+        `solve`='$solve',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+     }
+
+     public function shop_ticket_solve($id,$admin_id,$solve)
+     {
+         $now = time();
+         $status = 3;
+         $result = $this->connection->query("UPDATE `tbl_guild_ticket` SET 
+         `admin_id` = '$admin_id',
+         `solve`='$solve',
+         `status`='$status',
+         `solved_at`='$now'
+         WHERE `id` ='$id'");
+         if (!$this->result($result)) return false;
+         return $id;
+     }
+ 
+     public function shop_ticket_get($id)
+     {
+         return $this->get_data("tbl_guild_ticket", $id);
+     }
+
+
      public function solved_ticket_list()
      {
         return $this->connection->query("SELECT * FROM `tbl_ticket` WHERE `status` = 3 ORDER BY id DESC ");
@@ -1670,20 +1743,20 @@ public function guild_cart_list($shop_id){
     }
 
     // ----------- add an admin
-    public function shop_admin_add($shop_id,$first_name,$last_name,$phone,$username,$password,$national_code,$status)
+    public function shop_admin_add($shop_id,$first_name,$last_name,$phone,$username,$password,$national_code,$postal_code,$birthday,$status)
     {
         
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_shop_admin`
-        (`shop_id`,`first_name`,`last_name`,`phone`,`username`,`password`,`national_code`,`status`,`created_at`) 
+        (`shop_id`,`first_name`,`last_name`,`phone`,`username`,`password`,`national_code`,`postal_code`,`birthday`,`status`,`created_at`) 
         VALUES
-        ('$shop_id','$first_name','$last_name','$phone','$username','$password','$national_code','$status','$now')");
+        ('$shop_id','$first_name','$last_name','$phone','$username','$password','$national_code','$postal_code','$birthday','$status','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
     // ----------- update admin's detail
-    public function shop_admin_edit($id,$first_name, $last_name, $phone, $username, $password,$national_code,$status)
+    public function shop_admin_edit($id,$first_name, $last_name, $phone, $username, $password,$national_code,$postal_code,$birthday,$status)
     {
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_shop_admin` SET 
@@ -1693,6 +1766,8 @@ public function guild_cart_list($shop_id){
         `username`='$username',
         `password`='$password',
         `national_code`='$national_code',
+        `postal_code`='$postal_code',
+        `birthday` = '$birthday',
         `status`='$status',
         `updated_at`='$now'
         WHERE `id` ='$id'");

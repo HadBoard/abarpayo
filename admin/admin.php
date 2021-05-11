@@ -199,6 +199,35 @@ include('header.php'); ?>
                                 </div>
                                 <div class="form-group text-right" id="per_div">
                                 <?if($edit){?>
+
+                                    <div class="form-group">
+                                    <!-- <select class="form-control select2" name="perms[]" multiple="multiple">
+                                        <option>سطوح دسترسی  را انتخاب فرمایید .</option> -->
+                                        <!-- <option value="all">انتخاب همه</option>-->
+                                    <label for="perms">انتخاب سطح دسترسی</label>
+                                    <label>
+                                        <input type="checkbox" class="float-right m-1" 
+                                        id="selctall">
+                                          انتخاب همه
+                                    </label>
+                                    <select  class="form-control select2" name="perms[]" multiple="multiple" size=2 id="e1">
+                                        <option value=1>دسته بندی ها</option>
+                                        <option value=2>فروشگاه ها</option>
+                                        <option value=3>محصولات</option>
+                                        <option value=4>پکیج ها</option>
+                                        <option value=5>آزمون ها</option>
+                                        <option value=6>بازارسازان</option>
+                                        <option value=7>کاربران</option>
+                                        <option value=8>درخواست های برداشت</option>
+                                        <option value=9>تیکت وتماس با ما</option>
+                                        <option value=10>بازارسازان ویژه</option>
+                                        <option value=11>لاگ سنتر</option>
+                                        <option value=12>مدیریت سیستم</option>
+                                        <option value=13>اسلایدرها</option>
+                                        <option value=14>پرسش های پرتکرار</option>
+                                    </select>
+                                </div>
+
                                 
                                 <?}?>
                                 <div class="form-group" style="width:100%;float:right">
@@ -209,8 +238,6 @@ include('header.php'); ?>
                                     </label>
                                 </div>
                                 <div class="form-actions">
-
-
 
                                     <button type="submit" name="submit" class="btn btn-success sweet-success">
                                         <i class="fa fa-check"></i> ثبت
@@ -230,5 +257,19 @@ include('header.php'); ?>
     </div>
     <!-- ----------- end main container ------------------------------------------------------------------------ -->
 </div>
+<script>
+$("#e1").select2();
+$("#selctall").click(function(){
+    if($("#selctall").is(':checked') ){
+        $("#e1 > option").prop("selected","selected");
+        $("#e1").trigger("change");
+        console.log('check');
+    }else{
+        $("#e1 > option").prop("selected", false);
+         $("#e1").trigger("change");
+         console.log('not check');
+     }
+});
 
+</script>
 <? include('footer.php'); ?>

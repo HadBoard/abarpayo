@@ -124,6 +124,13 @@ $action = new Action();
     </li>
 
     <li>
+        <a class="has-arrow" href="shop-ticket-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">تیکت های اصناف</span>
+        </a>
+    </li>
+
+    <li>
         <a class="has-arrow" href="contact-list.php" aria-expanded="false">
             <i class="fa fa-user"></i>
             <span class="hide-menu">تماس با ما</span>
