@@ -38,6 +38,7 @@ if (isset($_POST['submit'])) {
     $longitude = $action->request('longitude');
     $latitude = $action->request('latitude');
     $status = $action->request('status');
+    $economic_code = $action->request('economic_code');
     $icon = ($edit ? $row->image : "");
     
     if($_FILES["icon"]["name"]){
@@ -90,7 +91,7 @@ if (isset($_POST['submit'])) {
 
     // send query
     if ($edit) {
-        $command = $action->shop_edit($id,$category_id, $title,$icon,$phone, $fax, $city_id, $address, $longitude, $latitude, $status);
+        $command = $action->shop_edit($id,$category_id, $title,$icon,$phone, $fax, $city_id, $address, $longitude, $latitude,$economic_code, $status);
     } 
 
     // check errors
@@ -277,7 +278,12 @@ include('header.php'); ?>
                                            value="<?= ($edit  && $row->latitude !=0) ? $row->latitude : "" ?>"
                                            required>
                                 </div>
-
+                                <div class="form-group">
+                                    <input type="text" name="economic_code" class="form-control input-default "
+                                           placeholder="شناسه اقتصادی"
+                                           value="<?= ($edit  && $row->economic_code !=0) ? $row->economic_code : "" ?>"
+                                           required>
+                                </div>
                                 <div>
                                         <label for="icon" class="btn btn-dark btn-block m-0 add-pic-btn"> انتخاب عکس اصلی</label>
                                         <input type="file" name="icon" id="icon" style="visibility:hidden;">

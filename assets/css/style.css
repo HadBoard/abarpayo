@@ -378,7 +378,7 @@ label.form-check-label {
 }
 /* eof welcome-modal */
 .flip-card {
-  width: 100%;
+  width: 60%;
   height: 88px;
   /* margin-top:-112px */
   display: table;
@@ -428,20 +428,24 @@ label.form-check-label {
   width: 86%;
   margin: 27px auto 0 auto;
 }
-.flip-card-back h2{
-  /* text-shadow: -2px 1px 2px rgb(255 142 10 / 76%); */
+.invation-wrapper .col-md-12 {
+    margin-bottom: 19px;
 }
 
+.flip-card-link {
+    width: 90%;
+}
 .flip-card-back .col-3 a {
   /* background: gray; */
   /* padding: 4px 10px; */
   /* border-radius: 32px; */
 }
 .flip-card-back h2 ,.flip-card-back h3{
-  /* text-shadow: -2px 1px 2px rgb(255 142 10 / 76%); */
-  float: right;
-  width: 80%;
-  text-align: right;
+  text-shadow: none;
+  float: left;
+  width: 60%;
+  text-align: left;
+  font-size: 14px;
 }
 
 .flip-card-back .col-3 a {
@@ -708,4 +712,32 @@ span.ticket_check i {
 .notif_table td:nth-child(3) {
   width: 20%;
   max-width: 20%;
+}
+.share-link button {
+    background: none;
+    border: none;
+    font-size: 30px;
+    width: 30%;
+    text-align: center;
+}
+button.whatsapp-icon i {
+    color: #0eff0e;
+    font-size: 35px;
+}
+
+button.telegram-icon i {
+    color: #2e6ba4;
+}
+
+.share-link {
+    width: 40%;
+    float: right;
+    margin-top: -10px;
+}
+
+button.copy-icon i {
+    color: gray;
+}
+.flip-card.flip-card-link .share-link {
+    width: 25%;
 }

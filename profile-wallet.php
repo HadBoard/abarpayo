@@ -110,6 +110,7 @@
                         </div>
                     </div>
                     <?
+                    
                         while($transaction = $transactions->fetch_object()){
                             if($action->user()){
                                 $payments = $action->payment_get_action($transaction->id);

@@ -109,7 +109,22 @@ include('header.php'); ?>
                                            placeholder="تلفن همراه"
                                            value="<?= $row->phone ?>">
                                 </div>
-
+                                <div class="form-group">
+                                    <input type="text" name="birthday" class="form-control input-default "
+                                           placeholder="تاریخ تولد"
+                                           value="<?= $row->birthday ?>">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="natinal_code" class="form-control input-default "
+                                           placeholder="کد ملی"
+                                           value="<?= $action->time_to_shamsi($row->national_code) ?>">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="postal_code" class="form-control input-default "
+                                           placeholder="کد پستی"
+                                           value="<?= $row->postal_code ?>">
+                                </div>
+                                
                                 <div class="form-group">
                                     <input type="text" name="password" class="form-control input-default "
                                            placeholder="رمز عبور"

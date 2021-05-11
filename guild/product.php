@@ -36,9 +36,9 @@ if (isset($_POST['submit'])) {
     $title = $action->request('title');
     $description = $action->request('description');
     $price = $action->request('price');
-    $status = $action->request('status');
+    $status = 0;
     $discount = $action->request('discount');
-    $score = $action->request('score');
+    $score =0;
 
     // send query
     if ($edit) {
@@ -168,19 +168,8 @@ include('header.php'); ?>
                                            value="<?= ($edit) ? $row->discount : "" ?>" >
                                 </div>
 
-                                <div class="form-group">
-                                    <input type="text" name="score" class="form-control input-default "
-                                           placeholder="امتیاز"
-                                           value="<?= ($edit) ? $row->score : "" ?>" >
-                                </div>
                                 
                                 <div class="form-actions">
-
-                                    <label class="float-right">
-                                        <input type="checkbox" class="float-right m-1" name="status" value="1"
-                                            <? if ($edit && $row->status) echo "checked"; ?> >
-                                        فعال
-                                    </label>
 
                                     <button type="submit" name="submit" class="btn btn-success sweet-success">
                                         <i class="fa fa-check"></i> ثبت
