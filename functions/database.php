@@ -348,11 +348,11 @@ class Action
     }
     public function user_get_payment(){
         $id = $this->user()->id;
-        return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id'");
+        return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id' ORDER BY id DESC");
     }
 
     public function app_get_payment($id){
-        return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id'");
+        return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id'ORDER BY id DESC");
     }
 
     public function payment_get_action($payment_id){
@@ -1219,11 +1219,11 @@ class Action
     return bcmod($shaba, '97');
 }
 
-public function iban_unique($iban,$isUser){
+public function iban_unique($id,$iban,$isUser){
     if($isUser == 1){
-        $result = $this->cart_list();
+        $result = $this->app_user_cart_list($id);
     }else{
-        $result = $this->marketer_carts();
+        $result = $this->marketer_cart_list($id);
     }
     
     while($row = $result->fetch_object()){
@@ -1235,12 +1235,12 @@ public function iban_unique($iban,$isUser){
     return true;
 }
 
-public function account_number_validate($account_number,$isUser){
+public function account_number_validate($id,$account_number,$isUser){
 
     if($isUser == 1){
-        $result = $this->cart_list();
+        $result = $this->app_user_cart_list($id);
     }else{
-        $result = $this->marketer_carts();
+        $result = $this->marketer_cart_list($id);
     }
     
     while($row = $result->fetch_object()){
@@ -1253,26 +1253,18 @@ public function account_number_validate($account_number,$isUser){
     
 }
 
-public function cart_number_validate($cart_number,$isUser){
+public function cart_number_validate($id,$cart_number,$isUser){
 
     if($isUser == 1){
-        $result = $this->cart_list();
+        $result = $this->app_user_cart_list($id);
     }else{
-        $result = $this->marketer_carts();
+        $result = $this->marketer_cart_list($id);
     }
-    $result = $this->cart_list();
     while($row = $result->fetch_object()){
         if($row->cart_number == $cart_number){
             return false;
         }
     }
-
-    $length = strlen($cart_number);
-
-    if($length != 16){
-        return false;
-    }
-    
     return true;
 }
 

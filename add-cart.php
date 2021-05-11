@@ -5,8 +5,11 @@
         $cart_id = $action->request('id');
         if($action->user()){
             $row  = $action->cart_get($cart_id);
+            $isUser = 1;
+           
         }else if($action->marketer()){
             $row = $action->marketer_cart_get($cart_id);
+            $isUser = 0;
         }
     }
 
@@ -23,13 +26,29 @@
         $account_number = $action->request('account_number');
         $cart_number = $action->request('cart_number');
         $iban = $action->request('iban');
+
         if($edit){
+            $validate = $validate1 = $validate2 = 1;
+            if($account_number != $row->account_number){
+                $validate = $action->account_number_validate($id,$account_number,$isUser);
+            }else if($iban != $row->iban){
+                $validate1 = $action->iban_validate($iban) && $action->iban_unique($id,$iban,$isUser);
+            }else if($cart_number != $row->cart_number){
+                $validate2 = $action->cart_number_validate($id,$cart_number,$isUser);
+            }
+        }else{
+            $validate = $action->account_number_validate($id,$account_number,$isUser);
+            $validate1 = $action->iban_validate($iban) && $action->iban_unique($id,$iban,$isUser);
+            $validate2 = $action->cart_number_validate($id,$cart_number,$isUser);
+        }
+
+        if($edit && $validate && $validate1 && $validate2){
             if($action->user()){
                 $command= $action->cart_edit($cart_id,$bank_id,$name,$cart_number,$account_number,$iban,$validation);
             }else if($action->marketer()){
                 $command= $action->marketer_cart_edit($cart_id,$bank_id,$name,$cart_number,$account_number,$iban,$validation);
             }    
-        }else{
+        }else if($validate && $validate1 && $validate2){
             if($action->user()){
                 $command= $action->cart_add($bank_id,$name,$cart_number,$account_number,$iban,$validation);
             }else if($action->marketer()){  
@@ -51,7 +70,7 @@
                     <div class="alert alert-fail">
                         <span class="close_alart">×</span>
                         <p>
-                            عملیات ناموفق بود!
+                            کارت با مشخصات داده شده در سیستم موجود است!
                         </p>
                     </div>
                 </div>
@@ -136,27 +155,27 @@ margin-top: -68px;" >
 </div>
 </div>
 <script>
-$('#form').submit(function (e) {
+// $('#form').submit(function (e) {
 //   e.preventDefault();
-  var account_number = $("#account_number").val();
-  var cart_number = $("#cart_number").val();
-  var iban = $("#iban").val();
+//   var account_number = $("#account_number").val();
+//   var cart_number = $("#cart_number").val();
+//   var iban = $("#iban").val();
 
-  $.ajax({
-    type: 'POST',
-    url: 'ajax/validation.php',
-    data: {iban:iban,account_number:account_number,cart_number:cart_number},
-    success: function (response) {
-        if(response == 1){
-            alert(1);
-            // $('#form').submit();
-        }else{
-            // alert(-1);
-            e.preventDefault();
-            // alert(-1);
-            // $('#answers').html(response);
-        }
-    },
-  });
-});
+//   $.ajax({
+//     type: 'POST',
+//     url: 'ajax/validation.php',
+//     data: {iban:iban,account_number:account_number,cart_number:cart_number},
+//     success: function (response) {
+//         if(response == 1){
+//             alert(1);
+//             // $('#form').submit();
+//         }else{
+//             // alert(-1);
+//             e.preventDefault();
+//             // alert(-1);
+//             // $('#answers').html(response);
+//         }
+//     },
+//   });
+// });
 </script>

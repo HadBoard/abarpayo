@@ -1794,16 +1794,18 @@ public function guild_cart_list($shop_id){
     }
 //------------------------------------------------------------------------------------------------------------------
 
-    public function iban_validate($code){
+      //VALIDATE CART-----------------------------------------------------------------------------------------
+   
+      public function iban_validate($code){
         $shaba=substr($code,2)."1827".$code[0].$code[1];
         return bcmod($shaba, '97');
     }
-
-    public function iban_unique($iban,$isUser){
+    
+    public function iban_unique($id,$iban,$isUser){
         if($isUser == 1){
-            $result = $this->cart_list();
+            $result = $this->user_get_cart($id);
         }else{
-            $result = $this->marketer_carts();
+            $result = $this->marketer_cart_list($id);
         }
         
         while($row = $result->fetch_object()){
@@ -1814,13 +1816,13 @@ public function guild_cart_list($shop_id){
        
         return true;
     }
-
-    public function account_number_validate($account_number,$isUser){
-
+    
+    public function account_number_validate($id,$account_number,$isUser){
+    
         if($isUser == 1){
-            $result = $this->cart_list();
+            $result = $this->user_get_cart($id);
         }else{
-            $result = $this->marketer_carts();
+            $result = $this->marketer_cart_list($id);
         }
         
         while($row = $result->fetch_object()){
@@ -1832,27 +1834,19 @@ public function guild_cart_list($shop_id){
         return true;
         
     }
-
-    public function cart_number_validate($cart_number,$isUser){
-
+    
+    public function cart_number_validate($id,$cart_number,$isUser){
+    
         if($isUser == 1){
-            $result = $this->cart_list();
+            $result = $this->user_get_cart($id);
         }else{
-            $result = $this->marketer_carts();
+            $result = $this->marketer_cart_list($id);
         }
-        $result = $this->cart_list();
         while($row = $result->fetch_object()){
             if($row->cart_number == $cart_number){
                 return false;
             }
         }
-
-        $length = strlen($cart_number);
-
-        if($length != 16){
-            return false;
-        }
-        
         return true;
     }
    // ----------- start log ----------------------------------------------------------------------------
