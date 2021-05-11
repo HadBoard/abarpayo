@@ -11,9 +11,9 @@ $main_url = "shop-cart.php";
 
 // ----------- get data ------------------------------------------------------------------------------------------------
 if (isset($_GET['shop'])) {
-    $user_id = $action->request('shop');
+    $shop_id = $action->request('shop');
     $counter = 1;
-    $result = $action->guild_get_cart($shop);
+    $result = $action->guild_cart_list($shop_id);
 }
 // ----------- get data ------------------------------------------------------------------------------------------------
 
@@ -59,17 +59,11 @@ if (isset($_POST['submit'])) {
     $iban = $action->request('iban');
     $validation = $action->request('validation');
 
-    // $validate = $action->account_number_validate($account_number,1);
-    // $validate1 = $action->iban_validate($iban) && $action->iban_unique($iban,1);
-    // $validate2 = $action->cart_number_validate($cart_number,1);
-
     // send query
     if ($edit_id) {
-        $command = $action->guild_cart_edit($edit_id,$shop_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation);
+        $command = $action->guild_cart_edit($edit_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation);
     } else {
-        if($validate && $validate1 && $validate2){
             $command = $action->guild_cart_add($shop_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation);
-        }
     }
 
     // check errors

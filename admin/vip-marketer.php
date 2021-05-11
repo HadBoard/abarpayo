@@ -14,19 +14,13 @@ $main_url = "vip-marketer.php";
 
 
 $result = $action->vip_marketer_list();
+
 if( $result->num_rows > 0){
     while($row = $result->fetch_object()){
         $ids[] = $row->marketer_id; 
     }
 }
 
-
-// $edit = false;
-// if (isset($_GET['edit'])) {
-//     $edit = true;
-//     $id = $action->request('edit');
-//     $row = $action->vip_marketer_get($id);
-// }
 // ----------- get data from database when action is edit --------------------------------------------------------------
 
 // ----------- check error ---------------------------------------------------------------------------------------------
@@ -43,16 +37,25 @@ if (isset($_POST['submit'])) {
 
     // get fields
     $score = $action->request('score');
-    $marketers = array($action->request('marketer'));
+    $marketers = $_POST['marketer'];
 
-    foreach($ids as $id){
-        $action->vip_marketer_remove($id);
-    }
+    if(!empty($marketers)){
+            
+        foreach ($marketers as $marketer) {
+            if($ids){
 
-    foreach($marketers as $marketer){
-        $command = $action->vip_marketer_add($marketer,$score);
+                $key = array_search($marketer, $ids);
+                if ($key < 0) {
+                    $action -> vip_marketer_add($marketer,$score);
+                } else {
+                    // $action->vip_marketer_remove($marketer,$score);
+                }
+            }else{
+                $action -> vip_marketer_add($marketer,$score);
+            }
+           
+        }
     }
-    // send query
     
     // check errors
     if ($command) {
@@ -153,7 +156,7 @@ include('header.php'); ?>
                             <form action="" method="post">
 
                             <div class="form-group">
-                                    <select class="form-control select2" name="marketer" multiple>
+                                    <select class="form-control select2" name="marketer[]" multiple="multiple">
                                         <option>بازارسازان  را انتخاب فرمایید .</option>
                                         <?
                                         $option_result = $action->marketer_list();
@@ -172,8 +175,7 @@ include('header.php'); ?>
 
                                 <div class="form-group">
                                     <input type="text" name="score" class="form-control input-default "
-                                           placeholder="امتیاز پیش فرض"
-                                           value="<?= ($edit) ? $row->score : "" ?>" required>
+                                           placeholder="امتیاز پیش فرض" required>
                                 </div>
 
                                 <div class="form-actions">
@@ -192,6 +194,39 @@ include('header.php'); ?>
                     </div>
                 </div>
                 <!-- ----------- end row of fields ----------------------------------------------------------- -->
+            </div>
+            <div class="col-lg-6">
+            <div class="card">
+                    <div class="card-body">
+
+                        <div class="table-responsive m-t-5">
+                            <table id="example23" class="display nowrap table table-hover table-striped"
+                                   cellspacing="0" width="100%">
+                                <thead>
+                               
+                                <tr>
+                                    <th class="text-center">ردیف</th>
+                                    <th class="text-center">نام</th>
+                                    <th class="text-center">امتیاز</th>
+                                </tr>
+                                </thead>
+
+                                <tbody class="text-center">
+                                <? 
+                                $counter = 1;
+                                $result = $action->vip_marketer_list();
+                                while ($row = $result->fetch_object()) { ?>
+                                    <tr class="text-center">
+                                        <td class="text-center"><?= $counter++ ?></td>
+                                        <td class="text-center"><?= $action->marketer_get($row->marketer_id)->first_name." ".$action->marketer_get($row->marketer_id)->last_name?></td>
+                                        <td class="text-center"><?= $row->score ?></td>
+                                    </tr>
+                                <? } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
