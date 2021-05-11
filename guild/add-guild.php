@@ -1,13 +1,14 @@
 <? require_once "functions/database.php";
+include("const-value.php");
 $database = new DB();
 $connection = $database->connect();
 $action = new Action();
 
 // ----------- urls ----------------------------------------------------------------------------------------------------
 // main url for add , edit
-$main_url = "product.php";
+$main_url = "add-guild.php";
 // main url for remove , change status
-$list_url = "product-list.php";
+$list_url = "add-guild-list.php";
 // ----------- urls ----------------------------------------------------------------------------------------------------
 
 // ----------- get data from database when action is edit --------------------------------------------------------------
@@ -15,7 +16,7 @@ $edit = false;
 if (isset($_GET['edit'])) {
     $edit = true;
     $id = $action->request('edit');
-    $row = $action->product_get($id);
+    $row = $action->guild_request_get($id);
 }
 // ----------- get data from database when action is edit --------------------------------------------------------------
 
@@ -32,19 +33,15 @@ if (isset($_SESSION['error'])) {
 if (isset($_POST['submit'])) {
 
     // get fields
-    
-    $title = $action->request('title');
-    $description = $action->request('description');
-    $price = $action->request('price');
-    $status = 0;
-    $discount = $action->request('discount');
-    $score =0;
-
+    $name  = $action->request('name');
+    $owner = $action->request('owner');
+    $address = $action->request('address');
+    $category = $action->request('category');
     // send query
     if ($edit) {
-        $command = $action->product_edit($id,$title,$description,$price,$discount,$score,$status);
+        $command = $action->guild_request_edit($id,$category,$name,$owner,$address);
     } else {
-        $command = $action->product_add($title,$description,$price,$discount,$score,$status);
+        $command = $action->guild_request_add($category,$name,$owner,$address);
     }
 
     // check errors
@@ -70,9 +67,9 @@ include('header.php'); ?>
         <!-- ----------- start title --------------------------------------------------------------------------- -->
         <div class="col-md-12 align-self-center text-right">
             <?php if (!isset($_GET['action'])) { ?>
-                <h3 class="text-primary">ثبت محصول </h3>
+                <h3 class="text-primary">ثبت صنف  </h3>
             <?php } else { ?>
-                <h3 class="text-primary">ویرایش محصول </h3>
+                <h3 class="text-primary">ویرایش صنف </h3>
             <?php } ?>
         </div>
         <!-- ----------- end title ----------------------------------------------------------------------------- -->
@@ -86,7 +83,7 @@ include('header.php'); ?>
                         خانه
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="<?= $list_url ?>">محصولات</a></li>
+                <li class="breadcrumb-item"><a href="<?= $list_url ?>">اصناف جدید</a></li>
                 <?php if ($edit) { ?>
                     <li class="breadcrumb-item"><a href="javascript:void(0)">ثبت</a></li>
                 <?php } else { ?>
@@ -127,14 +124,6 @@ include('header.php'); ?>
                                 <?= $action->time_to_shamsi($row->created_at) ?>
                             </p>
                         </div>
-                        <? if ($row->updated_at) { ?>
-                            <div class="col-lg-6">
-                                <p class="text-right m-b-0">
-                                    آخرین ویرایش :
-                                    <?= $action->time_to_shamsi($row->updated_at) ?>
-                                </p>
-                            </div>
-                        <? } ?>
                     </div>
                 <? } ?>
                 <!-- ----------- end history ------------------------------------------------------------------- -->
@@ -145,30 +134,34 @@ include('header.php'); ?>
                         <div class="basic-form">
                             <form action="" method="post" enctype="multipart/form-data">
                                 <div class="form-group">
-                                    <input type="text" name="title" class="form-control input-default "
-                                           placeholder="عنوان"
-                                           value="<?= ($edit) ? $row->title : "" ?>" required>
+                                    <input type="text" name="name" placeholder="نام صنف" class="form-control input-default " value='<?=$edit?$row->title:''?>' required>
                                 </div>
-
                                 <div class="form-group">
-                                    <textarea type="text" name="description" class="form-control input-default "
-                                           placeholder="توضیحات"
-                                            ><?= ($edit) ? $row->discription : "" ?></textarea>
+                                    <input type="text" name="owner" placeholder="نام صاحب کسب و کار" class="form-control input-default " value='<?=$edit?$row->owner:''?>' required>
                                 </div>
-
                                 <div class="form-group">
-                                    <input type="text" name="price" class="form-control input-default "
-                                           placeholder="قیمت"
-                                           value="<?= ($edit) ? $row->price : "" ?>" required>
+                                 
+                                    <select name="category" class="form-control" required>
+                                    <option>دسته بندی را انتخاب فرمایید .</option>
+                                        <?
+                                        $option_result = $action->category_list();
+                                        while ($option = $option_result->fetch_object()) {
+                                            echo '<option value="';
+                                            echo $option->id;
+                                            echo '"';
+                                            if ($option->id == $row->category_id) echo "selected";
+                                            echo '>';
+                                            echo $option->title;
+                                            echo '</option>';
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
-
                                 <div class="form-group">
-                                    <input type="text" name="discount" class="form-control input-default "
-                                           placeholder="تخفیف"
-                                           value="<?= ($edit) ? $row->discount : "" ?>" >
+                                    <textarea type="text" name="address" class="form-control input-default "
+                                           placeholder="نشانی"
+                                            ><?= ($edit) ? $row->address: "" ?></textarea>
                                 </div>
-
-                                
                                 <div class="form-actions">
 
                                     <button type="submit" name="submit" class="btn btn-success sweet-success">

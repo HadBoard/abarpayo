@@ -5,9 +5,9 @@ $action = new Action();
 
 // ----------- urls ----------------------------------------------------------------------------------------------------
 // main url for add , edit
-$main_url = "product.php";
+$main_url = "ticket.php";
 // main url for remove , change status
-$list_url = "product-list.php";
+$list_url = "ticket-list.php";
 // ----------- urls ----------------------------------------------------------------------------------------------------
 
 // ----------- get data from database when action is edit --------------------------------------------------------------
@@ -15,7 +15,7 @@ $edit = false;
 if (isset($_GET['edit'])) {
     $edit = true;
     $id = $action->request('edit');
-    $row = $action->product_get($id);
+    $row = $action->ticket_get($id);
 }
 // ----------- get data from database when action is edit --------------------------------------------------------------
 
@@ -33,18 +33,14 @@ if (isset($_POST['submit'])) {
 
     // get fields
     
-    $title = $action->request('title');
-    $description = $action->request('description');
-    $price = $action->request('price');
-    $status = 0;
-    $discount = $action->request('discount');
-    $score =0;
-
+    $subject = $action->request('title');
+    $text = $action->request('text');
+    $type = $action->request('type');
     // send query
     if ($edit) {
-        $command = $action->product_edit($id,$title,$description,$price,$discount,$score,$status);
+        $command = $action->ticket_edit($id,$subject,$text,$type);
     } else {
-        $command = $action->product_add($title,$description,$price,$discount,$score,$status);
+        $command = $action->ticket_add($subject,$text,$type);
     }
 
     // check errors
@@ -70,9 +66,9 @@ include('header.php'); ?>
         <!-- ----------- start title --------------------------------------------------------------------------- -->
         <div class="col-md-12 align-self-center text-right">
             <?php if (!isset($_GET['action'])) { ?>
-                <h3 class="text-primary">ثبت محصول </h3>
+                <h3 class="text-primary">ثبت تیکت </h3>
             <?php } else { ?>
-                <h3 class="text-primary">ویرایش محصول </h3>
+                <h3 class="text-primary">ویرایش تیکت </h3>
             <?php } ?>
         </div>
         <!-- ----------- end title ----------------------------------------------------------------------------- -->
@@ -86,7 +82,7 @@ include('header.php'); ?>
                         خانه
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="<?= $list_url ?>">محصولات</a></li>
+                <li class="breadcrumb-item"><a href="<?= $list_url ?>">پشتیبانی</a></li>
                 <?php if ($edit) { ?>
                     <li class="breadcrumb-item"><a href="javascript:void(0)">ثبت</a></li>
                 <?php } else { ?>
@@ -127,14 +123,6 @@ include('header.php'); ?>
                                 <?= $action->time_to_shamsi($row->created_at) ?>
                             </p>
                         </div>
-                        <? if ($row->updated_at) { ?>
-                            <div class="col-lg-6">
-                                <p class="text-right m-b-0">
-                                    آخرین ویرایش :
-                                    <?= $action->time_to_shamsi($row->updated_at) ?>
-                                </p>
-                            </div>
-                        <? } ?>
                     </div>
                 <? } ?>
                 <!-- ----------- end history ------------------------------------------------------------------- -->
@@ -145,30 +133,22 @@ include('header.php'); ?>
                         <div class="basic-form">
                             <form action="" method="post" enctype="multipart/form-data">
                                 <div class="form-group">
-                                    <input type="text" name="title" class="form-control input-default "
-                                           placeholder="عنوان"
-                                           value="<?= ($edit) ? $row->title : "" ?>" required>
+                                    <input type="text" name="title" placeholder="موضوع" class="form-control input-default " value='<?=$edit?$row->subject:''?>' required>
                                 </div>
-
                                 <div class="form-group">
-                                    <textarea type="text" name="description" class="form-control input-default "
+                                 
+                                    <select name="type" class="form-control" required>
+                                        <option value="-1">نوع درخواست</option>
+                                        <option value = 1>سرمایه گذاری و مشارکت</option>
+                                        <option value = 2>  انتقادات و پیشنهادات </option>
+                                        <option value = 3>حسابداری و مالی </option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <textarea type="text" name="text" class="form-control input-default "
                                            placeholder="توضیحات"
-                                            ><?= ($edit) ? $row->discription : "" ?></textarea>
+                                            ><?= ($edit) ? $row->text: "" ?></textarea>
                                 </div>
-
-                                <div class="form-group">
-                                    <input type="text" name="price" class="form-control input-default "
-                                           placeholder="قیمت"
-                                           value="<?= ($edit) ? $row->price : "" ?>" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="text" name="discount" class="form-control input-default "
-                                           placeholder="تخفیف"
-                                           value="<?= ($edit) ? $row->discount : "" ?>" >
-                                </div>
-
-                                
                                 <div class="form-actions">
 
                                     <button type="submit" name="submit" class="btn btn-success sweet-success">

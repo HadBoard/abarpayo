@@ -5,9 +5,9 @@ $action = new Action();
 
 // ----------- urls ----------------------------------------------------------------------------------------------------
 // main url for add , edit
-$main_url = "product.php";
+$main_url = "cart.php";
 // main url for remove , change status
-$list_url = "product-list.php";
+$list_url = "cart-list.php";
 // ----------- urls ----------------------------------------------------------------------------------------------------
 
 // ----------- get data from database when action is edit --------------------------------------------------------------
@@ -15,7 +15,7 @@ $edit = false;
 if (isset($_GET['edit'])) {
     $edit = true;
     $id = $action->request('edit');
-    $row = $action->product_get($id);
+    $row = $action->cart_get($id);
 }
 // ----------- get data from database when action is edit --------------------------------------------------------------
 
@@ -33,19 +33,21 @@ if (isset($_POST['submit'])) {
 
     // get fields
     
+    $bank_id = $action->request('bank_id');
     $title = $action->request('title');
-    $description = $action->request('description');
-    $price = $action->request('price');
-    $status = 0;
-    $discount = $action->request('discount');
-    $score =0;
-
+    $cart_number = $action->request('cart_number');
+    $iban = $action->request('iban');
+    $account_number = $action->request('account_number');
+    // if(!$action->bankCardCheck($cart_number) || !$action->shaba($iban) || strlen($account_number)!=13){
+    //     $_SESSION['error'] = 1;
+    // }else
     // send query
     if ($edit) {
-        $command = $action->product_edit($id,$title,$description,$price,$discount,$score,$status);
+        $command = $action->cart_edit($id,$bank_id,$title,$cart_number,$account_number,$iban,$validation);
     } else {
-        $command = $action->product_add($title,$description,$price,$discount,$score,$status);
+        $command = $action->cart_add($bank_id,$title,$cart_number,$account_number,$iban,$validation);
     }
+// }
 
     // check errors
     if ($command) {
@@ -70,9 +72,9 @@ include('header.php'); ?>
         <!-- ----------- start title --------------------------------------------------------------------------- -->
         <div class="col-md-12 align-self-center text-right">
             <?php if (!isset($_GET['action'])) { ?>
-                <h3 class="text-primary">ثبت محصول </h3>
+                <h3 class="text-primary">ثبت کارت</h3>
             <?php } else { ?>
-                <h3 class="text-primary">ویرایش محصول </h3>
+                <h3 class="text-primary">ویرایش  کارت</h3>
             <?php } ?>
         </div>
         <!-- ----------- end title ----------------------------------------------------------------------------- -->
@@ -86,7 +88,7 @@ include('header.php'); ?>
                         خانه
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="<?= $list_url ?>">محصولات</a></li>
+                <li class="breadcrumb-item"><a href="<?= $list_url ?>">کارت ها</a></li>
                 <?php if ($edit) { ?>
                     <li class="breadcrumb-item"><a href="javascript:void(0)">ثبت</a></li>
                 <?php } else { ?>
@@ -145,27 +147,44 @@ include('header.php'); ?>
                         <div class="basic-form">
                             <form action="" method="post" enctype="multipart/form-data">
                                 <div class="form-group">
+                                    <select class="form-control" name="bank_id" required>
+                                        <option>بانک را انتخاب فرمایید .</option>
+                                        <?
+                                        $option_result = $action->bank_list();
+                                        while ($option = $option_result->fetch_object()) {
+                                            echo '<option value="';
+                                            echo $option->id;
+                                            echo '"';
+                                            if ($option->id == $row->bank_id) echo "selected";
+                                            echo '>';
+                                            echo $option->name;
+                                            echo '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <input type="text" name="title" class="form-control input-default "
-                                           placeholder="عنوان"
+                                           placeholder="نام دارنده کارت"
                                            value="<?= ($edit) ? $row->title : "" ?>" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <textarea type="text" name="description" class="form-control input-default "
-                                           placeholder="توضیحات"
-                                            ><?= ($edit) ? $row->discription : "" ?></textarea>
+                                         <input type="text" name="account_number" class="form-control input-default "
+                                           placeholder="شماره حساب"
+                                           value="<?= ($edit) ? $row->account_number : "" ?>" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="text" name="price" class="form-control input-default "
-                                           placeholder="قیمت"
-                                           value="<?= ($edit) ? $row->price : "" ?>" required>
+                                    <input type="text" name="cart_number" class="form-control input-default "
+                                           placeholder="شماره کارت"
+                                           value="<?= ($edit) ? $row->cart_number : "" ?>" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="text" name="discount" class="form-control input-default "
-                                           placeholder="تخفیف"
-                                           value="<?= ($edit) ? $row->discount : "" ?>" >
+                                    <input type="text" name="iban" class="form-control input-default "
+                                           placeholder="شماره شبا"
+                                           value="<?= ($edit) ? $row->iban : "" ?>" >
                                 </div>
 
                                 

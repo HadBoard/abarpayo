@@ -6,34 +6,24 @@ $action = new Action();
 
 // ----------- urls ----------------------------------------------------------------------------------------------------
 // main url for add , edit
-$main_url = "product.php";
+$main_url = "cart.php";
 // main url for remove , change status
-$list_url = "product-list.php";
+$list_url = "cart-list.php";
 // ----------- urls ----------------------------------------------------------------------------------------------------
 
 // ----------- get data ------------------------------------------------------------------------------------------------
 $counter = 1;
-$result = $action->product_list();
+$result = $action->guild_cart_list();
 // ----------- get data ------------------------------------------------------------------------------------------------
 
 // ----------- delete --------------------------------------------------------------------------------------------------
 if (isset($_GET['remove'])) {
     $id = $action->request('remove');
-    $_SESSION['error'] = !$action->product_remove($id);
+    $_SESSION['error'] = !$action->cart_remove($id);
     header("Location: $list_url");
     return;
 }
 // ----------- delete --------------------------------------------------------------------------------------------------
-
-// ----------- change status -------------------------------------------------------------------------------------------
-if (isset($_GET['status'])) {
-    $id = $action->request('status');
-    $_SESSION['error'] = !$action->product_status($id);
-    header("Location: $list_url");
-    return;
-}
-// ----------- change status -------------------------------------------------------------------------------------------
-
 // ----------- check error ---------------------------------------------------------------------------------------------
 $error = false;
 if (isset($_SESSION['error'])) {
@@ -51,7 +41,7 @@ include('header.php'); ?>
     <div class="row page-titles">
         <!-- ----------- start breadcrumb ---------------------------------------------------------------------- -->
         <div class="col-md-12 align-self-center text-right">
-            <h3 class="text-primary">محصولات</h3></div>
+            <h3 class="text-primary">کارت ها</h3></div>
         <div class="col-md-12 align-self-center text-right">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
@@ -60,7 +50,7 @@ include('header.php'); ?>
                         خانه
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="javascript:void(0)">محصولات</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">کارت ها</a></li>
             </ol>
         </div>
         <!-- ----------- end breadcrumb ------------------------------------------------------------------------ -->
@@ -85,7 +75,7 @@ include('header.php'); ?>
 
         <!-- ----------- add button ---------------------------------------------------------------------------- -->
         <div class="row">
-            <a class="add-user mb-2" href="<?= $main_url ?>"> ثبت محصول <i class="fas fa-plus"></i></a>
+            <a class="add-user mb-2" href="<?= $main_url ?>"> ثبت کارت<i class="fas fa-plus"></i></a>
         </div>
         <!-- ----------- add button ---------------------------------------------------------------------------- -->
 
@@ -102,11 +92,8 @@ include('header.php'); ?>
                                 <thead>
                                 <tr>
                                     <th class="text-center">ردیف</th>
-                                    <th class="text-center">توسط</th>
-                                    <th class="text-center">عنوان</th>
-                                    
-                                    <th class="text-center">قیمت</th>
-                                    <!-- <th class="text-center">نظرات</th> -->
+                                    <th class="text-center">نام</th>
+                                    <th class="text-center">شماره کارت</th>
                                     <th class="text-center">وضعیت</th>
                                     <th class="text-center">مدیریت</th>
                                 </tr>
@@ -117,16 +104,15 @@ include('header.php'); ?>
                                     <tr class="text-center">
 
                                         <td class="text-center"><?= $counter++ ?></td>
-                                        <td class="text-center"><?if($row->guild_id){echo $action->admin_get($row->guild_id)->first_name." ".$action->admin_get($row->guild_id)->last_name;}else echo" پنل ادمین" ?></td>
-                                        <td class="text-center"><?= $row->title ?></td>
-                                        <td class="text-center"><?= number_format($row->price )?></td>
-                                        <!-- <td class="text-center"><a href="product-comment.php?product=<?= $row->id?>"><i class="fas fa-comment"></i></a></td> -->
-                                        <td class="text-center">
-                                              <?
-                                                if ($row->status) echo "<status-indicator positive pulse></status-indicator>";
+                                        <td class="text-center"><?=$row->title?></td>
+                                        <td class="text-center"><?= $row->cart_number ?></td>
+                                          <td class="text-center">
+                                           
+                                                <?
+                                                if ($row->validation) echo "<status-indicator positive pulse></status-indicator>";
                                                 else echo "<status-indicator negative pulse></status-indicator>";
                                                 ?>
-                                            
+                                          
                                         </td>
 
                                         <td class="text-center">

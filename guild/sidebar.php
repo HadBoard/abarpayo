@@ -50,6 +50,27 @@ $action = new Action();
     </li>
     <hr class="m-0">
     <li>
+        <a class="has-arrow" href="ticket-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">پشتیبانی</span>
+        </a>
+    </li>
+    <li>
+        <a class="has-arrow" href="add-guild-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">پیشنهاد فروشگاه جدید</span>
+        </a>
+    </li>
+    <hr class="m-0">
+    <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fas fa-user "></i><span class="hide-menu">صندوق</span></a>
+        <ul aria-expanded="false" class="collapse">
+            <li><a href="wallet-log.php">کیف پول</a></li>
+            <li><a href="cart-list.php">کارت ها</a></li>
+           
+        </ul>
+    </li>
+    <hr class="m-0">
+    <li>
         <a class="has-arrow" href="log.php" aria-expanded="false">
             <i class="fa fa-user"></i>
             <span class="hide-menu">لاگ</span>

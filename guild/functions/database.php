@@ -322,7 +322,7 @@ public function shop_pics_get($shop_id)
     return $this->connection->query("SELECT * FROM `tbl_shop_pics` WHERE `shop_id` = '$shop_id'");
 }
 
-public function shop_edit($id,$category_id,$title,$icon, $phone, $fax, $city_id, $address, $longitude, $latitude, $status)
+public function shop_edit($id,$category_id,$title,$icon, $phone, $fax, $city_id, $address, $longitude, $latitude,$economic_code, $status)
 {
     $now = time();
     $result = $this->connection->query("UPDATE `tbl_shop` SET 
@@ -332,10 +332,11 @@ public function shop_edit($id,$category_id,$title,$icon, $phone, $fax, $city_id,
     `phone`='$phone',
     `fax`='$fax',
     `city_id`='$city_id',
-    `address`='$address',
+    `address`='$address',S
     `longitude`='$longitude',
     `latitude`='$latitude',
     `status`='$status',
+    `economic_code`='$economic_code',
     `updated_at`='$now'
     WHERE `id` ='$id'");
     if (!$this->result($result)) return false;
@@ -586,10 +587,10 @@ public function cart_add($bank_id,$title,$cart_number,$account_number,$iban,$val
 public function cart_edit($id,$bank_id,$title,$cart_number,$account_number,$iban,$validation)
 {
     $now = time();
-    $result=$this->connection->query("SELECT *FROM tbl_guild_cart WHERE `cart_number`='$cart_number' OR `account_number`='$account_number' OR `iban`='$iban'");
-    if(mysqli_num_rows($result)){
-        return false;
-    }else{
+    // $result=$this->connection->query("SELECT *FROM tbl_guild_cart WHERE `cart_number`='$cart_number' AND `account_number`='$account_number' AND `iban`='$iban'");
+    // if(mysqli_num_rows($result)){
+    //     return false;
+    // }else{
         $result = $this->connection->query("UPDATE `tbl_guild_cart` SET 
         `bank_id` = '$bank_id',
         `title`='$title',
@@ -601,7 +602,7 @@ public function cart_edit($id,$bank_id,$title,$cart_number,$account_number,$iban
         WHERE `id` ='$id'");
         if (!$this->result($result)) return false;
         return $id;
-    }
+    // }
 }
 
 public function cart_remove($id){
@@ -609,11 +610,19 @@ public function cart_remove($id){
     if (!$this->result($result)) return false;
      return true;
 }
-
-public function guild_get_payment(){
-   $shop_id= $this->guild()->shop_id;;
-    return $this->connection->query("SELECT * FROM `tbl_guild_payment` WHERE `shop_id` = '$shop_id'");
+public function cart_get($id){
+        return $this->get_data("tbl_guild_cart", $id);
 }
+
+public function guild_get_request(){
+   $shop_id= $this->guild()->shop_id;
+    return $this->connection->query("SELECT * FROM `tbl_shop_withdraw` WHERE `shop_id` = '$shop_id'");
+}
+public function guild_request_remove($id){
+    $result= $this->connection->query("DELETE  FROM `tbl_shop_withdraw` WHERE `id` = '$id' AND `status`=0");
+     if (!$this->result($result)) return false;
+     return true;
+ }
 
 public function guild_cart_list(){
     $shop_id= $this->guild()->shop_id;;
@@ -659,7 +668,7 @@ public function bank_get($id){
 public function request_add($cart_id,$amount){
     $shop_id = $this->guild()->shop_id;
     $now  = time();
-    $result = $this->connection->query("INSERT INTO `tbl_guild_request`
+    $result = $this->connection->query("INSERT INTO `tbl_shop_withdraw`
     (`shop_id`,`cart_id`,`amount`,`created_at`) 
     VALUES
     ('$shop_id','$cart_id','$amount','$now')");
@@ -670,6 +679,83 @@ public function request_add($cart_id,$amount){
 
 
 // ----------- end finantial ----------------------------------------------------------------------------
+// ----------- start TICKETS -----------------------------------------------------------------------------------------
+
+
+public function ticket_add($subject,$text,$type)
+{
+    $now = time();
+    $shop_id = $this->guild()->shop_id;
+    $result = $this->connection->query("INSERT INTO `tbl_guild_ticket`
+    (`shop_id`,`subject`,`text`,`type`,`created_at`) 
+    VALUES
+    ('$shop_id','$subject','$text','$type','$now')");
+    if (!$this->result($result)) return false;
+    return $this->connection->insert_id;
+}
+
+public function ticket_edit($id,$subject,$text,$type)
+{
+    $result = $this->connection->query("UPDATE  `tbl_guild_ticket` SET'subject`='$subject',`text'=$text',`type`='$type' WHERE `id`='$id'");
+    if (!$this->result($result)) return false;
+    return $id;
+}
+public function ticket_get($id)
+{
+    return $this->get_data("tbl_guild_ticket", $id);
+}
+public function ticket_list()
+{
+   $shop_id= $this->guild()->shop_id;
+   $result = $this->connection->query("SELECT * FROM `tbl_guild_ticket` WHERE shop_id=' $shop_id' ORDER BY `id` DESC");
+   if (!$this->result($result)) return false;
+   return $result;
+}
+
+// ----------- end TICKET -------------------------------------------------------------------------------------------
+// -----------  strat add guild -----------------------------------------------------------------------------------------
+public function guild_request_get($id)
+{
+    return $this->get_data("tbl_shop_request", $id);
+}
+
+
+public function guild_request_add($category,$name,$owner,$address){
+    $now = time();
+    $shop_id= $this->guild()->shop_id;
+    $status = 0;
+    $result = $this->connection->query("INSERT INTO `tbl_shop_request`
+    (`shop_id`,`category_id`,`title`,`owner`,`address`,`created_at`,`status`) 
+    VALUES
+    ('$shop_id','$category','$name','$owner','$address','$now','$status')");
+    if (!$this->result($result)) return false;
+    return $this->connection->insert_id;
+}
+public function guild_request_edit($id,$category,$name,$owner,$address,){
+    $result = $this->connection->query("UPDATE `tbl_shop_request` SET
+     `category_id`='$category',
+     `title`='$name',
+     `owner`='$owner',
+     `address`='$address'
+    WHERE `id`='$id'");
+    if (!$this->result($result)) return false;
+    return $id;
+}
+public function add_guild_list()
+{
+   $shop_id= $this->guild()->shop_id;
+   $result = $this->connection->query("SELECT * FROM `tbl_shop_request` WHERE shop_id='$shop_id' ORDER BY `id` DESC");
+   if (!$this->result($result)) return false;
+   return $result;
+}
+
+public function add_guild_remove($id){
+    $result = $this->connection->query("DELETE FROM `tbl_shop_request` WHERE `id`='$id' AND `status`=0");
+    if (!$this->result($result)) return false;
+    return true;
+}
+// ----------- end add guild-----------------------------------------------------------------------------------------
+
 
 // ----------- end Action class ----------------------------------------------------------------------------------------
 
