@@ -200,9 +200,16 @@ include('header.php'); ?>
                                 <div class="form-group text-right" id="per_div">
                                 <?if($edit){?>
                                 <div class="form-group">
-                                    <select class="form-control select2" name="perms[]" multiple="multiple">
-                                        <option>سطوح دسترسی  را انتخاب فرمایید .</option>
-                                        <option value=1>دسته بندی ها</option
+                                    <label for="perms">انتخاب سطح دسترسی</label>
+                                    <!-- <input style="margin: 6px 8px 13px 0px;" type="checkbox"  >انتخاب همه -->
+                                    <label  >
+                                        <input type="checkbox" class="float-right m-1" 
+                                        id="selctall">
+                                          انتخاب همه
+                                    </label>
+                                    <select  class="form-control select2" name="perms[]" multiple="multiple" size=2 id="e1">
+                                        <!-- <option>سطوح دسترسی  را انتخاب فرمایید .</option> -->
+                                        <option value=1>دسته بندی ها</option>
                                         <option value=2>فروشگاه ها</option>
                                         <option value=3>محصولات</option>
                                         <option value=4>پکیج ها</option>
@@ -218,14 +225,18 @@ include('header.php'); ?>
                                         <option value=14>پرسش های پرتکرار</option>
                                     </select>
                                 </div>
-                                <?}?>
-                                <div class="form-actions">
 
+                                <?}?>
+                                <div class="form-group" style="width:100%;float:right">
                                     <label class="float-right">
                                         <input type="checkbox" class="float-right m-1" name="status" value="1"
                                             <? if ($edit && $row->status) echo "checked"; ?> >
                                         فعال
                                     </label>
+                                </div>
+                                <div class="form-actions">
+
+
 
                                     <button type="submit" name="submit" class="btn btn-success sweet-success">
                                         <i class="fa fa-check"></i> ثبت
@@ -247,4 +258,19 @@ include('header.php'); ?>
     <!-- ----------- end main container ------------------------------------------------------------------------ -->
 
 </div>
+<script>
+$("#e1").select2();
+$("#selctall").click(function(){
+    if($("#selctall").is(':checked') ){
+        $("#e1 > option").prop("selected","selected");
+        $("#e1").trigger("change");
+        console.log('check');
+    }else{
+        $("#e1 > option").prop("selected", false);
+         $("#e1").trigger("change");
+         console.log('not check');
+     }
+});
+
+</script>
 <? include('footer.php'); ?>
