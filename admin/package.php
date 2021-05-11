@@ -35,12 +35,15 @@ if (isset($_POST['submit'])) {
     $name = $action->request('name');
     $price = $action->request('price');
     $discount = $action->request('discount');
+    $DC1 = $action->request('DC1');
+    $DC2 = $action->request('DC2');
+    $max = $action->request('max');
     $status = $action->request('status');
     // send query
     if ($edit) {
-        $command = $action->package_edit($id,$name,$price,$discount,$status);
+        $command = $action->package_edit($id,$name,$price,$discount,$DC1,$DC2,$max,$status);
     } else {
-        $command = $action->package_add($name,$price,$discount,$status);
+        $command = $action->package_add($name,$price,$discount,$DC1,$DC2,$max,$status);
     }
 
     // check errors
@@ -157,6 +160,24 @@ include('header.php'); ?>
                                     <input type="text" name="discount" class="form-control"
                                            placeholder="تخفیف"
                                            value="<?= ($edit) ? $row->discount : "" ?>" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="DC1" class="form-control"
+                                           placeholder="تاثیر اولیه"
+                                           value="<?= ($edit) ? $row->DC1 : "" ?>" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="DC2" class="form-control"
+                                           placeholder="تاتیر ثانویه"
+                                           value="<?= ($edit) ? $row->DC2 : "" ?>" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="max" class="form-control"
+                                           placeholder=" سقف کارمزد روزانه "
+                                           value="<?= ($edit) ? $row->max : "" ?>" required>
                                 </div>
 
                                 <div class="form-actions">

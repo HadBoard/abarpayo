@@ -202,7 +202,8 @@ include('header.php'); ?>
                                 <div class="form-group">
                                     <select class="form-control select2" name="perms[]" multiple="multiple">
                                         <option>سطوح دسترسی  را انتخاب فرمایید .</option>
-                                        <option value=1>دسته بندی ها</option
+                                        <option value="all">انتخاب همه</option>
+                                        <option value=1>دسته بندی ها</option>
                                         <option value=2>فروشگاه ها</option>
                                         <option value=3>محصولات</option>
                                         <option value=4>پکیج ها</option>
@@ -240,11 +241,10 @@ include('header.php'); ?>
                     </div>
                 </div>
                 <!-- ----------- end row of fields ----------------------------------------------------------- -->
-
             </div>
         </div>
     </div>
     <!-- ----------- end main container ------------------------------------------------------------------------ -->
-
 </div>
+
 <? include('footer.php'); ?>

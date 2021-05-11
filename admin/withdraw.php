@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
     if ($edit) {
         $command = $action->request_edit($id, $description,$birthday);
         $command1 = $action->wallet_withdraw($user_id,$wallet);
-        $command2 = $action->wallet_log_add($user_id,"برداشت از حساب",$amount,0,0);
+        $command2 = $action->wallet_log_add($user_id,5,$amount,0,0);
         //$action->send_sms($mobile,$textMessage);
     } else {
         // $command = $action->withdraw_add($description,$paymented_at,$status);

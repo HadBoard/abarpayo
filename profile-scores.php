@@ -24,7 +24,7 @@
             <? while($row = $result->fetch_object()){?>
             <tr>
                 <td <?= ($type == 1) ? 'class="dec_wallet"': 'class="inc_wallet"' ?>><?= ($type == 1) ? "-".$row-> score : "+".$row-> score ?></td>
-                <td><?= $row -> action?></td>
+                <td><?= $action->action_log_get(($row -> action_id))->text?></td>
                 <td><?= $action->time_to_shamsi($row->created_at)?></td>
             </tr>
             <? } ?>

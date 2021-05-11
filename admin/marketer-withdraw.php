@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
     if ($edit) {
         $command = $action->marketer_request_edit($id, $description,$birthday);
         $command1 = $action->marketer_wallet_withdraw($marketer_id,$wallet);
-        $command2 = $action->marketer_wallet_log_add($marketer_id,"برداشت از حساب",$amount,0,0);
+        $command2 = $action->marketer_wallet_log_add($marketer_id,5,$amount,0,0);
     } else {
         // $command = $action->withdraw_add($description,$paymented_at,$status);
     }

@@ -41,6 +41,10 @@ if (isset($_POST['submit'])) {
     $address = $action->request('address');
     $longitude = $action->request('longitude');
     $latitude = $action->request('latitude');
+    $work = $action->request('work');
+    $participation = $action->request('participation');
+    $economic = $action->request('economic');
+
     $status = $action->request('status');
     $icon = ($edit ? $row->image : "");
     
@@ -67,7 +71,7 @@ if (isset($_POST['submit'])) {
 
     if($edit){
     // Count the number of uploaded files in array
-    $total_count = count($_FILES['upload']['name']);
+    $total_count = 5;
     // Loop through every file
     for( $i=0 ; $i < $total_count ; $i++ ) {
         $target_dir = "images/shops/";
@@ -93,9 +97,9 @@ if (isset($_POST['submit'])) {
 
     // send query
     if ($edit) {
-        $command = $action->shop_edit($id,$category_id, $title,$icon,$phone, $fax, $city_id, $address, $longitude, $latitude, $status);
+        $command = $action->shop_edit($id,$category_id, $title,$icon,$phone, $fax, $city_id, $address, $longitude, $latitude,$work,$participation,$economic, $status);
     } else {
-        $command = $action->shop_add($category_id,$title,$icon, $phone, $fax, $city_id, $address, $longitude, $latitude,$reference_id, $status);
+        $command = $action->shop_add($category_id,$title,$icon, $phone, $fax, $city_id, $address, $longitude, $latitude,$reference_id,$work,$participation,$economic, $status);
     }
 
     // check errors
@@ -284,6 +288,27 @@ include('header.php'); ?>
                                     <input type="text" name="latitude" class="form-control input-default "
                                            placeholder="عرض جغرافیایی"
                                            value="<?= ($edit  && $row->latitude !=0) ? $row->latitude : "" ?>"
+                                           required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="work" class="form-control input-default "
+                                           placeholder=" درصد کارانه"
+                                           value="<?= ($edit  && $row->work_percentage !=0) ? $row->work_percentage : "" ?>"
+                                           required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="participation" class="form-control input-default "
+                                           placeholder=" درصد مشارکت"
+                                           value="<?= ($edit  && $row->participation_percentage !=0) ? $row->participation_percentage : "" ?>"
+                                           required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="economic" class="form-control input-default "
+                                           placeholder="کد اقتصادی"
+                                           value="<?= ($edit  && $row->economic_code !=0) ? $row->economic_code : "" ?>"
                                            required>
                                 </div>
 

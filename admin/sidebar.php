@@ -2,7 +2,6 @@
 require_once "functions/database.php";
 $action = new Action();
 ?>
-
 <!-- ----------- start sidebar ------------------------------------------------------------------------------------- -->
 <ul id="sidebarnav">
 
@@ -149,6 +148,12 @@ $action = new Action();
         <a class="has-arrow" href="system.php" aria-expanded="false">
             <i class="fa fa-user"></i>
             <span class="hide-menu">مدیریت سیستم</span>
+        </a>
+    </li>
+    <li>
+        <a class="has-arrow" href="set-scores.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu"> امتیازات سیستم</span>
         </a>
     </li>
     <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fas fa-user "></i><span class="hide-menu">لاگ سنتر</span></a>

@@ -35,8 +35,9 @@ if (isset($_SESSION['error'])) {
             }
             else{ 
                 $_SESSION['marketer_id'] = $validated_code->user_id;
+                $_SESSION['marketer_access'] = $action->marketer_get($_SESSION['marketer_id'])->package_id;
                 $action->validation_code_remove($validated_code->id);
-                $action-> user_update_last_login( $_SESSION['marketer_id']);
+                $action->marketer_update_last_login( $_SESSION['marketer_id']);
                 $action->log_action(1,2);
                 unset($_SESSION['phone']);
                 header("Location: index.php");

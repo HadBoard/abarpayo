@@ -362,7 +362,7 @@ class Action
     public function score_log_add($id,$score,$action,$type){
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_score_log`
-        (`user_id`,`score`,`action`,`type`,`created_at`) 
+        (`user_id`,`score`,`action_id`,`type`,`created_at`) 
         VALUES
         ('$id','$score','$action','$type','$now')");
         if (!$this->result($result)) return false;
@@ -388,7 +388,7 @@ class Action
     public function marketer_score_log_add($id,$score,$action,$type){
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_marketer_score_log`
-        (`marketer_id`,`score`,`action`,`type`,`created_at`) 
+        (`marketer_id`,`score`,`action_id`,`type`,`created_at`) 
         VALUES
         ('$id','$score','$action','$type','$now')");
         if (!$this->result($result)) return false;
@@ -971,31 +971,33 @@ class Action
     // ----------- start WALLETlOG ------------------------------------------------------------------------------------------
     public function wallet_log_add($action,$amount,$type,$payment_id)
     {
+        $now = time();
         $user_id = $this->user()->id;
         $result = $this->connection->query("INSERT INTO `tbl_wallet_log`
-        (`user_id`,`action`,`amount`,`type`,`payment_id`) 
+        (`user_id`,`action_id`,`amount`,`type`,`payment_id`,`created_at`) 
         VALUES
-        ('$user_id','$action','$amount','$type','$payment_id')");
+        ('$user_id','$action','$amount','$type','$payment_id','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
     public function marketer_wallet_log_add($marketer_id,$action,$amount,$type,$payment_id)
     {
+        $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_marketer_wallet_log`
-        (`marketer_id`,`action`,`amount`,`type`,`payment_id`) 
+        (`marketer_id`,`action_id`,`amount`,`type`,`payment_id`,`created_at`) 
         VALUES
-        ('$marketer_id','$action','$amount','$type','$payment_id')");
+        ('$marketer_id','$action','$amount','$type','$payment_id','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
-    public function app_wallet_log_add($user_id,$action,$amount,$type,$payment_id)
+    public function app_wallet_log_add($user_id,$action_id,$amount,$type,$payment_id)
     {
         $result = $this->connection->query("INSERT INTO `tbl_wallet_log`
-        (`user_id`,`action`,`amount`,`type`,`payment_id`) 
+        (`user_id`,`action_id`,`amount`,`type`,`payment_id`) 
         VALUES
-        ('$user_id','$action','$amount','$type','$payment_id')");
+        ('$user_id','$action_id','$amount','$type','$payment_id')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
@@ -1324,7 +1326,7 @@ public function marketer_log_list(){
 }
 
 public function action_log_get($id){
-    return $this->get_data("tbl_action_log", $id);
+    return $this->get_data("tbl_action", $id);
 }
 public function change_view($id,$type){
     if($type==0){
