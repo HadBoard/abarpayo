@@ -34,7 +34,7 @@
   margin-right: 10px;
   /*! background: #8C8; */
   border-radius: 5px;
-  counter-increment: carousel-cell;
+  counter-insrement: carousel-cell;
   padding-top: 21px;
 }
 
@@ -64,6 +64,28 @@
 </head>
 
 <body>
+<div class="overlay_"></div>
+<!--welcome modal  -->
+<div class="welcom-modal modal2 animate__animated  animate__backInDown shop_modal">
+    <a class="close-modal"><i class="fa fa-times"></i></a>
+    <div class="swal">
+        <div class="swal-icon swal-icon--success">
+            <span class="swal-icon--success__line swal-icon--success__line--long"></span>
+            <span class="swal-icon--success__line swal-icon--success__line--tip"></span>
+        
+            <div class="swal-icon--success__ring"></div>
+            <div class="swal-icon--success__hide-corners"></div>
+          </div>
+    </div>
+    <h3>به سبد خرید افزوده شد</h3>
+   
+    <div class="container">
+        <a class="sabadkharid">مشاهده سبد خرید</a>
+
+    </div>
+    
+</div>
+<!--  -->
 
   <!-- header -->
   <header>
@@ -418,33 +440,26 @@
 
        <!-- stores -->
     <section class="container shop_extra">
-        <h3 class="index_title">فروشگاه های طرف قراداد</h3>
+        <h3 class="index_title">محصولات فروشگاه</h3>
 
         <!-- buttons -->
-        <div class="tab_index">
-            <button class="tablinks active_tablink">رستوران و کافی شاپ</button>
-            <button class="tablinks">تفریحی ورزشی</button>
-            <button class="tablinks">آرایشی و بهداشتی</button>
-            <button class="tablinks">پزشکی و سلامتی</button>
-            <button class="tablinks">فرهنگی و هنری</button>
-            <button class="tablinks">کالا و خدمات</button>
-        </div>
+       
         <!-- eof btns -->
         <!--tabs content  -->
         <div class="tabcontent">
             <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
+            <div class="index_shop product">
+                <div class="index_shop_inner product_inner">
                     <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
+                        <img src="../assets/images/26409.png">
                         <div class="shop_off">23%</div>
                     </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
+                    <div class="shop_content product_content">
+                        <h4>نخ دندان</h4>
+                        <div class="product_price">
+                            <s>250000</s>
+                            <p>120000</p>
+                        </div>
                     </div>
                     <div class="shop_star">
                         <div class="row">
@@ -452,12 +467,13 @@
                                 <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
                             </div>
                             <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
+                                
 
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
+                                    
+                                    <a class="shop_product">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </a>
+
                             </div>
                         </div>
                     </div>
@@ -465,18 +481,18 @@
             </div>
             <!--  -->
             <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
+            <div class="index_shop product">
+                <div class="index_shop_inner product_inner">
                     <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
+                        <img src="../assets/images/26409.png">
                         <div class="shop_off">23%</div>
                     </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
+                    <div class="shop_content product_content">
+                        <h4>نخ دندان</h4>
+                        <div class="product_price">
+                            <s>250000</s>
+                            <p>120000</p>
+                        </div>
                     </div>
                     <div class="shop_star">
                         <div class="row">
@@ -484,12 +500,14 @@
                                 <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
                             </div>
                             <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
+                                
 
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
+                                    
+                                    <a class="shop_product">
+                                        
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </a>
+
                             </div>
                         </div>
                     </div>
@@ -497,18 +515,18 @@
             </div>
             <!--  -->
             <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
+            <div class="index_shop product">
+                <div class="index_shop_inner product_inner">
                     <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
+                        <img src="../assets/images/26409.png">
                         <div class="shop_off">23%</div>
                     </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
+                    <div class="shop_content product_content">
+                        <h4>نخ دندان</h4>
+                        <div class="product_price">
+                            <s>250000</s>
+                            <p>120000</p>
+                        </div>
                     </div>
                     <div class="shop_star">
                         <div class="row">
@@ -516,12 +534,14 @@
                                 <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
                             </div>
                             <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
+                                
 
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
+                                    
+                                    <a class="shop_product">
+                                        
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </a>
+
                             </div>
                         </div>
                     </div>
@@ -529,563 +549,33 @@
             </div>
             <!--  -->
             <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
+            <div class="index_shop product">
+                <div class="index_shop_inner product_inner">
                     <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
+                        <img src="../assets/images/26409.png">
                         <div class="shop_off">23%</div>
                     </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
+                    <div class="shop_content product_content">
+                        <h4>نخ دندان</h4>
+                        <div class="product_price">
+                            <s>250000</s>
+                            <p>120000</p>
                         </div>
                     </div>
-                </div>
-            </div>
-            <!--  -->
-
-
-        </div>
-
-        <div class="tabcontent">
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
                     <div class="shop_star">
                         <div class="row">
                             <div class="col-3">
                                 <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
                             </div>
                             <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
+                                
 
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
+                                    
+                                    <a class="shop_product">
+                                        
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </a>
 
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-
-
-        </div>
-
-        <div class="tabcontent">
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-
-
-        </div>
-
-        <div class="tabcontent">
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-
-
-        </div>
-
-        <div class="tabcontent">
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
                             </div>
                         </div>
                     </div>
@@ -1101,423 +591,9 @@
             </button>
 
         </div>
+        <!--  -->
 
-        <div class="tabcontent">
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <button class="main_btn">
-
-                <a>
-                    <i class="fa fa-reply"></i>
-                </a>
-                بیشتر
-            </button>
-
-        </div>
-
-        <div class="tabcontent">
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <button class="main_btn">
-
-                <a>
-                    <i class="fa fa-reply"></i>
-                </a>
-                بیشتر
-            </button>
-
-        </div>
-
-        <div class="tabcontent">
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <!--  -->
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                        <img src="assets/images/26409.png">
-                        <div class="shop_off">23%</div>
-                    </div>
-                    <div class="shop_content">
-                        <h4>دندان پزشکی اسمایل سنتر</h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                            میدان اطلسی
-                        </h6>
-                    </div>
-                    <div class="shop_star">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
-                            </div>
-                            <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-            <button class="main_btn">
-
-                <a>
-                    <i class="fa fa-reply"></i>
-                </a>
-                بیشتر
-            </button>
-
-        </div>
+      
         <!-- eof tabs -->
     </section>
 
@@ -1805,7 +881,14 @@
             })
          
      }
-
+     document.querySelector('.close-modal').onclick = function(){
+            $('.modal2').hide();
+            $('.overlay_').css('opacity',0)
+     }
+     $('.shop_product').click(function(){
+        $('.overlay_').css('opacity',1)
+        $('.modal2').show();
+     })
 </script>
 
 </body>
