@@ -124,7 +124,7 @@
                             <tr>
                                 <td <?= ($type == 1) ? 'class="dec_wallet"': 'class="inc_wallet"' ?>> <?= ($type == 1) ? "-".$transaction->amount : "+".$transaction->amount ?></td>
                                 <td><?= $action->time_to_shamsi($transaction->date)?></td>
-                                <td><?= $payment->action?></td>
+                                <td><?= $action->action_log_get($payment->action_id)->text?></td>
                             </tr>
                     <?
                         }

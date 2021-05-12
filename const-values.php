@@ -1,16 +1,16 @@
-<?
+<? require_once "functions/database.php";
+$action = new Action();
+
 $default_tehran = 426;
 
-$register_score = 20;
-$wallet_increase_score = 20;
-$invitation_score = 20;
-$guilds_score = 20;
+$register_score = (int)$action->get_system('score_register');
+$wallet_increase_score = (int)$action->get_system('score_wallet');
+$invitation_score = (int)$action->get_system('score_invite');
+$guild_score = (int)$action->get_system('score_guild_by_guild');
+$user_guild_score = (int)$action->get_system('score_guild_by_user');
+$marketer_guild_score = (int)$action->get_system('score_guild_by_marketer');
 
-$marketer_register_score = 30;
-$marketer_wallet_increase_score = 30;
-$marketer_invitation_score = 20;
+$marketer_register_score = (int)$action->get_system('score_marketer_register');
+$marketer_wallet_increase_score = (int)$action->get_system('score_marketer_wallet');
+$marketer_invitation_score = (int)$action->get_system('score_marketer_invite');
 
-$register_action ="ثبت نام در ابرپایو";
-$wallet_increase_action= "افزایش موجودی کیف پول";
-$invitation_action = "معرفی عضو جدید";
-$guilds_action = "معرفی اصناف";

@@ -471,10 +471,13 @@ class Action
         return $this->table_counter("tbl_user");
     }
 
+   
+
+
     public function score_log_add($id,$score,$action,$type){
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_score_log`
-        (`user_id`,`score`,`action`,`type`,`created_at`) 
+        (`user_id`,`score`,`action_id`,`type`,`created_at`) 
         VALUES
         ('$id','$score','$action','$type','$now')");
         if (!$this->result($result)) return false;
@@ -497,10 +500,26 @@ class Action
         return $id;
     }
 
+    public function guild_coin_edit($id,$amount,$type){
+        $prev_score = $this->shop_get($id)->coin;
+        if($type == 1){
+            $score = $prev_score + $amount;
+        }else if($type == 0){
+            $score = $prev_score - $amount;
+        }
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_shop` SET 
+        `coin` = '$score',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
     public function marketer_score_log_add($id,$score,$action,$type){
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_marketer_score_log`
-        (`marketer_id`,`score`,`action`,`type`,`created_at`) 
+        (`marketer_id`,`score`,`action_id`,`type`,`created_at`) 
         VALUES
         ('$id','$score','$action','$type','$now')");
         if (!$this->result($result)) return false;
@@ -557,20 +576,22 @@ class Action
 
     public function wallet_log_add($user_id,$action,$amount,$type,$payment_id)
     {
+        $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_wallet_log`
-        (`user_id`,`action`,`amount`,`type`,`payment_id`) 
+        (`user_id`,`action_id`,`amount`,`type`,`payment_id`,`created_at`) 
         VALUES
-        ('$user_id','$action','$amount','$type','$payment_id')");
+        ('$user_id','$action','$amount','$type','$payment_id','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
     public function marketer_wallet_log_add($marketer_id,$action,$amount,$type,$payment_id)
     {
+        $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_marketer_wallet_log`
-        (`marketer_id`,`action`,`amount`,`type`,`payment_id`) 
+        (`marketer_id`,`action_id`,`amount`,`type`,`payment_id`,`created_at`) 
         VALUES
-        ('$marketer_id','$action','$amount','$type','$payment_id')");
+        ('$marketer_id','$action','$amount','$type','$payment_id','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
@@ -710,14 +731,14 @@ class Action
         return $shop_id;
     }
 
-    public function shop_add($category_id,$title,$icon,$phone, $fax, $city_id, $address, $longitude, $latitude,$reference_id,$status)
+    public function shop_add($category_id,$title,$icon,$phone, $fax, $city_id, $address, $longitude, $latitude,$reference_id,$work,$participation,$economic,$status)
     {
         $reference_code = $this->get_token(10);
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_shop`
-        (`category_id`,`title`,`image`,`phone`,`fax`,`city_id`,`address`,`longitude`,`latitude`,`reference_code`,`reference_id`,`status`,`created_at`) 
+        (`category_id`,`title`,`image`,`phone`,`fax`,`city_id`,`address`,`longitude`,`latitude`,`reference_code`,`reference_id`,`work_percentage`,`participation_percentage`,`economic_code`,`status`,`created_at`) 
         VALUES
-        ('$category_id','$title','$icon','$phone','$fax','$city_id','$address','$longitude','$latitude','$reference_code','$reference_id','$status','$now')");
+        ('$category_id','$title','$icon','$phone','$fax','$city_id','$address','$longitude','$latitude','$reference_code','$reference_id','$work','$participation','$economic','$status','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
@@ -792,7 +813,7 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_shop_pics` WHERE `shop_id` = '$shop_id'");
     }
 
-    public function shop_edit($id,$category_id,$title,$icon, $phone, $fax, $city_id, $address, $longitude, $latitude, $status)
+    public function shop_edit($id,$category_id,$title,$icon, $phone, $fax, $city_id, $address, $longitude, $latitude,$work,$participation,$economic, $status)
     {
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_shop` SET 
@@ -805,6 +826,9 @@ class Action
         `address`='$address',
         `longitude`='$longitude',
         `latitude`='$latitude',
+        `work_percentage` = '$work',
+        `participation_percentage` = '$participation',
+        `economic_code`= '$economic',
         `status`='$status',
         `updated_at`='$now'
         WHERE `id` ='$id'");
@@ -825,6 +849,16 @@ class Action
     public function shop_get($id)
     {
         return $this->get_data("tbl_shop", $id);
+    }
+
+    public function guild_score_log_add($id,$score,$action,$type){
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_shop_score_log`
+        (`shop_id`,`score`,`action_id`,`type`,`created_at`) 
+        VALUES
+        ('$id','$score','$action','$type','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
     }
 
     public function guild_cart_add($shop_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation)
@@ -1047,6 +1081,79 @@ public function guild_cart_list($shop_id){
      // ----------- end CITY -------------------------------------------------------------------------------------------
      // ----------- start TICKETS -----------------------------------------------------------------------------------------
 
+     public function solved_shop_ticket_list()
+     {
+        return $this->connection->query("SELECT * FROM `tbl_guild_ticket` WHERE `status` = 3 ORDER BY id DESC ");
+     }
+ 
+     public function not_solved_shop_ticket_list()
+     {
+        return $this->connection->query("SELECT * FROM `tbl_guild_ticket` WHERE `status` = 0 ORDER BY id DESC ");
+     }
+
+     public function in_queue_shop_ticket_list()
+     {
+        return $this->connection->query("SELECT * FROM `tbl_guild_ticket` WHERE `status` = 1 ORDER BY id DESC ");
+     }
+
+     public function solving_shop_ticket_list(){
+        return $this->connection->query("SELECT * FROM `tbl_guild_ticket` WHERE `status` = 2 ORDER BY id DESC ");
+     }
+
+     public function shop_ticket_set_status($id,$status)
+     {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_guild_ticket` SET 
+        `status`='$status',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+     }
+ 
+     public function shop_ticket_add($shop_id,$subject,$text)
+     {
+         $now = time();
+         $result = $this->connection->query("INSERT INTO `tbl_guild_ticket`
+         (`shop_id`,`subject`,`text`,`created_at`) 
+         VALUES
+         ('$shop_id','$subject','$text','$now')");
+         if (!$this->result($result)) return false;
+         return $this->connection->insert_id;
+     }
+
+     public function shop_ticket_edit($id,$admin_id,$solve)
+     {
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_guild_ticket` SET 
+        `admin_id`= '$admin_id',
+        `solve`='$solve',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+     }
+
+     public function shop_ticket_solve($id,$admin_id,$solve)
+     {
+         $now = time();
+         $status = 3;
+         $result = $this->connection->query("UPDATE `tbl_guild_ticket` SET 
+         `admin_id` = '$admin_id',
+         `solve`='$solve',
+         `status`='$status',
+         `solved_at`='$now'
+         WHERE `id` ='$id'");
+         if (!$this->result($result)) return false;
+         return $id;
+     }
+ 
+     public function shop_ticket_get($id)
+     {
+         return $this->get_data("tbl_guild_ticket", $id);
+     }
+
+
      public function solved_ticket_list()
      {
         return $this->connection->query("SELECT * FROM `tbl_ticket` WHERE `status` = 3 ORDER BY id DESC ");
@@ -1260,24 +1367,27 @@ public function guild_cart_list($shop_id){
       {
           return $this->table_list("tbl_package");
       }
-      public function package_add($name,$price,$discount,$status)
+      public function package_add($name,$price,$discount,$DC1,$DC2,$max,$status)
       {
           $now = time();
           $result = $this->connection->query("INSERT INTO `tbl_package`
-          (`name`,`price`,`discount`,`status`,`created_at`) 
+          (`name`,`price`,`discount`,`DC1`,`DC2`,`max`,`status`,`created_at`) 
           VALUES
-          ('$name','$price','$discount','$status','$now')");
+          ('$name','$price','$discount','$DC1','$DC2','$max','$status','$now')");
           if (!$this->result($result)) return false;
           return $this->connection->insert_id;
       }
   
-      public function package_edit($id, $name,$price,$discount,$status)
+      public function package_edit($id,$name,$price,$discount,$DC1,$DC2,$max,$status)
       {
           $now = time();
           $result = $this->connection->query("UPDATE `tbl_package` SET 
           `name`='$name',
           `price` = '$price',
           `discount` = '$discount',
+          `DC1` = '$DC1',
+          `DC2`= '$DC2',
+          `max` = '$max',
           `status`='$status',
           `updated_at`='$now'
           WHERE `id` ='$id'");
@@ -1428,10 +1538,9 @@ public function guild_cart_list($shop_id){
         return $this->get_data("tbl_vip_marketer", $id);
     }
 
-
-    public function vip_marketer_remove($id,$score)
+    public function vip_marketer_remove($id)
     {
-        $result = $this->connection->query("DELETE FROM `tbl_vip_marketer` WHERE `marketer_id`='$id' AND `score`='$score'");
+        $result = $this->connection->query("DELETE FROM `tbl_vip_marketer` WHERE `marketer_id`='$id'");
         if (!$this->result($result)) return false;
         return true;
     }
@@ -1634,20 +1743,20 @@ public function guild_cart_list($shop_id){
     }
 
     // ----------- add an admin
-    public function shop_admin_add($shop_id,$first_name,$last_name,$phone,$username,$password,$national_code,$status)
+    public function shop_admin_add($shop_id,$first_name,$last_name,$phone,$username,$password,$national_code,$postal_code,$birthday,$status)
     {
         
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_shop_admin`
-        (`shop_id`,`first_name`,`last_name`,`phone`,`username`,`password`,`national_code`,`status`,`created_at`) 
+        (`shop_id`,`first_name`,`last_name`,`phone`,`username`,`password`,`national_code`,`postal_code`,`birthday`,`status`,`created_at`) 
         VALUES
-        ('$shop_id','$first_name','$last_name','$phone','$username','$password','$national_code','$status','$now')");
+        ('$shop_id','$first_name','$last_name','$phone','$username','$password','$national_code','$postal_code','$birthday','$status','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
     // ----------- update admin's detail
-    public function shop_admin_edit($id,$first_name, $last_name, $phone, $username, $password,$national_code,$status)
+    public function shop_admin_edit($id,$first_name, $last_name, $phone, $username, $password,$national_code,$postal_code,$birthday,$status)
     {
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_shop_admin` SET 
@@ -1657,6 +1766,8 @@ public function guild_cart_list($shop_id){
         `username`='$username',
         `password`='$password',
         `national_code`='$national_code',
+        `postal_code`='$postal_code',
+        `birthday` = '$birthday',
         `status`='$status',
         `updated_at`='$now'
         WHERE `id` ='$id'");
@@ -1683,16 +1794,18 @@ public function guild_cart_list($shop_id){
     }
 //------------------------------------------------------------------------------------------------------------------
 
-    public function iban_validate($code){
+      //VALIDATE CART-----------------------------------------------------------------------------------------
+   
+      public function iban_validate($code){
         $shaba=substr($code,2)."1827".$code[0].$code[1];
         return bcmod($shaba, '97');
     }
-
-    public function iban_unique($iban,$isUser){
+    
+    public function iban_unique($id,$iban,$isUser){
         if($isUser == 1){
-            $result = $this->cart_list();
+            $result = $this->user_get_cart($id);
         }else{
-            $result = $this->marketer_carts();
+            $result = $this->marketer_cart_list($id);
         }
         
         while($row = $result->fetch_object()){
@@ -1703,13 +1816,13 @@ public function guild_cart_list($shop_id){
        
         return true;
     }
-
-    public function account_number_validate($account_number,$isUser){
-
+    
+    public function account_number_validate($id,$account_number,$isUser){
+    
         if($isUser == 1){
-            $result = $this->cart_list();
+            $result = $this->user_get_cart($id);
         }else{
-            $result = $this->marketer_carts();
+            $result = $this->marketer_cart_list($id);
         }
         
         while($row = $result->fetch_object()){
@@ -1721,27 +1834,19 @@ public function guild_cart_list($shop_id){
         return true;
         
     }
-
-    public function cart_number_validate($cart_number,$isUser){
-
+    
+    public function cart_number_validate($id,$cart_number,$isUser){
+    
         if($isUser == 1){
-            $result = $this->cart_list();
+            $result = $this->user_get_cart($id);
         }else{
-            $result = $this->marketer_carts();
+            $result = $this->marketer_cart_list($id);
         }
-        $result = $this->cart_list();
         while($row = $result->fetch_object()){
             if($row->cart_number == $cart_number){
                 return false;
             }
         }
-
-        $length = strlen($cart_number);
-
-        if($length != 16){
-            return false;
-        }
-        
         return true;
     }
    // ----------- start log ----------------------------------------------------------------------------

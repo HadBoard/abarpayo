@@ -18,7 +18,7 @@ if(isset($_POST['submit'])){
 
     if(isset($_SESSION['invitation_code'])){
         $reference_id = $_SESSION['invitation_code'];
-        $action->score_log_add($reference_id,$invitation_score,$invitation_action,1);
+        $action->score_log_add($reference_id,$invitation_score,8,1);
         $action->score_edit($reference_id,$invitation_score,1);
     }else{
         $reference_code = $action->request('reference_code');
@@ -26,7 +26,7 @@ if(isset($_POST['submit'])){
             $result = $action->user_reference_code($reference_code);
             $reference = $result->fetch_object();
             $reference_id = $reference->id;
-            $action->score_log_add($reference_id,$invitation_score,$invitation_action,1);
+            $action->score_log_add($reference_id,$invitation_score,8,1);
             $action->score_edit($reference_id,$invitation_score,1);
         }
     }
@@ -35,7 +35,7 @@ if(isset($_POST['submit'])){
     $platform = 1;
     $command = $action->user_add($first_name,$last_name,$phone,$reference_id,$platform);    
     if($command){
-        $action->score_log_add($command,$register_score,$register_action,1);
+        $action->score_log_add($command,$register_score,6,1);
         $action->score_edit($command,$register_score,1);
         unset($_SESSION['phone']);
         $_SESSION['user_id'] = $command;
@@ -114,7 +114,7 @@ if(isset($_POST['submit'])){
                                 پذیرش 
                             </label>
                             <a href="rules.php" id="rule-btn" class="show-rules">قوانین و مقررات</a>
-                    </div>
+                        </div>
                         <input id="signup"  name="submit" type="submit" class="main_btn" value="ادامه">
 
                     </form>

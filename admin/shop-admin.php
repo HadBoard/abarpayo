@@ -57,13 +57,15 @@ if (isset($_POST['submit'])) {
     $username = $action->request('username');
     $password = $action->request('password');
     $national_code = $action->request('national_code');
+    $postal_code = $action->request('postal_code');
+    $birthday = $action->request_date('birthday');
     $status = $action->request('status');
    
     // send query
     if ($edit_id) {
-        $command = $action->shop_admin_edit($edit_id,$first_name,$last_name,$phone,$username,$password,$national_code,$status);
+        $command = $action->shop_admin_edit($edit_id,$first_name,$last_name,$phone,$username,$password,$national_code,$postal_code,$birthday,$status);
     }else{
-        $command = $action->shop_admin_add($shop_id,$first_name,$last_name,$phone,$username,$password,$national_code,$status);
+        $command = $action->shop_admin_add($shop_id,$first_name,$last_name,$phone,$username,$password,$national_code,$postal_code,$birthday,$status);
         $action->guild_log($command,$shop_id);
     }
 
@@ -188,6 +190,18 @@ include('header.php'); ?>
                                     <input type="text" name="national_code" class="form-control input-default "
                                            placeholder="کد ملی"
                                            value="<?= ($edit_id) ? $edit_row->national_code : "" ?>" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="postal_code" class="form-control input-default "
+                                           placeholder="کد پستی"
+                                           value="<?= ($edit_id) ? $edit_row->postal_code : "" ?>" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" id="date" name="birthday" class="form-control input-default "
+                                           placeholder="تاریخ تولد"
+                                           value="<?= ($edit_id) ? $action->time_to_shamsi($edit_row->birthday) : "" ?>" required>
                                 </div>
 
                                 <div class="form-actions">

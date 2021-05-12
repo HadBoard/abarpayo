@@ -348,11 +348,11 @@ class Action
     }
     public function user_get_payment(){
         $id = $this->user()->id;
-        return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id'");
+        return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id' ORDER BY id DESC");
     }
 
     public function app_get_payment($id){
-        return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id'");
+        return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id'ORDER BY id DESC");
     }
 
     public function payment_get_action($payment_id){
@@ -362,7 +362,7 @@ class Action
     public function score_log_add($id,$score,$action,$type){
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_score_log`
-        (`user_id`,`score`,`action`,`type`,`created_at`) 
+        (`user_id`,`score`,`action_id`,`type`,`created_at`) 
         VALUES
         ('$id','$score','$action','$type','$now')");
         if (!$this->result($result)) return false;
@@ -388,7 +388,7 @@ class Action
     public function marketer_score_log_add($id,$score,$action,$type){
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_marketer_score_log`
-        (`marketer_id`,`score`,`action`,`type`,`created_at`) 
+        (`marketer_id`,`score`,`action_id`,`type`,`created_at`) 
         VALUES
         ('$id','$score','$action','$type','$now')");
         if (!$this->result($result)) return false;
@@ -971,31 +971,33 @@ class Action
     // ----------- start WALLETlOG ------------------------------------------------------------------------------------------
     public function wallet_log_add($action,$amount,$type,$payment_id)
     {
+        $now = time();
         $user_id = $this->user()->id;
         $result = $this->connection->query("INSERT INTO `tbl_wallet_log`
-        (`user_id`,`action`,`amount`,`type`,`payment_id`) 
+        (`user_id`,`action_id`,`amount`,`type`,`payment_id`,`created_at`) 
         VALUES
-        ('$user_id','$action','$amount','$type','$payment_id')");
+        ('$user_id','$action','$amount','$type','$payment_id','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
     public function marketer_wallet_log_add($marketer_id,$action,$amount,$type,$payment_id)
     {
+        $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_marketer_wallet_log`
-        (`marketer_id`,`action`,`amount`,`type`,`payment_id`) 
+        (`marketer_id`,`action_id`,`amount`,`type`,`payment_id`,`created_at`) 
         VALUES
-        ('$marketer_id','$action','$amount','$type','$payment_id')");
+        ('$marketer_id','$action','$amount','$type','$payment_id','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
-    public function app_wallet_log_add($user_id,$action,$amount,$type,$payment_id)
+    public function app_wallet_log_add($user_id,$action_id,$amount,$type,$payment_id)
     {
         $result = $this->connection->query("INSERT INTO `tbl_wallet_log`
-        (`user_id`,`action`,`amount`,`type`,`payment_id`) 
+        (`user_id`,`action_id`,`amount`,`type`,`payment_id`) 
         VALUES
-        ('$user_id','$action','$amount','$type','$payment_id')");
+        ('$user_id','$action_id','$amount','$type','$payment_id')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
@@ -1217,11 +1219,11 @@ class Action
     return bcmod($shaba, '97');
 }
 
-public function iban_unique($iban,$isUser){
+public function iban_unique($id,$iban,$isUser){
     if($isUser == 1){
-        $result = $this->cart_list();
+        $result = $this->app_user_cart_list($id);
     }else{
-        $result = $this->marketer_carts();
+        $result = $this->marketer_cart_list($id);
     }
     
     while($row = $result->fetch_object()){
@@ -1233,12 +1235,12 @@ public function iban_unique($iban,$isUser){
     return true;
 }
 
-public function account_number_validate($account_number,$isUser){
+public function account_number_validate($id,$account_number,$isUser){
 
     if($isUser == 1){
-        $result = $this->cart_list();
+        $result = $this->app_user_cart_list($id);
     }else{
-        $result = $this->marketer_carts();
+        $result = $this->marketer_cart_list($id);
     }
     
     while($row = $result->fetch_object()){
@@ -1251,26 +1253,18 @@ public function account_number_validate($account_number,$isUser){
     
 }
 
-public function cart_number_validate($cart_number,$isUser){
+public function cart_number_validate($id,$cart_number,$isUser){
 
     if($isUser == 1){
-        $result = $this->cart_list();
+        $result = $this->app_user_cart_list($id);
     }else{
-        $result = $this->marketer_carts();
+        $result = $this->marketer_cart_list($id);
     }
-    $result = $this->cart_list();
     while($row = $result->fetch_object()){
         if($row->cart_number == $cart_number){
             return false;
         }
     }
-
-    $length = strlen($cart_number);
-
-    if($length != 16){
-        return false;
-    }
-    
     return true;
 }
 
@@ -1324,7 +1318,7 @@ public function marketer_log_list(){
 }
 
 public function action_log_get($id){
-    return $this->get_data("tbl_action_log", $id);
+    return $this->get_data("tbl_action", $id);
 }
 public function change_view($id,$type){
     if($type==0){

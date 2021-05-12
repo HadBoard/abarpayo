@@ -25,10 +25,10 @@ $title = "ثبت نام";
             $support_id = $reference_id;
             $isVip = $action->is_vip($reference_id);
             if($isVip){
-                $invitation_score = $action->get_vip_score($reference_id);
+                $marketer_invitation_score = (int)$action->get_vip_score($reference_id)->score;
             }
-            $action->score_log_add($reference_id,$invitation_score,$invitation_action,1);
-            $action->score_edit($reference_id,$invitation_score,1);
+            $action->marketer_score_log_add($reference_id,$marketer_invitation_score,9,1);
+            $action->marketer_score_edit($reference_id,$marketer_invitation_score,1);
         }else{
             $reference_code = $action->request('reference_code');
             if($reference_code){
@@ -40,19 +40,20 @@ $title = "ثبت نام";
                 if($isVip){
                     $invitation_score = $action->get_vip_score($reference_id);
                 }
-                $action->score_log_add($reference_id,$invitation_score,$invitation_action,1);
-                $action->score_edit($reference_id,$invitation_score,1);
+                $action->marketer_score_log_add($reference_id,$marketer_invitation_score,9,1);
+                $action->marketer_score_edit($reference_id,$marketer_invitation_score,1);
             }
         }
         $phone = $_SESSION['phone'];
         $command = $action->marketer_add($first_name,$last_name,$phone,$package_id,$payment_type,$national_code,$reference_id,$support_id);
 
         if($command){
-            $action->marketer_score_log_add($command,$register_score,$register_action,1);
-            $action->marketer_score_edit($command,$register_score,1);
+            $action->marketer_score_log_add($command,$marketer_register_score,16,1);
+            $action->marketer_score_edit($command,$marketer_register_score,1);
             $_SESSION['marketer_id'] = $command;
-            $action-> user_update_last_login( $_SESSION['marketer_id']);
+            $action-> marketer_update_last_login( $_SESSION['marketer_id']);
             $action->log_action(3,2);
+            $_SESSION['marketer_access'] = $action->marketer_get($command)->package_id;
            if($payment_type == 1){
             $action->marketer_change_status($command);
             header("Location: index.php");
@@ -111,10 +112,12 @@ $title = "ثبت نام";
                                 <label for="national_code">کد ملی</label>
                                 <input type="text" name="national_code">
                             </div>
+                            <?if(!isset($_SESSION['invitation_code'])){?>
                             <div class="form-group">
                                 <label for="reference_code">کد معرف(اختیاری)</label>
                                 <input type="text" name="reference_code" >
                             </div>
+                            <?}?>
                             <div class="form-group">
                                 <label for="package_id">انتخاب محصول</label>
                                 
@@ -144,6 +147,13 @@ $title = "ثبت نام";
                                     <option value=2>نقدی</option>
                                 </select>
                             </div>
+                            <div class="form-group">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onclick="checkRule()">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                پذیرش 
+                            </label>
+                            <a href="rules.php" id="rule-btn" class="show-rules">قوانین و مقررات</a>
+                        </div>
                             <input id="signup"  name="submit" type="submit" class="main_btn" value="ثبت خرید">
                             
                         </form>
@@ -156,5 +166,18 @@ $title = "ثبت نام";
             </div>
         </div>
     </div>
+    <script>
+        function checkRule() {
+                document.getElementById("signup").disabled = true;
+                var checkBox = document.getElementById("flexCheckDefault");
+                if (checkBox.checked == true){
+                    document.getElementById("signup").disabled = false;
+                } else {
+                    document.getElementById("signup").disabled = true;
+                }
+            }
+            checkRule()
+
+    </script>
 </body>
 </html>

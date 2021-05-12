@@ -59,12 +59,23 @@ if (isset($_POST['submit'])) {
     $iban = $action->request('iban');
     $validation = $action->request('validation');
 
-    $validate = $action->account_number_validate($account_number,1);
-    $validate1 = $action->iban_validate($iban) && $action->iban_unique($iban,1);
-    $validate2 = $action->cart_number_validate($cart_number,1);
-
+    if($edit){
+        $validate = $validate1 = $validate2 = 1;
+        if($account_number != $row->account_number){
+            $validate = $action->account_number_validate($user_id,$account_number,$isUser);
+        }else if($iban != $row->iban){
+            $validate1 = $action->iban_validate($iban) && $action->iban_unique($user_id,$iban,$isUser);
+        }else if($cart_number != $row->cart_number){
+            $validate2 = $action->cart_number_validate($user_id,$cart_number,$isUser);
+        }
+    }else{
+        $validate = $action->account_number_validate($user_id,$account_number,1);
+        $validate1 = $action->iban_validate($iban) && $action->iban_unique($user_id,$iban,1);
+        $validate2 = $action->cart_number_validate($user_id,$cart_number,1);
+    }
+    
     // send query
-    if ($edit_id) {
+    if ($edit_id && $validate && $validate1 && $validate2) {
         $command = $action->cart_edit($edit_id,$user_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation);
     } else {
         if($validate && $validate1 && $validate2){

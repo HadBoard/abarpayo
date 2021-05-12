@@ -199,16 +199,18 @@ include('header.php'); ?>
                                 </div>
                                 <div class="form-group text-right" id="per_div">
                                 <?if($edit){?>
-                                <div class="form-group">
+
+                                    <div class="form-group">
+                                    <!-- <select class="form-control select2" name="perms[]" multiple="multiple">
+                                        <option>سطوح دسترسی  را انتخاب فرمایید .</option> -->
+                                        <!-- <option value="all">انتخاب همه</option>-->
                                     <label for="perms">انتخاب سطح دسترسی</label>
-                                    <!-- <input style="margin: 6px 8px 13px 0px;" type="checkbox"  >انتخاب همه -->
-                                    <label  >
+                                    <label>
                                         <input type="checkbox" class="float-right m-1" 
                                         id="selctall">
                                           انتخاب همه
                                     </label>
                                     <select  class="form-control select2" name="perms[]" multiple="multiple" size=2 id="e1">
-                                        <!-- <option>سطوح دسترسی  را انتخاب فرمایید .</option> -->
                                         <option value=1>دسته بندی ها</option>
                                         <option value=2>فروشگاه ها</option>
                                         <option value=3>محصولات</option>
@@ -226,6 +228,7 @@ include('header.php'); ?>
                                     </select>
                                 </div>
 
+                                
                                 <?}?>
                                 <div class="form-group" style="width:100%;float:right">
                                     <label class="float-right">
@@ -235,8 +238,6 @@ include('header.php'); ?>
                                     </label>
                                 </div>
                                 <div class="form-actions">
-
-
 
                                     <button type="submit" name="submit" class="btn btn-success sweet-success">
                                         <i class="fa fa-check"></i> ثبت
@@ -251,12 +252,10 @@ include('header.php'); ?>
                     </div>
                 </div>
                 <!-- ----------- end row of fields ----------------------------------------------------------- -->
-
             </div>
         </div>
     </div>
     <!-- ----------- end main container ------------------------------------------------------------------------ -->
-
 </div>
 <script>
 $("#e1").select2();

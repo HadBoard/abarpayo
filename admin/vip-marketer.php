@@ -40,20 +40,20 @@ if (isset($_POST['submit'])) {
     $marketers = $_POST['marketer'];
 
     if(!empty($marketers)){
-            
+
         foreach ($marketers as $marketer) {
             if($ids){
 
                 $key = array_search($marketer, $ids);
                 if ($key < 0) {
-                    $action -> vip_marketer_add($marketer,$score);
-                } else {
-                    // $action->vip_marketer_remove($marketer,$score);
+                    $command = $action -> vip_marketer_add($marketer,$score);
+                }else{
+                    $action -> vip_marketer_remove($marketer);
+                    $command = $action -> vip_marketer_add($marketer,$score);
                 }
             }else{
-                $action -> vip_marketer_add($marketer,$score);
+                $command = $action -> vip_marketer_add($marketer,$score);
             }
-           
         }
     }
     

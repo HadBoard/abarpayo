@@ -33,7 +33,7 @@ if ($result->Status == 100) {
  if(isset($_SESSION['app'])){
     $user_id = $_SESSION['user_id'];
     $command = $action->app_payment_add($user_id,$Amount,$cart_number,$result->RefID,1);
-     $action->app_wallet_log_add($user_id,"افزایش موجودی کیف پول",$Amount,1,$command);
+     $action->app_wallet_log_add($user_id,3,$Amount,1,$command);
      $action->app_user_wallet_edit($user_id,$Amount,1);
      $_SESSION['app-wallet'] = 'success';
     echo "<script> location.href='http://abarpayo.com/abarpayo/return.php'; </script>";
@@ -43,7 +43,7 @@ if ($result->Status == 100) {
 
         $id = $action->user()->id;
         $command = $action->payment_add($Amount,$cart_number,$result->RefID,1);
-        $action->wallet_log_add("افزایش موجودی کیف پول",$Amount,1,$command);
+        $action->wallet_log_add(3,$Amount,1,$command);
         $action->user_wallet_edit($Amount,1);
 
         $action->score_log_add($id,$wallet_increase_score,$wallet_increase_action,1);
@@ -53,7 +53,7 @@ if ($result->Status == 100) {
 
         $id = $action->marketer()->id;
         $command = $action->marketer_payment_add($id,$Amount,$cart_number,$result->RefID,1);
-        $action->marketer_wallet_log_add($id,"افزایش موجودی کیف پول",$Amount,1,$command);
+        $action->marketer_wallet_log_add($id,11,$Amount,1,$command);
         $action->marketer_wallet_edit($id,$Amount,1);
 
         $action->marketer_score_log_add($id,$marketer_wallet_increase_score,$wallet_increase_action,1);
