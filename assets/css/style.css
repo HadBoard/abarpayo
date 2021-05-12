@@ -669,7 +669,7 @@ span.ticket_check i {
 .notif_table tr:first-child td ,.cart_table th:nth-child(1) {
   font-size: 15px;
   color: rgb(26, 26, 26);
-  font-weight: 600;
+  font-weight: 500;
 }
 .notif_table td ,.cart_table th{
   color: rgb(34, 51, 66);
@@ -815,4 +815,42 @@ span.final_price {
 
 .suc_button:hover {
     box-shadow: -1px 2px 5px 0px #14350b;
+}
+.payment {
+  width: 100%;
+  background: #fff;
+  padding: 3rem 2rem 4rem 2rem;
+  border-radius: 5px;
+  /* text-align: center; */
+  box-shadow: rgb(0 0 0 / 50%) 0px 1.5px 3px 0px;
+}
+
+.suc_payment {
+  width: 100%;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.payment_table {
+  margin: auto;
+  width: 80%;
+}
+
+.suc_payment p {color: #0d240d;margin-bottom: 10px;}
+
+
+.suc_payment p:first-child {
+  font-weight: 500;
+  font-size: 20px;
+  color: green;
+}
+
+.fail_payment p:first-child {
+  color: red;
+}
+.payment img {
+    width: 128px;
+    height: 128px;
+    margin: auto;
+    display: flex;
 }
