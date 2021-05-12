@@ -3,8 +3,16 @@ require_once "functions/database.php";
 $action = new Action();
 $title = "فروشگاه ها" ;
 include_once "header.php";
+
 if(isset($_GET['id'])){
     $id = $action->request('id');
+}
+
+$error = false;
+if (isset($_SESSION['error'])) {
+    $error = true;
+    $error_val = $_SESSION['error'];
+    unset($_SESSION['error']);
 }
 
 $shop  = $action-> shop_get($id);
@@ -15,21 +23,100 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
         $mycomment  = $action->request('mycomment');
         $score = $action->request('rate');
         $command  = $action->shop_comment_add($id,$user_id,$mycomment,$score);
-
         if($command){
-            ?> 
-            <div class="modal">
-                <div class="alert alert-suc">
-                    <span class="close_alart">×</span>
-                    <p>
-                          کامنت شما با موفقیت ثبت شد!
-                    </p>
-                </div>
-            </div>
-            <script src="assets/js/alert.js"></script>
-        <?
+            $_SESSION['error']= 0 ;
+        }else{
+            $_SESSION['error']= 1 ;
         }
+        header("Location: shop.php?id=$id" );
     }
+
+    if(isset($_POST['add_to_cart'])){
+        $product_id = $action->request('product_id');
+        $product = $action->product_get($product_id);
+
+        if(!isset($_SESSION['already_in_gateway'])){
+            if($action->user()){
+                $user_id = $action->user()->id;
+                $access = 1;
+            }else if($action->marketer()){
+                $user_id = $action->marketer()->id;
+                $access = 0;
+            }
+
+            $items = $action->cart_item_check($user_id,$product_id,$access);
+            $item = $items->fetch_object();
+
+            if(!$item){
+
+                $count = 1;
+                $command = $action->add_to_cart($user_id,$id,$product_id,$count,$access);
+
+            }else{
+
+                $count = $item->count + 1;
+                $command = $action->update_cart_item($item->id,$count);
+            }
+        }
+    
+        if($command){
+            $_SESSION['error']= 0 ;
+        }else{
+            $_SESSION['error']= 1 ;
+        }
+        header("Location: shop.php?id=$id" );
+    }  
+   
+?>
+<? 
+if ($error) {
+if ($error_val) { ?>
+
+        <div class="modal">
+        <div class="alert alert-fail">
+            <span class="close_alart">×</span>
+            <p>
+               لطفا ابتدا وضعیت سبد خرید فعلی خود را مشخص کنید.
+            </p>
+        </div>
+    </div>
+    <script src="assets/js/alert.js"></script>
+    
+<? } else { ?>
+    <div class="modal">
+        <div class="alert alert-suc">
+            <span class="close_alart">×</span>
+            <p>
+               به سبد خرید افزوده شد!
+            </p>
+        </div>
+    </div>
+    <script src="assets/js/alert.js"></script>
+    <div class="overlay_"></div>
+<!--welcome modal  -->
+<!-- <div class="welcom-modal modal2 animate__animated  animate__backInDown shop_modal">
+    <a class="close-modal"><i class="fa fa-times"></i></a>
+    <div class="swal">
+        <div class="swal-icon swal-icon--success">
+            <span class="swal-icon--success__line swal-icon--success__line--long"></span>
+            <span class="swal-icon--success__line swal-icon--success__line--tip"></span>
+        
+            <div class="swal-icon--success__ring"></div>
+            <div class="swal-icon--success__hide-corners"></div>
+          </div>
+    </div>
+    <h3>به سبد خرید افزوده شد</h3>
+   
+    <div class="container">
+        <a class="sabadkharid">مشاهده سبد خرید</a>
+
+    </div>
+    
+</div> -->
+    
+<? }
+} 
+ 
 ?>
 <div class="overlay_"></div>
 <!--welcome modal  -->
@@ -229,10 +316,6 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
                                    
                                 </ul>
                             </div>
-                            <!--  -->
-    
-    
-                            
     
                         </div>
                     </div>
@@ -270,7 +353,7 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
                     <div class="shop_content product_content">
                         <h4><?= $product->title?> </h4>
                         <div class="product_price">
-                            <?$final = floatval($product->price) - ($product->price*$product->discount/100)?>
+                            <?$final = floatval($product->price) - floatval($product->price*$product->discount/100)?>
                             <s><?= $product->price ?></s>
                             <p id="price"><?= $final?></p>
                         </div>
@@ -281,9 +364,14 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
                                 <div class="star_card"><i class="fa fa-star"></i><?= $product->score ?></div>
                             </div>
                             <div class="col-9 sell_card">
-                                    <a class="shop_product">
+                                <? if($action->auth()){?>
+                                <form action="" method="post">
+                                    <input type="hidden" name="product_id" value="<?= $product->id ?>">
+                                    <button type="submit" name="add_to_cart" class="shop_product">
                                         <i class="fas fa-shopping-cart"></i>
-                                    </a>
+                                    </button>
+                                </form>
+                                <?}?>
                             </div>
                         </div>
                     </div>
@@ -419,30 +507,13 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
             })
          
      }
-    document.querySelector('.close-modal').onclick = function(){
-        $('.modal2').hide();
-        $('.overlay_').css('opacity',0)
-     }
-     var id = document.getElementById("price").innerHTML;
-     $('.shop_product').click(function(){
-        console.log("id",id);
-        $.ajax({
-            url: "ajax/add-to-cart.php",
-            type:'post',
-            data: {cur_index:cur_index,category_id:id},
-            success: function(response){
-                cur_index += 8;
-                if(response){
-                    $(".tabcontent").append(response);
-                    $('.more-item').hide();
-                }else{
-                    $('.more-item').show();
-                    $('#lazyload').hide();
-                }
-            }
-        });
-        $('.overlay_').css('opacity',1)
-        $('.modal2').show();
-     })
+    //  document.querySelector('.close-modal').onclick = function(){
+    //     $('.modal2').hide();
+    //     $('.overlay_').css('opacity',0)
+    //  }
+    //  $('.shop_product').click(function(){
+    //     $('.overlay_').css('opacity',1)
+    //     $('.modal2').show();
+    //  })
 </script>
 <? include_once "footer.php" ;?>

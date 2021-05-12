@@ -20,7 +20,7 @@ if (isset($_SESSION['error'])) {
         }else if($action->marketer()){
             $access = 1;
         }
-        $command = $action->shop_request_add($id,$category,$reference_id,$name,$owner,$address,$access);
+        $command = $action->shop_request_add($id,$category,$name,$owner,$address,$access);
         if ($command) {
             $_SESSION['error'] = 0;
         } else {

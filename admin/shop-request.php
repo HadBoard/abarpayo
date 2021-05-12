@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
     if ($edit) {
         $command1 = $action->shop_request_status($id,$status);
         $icon = "";
-        $command = $action->shop_add($row->category_id,$row->title,$icon,0,0,0, $row->address,0,0,$reference_id,0,0,0,$status);
+        $command = $action->shop_add($row->category_id,$row->title,$icon,0,0,0, $row->address,0,0,$row->user_id,0,0,0,$status);
     } 
     // check errors
     if ($command && $command1) {

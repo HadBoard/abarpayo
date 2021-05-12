@@ -853,14 +853,48 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_product` WHERE `shop_id` = '$shop_id' ORDER BY id DESC ");
     }
 
-    public function add_to_cart($user_id,$shop_id,$product_id,$access){
+    public function product_get($id)
+    {
+        return $this->get_data("tbl_product", $id);
+    }
+
+    public function add_to_cart($user_id,$shop_id,$product_id,$count,$access){
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_cart`
-        (`user_id`,`shop_id`,`product_id`,`access`,`created_at`) 
+        (`user_id`,`shop_id`,`product_id`,`count`,`access`,`created_at`) 
         VALUES
-        ('$user_id','$shop_id','$product_id','$access','$now')");
+        ('$user_id','$shop_id','$product_id','$count','$access','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
+    }
+
+    public function cart_item_remove($id){
+        return $this->remove_data("tbl_cart", $id);
+   }
+
+   public function remove_cart($id,$isUser){
+        $result =  $this->connection->query("SELECT * FROM `tbl_cart` WHERE `user_id` = '$id' AND `access` = '$isUser' ");
+        while($row = $result->fetch_object()){
+            $command = $this->remove_data("tbl_cart", $row->id);
+        }
+        return $command;
+   }
+
+    public function cart_items($id,$isUser){
+        return $this->connection->query("SELECT * FROM `tbl_cart` WHERE `user_id` = '$id' AND `access` = '$isUser' ");
+    }
+
+    public function update_cart_item($id,$count){
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_cart` SET 
+        `count`= '$count'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    public function cart_item_check($id,$product_id,$isUser){
+        return $this->connection->query("SELECT * FROM `tbl_cart` WHERE `user_id` = '$id' AND `product_id` = '$product_id' AND `access` = '$isUser' ");
     }
 
     public function shop_search($title,$cur_index){
@@ -979,13 +1013,13 @@ class Action
     }
 
 
-    public function shop_request_add($id,$category,$reference_id,$name,$owner,$address,$access){
+    public function shop_request_add($id,$category,$name,$owner,$address,$access){
         $now = time();
         $status = 0;
         $result = $this->connection->query("INSERT INTO `tbl_shop_request`
-        (`user_id`,`category_id`,`reference_id`,`title`,`owner`,`address`,`access`,`created_at`,`status`) 
+        (`user_id`,`category_id`,`title`,`owner`,`address`,`access`,`created_at`,`status`) 
         VALUES
-        ('$id','$category','$reference_id','$name','$owner','$address','$access','$now','$status')");
+        ('$id','$category','$name','$owner','$address','$access','$now','$status')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }

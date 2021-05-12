@@ -110,6 +110,7 @@ include('header.php'); ?>
                                         <th class="text-center">کارت ها</th>
                                         <th class="text-center">مدیران</th>
                                         <th class="text-center">نظرات</th>
+                                        <th class="text-center">QR کد</th>
                                         <th class="text-center">وضعیت</th>
                                         <th class="text-center">مدیریت</th>
                                     </tr>
@@ -130,7 +131,7 @@ include('header.php'); ?>
                                             </td>
                                             <td class="text-center"><a href="shop-admin.php?id=<?= $row->id?>"><i class="fas fa-user"></i></a></td>
                                             <td class="text-center"><a href="shop-comment-list.php?shop=<?= $row->id?>"><i class="fas fa-comment"></i></a></td>
-
+                                            <td class="text-center"><a href="../QRcode.php?c=<?= $row->reference_code?>"><i class="fas fa-qrcode"></i></a></td>
                                             <td class="text-center">
                                                 <a href="<?= $list_url ?>?status=<?= $row->id ?>">
                                                     <?
