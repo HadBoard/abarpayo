@@ -31,6 +31,29 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
         }
     }
 ?>
+<div class="overlay_"></div>
+<!--welcome modal  -->
+<div class="welcom-modal modal2 animate__animated  animate__backInDown shop_modal">
+    <a class="close-modal"><i class="fa fa-times"></i></a>
+    <div class="swal">
+        <div class="swal-icon swal-icon--success">
+            <span class="swal-icon--success__line swal-icon--success__line--long"></span>
+            <span class="swal-icon--success__line swal-icon--success__line--tip"></span>
+        
+            <div class="swal-icon--success__ring"></div>
+            <div class="swal-icon--success__hide-corners"></div>
+          </div>
+    </div>
+    <h3>به سبد خرید افزوده شد</h3>
+   
+    <div class="container">
+        <a class="sabadkharid">مشاهده سبد خرید</a>
+
+    </div>
+    
+</div>
+
+
 
   <!-- shop first-container -->
   <div class="shop_container">
@@ -233,73 +256,42 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
     </div>
 
        <!-- stores -->
-       <section class="container shop_extra">
-        <h3 class="index_title">فروشگاه های طرف قراداد</h3>
-
-        <!-- buttons -->
-        <div class="tab_index">
-        <?
-            $result = $action->category_ordered_list_limited();
-            while($row = $result->fetch_object()){
-        ?>
-            <button class="tablinks"><?= $row->title ?></button>
-        <?  } ?>
-    </div>
-        <!-- eof btns -->
-        <!--tabs content  -->
-        <?
-        $result = $action->category_ordered_list();
-        while($row = $result->fetch_object()){
-            $shops = $action->category_shops_list_limited($row->id)
-    ?>
-        <div  class="tabcontent">
-        <?
-            while($shop = $shops->fetch_object()){
-        ?>
-            <div class="index_shop">
-                <div class="index_shop_inner">
-                    <a href="shop.php?id=<?=$shop->id ?>" >
-                        <img src="admin/images/shops/<?= $shop->image?>">
-                        <div class="shop_off">23%</div>
-                     </a>
-                     <a href="shop.php?id=<?=$shop->id?>" class="shop_content">
-                        <h4><?= $shop->title ?></h4>
-                        <h6>
-                            <i class="fa fa-map"></i>
-                             <?= $shop->address?>
-                        </h6>
-                    </a>
+    <section class="container shop_extra">
+        <h3 class="index_title">محصولات </h3>
+        <div class="tabcontent">
+            <? $products = $action->shop_product_list($id);
+             while($product = $products->fetch_object()){ ?>
+            <div class="index_shop product">
+                <div class="index_shop_inner product_inner">
+                    <div style="width: 100%;position: relative;">
+                        <img src="admin/images/products/<?= $product->image?>">
+                        <div class="shop_off"><?= $product->discount ?></div>
+                    </div>
+                    <div class="shop_content product_content">
+                        <h4><?= $product->title?> </h4>
+                        <div class="product_price">
+                            <?$final = floatval($product->price) - ($product->price*$product->discount/100)?>
+                            <s><?= $product->price ?></s>
+                            <p id="price"><?= $final?></p>
+                        </div>
+                    </div>
                     <div class="shop_star">
                         <div class="row">
                             <div class="col-3">
-                                <div class="star_card"><i class="fa fa-star"></i> 3.8</div>
+                                <div class="star_card"><i class="fa fa-star"></i><?= $product->score ?></div>
                             </div>
                             <div class="col-9 sell_card">
-                                <i class="fas fa-shopping-cart"></i>
-
-                                <p>
-                                    <span>256</span>
-                                    خرید
-                                </p>
+                                    <a class="shop_product">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>  
-            <?
-            }
-            ?>
-         <a href="shop-list.php?category=<?= $row->id ?>" class="main_btn">    
-                 <i class="fa fa-reply"></i>
-                
-                 بیشتر
-             </a>
+            </div>
+            <?}?>
+            <!--  -->
         </div>
-    <?
-        }
-    ?>
-
-        <!-- eof tabs -->
     </section>
 
       <!-- comment -->
@@ -416,17 +408,41 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
 
     <script>
     let tab_btns = document.querySelectorAll('.tablinks')
-    let tab_content = document.querySelectorAll('.tabcontent')
-    tab_content[0].style.display='block';
-    tab_btns[0].classList.add('active_tablink');
-    for (let index = 0; index < tab_btns.length; index++) {
-           tab_btns[index].addEventListener('click' , function(){
-               $('.tablinks').removeClass('active_tablink');
-               $('.tabcontent').hide();
-               tab_content[index].style.display = 'block';
-               tab_btns[index].classList.add('active_tablink');
-           })
-        
-    }
+     let tab_content = document.querySelectorAll('.tabcontent')
+     tab_content[0].style.display='block';
+     for (let index = 0; index < tab_btns.length; index++) {
+            tab_btns[index].addEventListener('click' , function(){
+                $('.tablinks').removeClass('active_tablink');
+                $('.tabcontent').hide();
+                tab_content[index].style.display = 'block';
+                tab_btns[index].classList.add('active_tablink');
+            })
+         
+     }
+    document.querySelector('.close-modal').onclick = function(){
+        $('.modal2').hide();
+        $('.overlay_').css('opacity',0)
+     }
+     var id = document.getElementById("price").innerHTML;
+     $('.shop_product').click(function(){
+        console.log("id",id);
+        $.ajax({
+            url: "ajax/add-to-cart.php",
+            type:'post',
+            data: {cur_index:cur_index,category_id:id},
+            success: function(response){
+                cur_index += 8;
+                if(response){
+                    $(".tabcontent").append(response);
+                    $('.more-item').hide();
+                }else{
+                    $('.more-item').show();
+                    $('#lazyload').hide();
+                }
+            }
+        });
+        $('.overlay_').css('opacity',1)
+        $('.modal2').show();
+     })
 </script>
 <? include_once "footer.php" ;?>

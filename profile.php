@@ -60,6 +60,8 @@ include_once "header.php";
                     include_once "profile-ticket.php";
                 else if(isset($_GET['support']))
                     include_once "profile-support.php";
+                else if(isset($_GET['wallet-history']))
+                    include_once "profile-wallet-history.php";
                 else
                    include_once "profile-edit.php";
                 ?>

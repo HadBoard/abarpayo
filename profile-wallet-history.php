@@ -1,8 +1,8 @@
 <?
     if($action->user()){
-        $transactions = $action->user_get_payment();
+        $transactions = $action->wallet_history($id,1);
     }else if($action->marketer()){
-        $transactions = $action->marketer_get_payment($id);
+        $transactions = $action->wallet_history($id,0);
     }
 ?> 
 <div class="edit_profile_div">
@@ -14,7 +14,7 @@
 <div class="row profile_title">
     <a href="?wallet" class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
 
-    <h3 style="width: 50%;float: right;">تراکنش های مالی</h3>
+    <h3 style="width: 50%;float: right;">تاریخچه کیف پول</h3>
     <img src="assets/images/Group 465.svg">
 </div>
 <div class="profile_left">
@@ -24,16 +24,10 @@
         <table>
         <?
             while($transaction = $transactions->fetch_object()){
-                if($action->user()){
-                    $payments = $action->payment_get_action($transaction->id);
-                }else if($action->marketer()){
-                    $payments = $action->marketer_payment_get_action($transaction->id);
-                }
-                $payment = $payments->fetch_object();
         ?>  
                 <tr>
-                    <td class="inc_wallet"'> <?=  "+".$transaction->amount ?></td>
-                    <td><?= $action->time_to_shamsi($transaction->date)?></td>
+                    <td <?= ($transaction->type == 1) ?'class="inc_wallet"' : 'class:"dec_wallet"'?>> <?= ($transaction->type == 1) ? "+".$transaction->amount : "-".$transaction->amount ?></td>
+                    <td><?= $action->time_to_shamsi($transaction->created_at)?></td>
                     <td><?= $action->action_log_get($payment->action_id)->text ?></td>
                 </tr>
         <?

@@ -36,16 +36,16 @@
                                 
                         </div>
                         <div class="flip-card-back">
-                            <h2><?= $invitation_code?></h2>
+                            <h2 id="code_copy" ><?= $invitation_code?></h2>
                             
                                 <div class="share-link">
-                                    <button class="whatsapp-icon">
+                                    <a  href="https://wa.me/?text=http://abarpayo.com/abarpayo/phone.php?ref=<?=$invitation_code?>" class="whatsapp-icon">
                                         <i class="fab fa-whatsapp-square"></i>
-                                    </button>
+                                    </a>
                                     <button class="telegram-icon">
                                         <i class="fab fa-telegram"></i>
                                     </button>
-                                    <button class="copy-icon">
+                                    <button onclick="copy_code()" class="copy-icon">
                                         <i class="far fa-copy"></i>
                                     </button>
                                 </div>
@@ -62,15 +62,15 @@
                             <h3>لینک دعوت</h3>
                         </div>
                         <div class="flip-card-back">
-                            <h3><?= 'http://abarpayo.com/abarpayo/phone.php?ref='.$invitation_code ?></h3>
+                            <h3 id="link_copy"><?= 'http://abarpayo.com/abarpayo/phone.php?ref='.$invitation_code ?></h3>
                             <div class="share-link">
-                                    <button class="whatsapp-icon">
+                                    <a href="https://wa.me/?text=http://abarpayo.com/abarpayo/phone.php?ref=<?=$invitation_code?>" class="whatsapp-icon">
                                         <i class="fab fa-whatsapp-square"></i>
-                                    </button>
+                                    </a>
                                     <button class="telegram-icon">
                                         <i class="fab fa-telegram"></i>
                                     </button>
-                                    <button class="copy-icon">
+                                    <button onclick="copy_link()" class="copy-icon">
                                         <i class="far fa-copy"></i>
                                     </button>
                                 </div>
@@ -109,4 +109,19 @@
         <?}?>
     </div>
 </div>
-         
+<script>
+function copy_link() {
+  var copyText = document.getElementById("link_copy").innerHTML;
+  copyText.select();
+  copyText.setSelectionRange(0, 99999)
+  document.execCommand("copy");
+  alert("Copied the text: " + copyText.value);
+}
+</script>
+<script>
+function copy_code() {
+  var copyText = document.getElementById("code_copy").innerHTML;
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>

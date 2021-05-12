@@ -1,14 +1,10 @@
 <?
     if($action->user()){
         $wallet = $action->user_get($id)->wallet;
-        $carts = $action->user_get_cart_limited();
-        $transactions = $action->user_get_payment_limited();
-        $withdraws = $action->user_get_requests_limited();
+        $transactions = $action->wallet_history_limited($id,1);
     }else if($action -> marketer()){
         $wallet = $action->marketer_get($id)->wallet;
-        $carts = $action->marketer_get_cart_limited($id);
-        $transactions = $action->marketer_get_payment_limited($id);
-        $withdraws = $action->marketer_get_requests_limited($id);
+        $transactions = $action->wallet_history_limited($id,0);
     }
    
 
@@ -71,73 +67,26 @@
             </div>
         </div>
         <div class="profile_left profile_left_2">
+        
             <div class="wallet_table">
                 
                 <table>
                     <div class="row wallet_table_title" >
                         <div class="col-6">
-                            <h4>مدیریت کارت ها</h4>
+                            <h4>تاریخچه کیف پول</h4>
                         </div>
                         <div class="col-6">
-                            <a href="?carts">مشاهده همه</a>
+                            <a href="?wallet-history">مشاهده همه</a>
                         </div>
                     </div>
                     <?
-                        while($cart = $carts->fetch_object()){
-                    ?>  
-                            <tr>
-                                <td><?= $cart->title ?></td>
-                                <td><?=  $action->bank_get($cart->bank_id)->name?></td>
-                                <td><?= $cart->cart_number?></td>
-                            </tr>
-                    <?
-                        }
-                    ?>                  
-
-                </table>
-
-
-            </div>
-            <div class="wallet_table">
-                
-                <table>
-                    <div class="row wallet_table_title" >
-                        <div class="col-6">
-                            <h4>تراکنش های اخیر</h4>
-                        </div>
-                        <div class="col-6">
-                            <a href="?transactions">مشاهده همه</a>
-                        </div>
-                    </div>
-                    <?
-                    
                         while($transaction = $transactions->fetch_object()){
-                            if($action->user()){
-                                $payments = $action->payment_get_action($transaction->id);
-                            }else if($action->marketer()){
-                                $payments = $action->marketer_payment_get_action($transaction->id);
-                            }
-                           
-                            $payment = $payments->fetch_object();
-                            $type = $transaction->type;
                     ?>  
                             <tr>
-                                <td <?= ($type == 1) ? 'class="dec_wallet"': 'class="inc_wallet"' ?>> <?= ($type == 1) ? "-".$transaction->amount : "+".$transaction->amount ?></td>
-                                <td><?= $action->time_to_shamsi($transaction->date)?></td>
-                                <td><?= $action->action_log_get($payment->action_id)->text?></td>
+                                <td <?= ($transaction->type == 1) ?'class="inc_wallet"' : 'class:"dec_wallet"'?>> <?= ($transaction->type == 1) ? "+".$transaction->amount : "-".$transaction->amount ?></td>
+                                <td><?= $action->time_to_shamsi($transaction->created_at)?></td>
+                                <td><?= $action->action_log_get($payment->action_id)->text ?></td>
                             </tr>
-                    <?
-                        }
-                       
-                        while($withdraw = $withdraws->fetch_object()){
-                    ?>  
-
-                        <tr>
-                            <td class="dec_wallet"> <?= "-".$withdraw->amount ?></td>
-                            <td><?= $action->time_to_shamsi($withdraw->paymented_at)?></td>
-                            <td>برداشت از حساب</td>
-                        </tr>
-
                     <?
                         }
                     ?>  

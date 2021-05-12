@@ -35,17 +35,38 @@ if (isset($_POST['submit'])) {
     $category_id = $action->request('category_id');
     $shop_id = $action->request('shop_id');
     $title = $action->request('title');
+    $image = $action->request('icon');
     $description = $action->request('description');
     $price = $action->request('price');
     $status = $action->request('status');
     $discount = $action->request('discount');
     $score = $action->request('score');
 
+    if($_FILES["icon"]["name"]){
+        unlink("images/products/$icon");
+        $target_dir = "images/products/";
+        $target_file = $target_dir . basename($_FILES["icon"]["name"]);
+
+        // Select file type
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+        // Valid file extensions
+        $extensions_arr = array("jpg","jpeg","png","gif");
+
+        // Check extension
+        if( in_array($imageFileType,$extensions_arr) ){
+            $name = $action -> get_token(10) . "." . $imageFileType;
+            // Upload file
+            move_uploaded_file($_FILES['icon']['tmp_name'],$target_dir.$name);
+            $icon = $name;
+        } 
+    }
+
     // send query
     if ($edit) {
-        $command = $action->product_edit($id,$category_id,$shop_id,$title,$description,$price,$discount,$score,$status);
+        $command = $action->product_edit($id,$category_id,$shop_id,$title,$icon,$description,$price,$discount,$score,$status);
     } else {
-        $command = $action->product_add($category_id,$shop_id,$title,$description,$price,$discount,$score,$status);
+        $command = $action->product_add($category_id,$shop_id,$title,$icon,$description,$price,$discount,$score,$status);
     }
 
     // check errors
@@ -209,6 +230,11 @@ include('header.php'); ?>
                                            placeholder="امتیاز"
                                            value="<?= ($edit) ? $row->score : "" ?>" >
                                 </div>
+
+                                <div>
+                                    <label for="icon" class="btn btn-dark btn-block m-0">انتخاب عکس محصول</label>
+                                    <input type="file" name="icon" id="icon" style="visibility:hidden;">
+                                </div>
                                 
                                 <div class="form-actions">
 
@@ -233,6 +259,13 @@ include('header.php'); ?>
                 <!-- ----------- end row of fields ----------------------------------------------------------- -->
 
             </div>
+            <? if($edit && $row->image) { ?>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <img src="images/products/<?= $row->image ?>">
+                        </div>
+                    </div>
+            <? } ?>
         </div>
     </div>
     <!-- ----------- end main container ------------------------------------------------------------------------ -->

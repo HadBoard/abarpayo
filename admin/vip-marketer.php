@@ -1,25 +1,32 @@
 <? require_once "functions/database.php";
-$database = new DB();
-$connection = $database->connect();
 $action = new Action();
 
 // ----------- urls ----------------------------------------------------------------------------------------------------
 // main url for add , edit
 $main_url = "vip-marketer.php";
-// main url for remove , change status
-// $list_url = "vip-marketer-list.php";
 // ----------- urls ----------------------------------------------------------------------------------------------------
-
-// ----------- get data from database when action is edit --------------------------------------------------------------
-
-
-$result = $action->vip_marketer_list();
-
-if( $result->num_rows > 0){
-    while($row = $result->fetch_object()){
-        $ids[] = $row->marketer_id; 
+$edit = false;
+if (isset($_GET['edit'])) {
+    $id = $action->request('edit');
+    $edit = true;
+    
+}else{
+    $result = $action->vip_marketer_list();
+    if( $result->num_rows > 0){
+        while($row = $result->fetch_object()){
+            $vips[] = $row->marketer_id; 
+        }
     }
 }
+
+if (isset($_GET['remove'])) {
+    $id = $action->request('remove');
+    $_SESSION['error'] = !$action->vip_marketer_remove($id);
+    header("Location: $main_url");
+    return;
+}
+// ----------- get data from database when action is edit --------------------------------------------------------------
+
 
 // ----------- get data from database when action is edit --------------------------------------------------------------
 
@@ -37,26 +44,27 @@ if (isset($_POST['submit'])) {
 
     // get fields
     $score = $action->request('score');
-    $marketers = $_POST['marketer'];
+    
+    if($edit){
+        $command = $action-> vip_marketer_edit($id,$score);
 
-    if(!empty($marketers)){
+    }else{
 
-        foreach ($marketers as $marketer) {
-            if($ids){
+        $marketers = $_POST['marketer'];
+        if(!empty($marketers)){
+    
+            foreach($vips as $vip){
+                $command = $action -> vip_marketer_remove($vip);
+            }
 
-                $key = array_search($marketer, $ids);
-                if ($key < 0) {
-                    $command = $action -> vip_marketer_add($marketer,$score);
-                }else{
-                    $action -> vip_marketer_remove($marketer);
-                    $command = $action -> vip_marketer_add($marketer,$score);
-                }
-            }else{
-                $command = $action -> vip_marketer_add($marketer,$score);
+            foreach ($marketers as $marketer) {
+               $command = $action -> vip_marketer_add($marketer,$score);
             }
         }
+        
     }
-    
+
+   
     // check errors
     if ($command) {
         $_SESSION['error'] = 0;
@@ -154,17 +162,17 @@ include('header.php'); ?>
                     <div class="card-body">
                         <div class="basic-form">
                             <form action="" method="post">
-
+                            <?if(!$edit){?>
                             <div class="form-group">
+                                    <label for="marketer[]">انتخاب بازاراسازان</label>
                                     <select class="form-control select2" name="marketer[]" multiple="multiple">
-                                        <option>بازارسازان  را انتخاب فرمایید .</option>
                                         <?
                                         $option_result = $action->marketer_list();
                                         while ($option = $option_result->fetch_object()) {
                                             echo '<option value="';
                                             echo $option->id;
                                             echo '"';
-                                            if( $result->num_rows > 0){if (in_array($option->id,$ids)) echo "selected";}
+                                            if( $result->num_rows > 0){if (in_array($option->id,$vips)) echo "selected";}
                                             echo '>';
                                             echo $option->first_name." ".$option->last_name;
                                             echo '</option>';
@@ -172,6 +180,14 @@ include('header.php'); ?>
                                         ?>
                                     </select>
                                 </div>
+                                <?}?>
+
+                                <?if($edit){?>
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-default "
+                                        value="<?= $action->marketer_get($id)->first_name." ".$action->marketer_get($id)->last_name?>" readonly>
+                                </div>
+                                <?}?>
 
                                 <div class="form-group">
                                     <input type="text" name="score" class="form-control input-default "
@@ -184,9 +200,7 @@ include('header.php'); ?>
                                         <i class="fa fa-check"></i> ثبت
                                     </button>
 
-                                    <a href="panel.php"><span name="back"
-                                                                     class="btn btn-inverse">بازگشت  </span></a>
-
+                                    <a href="panel.php"><span name="back" class="btn btn-inverse">بازگشت  </span></a>
                                 </div>
 
                             </form>
@@ -208,6 +222,7 @@ include('header.php'); ?>
                                     <th class="text-center">ردیف</th>
                                     <th class="text-center">نام</th>
                                     <th class="text-center">امتیاز</th>
+                                    <th class="text-center">مدیریت</th>
                                 </tr>
                                 </thead>
 
@@ -220,6 +235,15 @@ include('header.php'); ?>
                                         <td class="text-center"><?= $counter++ ?></td>
                                         <td class="text-center"><?= $action->marketer_get($row->marketer_id)->first_name." ".$action->marketer_get($row->marketer_id)->last_name?></td>
                                         <td class="text-center"><?= $row->score ?></td>
+                                        <td class="text-center">
+                                            <a href="<?= $main_url ?>?edit=<?= $action->marketer_get($row->marketer_id)->id ?>">
+                                                <i class="fa fa-pencil-square-o"></i>
+                                            </a>
+                                            |
+                                            <a href="<?= $main_url ?>?remove=<?= $action->marketer_get($row->marketer_id)->id ?>">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                 <? } ?>
                                 </tbody>

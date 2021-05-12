@@ -7,14 +7,14 @@ include_once "header.php";
 if(isset($_POST['advanced_search'])){
     $search = $action->request('input');
     $city = $action->request('city');
-    $category = $action->request($category);
+    $category = $action->request('category');
     
     if(!$city){
         $result = $action->advance_search_not_city($search,$category,0);
     }else if(!$category){
         $result = $action->advance_search_not_category($search,$city,0);
     }else if(!$input){
-        $result = $action->advance_search_not_input($search,$category,0);
+        $result = $action->advance_search_not_input($city,$category,0);
     }else{
         $result = $action->advance_search($search,$category,$city,0);
     }
@@ -189,7 +189,7 @@ if ($count) { while ($shop = $result->fetch_object()) {
     // console.log("id",id);
      console.log("index",cur_index);
     $.ajax({
-        url: "ajax/search-lazyLoader.php",
+        url: "ajax/lazyLoader.php",
         type:'post',
         data: {cur_index:cur_index,title:title},
         success: function(response){

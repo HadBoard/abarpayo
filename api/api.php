@@ -468,6 +468,16 @@ if(isset($_POST['function'])) {
         $json = json_encode($obj);
         echo $json; 
     }
+
+    if($_POST['function'] == 'QRcode'){
+        $code = $action->request('code');
+        $result  = $action->shop_qrcode($code);
+        $shop = $result->fetch_object();
+        $obj ->address = $shop->address;
+        $obj -> title = $shop->title;
+        $json = json_encode($obj);
+        echo $json; 
+    }
     
 }
 

@@ -351,6 +351,23 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id' ORDER BY id DESC");
     }
 
+    public function wallet_history($id,$isUser){
+        if($isUser == 1){
+            return $this->connection->query("SELECT * FROM `tbl_wallet_log` WHERE `user_id` = '$id' ORDER BY id DESC");
+        }else{
+            return $this->connection->query("SELECT * FROM `tbl_marketer_wallet_log` WHERE `marketer_id` = '$id' ORDER BY id DESC");
+        }
+    }
+
+    public function wallet_history_limited($id,$isUser){
+        if($isUser == 1){
+            return $this->connection->query("SELECT * FROM `tbl_wallet_log` WHERE `user_id` = '$id' ORDER BY id DESC LIMIT 3");
+        }else{
+            return $this->connection->query("SELECT * FROM `tbl_marketer_wallet_log` WHERE `marketer_id` = '$id' ORDER BY id DESC LIMIT 3");
+        }
+    }
+    
+
     public function app_get_payment($id){
         return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id'ORDER BY id DESC");
     }
@@ -830,6 +847,22 @@ class Action
     {
         return $this->connection->query("SELECT * FROM `tbl_shop_pics` WHERE `shop_id` = '$shop_id'");
     }
+
+    public function shop_product_list($shop_id)
+    {
+        return $this->connection->query("SELECT * FROM `tbl_product` WHERE `shop_id` = '$shop_id' ORDER BY id DESC ");
+    }
+
+    public function add_to_cart($user_id,$shop_id,$product_id,$access){
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_cart`
+        (`user_id`,`shop_id`,`product_id`,`access`,`created_at`) 
+        VALUES
+        ('$user_id','$shop_id','$product_id','$access','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
     public function shop_search($title,$cur_index){
         if(isset($_SESSION['default_city'])){
             $city_id = $_SESSION['default_city'];
@@ -929,6 +962,10 @@ class Action
     public function city_get($id)
     {
         return $this->get_data("tbl_city", $id);
+    }
+
+    public function shop_qrcode($code){
+        return $result = $this->connection->query("SELECT * FROM `tbl_shop` WHERE `reference_code` = '$code'");
     }
 
     public function shop_get($id)
