@@ -42,12 +42,13 @@
                                     <a  href="https://wa.me/?text=http://abarpayo.com/abarpayo/phone.php?ref=<?=$invitation_code?>" class="whatsapp-icon">
                                         <i class="fab fa-whatsapp-square"></i>
                                     </a>
-                                    <button class="telegram-icon">
+                                    <a class="telegram-icon">
                                         <i class="fab fa-telegram"></i>
-                                    </button>
-                                    <button onclick="copy_code()" class="copy-icon">
+                                     </a>        
+                                    <a onclick="copy_code()" class="copy-icon">
+                                        <p id="copyC" style="display:none">کپی شد</p>
                                         <i class="far fa-copy"></i>
-                                    </button>
+                                    </a>
                                 </div>
                              
                         </div>
@@ -67,13 +68,14 @@
                                     <a href="https://wa.me/?text=http://abarpayo.com/abarpayo/phone.php?ref=<?=$invitation_code?>" class="whatsapp-icon">
                                         <i class="fab fa-whatsapp-square"></i>
                                     </a>
-                                    <button class="telegram-icon">
+                                    <a class="telegram-icon">
                                         <i class="fab fa-telegram"></i>
-                                    </button>
-                                    <button onclick="copy_link()" class="copy-icon">
+                                    </a>
+                                    <a onclick="copy_link()"  class="copy-icon">
+                                        <p id="copyL" style="display:none">کپی شد</p>
                                         <i class="far fa-copy"></i>
-                                    </button>
-                                </div>
+                                    </a>
+                            </div>
                             
                         </div>
                         </div>
@@ -110,18 +112,38 @@
     </div>
 </div>
 <script>
-function copy_link() {
-  var copyText = document.getElementById("link_copy").innerHTML;
-  copyText.select();
-  copyText.setSelectionRange(0, 99999)
-  document.execCommand("copy");
-  alert("Copied the text: " + copyText.value);
+function copyToClipboard(text) {
+    var dummy = document.createElement("textarea");
+    document.body.appendChild(dummy);
+    dummy.value = text;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
 }
-</script>
-<script>
-function copy_code() {
-  var copyText = document.getElementById("code_copy").innerHTML;
-  copyText.select();
-  document.execCommand("copy");
-}
+    
+        
+
+
+        
+        function copy_code() {
+            var copyText = $('#code_copy').text();
+            console.log(copyText)
+            copyToClipboard(copyText)
+            document.execCommand("copy");
+            document.getElementById('copyC').style.display='block';
+            setTimeout(function(){
+                document.getElementById('copyC').style.display='none';
+            },3000)
+        }
+        function copy_link() {
+            var copyText = $('#link_copy').text();
+            console.log(copyText)
+            copyToClipboard(copyText)
+            document.execCommand("copy");
+        //   alert("Copied the text: " + copyText);
+        document.getElementById('copyL').style.display='block';
+        setTimeout(function(){
+            document.getElementById('copyL').style.display='none';
+        },3000)
+        }
 </script>

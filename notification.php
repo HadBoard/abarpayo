@@ -26,8 +26,12 @@ include_once "header.php";
                   </div>
             </div>
         </div>
-
+        
         <div class="container">
+            <button class="main_btn middle_btn notif_all_btn">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        حذف همه
+            </button>
             <div class="notif_table">
                 <table>
                     <tr>

@@ -48,7 +48,7 @@ body {
 }
 
 
-.qr_wrapper img {
+.qr_wrapper img,.qr_wrapper iframe {
     width: 256px;
     height: 256px;
     margin-top: 79px;
