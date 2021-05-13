@@ -24,26 +24,28 @@ $result = $client->PaymentVerification(
 
 if ($result->Status == 100) {
 // echo '<br>Transation success. RefID:'.$result->RefID;
-
+    // var_dump($result);
     if($action->user()){
 
         $id = $action->user()->id;
+        $action->remove_cart($id,1);
         $command = $action->payment_add($Amount,2,$result->RefID,1);
 
     }else if($action->marketer()){
 
         $id = $action->marketer()->id;
+        $action->remove_cart($id,0);
         $command = $action->marketer_payment_add($id,$Amount,2,$result->RefID,1);
     }
     unset($_SESSION['already_in_gateway']);
     $_SESSION['successful_pay'] = 'true';
-    header("Location: shopping-cart.php");
+    header("Location: factor.php");
 
 
 } else {
     unset($_SESSION['already_in_gateway']);
     $_SESSION['successful_pay'] = 'false';
-    header("Location: shopping-cart.php");
+    header("Location: factor.php");
 }
 } else {   
     unset($_SESSION['already_in_gateway']); 
