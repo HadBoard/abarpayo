@@ -300,7 +300,24 @@ class Action
         return $this->table_counter("tbl_shop_admin");
     }
 
-    
+    public function guild_edit($first_name, $last_name, $phone, $username, $password,$national_code,$postal_code,$birthday)
+    {
+        $now = time();
+        $id= $_SESSION['guild_id'];
+        $result = $this->connection->query("UPDATE `tbl_shop_admin` SET 
+        `first_name`='$first_name',
+        `last_name`='$last_name',
+        `phone`='$phone',
+        `username`='$username',
+        `password`='$password',
+        `national_code`='$national_code',
+        `postal_code`='$postal_code',
+        `birthday`='$birthday',
+        `updated_at`='$now'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
     // ----------- end guild ------------------------------------------------------------------------------------------
 
     // ----------- start SHOPS -----------------------------------------------------------------------------------------
@@ -361,7 +378,7 @@ public function shop_get($id)
 
      public function product_list()
      {
-        $shop_id= $this->guild()->shop_id;;
+        $shop_id= $this->guild()->shop_id;
         $result = $this->connection->query("SELECT * FROM `tbl_product` WHERE shop_id=' $shop_id' ORDER BY `id` DESC");
         if (!$this->result($result)) return false;
         return $result;
@@ -722,15 +739,16 @@ public function guild_request_get($id)
 
 public function guild_request_add($category,$name,$owner,$address){
     $now = time();
-    $shop_id= $this->guild()->shop_id;
     $status = 0;
+    $shop_id= $this->guild()->shop_id;
     $result = $this->connection->query("INSERT INTO `tbl_shop_request`
-    (`shop_id`,`category_id`,`title`,`owner`,`address`,`created_at`,`status`) 
+    (`user_id`,`category_id``title`,`owner`,`address`,`access`,`created_at`,`status`) 
     VALUES
-    ('$shop_id','$category','$name','$owner','$address','$now','$status')");
+    ('$shop_id','$category','$name','$owner','$address',2,'$now','$status')");
     if (!$this->result($result)) return false;
     return $this->connection->insert_id;
 }
+
 public function guild_request_edit($id,$category,$name,$owner,$address,){
     $result = $this->connection->query("UPDATE `tbl_shop_request` SET
      `category_id`='$category',

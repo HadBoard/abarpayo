@@ -19,6 +19,7 @@
     kamaDatepicker('date_end', customOptions);
     kamaDatepicker('birthday', customOptions);
 </script>
+
 <!-- ----------- script for show calender -------------------------------------------------------------------------- -->
 <!-- ----------- script for ckeditor ------------------------------------------------------------------------------- -->
 <script>
@@ -37,7 +38,7 @@
 <footer class="footer" style="padding-left: 261px;">
     طراحی شده توسط
     <a href="http://hamitec.ir">حامی تک</a>
-    <a href="http://SinHeRe.ir">:)</a>
+    <a href="http://SinHeRe.ir">😏</a>
 </footer>
 <!-- ----------- end footer ---------------------------------------------------------------------------------------- -->
 
