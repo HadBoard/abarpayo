@@ -151,7 +151,7 @@ class Action
     public function request_date($name)
     {
         $name = $this->request('birthday', false);
-        if (!$name) return 0;
+        if(!$name) return 0;
         $name = $this->shamsi_to_miladi($name);
         return strtotime($name);
     }
@@ -188,30 +188,32 @@ class Action
 
     // ----------- for send sms to mobile number
 
-    public function send_sms($mobile, $textMessage)
-    {
+    public function send_sms($mobile,$textMessage){
 
-        $webServiceURL = "http://login.parsgreen.com/Api/SendSMS.asmx?WSDL";
+        $webServiceURL  = "http://login.parsgreen.com/Api/SendSMS.asmx?WSDL";
         $webServiceSignature = "86D08235-C008-4C53-8EEA-CE2284FD66F4";
 
-        $textMessage = mb_convert_encoding($textMessage, "UTF-8"); // encoding to utf-8
+        $textMessage= mb_convert_encoding($textMessage,"UTF-8"); // encoding to utf-8
 
 
         $parameters['signature'] = $webServiceSignature;
-        $parameters['toMobile'] = $mobile;
-        $parameters['smsBody'] = $textMessage;
-        $parameters['retStr'] = ""; // return refrence send status and mobile and report code for delivery
+        $parameters['toMobile' ]  = $mobile;
+        $parameters['smsBody' ]=$textMessage;
+        $parameters[ 'retStr'] = ""; // return refrence send status and mobile and report code for delivery
 
 
-        try {
+        try
+        {
             $con = new SoapClient($webServiceURL);
 
-            $responseSTD = (array)$con->Send($parameters);
+            $responseSTD = (array) $con ->Send($parameters);
 
-            $responseSTD['retStr'] = (array)$responseSTD['retStr'];
+            $responseSTD['retStr'] = (array) $responseSTD['retStr'];
 
 
-        } catch (SoapFault $ex) {
+        }
+        catch (SoapFault $ex)
+        {
             echo $ex->faultstring;
         }
 
@@ -244,7 +246,7 @@ class Action
         if ($rowcount) {
             $this->user_update_last_login($row->id);
             $_SESSION['user_id'] = $row->id;
-            $this->log_action(1, 0);
+            $this->log_action(1,0);
             return true;
         }
         return false;
@@ -288,7 +290,7 @@ class Action
         `updated_at`='$now'
         WHERE `id` ='$id'");
         if (!$this->result($result)) return false;
-        $this->log_action(2, 0);
+        $this->log_action(2,0);
         return $id;
     }
 
@@ -316,7 +318,6 @@ class Action
         return $this->get_data("tbl_marketer", $id);
     }
 
-<<<<<<< Updated upstream
 
     public function is_vip($id){
         $result = $this->table_list("tbl_vip_marketer");
@@ -339,21 +340,13 @@ class Action
         return true;
     }
     public function hasUnpaidPackage($marketer_id){
-=======
-    public function hasUnpaidPackage($marketer_id)
-    {
->>>>>>> Stashed changes
         return $this->marketer_get($marketer_id)->payment_type == 2 && $this->marketer_get($marketer_id)->payment_id == 0;
 
     }
-
-    public function user_get_phone($phone)
-    {
+    public function user_get_phone($phone){
         return $this->connection->query("SELECT * FROM `tbl_user` WHERE `phone` = '$phone'");
     }
-
-    public function user_get_payment()
-    {
+    public function user_get_payment(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id' ORDER BY id DESC");
     }
@@ -366,7 +359,6 @@ class Action
         }
     }
 
-<<<<<<< Updated upstream
     public function wallet_history_limited($id,$isUser){
         if($isUser == 1){
             return $this->connection->query("SELECT * FROM `tbl_wallet_log` WHERE `user_id` = '$id' ORDER BY id DESC LIMIT 3");
@@ -374,24 +366,17 @@ class Action
             return $this->connection->query("SELECT * FROM `tbl_marketer_wallet_log` WHERE `marketer_id` = '$id' ORDER BY id DESC LIMIT 3");
         }
     }
-    
+
 
     public function app_get_payment($id){
         return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id'ORDER BY id DESC");
-=======
-    public function app_get_payment($id)
-    {
-        return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id'");
->>>>>>> Stashed changes
     }
 
-    public function payment_get_action($payment_id)
-    {
+    public function payment_get_action($payment_id){
         return $this->connection->query("SELECT * FROM `tbl_wallet_log` WHERE `payment_id` = '$payment_id'");
     }
 
-    public function score_log_add($id, $score, $action, $type)
-    {
+    public function score_log_add($id,$score,$action,$type){
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_score_log`
         (`user_id`,`score`,`action_id`,`type`,`created_at`) 
@@ -401,12 +386,11 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function score_edit($id, $amount, $type)
-    {
+    public function score_edit($id,$amount,$type){
         $prev_score = $this->user_get($id)->score;
-        if ($type == 1) {
+        if($type == 1){
             $score = $prev_score + $amount;
-        } else if ($type == 0) {
+        }else if($type == 0){
             $score = $prev_score - $amount;
         }
         $now = time();
@@ -418,8 +402,7 @@ class Action
         return $id;
     }
 
-    public function marketer_score_log_add($id, $score, $action, $type)
-    {
+    public function marketer_score_log_add($id,$score,$action,$type){
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_marketer_score_log`
         (`marketer_id`,`score`,`action_id`,`type`,`created_at`) 
@@ -429,12 +412,11 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function marketer_score_edit($id, $amount, $type)
-    {
+    public function marketer_score_edit($id,$amount,$type){
         $prev_score = $this->marketer_get($id)->score;
-        if ($type == 1) {
+        if($type == 1){
             $score = $prev_score + $amount;
-        } else if ($type == 0) {
+        }else if($type == 0){
             $score = $prev_score - $amount;
         }
         $now = time();
@@ -446,67 +428,56 @@ class Action
         return $id;
     }
 
-    public function score_logs_list($id)
-    {
+    public function score_logs_list($id){
         return $this->connection->query("SELECT * FROM `tbl_score_log` WHERE `user_id` = '$id'");
     }
 
-    public function marketer_score_logs_list($id)
-    {
+    public function marketer_score_logs_list($id){
         return $this->connection->query("SELECT * FROM `tbl_marketer_score_log` WHERE `marketer_id` = '$id'");
     }
 
-    public function marketer_payment_get_action($payment_id)
-    {
+    public function marketer_payment_get_action($payment_id){
         return $this->connection->query("SELECT * FROM `tbl_marketer_wallet_log` WHERE `payment_id` = '$payment_id'");
     }
 
-    public function user_get_payment_limited()
-    {
+    public function user_get_payment_limited(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id' LIMIT 2");
     }
 
-    public function marketer_get_payment_limited($id)
-    {
+    public function marketer_get_payment_limited($id){
         return $this->connection->query("SELECT * FROM `tbl_marketer_payment` WHERE `marketer_id` = '$id' LIMIT 2");
     }
 
-    public function marketer_get_payment($id)
-    {
+    public function marketer_get_payment($id){
         return $this->connection->query("SELECT * FROM `tbl_marketer_payment` WHERE `marketer_id` = '$id'");
     }
 
-    public function user_get_requests()
-    {
+    public function user_get_requests(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_request` WHERE `user_id` = '$id' AND `status` = 1");
     }
 
-    public function app_get_requests($user_id)
-    {
+    public function app_get_requests($user_id){
         return $this->connection->query("SELECT * FROM `tbl_request` WHERE `user_id` = '$user_id' AND `status` = 1 ORDER BY id DESC");
     }
 
-    public function user_get_requests_limited()
-    {
+    public function user_get_requests_limited(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_request` WHERE `user_id` = '$id' AND `status` = 1 LIMIT 2");
     }
 
-    public function marketer_get_requests_limited()
-    {
+    public function marketer_get_requests_limited(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_marketer_request` WHERE `marketer_id` = '$id' AND `status` = 1 LIMIT 2");
     }
 
-    public function marketer_get_requests()
-    {
+    public function marketer_get_requests(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_marketer_request` WHERE `marketer_id` = '$id' AND `status` = 1");
     }
 
-    public function user_add($first_name, $last_name, $phone, $reference_id, $platform)
+    public function user_add($first_name,$last_name,$phone,$reference_id,$platform)
     {
         $now = time();
         $reference_code = $this->get_token(6);
@@ -518,7 +489,7 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function user_profile_edit($first_name, $last_name, $national_code, $birthday, $icon)
+    public function user_profile_edit($first_name, $last_name,$national_code,$birthday,$icon)
     {
         $id = $this->user()->id;
         $now = time();
@@ -534,12 +505,11 @@ class Action
         return $id;
     }
 
-    public function user_invitations_list($id)
-    {
+    public function user_invitations_list($id){
         return $this->connection->query("SELECT * FROM `tbl_user` WHERE `reference_id` = '$id'");
     }
 
-    public function app_profile_edit($user_id, $first_name, $last_name, $national_code, $birthday, $address, $postal_code, $city_id)
+    public function app_profile_edit($user_id,$first_name, $last_name,$national_code,$birthday,$address,$postal_code,$city_id)
     {
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_user` SET 
@@ -556,7 +526,6 @@ class Action
         return $user_id;
     }
 
-<<<<<<< Updated upstream
     public function user_profile($user_id,$profile){
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_user` SET 
@@ -568,10 +537,6 @@ class Action
     }
 
     public function user_phone_edit($first_name,$last_name,$national_code,$phone,$birthday)
-=======
-
-    public function user_phone_edit($first_name, $last_name, $national_code, $phone, $birthday)
->>>>>>> Stashed changes
     {
         $id = $this->user()->id;
         $now = time();
@@ -586,8 +551,7 @@ class Action
         if (!$this->result($result)) return false;
         return $id;
     }
-
-    public function marketer_address_edit($id, $city_id, $postal_code, $address)
+    public function marketer_address_edit($id,$city_id,$postal_code,$address)
     {
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_marketer` SET 
@@ -600,7 +564,7 @@ class Action
         return $id;
     }
 
-    public function user_address_edit($city_id, $postal_code, $address)
+    public function user_address_edit($city_id,$postal_code,$address)
     {
         $id = $this->user()->id;
         $now = time();
@@ -614,7 +578,7 @@ class Action
         return $id;
     }
 
-    public function cart_add($bank_id, $title, $cart_number, $account_number, $iban, $validation)
+    public function cart_add($bank_id,$title,$cart_number,$account_number,$iban,$validation)
     {
         $user_id = $this->user()->id;
         $now = time();
@@ -626,7 +590,7 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function marketer_cart_add($id, $bank_id, $title, $cart_number, $account_number, $iban, $validation)
+    public function marketer_cart_add($id,$bank_id,$title,$cart_number,$account_number,$iban,$validation)
     {
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_marketer_cart`
@@ -637,7 +601,7 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function app_cart_add($user_id, $bank_id, $title, $cart_number, $account_number, $iban, $validation)
+    public function app_cart_add($user_id,$bank_id,$title,$cart_number,$account_number,$iban,$validation)
     {
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_user_cart`
@@ -648,7 +612,7 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function cart_edit($id, $bank_id, $title, $cart_number, $account_number, $iban, $validation)
+    public function cart_edit($id,$bank_id,$title,$cart_number,$account_number,$iban,$validation)
     {
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_user_cart` SET 
@@ -664,7 +628,7 @@ class Action
         return $id;
     }
 
-    public function marketer_cart_edit($cart_id, $bank_id, $name, $cart_number, $account_number, $iban, $validation)
+    public function marketer_cart_edit($cart_id,$bank_id,$name,$cart_number,$account_number,$iban,$validation)
     {
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_marketer_cart` SET 
@@ -695,46 +659,39 @@ class Action
         return $this->get_data("tbl_marketer_cart", $id);
     }
 
-    public function user_cart_list()
-    {
+    public function user_cart_list(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$id'");
     }
 
-    public function user_get_cart_limited()
-    {
+    public function user_get_cart_limited(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$id' LIMIT 2");
     }
 
-    public function marketer_get_cart_limited($id)
-    {
+    public function marketer_get_cart_limited($id){
         return $this->connection->query("SELECT * FROM `tbl_marketer_cart` WHERE `marketer_id` = '$id' LIMIT 2");
     }
 
-    public function user_get_cart()
-    {
+    public function user_get_cart(){
         $id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$id'");
     }
 
-    public function marketer_cart_list($id)
-    {
+    public function marketer_cart_list($id){
         return $this->connection->query("SELECT * FROM `tbl_marketer_cart` WHERE `marketer_id` = '$id'");
     }
 
-    public function user_reference_code($reference_code)
-    {
+    public function user_reference_code($reference_code){
         return $this->connection->query("SELECT * FROM `tbl_user` WHERE `reference_code` = '$reference_code'");
     }
 
-    public function user_wallet_edit($amount, $type)
-    {
+    public function user_wallet_edit($amount,$type){
         $id = $this->user()->id;
         $prev_wallet = $this->user_get($id)->wallet;
-        if ($type == 1) {
+        if($type == 1){
             $wallet = $prev_wallet + $amount;
-        } else if ($type == 0) {
+        }else if($type == 0){
             $wallet = $prev_wallet - $amount;
         }
         $now = time();
@@ -747,12 +704,11 @@ class Action
 
     }
 
-    public function marketer_wallet_edit($id, $amount, $type)
-    {
+    public function marketer_wallet_edit($id,$amount,$type){
         $prev_wallet = $this->marketer_get($id)->wallet;
-        if ($type == 1) {
+        if($type == 1){
             $wallet = $prev_wallet + $amount;
-        } else if ($type == 0) {
+        }else if($type == 0){
             $wallet = $prev_wallet - $amount;
         }
         $now = time();
@@ -765,12 +721,11 @@ class Action
 
     }
 
-    public function app_user_wallet_edit($id, $amount, $type)
-    {
+    public function app_user_wallet_edit($id,$amount,$type){
         $prev_wallet = $this->user_get($id)->wallet;
-        if ($type == 1) {
+        if($type == 1){
             $wallet = $prev_wallet + $amount;
-        } else if ($type == 0) {
+        }else if($type == 0){
             $wallet = $prev_wallet - $amount;
         }
         $now = time();
@@ -787,8 +742,7 @@ class Action
     // ----------- end USERS ------------------------------------------------------------------------------------------
     // MESSAGES----------------------------------------------------------------------------------------------------------------------------
 
-    public function message_add($from_id, $to_id, $parent, $text, $status)
-    {
+    public function message_add($from_id,$to_id,$parent,$text,$status){
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_message`
         (`from_id`,`to_id`,`parent`,`text`,`status`,`created_at`) 
@@ -798,8 +752,7 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function message_status($id)
-    {
+    public function message_status($id){
         $result = $this->connection->query("UPDATE `tbl_message` SET 
         `status`= 1
         WHERE `id` ='$id'");
@@ -807,46 +760,39 @@ class Action
         return $id;
     }
 
-    public function supporter_message_list($id)
-    {
+    public function supporter_message_list($id){
 
         return $this->connection->query("SELECT * FROM `tbl_message` WHERE `to_id` = '$id' AND `parent` = 0");
     }
 
-    public function message_list($from_id)
-    {
+    public function message_list($from_id){
         return $this->connection->query("SELECT * FROM `tbl_message` WHERE `from_id` = '$from_id' AND `parent` = 0 ");
     }
 
-    public function message_reply_list($parent)
-    {
+    public function message_reply_list($parent){
         return $this->connection->query("SELECT * FROM `tbl_message` WHERE `parent` = '$parent' ");
     }
 
-    public function ticket_replys($user_id)
-    {
+    public function ticket_replys($user_id){
         return $this->connection->query("SELECT * FROM `tbl_ticket` WHERE `user_id` = '$user_id' AND `admin_id` IS NOT NULL ");
     }
 
-    public function new_message_counter($marketer_id)
-    {
+    public function new_message_counter($marketer_id){
 
-        $from = $this->connection->query("SELECT * FROM `tbl_message` WHERE `from_id` = '$marketer_id' AND `user_view`='0' AND `status` = '1'");
+        $from =$this->connection->query("SELECT * FROM `tbl_message` WHERE `from_id` = '$marketer_id' AND `user_view`='0' AND `status` = '1'");
         return $from->num_rows;
     }
 
-    public function notification_counter($id, $isUser)
-    {
-        if ($isUser == 1) {
-            $result = $this->connection->query("SELECT * FROM `tbl_user_log` WHERE `user_id` = '$id' AND `view` = '0' ");
-        } else {
-            $result = $this->connection->query("SELECT * FROM `tbl_marketer_log` WHERE `marketer_id` = '$id' AND `view`='0'");
+    public function notification_counter($id,$isUser){
+        if($isUser == 1){
+            $result =$this->connection->query("SELECT * FROM `tbl_user_log` WHERE `user_id` = '$id' AND `view` = '0' ");
+        }else{
+            $result =$this->connection->query("SELECT * FROM `tbl_marketer_log` WHERE `marketer_id` = '$id' AND `view`='0'");
         }
         return $result->num_rows;
     }
 
-    public function setMessageView($id)
-    {
+    public function setMessageView($id){
         $result = $this->connection->query("UPDATE `tbl_message` SET 
         `user_view`= 1
         WHERE `id` ='$id'");
@@ -855,7 +801,7 @@ class Action
     }
 
     // ----------- start VALIDATION_CODE ------------------------------------------------------------------------------------------
-    public function validation_code_add($user_id, $phone, $code)
+    public function validation_code_add($user_id,$phone, $code)
     {
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_validation_code`
@@ -866,8 +812,7 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function validate_code($phone, $code)
-    {
+    public function validate_code($phone,$code){
         $dt = new DateTime("-3 minutes");
         $dt = $dt->format("Y-m-d h:i:s");
         $dt = strtotime($dt);
@@ -883,13 +828,10 @@ class Action
     // ----------- end VALIDATION_CODE ------------------------------------------------------------------------------------------
 
     // ----------- start CATEGORIES ------------------------------------------------------------------------------------------
-    public function category_ordered_list()
-    {
+    public function category_ordered_list(){
         return $this->connection->query("SELECT * FROM `tbl_category` ORDER BY ord ASC ");
     }
-
-    public function category_ordered_list_limited()
-    {
+    public function category_ordered_list_limited(){
         return $this->connection->query("SELECT * FROM `tbl_category` ORDER BY ord ASC LIMIT 7 ");
     }
 
@@ -897,9 +839,7 @@ class Action
     {
         return $this->get_data("tbl_category", $id);
     }
-
-    public function category_shops_list($category_id)
-    {
+    public function category_shops_list($category_id){
         return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id' ");
     }
 
@@ -908,7 +848,6 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_shop_pics` WHERE `shop_id` = '$shop_id'");
     }
 
-<<<<<<< Updated upstream
     public function shop_product_list($shop_id)
     {
         return $this->connection->query("SELECT * FROM `tbl_product` WHERE `shop_id` = '$shop_id' ORDER BY id DESC ");
@@ -931,15 +870,15 @@ class Action
 
     public function cart_item_remove($id){
         return $this->remove_data("tbl_cart", $id);
-   }
+    }
 
-   public function remove_cart($id,$isUser){
+    public function remove_cart($id,$isUser){
         $result =  $this->connection->query("SELECT * FROM `tbl_cart` WHERE `user_id` = '$id' AND `access` = '$isUser' ");
         while($row = $result->fetch_object()){
             $command = $this->remove_data("tbl_cart", $row->id);
         }
         return $command;
-   }
+    }
 
     public function cart_items($id,$isUser){
         return $this->connection->query("SELECT * FROM `tbl_cart` WHERE `user_id` = '$id' AND `access` = '$isUser' ");
@@ -960,43 +899,32 @@ class Action
 
     public function shop_search($title,$cur_index){
         if(isset($_SESSION['default_city'])){
-=======
-    public function shop_search($title, $cur_index)
-    {
-        if (isset($_SESSION['default_city'])) {
->>>>>>> Stashed changes
             $city_id = $_SESSION['default_city'];
-        } else {
+        }else{
             $city_id = 426;
         }
-        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `title` like '%" . $title . "%' AND `city_id` = '$city_id'  ORDER BY id LIMIT $cur_index,8 ");
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `title` like '%".$title."%' AND `city_id` = '$city_id'  ORDER BY id LIMIT $cur_index,8 ");
     }
 
-    public function advance_search($input, $category, $city, $cur_index)
-    {
-        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE  `category_id` = '$category' AND `city_id` = '$city' AND `title` like '%" . $input . "%' LIMIT $cur_index,8 ");
+    public function advance_search($input,$category,$city,$cur_index){
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE  `category_id` = '$category' AND `city_id` = '$city' AND `title` like '%".$input."%' LIMIT $cur_index,8 ");
     }
 
-    public function advance_search_not_city($input, $category, $cur_index)
-    {
-        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE  `category_id` = '$category' AND `title` like '%" . $input . "%' LIMIT $cur_index,8 ");
+    public function advance_search_not_city($input,$category,$cur_index){
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE  `category_id` = '$category' AND `title` like '%".$input."%' LIMIT $cur_index,8 ");
     }
 
-    public function advance_search_not_input($city, $category, $cur_index)
-    {
+    public function advance_search_not_input($city,$category,$cur_index){
         return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category' AND `city_id` = '$city' LIMIT $cur_index,8 ");
     }
-
-    public function advance_search_not_category($input, $city, $cur_index)
-    {
-        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE  `city` = '$city' AND `title` like '%" . $input . "%' LIMIT $cur_index,8 ");
+    public function advance_search_not_category($input,$city,$cur_index){
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE  `city` = '$city' AND `title` like '%".$input."%' LIMIT $cur_index,8 ");
     }
 
-    public function category_shops_list_limited($category_id)
-    {
-        if (isset($_SESSION['default_city'])) {
+    public function category_shops_list_limited($category_id){
+        if(isset($_SESSION['default_city'])){
             $city_id = $_SESSION['default_city'];
-        } else {
+        }else{
             $city_id = 426;
         }
         return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id'AND `city_id` = '$city_id' LIMIT 4 ");
@@ -1005,10 +933,9 @@ class Action
     // ----------- end CATEGORIES ------------------------------------------------------------------------------------------
 
     // ----------- start REQUEST ------------------------------------------------------------------------------------------
-    public function request_add($cart_id, $amount)
-    {
+    public function request_add($cart_id,$amount){
         $user_id = $this->user()->id;
-        $now = time();
+        $now  = time();
         $result = $this->connection->query("INSERT INTO `tbl_request`
         (`user_id`,`cart_id`,`amount`,`created_at`) 
         VALUES
@@ -1017,9 +944,8 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function marketer_request_add($id, $cart_id, $amount)
-    {
-        $now = time();
+    public function marketer_request_add($id,$cart_id,$amount){
+        $now  = time();
         $result = $this->connection->query("INSERT INTO `tbl_marketer_request`
         (`marketer_id`,`cart_id`,`amount`,`created_at`) 
         VALUES
@@ -1029,9 +955,8 @@ class Action
 
     }
 
-    public function app_request_add($user_id, $cart, $amount)
-    {
-        $now = time();
+    public function app_request_add($user_id,$cart,$amount){
+        $now  = time();
         $result = $this->connection->query("INSERT INTO `tbl_request`
         (`user_id`,`cart_id`,`amount`,`created_at`) 
         VALUES
@@ -1040,8 +965,7 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function last_request($user_id)
-    {
+    public function last_request($user_id){
         return $this->connection->query("SELECT * FROM `tbl_request` WHERE `user_id` = '$user_id' ORDER BY id DESC LIMIT 1");
     }
     // ----------- end REQUEST ------------------------------------------------------------------------------------------
@@ -1089,8 +1013,7 @@ class Action
     }
 
 
-    public function shop_request_add($id, $category, $name, $owner, $address, $access)
-    {
+    public function shop_request_add($id,$category,$name,$owner,$address,$access){
         $now = time();
         $status = 0;
         $result = $this->connection->query("INSERT INTO `tbl_shop_request`
@@ -1117,7 +1040,7 @@ class Action
     // ----------- end SLIDER ------------------------------------------------------------------------------------------
 
     // ----------- start WALLETlOG ------------------------------------------------------------------------------------------
-    public function wallet_log_add($action, $amount, $type, $payment_id)
+    public function wallet_log_add($action,$amount,$type,$payment_id)
     {
         $now = time();
         $user_id = $this->user()->id;
@@ -1129,7 +1052,7 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function marketer_wallet_log_add($marketer_id, $action, $amount, $type, $payment_id)
+    public function marketer_wallet_log_add($marketer_id,$action,$amount,$type,$payment_id)
     {
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_marketer_wallet_log`
@@ -1140,11 +1063,7 @@ class Action
         return $this->connection->insert_id;
     }
 
-<<<<<<< Updated upstream
     public function app_wallet_log_add($user_id,$action_id,$amount,$type,$payment_id)
-=======
-    public function app_wallet_log_add($user_id, $action, $amount, $type, $payment_id)
->>>>>>> Stashed changes
     {
         $result = $this->connection->query("INSERT INTO `tbl_wallet_log`
         (`user_id`,`action_id`,`amount`,`type`,`payment_id`) 
@@ -1154,13 +1073,11 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function wallet_log_increase($user_id)
-    {
+    public function wallet_log_increase($user_id){
         return $this->connection->query("SELECT * FROM `tbl_wallet_log` WHERE `user_id` = '$user_id' AND `type` = 1  ORDER BY id DESC");
     }
 
-    public function wallet_log_get_payment($id)
-    {
+    public function wallet_log_get_payment($id){
         return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `id` = '$id'");
     }
 
@@ -1168,7 +1085,7 @@ class Action
     // ----------- end WALLETLOG------------------------------------------------------------------------------------------
 
     // ----------- start PAYMENT ------------------------------------------------------------------------------------------
-    public function payment_add($amount, $cart_number, $reference_code, $status)
+    public function payment_add($amount,$cart_number,$reference_code,$status)
     {
         $now = time();
         $user_id = $this->user()->id;
@@ -1180,7 +1097,7 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function app_payment_add($user_id, $amount, $cart_number, $reference_code, $status)
+    public function app_payment_add($user_id,$amount,$cart_number,$reference_code,$status)
     {
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_payment`
@@ -1201,21 +1118,18 @@ class Action
         return $this->get_data("tbl_bank", $id);
     }
 
-    public function lazyLoad($category_id, $cur_index)
-    {
-        if (isset($_SESSION['default_city'])) {
+    public function lazyLoad($category_id,$cur_index){
+        if(isset($_SESSION['default_city'])){
             $city_id = $_SESSION['default_city'];
-        } else {
+        }else{
             //$city_id = $GLOBALS['city'];
             $city_id = 426;
         }
         return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category_id'AND `city_id` = '$city_id' ORDER BY id LIMIT $cur_index,8 ");
     }
-
     // ----------- end PAYMENT ------------------------------------------------------------------------------------------
-    public function shop_comment_add($shop_id, $user_id, $text, $score)
-    {
-        if ($user_id == 0) return;
+    public function shop_comment_add($shop_id,$user_id,$text,$score){
+        if($user_id == 0) return;
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_shop_comment`
         (`shop_id`,`user_id`,`parent`,`text`,`score`,`created_at`,`confirm`) 
@@ -1225,24 +1139,21 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function shop_comments_list($id)
-    {
+    public function shop_comments_list($id){
         // $user_id = $this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `shop_id` = '$id' AND `confirm` = 1");
     }
 
-    public function shop_comments_replys_list($comment_id)
-    {
+    public function shop_comments_replys_list($comment_id){
         return $this->connection->query("SELECT * FROM `tbl_shop_comment` WHERE `parent` = '$comment_id' ");
 
     }
 
-    public function marketer_get_phone($phone)
-    {
+    public function marketer_get_phone($phone){
         return $this->connection->query("SELECT * FROM `tbl_marketer` WHERE `phone` = '$phone'");
     }
 
-    public function marketer_add($first_name, $last_name, $phone, $package_id, $payment_type, $national_code, $reference_id, $support_id)
+    public function marketer_add($first_name,$last_name,$phone,$package_id,$payment_type,$national_code,$reference_id,$support_id)
     {
         $now = time();
         $reference_code = $this->get_token(6);
@@ -1255,20 +1166,13 @@ class Action
     }
 
 
-<<<<<<< Updated upstream
+
     public function isSupporter($id){
         $result =  $this->connection->query("SELECT * FROM `tbl_marketer` WHERE `support_id` = '$id' ");
         if($result->num_rows > 0) return true;
-=======
-    public function has_sub_marketer($id)
-    {
-        $result = $this->connection->query("SELECT * FROM `tbl_marketer` WHERE `support_id` = '$id' ");
-        if ($result->num_rows > 0) return true;
->>>>>>> Stashed changes
     }
 
-    public function marketer_profile_edit($id, $first_name, $last_name, $national_code, $birthday, $icon)
-    {
+    public function marketer_profile_edit($id,$first_name, $last_name,$national_code,$birthday,$icon){
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_marketer` SET 
         `first_name`= '$first_name',
@@ -1282,8 +1186,7 @@ class Action
         return $id;
     }
 
-    public function marketer_change_status($id)
-    {
+    public function marketer_change_status($id){
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_marketer` SET 
         `status` =  1,
@@ -1293,9 +1196,7 @@ class Action
         return $id;
 
     }
-
-    public function marketer_payment_add($marketer_id, $amount, $cart_number, $reference_code, $status)
-    {
+    public function marketer_payment_add($marketer_id,$amount,$cart_number,$reference_code,$status){
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_marketer_payment`
         (`marketer_id`,`amount`,`cart_number`,`reference_code`,`date`,`status`) 
@@ -1304,9 +1205,7 @@ class Action
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
-
-    public function marketer_paymentid_add($marketer_id, $payment_id)
-    {
+    public function marketer_paymentid_add($marketer_id,$payment_id){
         $now = time();
         $result = $this->connection->query("UPDATE `tbl_marketer` SET 
         `payment_id` = '$payment_id',
@@ -1316,24 +1215,19 @@ class Action
         return $marketer_id;
 
     }
-
-    public function marketer_reference_code($reference_code)
-    {
+    public function marketer_reference_code($reference_code){
         return $this->connection->query("SELECT * FROM `tbl_marketer` WHERE `reference_code` = '$reference_code'");
     }
 
-    public function marketer_invitations_list($id)
-    {
+    public function marketer_invitations_list($id){
         return $this->connection->query("SELECT * FROM `tbl_marketer` WHERE `reference_id` = '$id'");
     }
 
-    public function app_token_list($user_id)
-    {
+    public function app_token_list($user_id){
         return $this->connection->query("SELECT * FROM `tbl_app_token` WHERE `user_id` = '$user_id'");
     }
 
-    public function app_token_add($user_id, $token)
-    {
+    public function app_token_add($user_id,$token){
         $result = $this->connection->query("INSERT INTO `tbl_app_token`
         (`user_id`,`token`) 
         VALUES
@@ -1342,13 +1236,11 @@ class Action
         return $this->connection->insert_id;
     }
 
-    public function app_user_cart_list($id)
-    {
+    public function app_user_cart_list($id){
         return $this->connection->query("SELECT * FROM `tbl_user_cart` WHERE `user_id` = '$id'");
     }
 
-    public function app_token_remove($id)
-    {
+    public function app_token_remove($id){
         return $this->remove_data("tbl_app_token", $id);
     }
 
@@ -1356,7 +1248,6 @@ class Action
     {
         return $this->table_list("tbl_package");
     }
-
     public function package_get($id)
     {
         return $this->get_data("tbl_package", $id);
@@ -1368,11 +1259,10 @@ class Action
 
     }
 
-    public function get_system($key)
-    {
+    public function get_system($key){
         $result = $this->connection->query("SELECT * FROM tbl_app WHERE `app_key` = '$key'");
         if (!$this->result($result)) return false;
-        $row = $result->fetch_object();
+        $row  = $result->fetch_object();
         return $row->value;
     }
 
@@ -1382,7 +1272,7 @@ class Action
         return $this->table_list("tbl_asked_question");
     }
 
-    public function contact_add($name, $phone, $title, $description)
+    public function contact_add($name,$phone,$title,$description)
     {
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_contact`
@@ -1393,110 +1283,63 @@ class Action
         return $this->connection->insert_id;
     }
 
-<<<<<<< Updated upstream
-public function iban_unique($id,$iban,$isUser){
-    if($isUser == 1){
-        $result = $this->app_user_cart_list($id);
-    }else{
-        $result = $this->marketer_cart_list($id);
-=======
     //VALIDATE CART-----------------------------------------------------------------------------------------
 
-    public function iban_validate($code)
-    {
-        $shaba = substr($code, 2) . "1827" . $code[0] . $code[1];
+    public function iban_validate($code){
+        $shaba=substr($code,2)."1827".$code[0].$code[1];
         return bcmod($shaba, '97');
->>>>>>> Stashed changes
     }
 
-    public function iban_unique($iban, $isUser)
-    {
-        if ($isUser == 1) {
-            $result = $this->cart_list();
-        } else {
-            $result = $this->marketer_carts();
+    public function iban_unique($id,$iban,$isUser){
+        if($isUser == 1){
+            $result = $this->app_user_cart_list($id);
+        }else{
+            $result = $this->marketer_cart_list($id);
         }
 
-<<<<<<< Updated upstream
-public function account_number_validate($id,$account_number,$isUser){
-
-    if($isUser == 1){
-        $result = $this->app_user_cart_list($id);
-    }else{
-        $result = $this->marketer_cart_list($id);
-=======
-        while ($row = $result->fetch_object()) {
-            if ($row->iban == $iban) {
+        while($row = $result->fetch_object()){
+            if($row->iban == $iban){
                 return false;
             }
         }
 
         return true;
->>>>>>> Stashed changes
     }
 
-    public function account_number_validate($account_number, $isUser)
-    {
+    public function account_number_validate($id,$account_number,$isUser){
 
-        if ($isUser == 1) {
-            $result = $this->cart_list();
-        } else {
-            $result = $this->marketer_carts();
+        if($isUser == 1){
+            $result = $this->app_user_cart_list($id);
+        }else{
+            $result = $this->marketer_cart_list($id);
         }
 
-        while ($row = $result->fetch_object()) {
-            if ($row->account_number == $account_number) {
+        while($row = $result->fetch_object()){
+            if($row->account_number == $account_number){
                 return false;
             }
         }
 
-<<<<<<< Updated upstream
-public function cart_number_validate($id,$cart_number,$isUser){
-
-    if($isUser == 1){
-        $result = $this->app_user_cart_list($id);
-    }else{
-        $result = $this->marketer_cart_list($id);
-    }
-    while($row = $result->fetch_object()){
-        if($row->cart_number == $cart_number){
-            return false;
-        }
-    }
-    return true;
-}
-=======
         return true;
 
     }
 
-    public function cart_number_validate($cart_number, $isUser)
-    {
+    public function cart_number_validate($id,$cart_number,$isUser){
 
-        if ($isUser == 1) {
-            $result = $this->cart_list();
-        } else {
-            $result = $this->marketer_carts();
+        if($isUser == 1){
+            $result = $this->app_user_cart_list($id);
+        }else{
+            $result = $this->marketer_cart_list($id);
         }
-        $result = $this->cart_list();
-        while ($row = $result->fetch_object()) {
-            if ($row->cart_number == $cart_number) {
+        while($row = $result->fetch_object()){
+            if($row->cart_number == $cart_number){
                 return false;
             }
         }
-
-        $length = strlen($cart_number);
-
-        if ($length != 16) {
-            return false;
-        }
-
         return true;
     }
->>>>>>> Stashed changes
 
-    public function ticket_add($user_id, $title, $text, $type, $view, $status)
-    {
+    public function ticket_add($user_id,$title,$text,$type,$view,$status){
         $now = time();
         $result = $this->connection->query("INSERT INTO `tbl_ticket`
     (`user_id`,`subject`,`text`,`type`,`view`,`status`,`created_at`) 
@@ -1505,99 +1348,77 @@ public function cart_number_validate($id,$cart_number,$isUser){
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
-
 // ----------- start log ----------------------------------------------------------------------------
-    public function log_action($action_id, $type)
-    {
-        if ($type == 0) {
+    public function log_action($action_id,$type){
+        if($type==0){
             $this->user_log($action_id);
         }
 
-        if ($type == 2) {
+        if($type==2){
             $this->marketer_log($action_id);
         }
 
     }
-
-    public function user_log($action_id)
-    {
+    public function user_log($action_id){
         $now = time();
-        $user_id = $_SESSION['user_id'];
-        $ip = $_SERVER['REMOTE_ADDER'];
-        $result = $this->connection->query("INSERT INTO tbl_user_log (`user_id`,`action_id`,`ip`,`created_at`)VALUES('$user_id','$action_id','$ip','$now')");
+        $user_id=$_SESSION['user_id'];
+        $ip=$_SERVER['REMOTE_ADDER'];
+        $result= $this->connection->query("INSERT INTO tbl_user_log (`user_id`,`action_id`,`ip`,`created_at`)VALUES('$user_id','$action_id','$ip','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
 
-    public function marketer_log($action_id)
-    {
+    public function marketer_log($action_id){
         $now = time();
-        $marketer_id = $_SESSION['marketer_id'];
-        $ip = $_SERVER['REMOTE_ADDER'];
-        $result = $this->connection->query("INSERT INTO tbl_marketer_log (`marketer_id`,`action_id`,`ip`,`created_at`)VALUES('$marketer_id','$action_id','$ip','$now')");
+        $marketer_id=$_SESSION['marketer_id'];
+        $ip=$_SERVER['REMOTE_ADDER'];
+        $result= $this->connection->query("INSERT INTO tbl_marketer_log (`marketer_id`,`action_id`,`ip`,`created_at`)VALUES('$marketer_id','$action_id','$ip','$now')");
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
 
-<<<<<<< Updated upstream
-public function user_log_list(){
-    $user_id=$_SESSION['user_id'];
-     return $this->connection->query("SELECT * FROM `tbl_user_log` WHERE `user_id` = '$user_id' AND `view`=0 ORDER BY `id` DESC");
-}
-
-public function marketer_log_list(){
-    $marketer_id=$_SESSION['marketre_id'];
-     return $this->connection->query("SELECT * FROM `tbl_marketer_log` WHERE `marketer_id` = '$marketer_id' AND `view`=0 ORDER BY `id` DESC");
-}
-
-public function action_log_get($id){
-    return $this->get_data("tbl_action", $id);
-}
-public function change_view($id,$type){
-    if($type==0){
-        $result= $this->connection->query("UPDATE tbl_user_log SET `view`='1' WHERE id='$id'");  
-=======
-    public function user_log_list()
-    {
-        $user_id = $_SESSION['user_id'];
+    public function user_log_list(){
+        $user_id=$_SESSION['user_id'];
         return $this->connection->query("SELECT * FROM `tbl_user_log` WHERE `user_id` = '$user_id' AND `view`=0 ORDER BY `id` DESC");
     }
 
-    public function marketer_log_list()
-    {
-        $marketer_id = $_SESSION['marketre_id'];
+    public function marketer_log_list(){
+        $marketer_id=$_SESSION['marketre_id'];
         return $this->connection->query("SELECT * FROM `tbl_marketer_log` WHERE `marketer_id` = '$marketer_id' AND `view`=0 ORDER BY `id` DESC");
     }
 
-    public function action_log_get($id)
-    {
-        return $this->get_data("tbl_action_log", $id);
+    public function action_log_get($id){
+        return $this->get_data("tbl_action", $id);
     }
-
-    public function change_view($id, $type)
-    {
-        if ($type == 0) {
-            $result = $this->connection->query("UPDATE tbl_user_log SET `view`='1' WHERE id='$id'");
+    public function change_view($id,$type){
+        if($type==0){
+            $result= $this->connection->query("UPDATE tbl_user_log SET `view`='1' WHERE id='$id'");
             if (!$this->result($result)) return false;
             return true;
         }
-        if ($type == 2) {
-            $result = $this->connection->query("UPDATE tbl_marketer_log SET `view`='1'WHERE id='$id'");
+        if($type==2){
+            $result= $this->connection->query("UPDATE tbl_marketer_log SET `view`='1'WHERE id='$id'");
             if (!$this->result($result)) return false;
             return true;
         }
     }
+
 
 
 // ----------- end log ----------------------------------------------------------------------------
+    public function tmp_marketer_get($parent)
+    {
+        $result = $this->connection->query("SELECT * FROM `tbl_bazarsaz` WHERE `id`='$parent'");
+        if (!$this->result($result)) return false;
+        return $result->fetch_object();
+    }
 
     public function diagram($parent = 0)
     {
         $result = $this->connection->query("SELECT * FROM `tbl_bazarsaz` WHERE `refcode`='$parent'");
         $name = $this->tmp_marketer_get($parent)->fname . " " . $this->tmp_marketer_get($parent)->lname;
         if ($parent) echo "<a href='#'> $name </a>";
->>>>>>> Stashed changes
         if (!$this->result($result)) return false;
         if ($result->num_rows) {
             echo '<ul>';
@@ -1609,19 +1430,10 @@ public function change_view($id,$type){
             echo '</ul>';
         }
     }
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-    if($type==0){
-=======
-    if($type==2){
->>>>>>> parent of 7268cf3 (update thanks to karimi)
-        $result= $this->connection->query("UPDATE tbl_marketer_log SET `view`='1'WHERE id='$id'");  
-=======
 
     public function diagram2()
     {
         $result = $this->connection->query("SELECT * FROM `tbl_bazarsaz`");
->>>>>>> Stashed changes
         if (!$this->result($result)) return false;
         while ($row = $result->fetch_object()) {
             $id = $row->id;
@@ -1639,26 +1451,14 @@ public function change_view($id,$type){
             echo "},";
         }
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-public function change_view_all($id,$type){
-    if($type==1){
-        $result= $this->connection->query("UPDATE tbl_user_log SET `view`='1' WHERE `user_id` ='$id'");  
     }
-    if($type==0){
-        $result= $this->connection->query("UPDATE tbl_marketer_log SET `view`='1'WHERE `marketer_id`='$id'");  
-    }
-    
-    while($row = $result->fetch_object()){
-        $this->change_view($row->id,$type);
-    }
-    return true;
-}
 
-=======
+    public function change_view_all($id,$type)
+    {
+        if ($type == 1) {
+            $result = $this->connection->query("UPDATE tbl_user_log SET `view`='1' WHERE `user_id` ='$id'");
+        }
     }
-=======
->>>>>>> parent of 7268cf3 (update thanks to karimi)
 
     public function diagram3()
     {
@@ -1675,33 +1475,10 @@ public function change_view_all($id,$type){
             echo "post: 'کاربر : $id',";
             echo "phone: $phone,";
             echo "link: 'مشاهده',";
-            echo "photo: 'https://docs.dhtmlx.com/diagram/samples/common/big_img/big-avatar-".rand(1,34).".jpg',";
+            echo "photo: 'https://docs.dhtmlx.com/diagram/samples/common/big_img/big-avatar-" . rand(1, 34) . ".jpg',";
             if ($ref) echo "parent: $ref,";
             echo "},";
         }
->>>>>>> Stashed changes
-
-    }
-
-    public function tmp_marketer_get($parent)
-    {
-        $result = $this->connection->query("SELECT * FROM `tbl_bazarsaz` WHERE `id`='$parent'");
-        if (!$this->result($result)) return false;
-        return $result->fetch_object();
-    }
-
-    public function check_parent($id)
-    {
-        $result = $this->connection->query("SELECT * FROM `tbl_bazarsaz` WHERE `refcode`='$id'");
-        if (!$this->result($result)) return false;
-        return $result->num_rows;
-    }
-
-    public function parent_string($id)
-    {
-        $result = $this->connection->query("SELECT * FROM `tbl_bazarsaz` WHERE `refcode`='$id'");
-        if (!$this->result($result)) return false;
-        return $result->num_rows;
     }
 
 }
