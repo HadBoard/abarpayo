@@ -15,6 +15,14 @@ if($action->user()){
     $access = 0;
 }
 
+// if(isset($_POST['cart_pay'])){
+//     if(isset($_SESSION['already_in_gateway'])){
+//         unset($_SESSION['already_in_gateway']);
+//     }
+//     $_SESSION['cart_cost'] = $total_cost;
+//     header("Location: shop-request.php");
+// }
+
 if(isset($_POST['delete_row'])){
     $item_id = $action->request('delete_item');
     $action->cart_item_remove($item_id);
@@ -34,6 +42,35 @@ if(isset($_POST['cart_cancel'])){
 
 include_once "header.php";
 
+if(isset($_SESSION['successful_pay']) && $_SESSION['successful_pay'] == 'true'){
+    ?>
+        <div class="modal">
+                <div class="alert alert-suc">
+                    <span class="close_alart">×</span>
+                    <p>
+                        پرداخت موفق بود!
+                    </p>
+                </div>
+            </div>
+            <script src="assets/js/alert.js"></script>
+    <?
+    unset($_SESSION['successful_pay']);
+}
+
+if(isset($_SESSION['successful_pay']) && $_SESSION['successful_pay'] == 'false'){
+    ?>
+        <div class="modal">
+                <div class="alert alert-fail">
+                    <span class="close_alart">×</span>
+                    <p>
+                        پرداخت ناموفق بود!
+                    </p>
+                </div>
+            </div>
+            <script src="assets/js/alert.js"></script>
+    <?
+    unset($_SESSION['successful_pay']);
+}
 if(isset($_SESSION['already_in_gateway']) && $_SESSION['already_in_gateway'] == 'true'){
     ?>
         <div class="modal">
@@ -124,16 +161,18 @@ if(isset($_SESSION['already_in_gateway']) && $_SESSION['already_in_gateway'] == 
                                  <?= $total_cost ?> تومان
                              </span>
                          </p>
-                                <form action="shop-request.php" method="post">
-                                <input type="hidden" name="price" value="<?= $total_cost?>">
-                                <button type="submit" name="cart_pay" id="cart_pay" class="suc_button">پرداخت</button>
-                                </form>
-                    
+                         <div class="row">
+                            <div class="col-lg-6">
+                                <!-- <form action="" method="post"> -->
+                                <button id="cart_pay" class="suc_button">پرداخت</button>
+                                <!-- </form> -->
+                            </div>
+                            <div class="col-lg-6">
                                 <form action="" method="post">
                                 <button name="cart_cancel" type="submit" class="suc_button">انصراف</button>
                                 </form>
-                    
-                    
+                            </div>
+                         </div>
                     </div>
                 </div>
             </div>
@@ -142,6 +181,18 @@ if(isset($_SESSION['already_in_gateway']) && $_SESSION['already_in_gateway'] == 
         </div>
     </section>
     <script>
-    <? 
-    $_SESSION['cart_cost'] = $total_cost;
-    include('footer.php') ?>
+ $('#cart_pay').click(function(){
+    console.log('in');
+     var total_cost = <?= $total_cost ?>
+    $.ajax({
+        url: "ajax/set-price.php",
+        type:'post',
+        data:{total_cost:total_cost},
+        success: function(response){
+            console.log(response)
+            location.href = "shop-request.php"
+        }
+    });
+});
+</script>
+    <? include('footer.php') ?>

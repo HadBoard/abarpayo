@@ -1542,12 +1542,12 @@ public function cart_number_validate($id,$cart_number,$isUser){
 
 <<<<<<< Updated upstream
 public function user_log_list(){
-    $user_id=$this->user()->id;
+    $user_id=$_SESSION['user_id'];
      return $this->connection->query("SELECT * FROM `tbl_user_log` WHERE `user_id` = '$user_id' AND `view`=0 ORDER BY `id` DESC");
 }
 
 public function marketer_log_list(){
-    $marketer_id=$this->marketer()->id;
+    $marketer_id=$_SESSION['marketre_id'];
      return $this->connection->query("SELECT * FROM `tbl_marketer_log` WHERE `marketer_id` = '$marketer_id' AND `view`=0 ORDER BY `id` DESC");
 }
 
@@ -1555,7 +1555,7 @@ public function action_log_get($id){
     return $this->get_data("tbl_action", $id);
 }
 public function change_view($id,$type){
-    if($type==1){
+    if($type==0){
         $result= $this->connection->query("UPDATE tbl_user_log SET `view`='1' WHERE id='$id'");  
 =======
     public function user_log_list()
@@ -1609,8 +1609,12 @@ public function change_view($id,$type){
             echo '</ul>';
         }
     }
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     if($type==0){
+=======
+    if($type==2){
+>>>>>>> parent of 7268cf3 (update thanks to karimi)
         $result= $this->connection->query("UPDATE tbl_marketer_log SET `view`='1'WHERE id='$id'");  
 =======
 
@@ -1635,6 +1639,7 @@ public function change_view($id,$type){
             echo "},";
         }
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 public function change_view_all($id,$type){
     if($type==1){
@@ -1652,6 +1657,8 @@ public function change_view_all($id,$type){
 
 =======
     }
+=======
+>>>>>>> parent of 7268cf3 (update thanks to karimi)
 
     public function diagram3()
     {
