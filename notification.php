@@ -7,13 +7,31 @@ include_once "header.php";
 <?
     if($action->user()){
         $result = $action->user_log_list();
-        $type = 0;
+        $id = $action->user()->id;
+        $type = 1;
     }else if($action->marketer()){
         $result = $action->marketer_log_list();
-        $type = 1;
+        $id = $action->marketer()->id;
+        $type = 0;
     }
 
     $count = 0;
+
+    if(isset($_POST['delete_row'])){
+        $delete_id = $action->request('delete_item');
+        $command = $action->change_view($delete_id,$type);
+        if($command){
+            echo '<script>window.location="notification.php"</script>';
+        }
+    }
+
+    if(isset($_POST['delete_all'])){
+        $command = $action->change_view_all($id,$type);
+        if($command){
+            echo '<script>window.location="notification.php"</script>';
+        }
+    }
+
 ?>
   <!-- notifiction -->
     <section class="container">
@@ -28,10 +46,14 @@ include_once "header.php";
         </div>
         
         <div class="container">
-            <button class="main_btn middle_btn notif_all_btn">
+        <?if($result->num_rows > 0 ){?>
+            <form action="" method="post">
+            <button name="delete_all" type="submit" class="main_btn middle_btn notif_all_btn">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                         حذف همه
             </button>
+            </form>
+        <?}?>
             <div class="notif_table">
                 <table>
                     <tr>
@@ -42,30 +64,19 @@ include_once "header.php";
                     </tr>
                     <?while($row = $result->fetch_object()){ ?>
                     <tr>
-                        <td id="notif" style="display: none;"><?= $row->id ?></td>
                         <td><?= ++$count ?></td>
                         <td><?= $action->action_log_get($row->id)->text?> </td>
                         <td><?= $action->time_to_shamsi($row->created_at)?></td>
-                        <td><button class="delete_row"><i class="fa fa-trash-o"></i></button></td>
+                        <td>
+                            <form action="" method="post">
+                            <input type="hidden" name="delete_item" value="<?= $row->id ?>">
+                            <button type="submit" name="delete_row" class="delete_row"><i class="fa fa-trash-o"></i></button>
+                            </form>
+                        </td>
                     </tr>
                     <?}?>
                 </table>
             </div>
         </div>
     </section>
-    <script>
-    $('.delete_row').click(function(){
-    var type = <?= $type ?>;
-    var id = document.getElementById("notif").innerHTML;
-    console.log(id,"type:",type)
-    $.ajax({
-        url: "ajax/delete-notification.php",
-        type:'post',
-        data: {id:id,type:type},
-        success: function(response){
-            location.reload(true);
-        }
-    });
-});
-    </script>
     <? include_once "footer.php" ?>

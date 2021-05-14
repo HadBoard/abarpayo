@@ -68,7 +68,7 @@
                                     <a href="https://wa.me/?text=http://abarpayo.com/abarpayo/phone.php?ref=<?=$invitation_code?>" class="whatsapp-icon">
                                         <i class="fab fa-whatsapp-square"></i>
                                     </a>
-                                    <a class="telegram-icon">
+                                    <a href="https://api.telegram.org" class="telegram-icon">
                                         <i class="fab fa-telegram"></i>
                                     </a>
                                     <a onclick="copy_link()"  class="copy-icon">

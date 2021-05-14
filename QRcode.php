@@ -69,7 +69,7 @@ body {
     
     <div class="container">
         <div class="qr_wrapper">   
-        <iframe src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=<?= $code?>"  width="600" height="400" frameborder="0" style="border-radius: 5px;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        <iframe src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=<?= $code?>"  width="600" height="400" frameborder="0" style="border-radius: 5px;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
             <div class="info">
                 <h2><?= $shop->title?> </h2>
                 <p><?= $shop->address ?> </p>

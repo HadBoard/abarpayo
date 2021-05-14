@@ -1384,7 +1384,7 @@ class Action
     }
 
     public function marketer_log_list(){
-        $marketer_id=$_SESSION['marketre_id'];
+        $marketer_id=$_SESSION['marketer_id'];
         return $this->connection->query("SELECT * FROM `tbl_marketer_log` WHERE `marketer_id` = '$marketer_id' AND `view`=0 ORDER BY `id` DESC");
     }
 
@@ -1392,16 +1392,16 @@ class Action
         return $this->get_data("tbl_action", $id);
     }
     public function change_view($id,$type){
+        if($type==1){
+            $result= $this->connection->query("UPDATE tbl_user_log SET `view`='1' WHERE id='$id'");  
+            if (!$this->result($result)) return false;
+            return true;
+        }
         if($type==0){
-            $result= $this->connection->query("UPDATE tbl_user_log SET `view`='1' WHERE id='$id'");
+            $result= $this->connection->query("UPDATE tbl_marketer_log SET `view`='1'WHERE id='$id'");  
             if (!$this->result($result)) return false;
             return true;
-        }
-        if($type==2){
-            $result= $this->connection->query("UPDATE tbl_marketer_log SET `view`='1'WHERE id='$id'");
-            if (!$this->result($result)) return false;
-            return true;
-        }
+        }  
     }
 
 
@@ -1453,11 +1453,18 @@ class Action
 
     }
 
-    public function change_view_all($id,$type)
-    {
-        if ($type == 1) {
-            $result = $this->connection->query("UPDATE tbl_user_log SET `view`='1' WHERE `user_id` ='$id'");
+    public function change_view_all($id,$type){
+        if($type==1){
+            $result= $this->connection->query("UPDATE tbl_user_log SET `view`='1' WHERE `user_id` ='$id'");  
         }
+        if($type==0){
+            $result= $this->connection->query("UPDATE tbl_marketer_log SET `view`='1'WHERE `marketer_id`='$id'");  
+        }
+        
+        while($row = $result->fetch_object()){
+            $this->change_view($row->id,$type);
+        }
+        return true;
     }
 
     public function diagram3()
