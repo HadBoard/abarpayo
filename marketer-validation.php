@@ -83,7 +83,7 @@ if (isset($_SESSION['error'])) {
             <div class="modal">
                     <div class="alert alert-fail">
                         <span class="close_alart">×</span>
-                        <p>
+                        <p style="display:inline">
                               کد وارد شده نامعتبر است!
                         </p>
                     </div>

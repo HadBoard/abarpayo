@@ -100,7 +100,18 @@ $action = new Action();
             <span class="hide-menu">پکیج سوالات</span>
         </a>
     </li>
-
+    <li>
+        <a class="has-arrow" href="exam-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">آزمون ها</span>
+        </a>
+    </li> 
+     <li>
+        <a class="has-arrow" href="course-list.php" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hide-menu">دوره های آموزشی</span>
+        </a>
+    </li>
     <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fas fa-user "></i><span class="hide-menu">درخواست های برداشت</span></a>
         <ul aria-expanded="false" class="collapse">
             <li><a href="marketer-withdraw-list.php">برداشت های بازاریابان</a></li>

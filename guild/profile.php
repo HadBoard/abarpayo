@@ -28,8 +28,11 @@ if (isset($_POST['submit'])) {
     $last_name = $action->request('last_name');
     $phone = $action->request('phone');
     $password = $action->request('password');
-
-
+    $username= $action->request('username');
+    $birthday=$action->request('birthday');
+    $natinal_code=$action->request('natinal_code');
+    $postal_code = $action->request('postal_code');
+    $command = $action->guild_edit($first_name,$last_name,$phone,$username,$password,$natinal_code,$postal_code,$birthday);
     // bye bye :)
     header("Location: profile.php");
 
@@ -117,14 +120,19 @@ include('header.php'); ?>
                                 <div class="form-group">
                                     <input type="text" name="natinal_code" class="form-control input-default "
                                            placeholder="کد ملی"
-                                           value="<?= $action->time_to_shamsi($row->national_code) ?>">
+                                           value="<?= $row->national_code ?>">
                                 </div>
                                 <div class="form-group">
                                     <input type="text" name="postal_code" class="form-control input-default "
                                            placeholder="کد پستی"
                                            value="<?= $row->postal_code ?>">
                                 </div>
-                                
+                                <div class="form-group">
+                                    <input type="text" name="username" class="form-control input-default "
+                                           placeholder="نام کاربری"
+                                           value="<?= $row->username ?>">
+                                </div>
+
                                 <div class="form-group">
                                     <input type="text" name="password" class="form-control input-default "
                                            placeholder="رمز عبور"
@@ -132,7 +140,9 @@ include('header.php'); ?>
                                 </div>
 
                                 <div class="form-actions">
-                                   
+                                     <button type="submit" name="submit" class="btn btn-success sweet-success">
+                                        <i class="fa fa-check"></i> ویرایش
+                                    </button>
                                     <a href="panel.php"><span name="back" class="btn btn-inverse">بازگشت</span></a>
                                 </div>
 

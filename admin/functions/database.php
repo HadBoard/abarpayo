@@ -2053,6 +2053,99 @@ public function change_admin_view($id,$type){
         return $this->change_status('tbl_question', $id);
     }
 
+    public function exam_list(){
+        return $this->connection->query("SELECT * FROM `tbl_exam` ");
+    }
+
+    
+    public function exam_get($id)
+    {
+        return $this->get_data("tbl_exam", $id);
+    }
+
+    public function exam_add($title,$package_id,$question_pack_id,$start_time,$end_time,$status)
+    {
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_exam`
+        (`title`,`package_id`,`question_pack_id`,`start_time`,`end_time`,`status`,`created_at`) 
+        VALUES
+        ('$title','$package_id','$question_pack_id','$start_time','$end_time','$status','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+
+    public function exam_edit($id,$title,$package_id,$question_pack_id,$start_time,$end_time,$status){
+        $now = time();
+        $result = $this->connection->query("UPDATE `tbl_exam` SET 
+        `title`='$title',
+        `package_id` = '$package_id',
+        `question_pack_id`='$question_pack_id',
+        `start_time`='$start_time',
+        `end_time`='$end_time',
+        `status`='$status'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    public function exam_remove($id){
+        return $this->remove_data("tbl_exam", $id);
+    }
+
+    public function exam_status($id)
+    {
+        return $this->change_status('tbl_exxam', $id);
+    }
+
+
+
+    // ----------- end EXAM -------------------------------------------------------------------------------------------
+    
+    // ----------- start course-------------------------------------------------------------------------------------------
+    public function course_list(){
+        return $this->connection->query("SELECT * FROM `tbl_course`");
+    }
+
+    
+    public function course_get($id)
+    {
+        return $this->get_data("tbl_course", $id);
+    }
+
+    public function course_add($title,$package_id,$description,$image,$file,$status)
+    {
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_course`
+        (`title`,`package_id`,`description`,`image`,`file`,`status`,`created_at`) 
+        VALUES
+        ('$title','$package_id','$description','$image','$file','$status','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
+
+    public function course_edit($id,$title,$package_id,$description,$image,$file,$status){
+        $result = $this->connection->query("UPDATE `tbl_course` SET 
+        `title`='$title',
+        `package_id` = '$package_id',
+        `description`='$description', 
+        `image`='$image',
+        `file`='$file',
+        `status`='$status'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+    }
+
+    public function course_remove($id){
+        return $this->remove_data("tbl_course", $id);
+    }
+
+    public function course_status($id)
+    {
+        return $this->change_status('tbl_course', $id);
+    }
     // ----------- end EXAM -------------------------------------------------------------------------------------------
     
 }

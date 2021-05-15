@@ -22,6 +22,7 @@ $title = "ثبت نام";
         $support_id = 13;
         if(isset($_SESSION['invitation_code'])){
             $reference_id = $_SESSION['invitation_code'];
+            $_SESSION['refrence_id']=$reference_id;
             $support_id = $reference_id;
             $isVip = $action->is_vip($reference_id);
             if($isVip){
@@ -33,15 +34,18 @@ $title = "ثبت نام";
             $reference_code = $action->request('reference_code');
             if($reference_code){
                 $result = $action->marketer_reference_code($reference_code);
-                $reference = $result->fetch_object();
-                $reference_id = $reference->id;
-                $support_id = $reference_id;
-                $isVip = $action->is_vip($reference_id);
-                if($isVip){
-                    $invitation_score = $action->get_vip_score($reference_id);
+                if(mysqli_num_rows($result)){
+                    $reference = $result->fetch_object();
+                    $_SESSION['refrence_id']=$reference_id;
+                    $reference_id = $reference->id;
+                    $support_id = $reference_id;
+                    $isVip = $action->is_vip($reference_id);
+                    if($isVip){
+                        $invitation_score = $action->get_vip_score($reference_id);
+                    }
+                    $action->marketer_score_log_add($reference_id,$marketer_invitation_score,9,1);
+                    $action->marketer_score_edit($reference_id,$marketer_invitation_score,1);
                 }
-                $action->marketer_score_log_add($reference_id,$marketer_invitation_score,9,1);
-                $action->marketer_score_edit($reference_id,$marketer_invitation_score,1);
             }
         }
         $phone = $_SESSION['phone'];
@@ -56,7 +60,7 @@ $title = "ثبت نام";
             $_SESSION['marketer_access'] = $action->marketer_get($command)->package_id;
            if($payment_type == 1){
             $action->marketer_change_status($command);
-            header("Location: index.php");
+            // header("Location: index.php");
            }else{
                $price =  $action->package_get($package_id)->price;
                $discount = $action->package_get($package_id)->discount;
@@ -65,6 +69,18 @@ $title = "ثبت نام";
                 header("Location: marketer-package-request.php");
            }
         }
+        if(!isset($_SESSION['refrence_id'])){
+            $_SESSION['error']=1;
+        }
+        ?>
+        <script>
+        var id=<?= $command;?>;
+            $.ajax({
+                url:'calculat.php',
+                method:'post',
+                data:{id}
+            })
+        </script><?
     }
 
 ?>
@@ -93,6 +109,17 @@ $title = "ثبت نام";
                 <div class="row">
                     <div class="col-md-5 right-form">
                         <div class="form_top">
+                        <?if(isset($_SESSION['error'])){?>
+                            <div class="modal">
+                                <div class="alert alert-fail">
+                                    <span class="close_alart">×</span>
+                                    <p style="display:inline">
+                                        کد وارد شده نامعتبر است!
+                                    </p>
+                                </div>
+                            </div>
+                            <script src="assets/js/alert.js"></script>
+                        <?unset($_SESSION['error']);}?>
                         <a href="index.php">
                         <img src="assets/images/logo.png">
                        </a>
