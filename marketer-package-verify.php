@@ -26,7 +26,7 @@ $command = $action->marketer_payment_add($marketer_id,$Amount,$cart_number,$resu
 $action->marketer_paymentid_add($marketer_id,$command);
 $action->marketer_wallet_log_add($marketer_id,12,$Amount,1,$command);
 $action->marketer_change_status($marketer_id);
-$_SESSION['marketer_access'] = $action->marketer_get($marketer_id)->package_id;
+// $_SESSION['marketer_access'] = $action->marketer_get($marketer_id)->package_id;
 $_SESSION['successful_pay'] = 'true';
 echo "<script> location.href='index.php'; </script>";
 } else {

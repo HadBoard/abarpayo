@@ -84,9 +84,20 @@ if(isset($_SESSION['already_in_gateway']) && $_SESSION['already_in_gateway'] == 
                                 if($action->user()){
                                     $off = $action->product_get($item->product_id)->discount;
                                 }else if($action->marketer()){
-                                    $action->marketer($id)-> package_id == 1
+                                    switch($action->marketer($id)->package_id){
+                                        case 1: 
+                                            $off = $action->product_get($item->product_id)->discount1;
+                                            break;
+                                        case 2 :
+                                            $off = $action->product_get($item->product_id)->discount2;
+                                            break;
+                                        case 3 :
+                                            $off = $action->product_get($item->product_id)->discount3;
+                                            break;
+                                        case 4 :
+                                            $off = $action->product_get($item->product_id)->discount4;
+                                    }
                                 }
-                                
                                 $cost += $item->count * $price;
                                 $total_off += $item->count *($price*$off/100);
                                 $final = $item->count * (floatval($price) - floatval($price*$off/100));

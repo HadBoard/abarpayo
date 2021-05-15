@@ -57,7 +57,7 @@ $title = "ثبت نام";
             $_SESSION['marketer_id'] = $command;
             $action-> marketer_update_last_login( $_SESSION['marketer_id']);
             $action->log_action(3,2);
-            $_SESSION['marketer_access'] = $action->marketer_get($command)->package_id;
+            // $_SESSION['marketer_access'] = $action->marketer_get($command)->package_id;
            if($payment_type == 1){
             $action->marketer_change_status($command);
             // header("Location: index.php");
@@ -76,7 +76,7 @@ $title = "ثبت نام";
         <script>
         var id=<?= $command;?>;
             $.ajax({
-                url:'calculat.php',
+                url:'calculate.php',
                 method:'post',
                 data:{id}
             })
