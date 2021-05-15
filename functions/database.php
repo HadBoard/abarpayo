@@ -694,10 +694,8 @@ class Action
         }else if($type == 0){
             $wallet = $prev_wallet - $amount;
         }
-        $now = time();
         $result = $this->connection->query("UPDATE `tbl_user` SET 
-        `wallet` = '$wallet',
-        `updated_at`='$now'
+        `wallet` = '$wallet'
         WHERE `id` ='$id'");
         if (!$this->result($result)) return false;
         return $id;
@@ -711,10 +709,23 @@ class Action
         }else if($type == 0){
             $wallet = $prev_wallet - $amount;
         }
-        $now = time();
         $result = $this->connection->query("UPDATE `tbl_marketer` SET 
-        `wallet` = '$wallet',
-        `updated_at`='$now'
+        `wallet` = '$wallet'
+        WHERE `id` ='$id'");
+        if (!$this->result($result)) return false;
+        return $id;
+
+    }
+
+    public function shop_wallet_edit($id,$amount,$type){
+        $prev_wallet = $this->shop_get($id)->wallet;
+        if($type == 1){
+            $wallet = $prev_wallet + $amount;
+        }else if($type == 0){
+            $wallet = $prev_wallet - $amount;
+        }
+        $result = $this->connection->query("UPDATE `tbl_shop` SET 
+        `wallet` = '$wallet'
         WHERE `id` ='$id'");
         if (!$this->result($result)) return false;
         return $id;
@@ -999,7 +1010,7 @@ class Action
     }
 
     public function shop_qrcode($code){
-        return $result = $this->connection->query("SELECT * FROM `tbl_shop` WHERE `reference_code` = '$code'");
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `reference_code` = '$code'");
     }
 
     public function shop_get($id)
@@ -1085,6 +1096,18 @@ class Action
     // ----------- end WALLETLOG------------------------------------------------------------------------------------------
 
     // ----------- start PAYMENT ------------------------------------------------------------------------------------------
+    
+    public function purchase_add($user_id,$access,$shop_id,$payment_id,$order_id)
+    {
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_purchase`
+        (`user_id`,`access`,`shop_id`,`payment_id`,`order_id`,`created_at`) 
+        VALUES
+        ('$user_id','$access','$shop_id','$payment_id','$order_id','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
     public function payment_add($amount,$cart_number,$reference_code,$status)
     {
         $now = time();

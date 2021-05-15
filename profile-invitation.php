@@ -121,29 +121,25 @@ function copyToClipboard(text) {
     document.body.removeChild(dummy);
 }
     
-        
-
-
-        
-        function copy_code() {
-            var copyText = $('#code_copy').text();
-            console.log(copyText)
-            copyToClipboard(copyText)
-            document.execCommand("copy");
-            document.getElementById('copyC').style.display='block';
-            setTimeout(function(){
-                document.getElementById('copyC').style.display='none';
-            },3000)
-        }
-        function copy_link() {
-            var copyText = $('#link_copy').text();
-            console.log(copyText)
-            copyToClipboard(copyText)
-            document.execCommand("copy");
-        //   alert("Copied the text: " + copyText);
-        document.getElementById('copyL').style.display='block';
+    function copy_code() {
+        var copyText = $('#code_copy').text();
+        console.log(copyText)
+        copyToClipboard(copyText)
+        document.execCommand("copy");
+        document.getElementById('copyC').style.display='block';
         setTimeout(function(){
-            document.getElementById('copyL').style.display='none';
+            document.getElementById('copyC').style.display='none';
         },3000)
-        }
+    }
+    function copy_link() {
+        var copyText = $('#link_copy').text();
+        console.log(copyText)
+        copyToClipboard(copyText)
+        document.execCommand("copy");
+    //   alert("Copied the text: " + copyText);
+    document.getElementById('copyL').style.display='block';
+    setTimeout(function(){
+        document.getElementById('copyL').style.display='none';
+    },3000)
+    }
 </script>

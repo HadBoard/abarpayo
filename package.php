@@ -20,11 +20,12 @@
             <p class="warning-package">شما یک پکیج خریداری نشده دارید</p>
             <? } ?>
         </div>
-        <!--  -->
-        
-        <!--  -->
         <?
             $package_id =$action->marketer_get($marketer_id)->package_id;
+            $price =  $action->package_get($package_id)->price;
+            $discount = $action->package_get($package_id)->discount;
+            $final = floatval($price) - floatval($price * $discount/100);
+            $_SESSION['marketer_package'] = $final;
         ?>
         <div class="wallet_table inviataion_table package_factor">
             <table>
@@ -40,7 +41,7 @@
                     <td><?= $action->package_get($package_id)->price?></td>
                     <? if( $action->hasUnpaidPackage($marketer_id)) {?>
                         <td><form action="marketer-package-request.php" method="post">
-                            <input type="hidden" name="package" value="<?= $action->package_get($package_id)->price ?>">
+                            <!-- <input type="hidden" name="package" value="<?= $action->package_get($package_id)->price ?>"> -->
                             <button name="pay_factor" class="pay_factor">پرداخت</button>
                         </form></td>
                     <? }else{ ?>
