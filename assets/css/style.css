@@ -1198,3 +1198,12 @@ a.copy-icon {
     margin:0 0 20px 0;
     display: table;
 }
+.message_header.cart_header img {
+  opacity: 0.9;
+  margin-top: -21px;
+  transform: scale(0.5);
+}
+
+.message_header {
+  width: 13%;
+}
