@@ -108,8 +108,13 @@ if(isset($_SESSION['already_in_gateway']) && $_SESSION['already_in_gateway'] == 
                             <td><?= $counter++ ?></td>
                             <td><?= $action->product_get($item->product_id)->title ?></td>
                             <td><?= $item->count ?></td>
+                            <? if($cost != $final){?>
                             <td><?= $cost ?></td>
                             <td><?= $final ?></td>
+                            <?}else{?>
+                                <td><?= $cost ?></td>
+                                <td></td>
+                            <?}?>
                             <td>
                                 <form action="" method="post">
                                     <input type="hidden" name="delete_item" value="<?= $item->id ?>">
