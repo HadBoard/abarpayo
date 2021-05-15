@@ -40,12 +40,17 @@ if (isset($_POST['submit'])) {
     $price = $action->request('price');
     $status = $action->request('status');
     $discount = $action->request('discount');
+    $discount1 = $action->request('discount1');
+    $discount2 = $action->request('discount2');
+    $discount3 = $action->request('discount3');
+    $discount4 = $action->request('discount4');
     $score = $action->request('score');
 
     if($_FILES["icon"]["name"]){
         unlink("images/products/$icon");
         $target_dir = "images/products/";
         $target_file = $target_dir . basename($_FILES["icon"]["name"]);
+
 
         // Select file type
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -64,9 +69,9 @@ if (isset($_POST['submit'])) {
 
     // send query
     if ($edit) {
-        $command = $action->product_edit($id,$category_id,$shop_id,$title,$icon,$description,$price,$discount,$score,$status);
+        $command = $action->product_edit($id,$category_id,$shop_id,$title,$icon,$description,$price,$discount,$discount1,$discount2,$discount3,$discount4,$score,$status);
     } else {
-        $command = $action->product_add($category_id,$shop_id,$title,$icon,$description,$price,$discount,$score,$status);
+        $command = $action->product_add($category_id,$shop_id,$title,$icon,$description,$price,$discount,$discount1,$discount2,$discount3,$discount4,$score,$status);
     }
 
     // check errors
@@ -221,8 +226,32 @@ include('header.php'); ?>
 
                                 <div class="form-group">
                                     <input type="text" name="discount" class="form-control input-default "
-                                           placeholder="تخفیف"
+                                           placeholder="تخفیف کاربران"
                                            value="<?= ($edit) ? $row->discount : "" ?>" >
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="discount1" class="form-control input-default "
+                                           placeholder="تخفیف بازارساز سطح یک"
+                                           value="<?= ($edit) ? $row->discount1 : "" ?>" >
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="discount2" class="form-control input-default "
+                                           placeholder="تخفیف بازارساز سطح دو"
+                                           value="<?= ($edit) ? $row->discount2 : "" ?>" >
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="discount3" class="form-control input-default "
+                                           placeholder="تخفیف بازارساز سطح سه"
+                                           value="<?= ($edit) ? $row->discount3 : "" ?>" >
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="discount4" class="form-control input-default "
+                                           placeholder="تخفیف بازاساز سطح چهار"
+                                           value="<?= ($edit) ? $row->discount4 : "" ?>" >
                                 </div>
 
                                 <div class="form-group">

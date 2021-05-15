@@ -34,7 +34,8 @@ if ($result->Status == 100) {
     if(isset($_SESSION['app'])){
 
         $id = $_SESSION['user_id'];
-        $command = $action->app_payment_add($id,$Amount,2,$result->RefID,1);
+        $payment_id = $action->app_payment_add($id,$Amount,2,$result->RefID,1);
+        $action->purchase_add($id,1,$shop_id,$payment_id,$order_id);
         $_SESSION['app-wallet'] = 'success';
         $participation = floatval(($action->shop_get($shop_id)->participation_percentage)* $Amount/100) ;
         $action->shop_wallet_edit($shop_id,$participation,1);

@@ -803,6 +803,15 @@ class Action
         return $result->num_rows;
     }
 
+    public function cart_items_counter($id,$type){
+        if($type == 1){
+            $result =$this->connection->query("SELECT * FROM `tbl_cart` WHERE `user_id` = '$id' AND `access` = '1' ");
+        }else{
+            $result =$this->connection->query("SELECT * FROM `tbl_cart` WHERE `user_id` = '$id' AND `access`='0'");
+        }
+        return $result->num_rows;
+    }
+
     public function setMessageView($id){
         $result = $this->connection->query("UPDATE `tbl_message` SET 
         `user_view`= 1
@@ -1108,6 +1117,19 @@ class Action
         return $this->connection->insert_id;
     }
 
+    public function last_purchase($id,$access){
+        return $this->connection->query("SELECT * FROM `tbl_purchase` WHERE `user_id` = '$id' AND `access` = '$access' AND `order_id` = '0' ORDER BY `id` DESC LIMIT 1 ");
+    }
+
+    public function payment_get($id,$access)
+    {
+        if($access == 1){
+            return $this->get_data("tbl_payment", $id);
+        }else{
+            return $this->get_data("tbl_marketer_payment", $id);
+        }
+    }
+
     public function payment_add($amount,$cart_number,$reference_code,$status)
     {
         $now = time();
@@ -1119,6 +1141,7 @@ class Action
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
+    
 
     public function app_payment_add($user_id,$amount,$cart_number,$reference_code,$status)
     {

@@ -128,10 +128,19 @@ $action = new Action();
                         </a>
                     </div>
                     <?}?>
+                    <?
+                        if($action->user()){
+                            $id = $action->user()->id;
+                            $type = 1;
+                        }else if($action->marketer()){
+                            $id = $action->marketer()->id;
+                            $type = 0;
+                        }
+                    ?>
                     <div class="message_header cart_header">
-                        <a href="notification.php">
+                        <a href="shopping-cart.php">
                             <img src="assets/images/icons8-shopping-cart-64.png">
-                                                        <span>5</span>
+                                <span><?= $action->cart_items_counter($id,$type) ?></span>
                         </a>
                     </div>
                 </div>

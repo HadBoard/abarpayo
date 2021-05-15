@@ -80,9 +80,13 @@ if(isset($_SESSION['already_in_gateway']) && $_SESSION['already_in_gateway'] == 
                             $items = $action->cart_items($id,$access);
 
                             while($item = $items->fetch_object()){
-
                                 $price = $action->product_get($item->product_id)->price;
-                                $off = $action->product_get($item->product_id)->discount;
+                                if($action->user()){
+                                    $off = $action->product_get($item->product_id)->discount;
+                                }else if($action->marketer()){
+                                    $action->marketer($id)-> package_id == 1
+                                }
+                                
                                 $cost += $item->count * $price;
                                 $total_off += $item->count *($price*$off/100);
                                 $final = $item->count * (floatval($price) - floatval($price*$off/100));
