@@ -43,8 +43,7 @@ $action = new Action();
                if($max_income-$parent_today_income<$amount){
                    $amount=$max_income-$parent_today_income;
                }             
-               $payment_id=$action->marketer_payment_add($parent_id,$amount,0,0,1);
-               $action->marketer_wallet_log_add($parent_id,4,$amount,1,$payment_id);
+               $action->marketer_wallet_log_add($parent_id,4,$amount,1,0);
                $step++;
                $parent_id=$parent->reference_id;             
             }else{
