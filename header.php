@@ -128,6 +128,12 @@ $action = new Action();
                         </a>
                     </div>
                     <?}?>
+                    <div class="message_header cart_header">
+                        <a href="notification.php">
+                            <img src="assets/images/icons8-shopping-cart-64.png">
+                                                        <span>5</span>
+                        </a>
+                    </div>
                 </div>
             <? } else { ?>
                 <div class="col-md-4">
