@@ -262,32 +262,20 @@ if(isset($_POST['function'])) {
         echo $json; 
     }
 
- 
     if($_POST['function'] == 'transactions'){
         $obj -> arr = [];
         $user_id = $action->request('user_id');
-        $transactions = $action->app_get_payment($user_id);
-        while($transaction = $transactions->fetch_object()){
+         $transactions = $action->app_get_payment($user_id);
+         while($transaction = $transactions->fetch_object()){
             $payments = $action->payment_get_action($transaction->id);
             $payment = $payments->fetch_object();
             $obj_in -> cost = $transaction->amount;
-            $obj_in -> action = $payment->action;
-            $obj_in -> pay_date = $action->time_to_shamsi($transaction->date);
+            $obj_in -> action = $action->time_to_shamsi($transaction->date);
+            $obj_in -> pay_date = $action->action_log_get($payment->action_id)->text;
             $obj_in -> type = 1;
             $out[] = $obj_in;
             $obj_in = null;
-        }
-        
-        $withdraws = $action->app_get_requests($user_id);
-        while($withdraw = $withdraws->fetch_object()){
-            $obj_in -> cost = $withdraw->amount;
-            $obj_in -> pay_date  = $action->time_to_shamsi($withdraw->created_at);
-            $obj_in -> action = "برداشت از کیف پول";
-            $obj_in -> type = 0;
-            $out[] = $obj_in;
-            $obj_in = null;
-        }
-
+         }
         $obj-> arr = $out;
         $json = json_encode($obj);
         echo $json; 

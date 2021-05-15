@@ -2,12 +2,9 @@
 require_once "functions/database.php";
 $action = new Action();
 session_start();
-if(isset($_SESSION['marketer_package']) || isset($_POST['pay_factor'])){
+if(isset($_SESSION['marketer_package'])){
     $amount = $_SESSION['marketer_package'];
     unset($_SESSION['marketer_package']);
-    if(isset($_POST['pay_factor'])){
-        $amount = $action->request('package');
-    }
     $_SESSION['marketer_amount'] = $amount;
    
     $Amount = $amount;

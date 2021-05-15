@@ -22,7 +22,7 @@ $result = $client->PaymentVerification(
 if ($result->Status == 100) {
 // echo '<br>Transation success. RefID:'.$result->RefID;
 $marketer_id = $action->marketer()->id;
-$command = $action->marketer_payment_add($marketer_id,$cart_number,$Amount,$result->RefID,1);
+$command = $action->marketer_payment_add($marketer_id,$Amount,$cart_number,$result->RefID,1);
 $action->marketer_paymentid_add($marketer_id,$command);
 $action->marketer_wallet_log_add($marketer_id,12,$Amount,1,$command);
 $action->marketer_change_status($marketer_id);

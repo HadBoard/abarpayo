@@ -2,9 +2,18 @@
 require_once "functions/database.php";
 $action = new Action();
 
-if(isset($_POST['cart_pay'])){
 
-$Amount = $_SESSION['cart_cost'];
+if(isset($_SESSION['already_in_gateway'])){
+    header("Location: shopping-cart.php");
+}
+if(isset($_POST['cart_pay'])  || isset($_SESSION['app'])){
+
+if(isset($_SESSION['app'])){
+    $Amount =  $_SESSION['amount'];
+}else{
+    $Amount = $_SESSION['cart_cost'];
+}
+
 $MerchantID = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'; //Required
 //$Amount = $_SESSION['cost']/1000; //Amount will be based on Toman - Required
 // $Amount = 10000;

@@ -60,7 +60,7 @@ $title = "ثبت نام";
            }else{
                $price =  $action->package_get($package_id)->price;
                $discount = $action->package_get($package_id)->discount;
-               $final = $price - ($price * $discount/100);
+               $final = floatval($price) - floatval($price * $discount/100);
                $_SESSION['marketer_package'] = $final;
                 header("Location: marketer-package-request.php");
            }
