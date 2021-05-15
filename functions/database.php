@@ -318,7 +318,17 @@ class Action
         return $this->get_data("tbl_marketer", $id);
     }
 
-
+    public function marketer_today_income($id){
+        $today= strtotime(date('Y-m-d'));
+        $tommoro=$today+86400;
+        $amount=0;
+        $result=$this->connection->query("SELECT * FROM `tbl_marketer_wallet_log` WHERE `marketer_id` = '$id' `created_at` BETWEEN '$today'AND'$tommoro'");
+        if(mysqli_num_rows($result)){
+            while($row = $result->fetch_object()){
+                $amount+=$row->amount;
+            }
+        }return $amount;
+    }
     public function is_vip($id){
         $result = $this->table_list("tbl_vip_marketer");
         while($row = $result->fetch_object()){

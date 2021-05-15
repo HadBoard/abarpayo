@@ -68,8 +68,9 @@ if(isset($_SESSION['already_in_gateway']) && $_SESSION['already_in_gateway'] == 
                         <tr>
                             <th >ردیف</th>
                             <th>اسم محصول</th>
-                            <th>نام فروشگاه</th>
                             <th>تعداد</th>
+                            <th>قیمت اصلی</th>
+                            <th> قیمت پس از تخفیف</th>
                             <th>حذف </th>
                         </tr>
                         <?
@@ -106,8 +107,9 @@ if(isset($_SESSION['already_in_gateway']) && $_SESSION['already_in_gateway'] == 
                         <tr>
                             <td><?= $counter++ ?></td>
                             <td><?= $action->product_get($item->product_id)->title ?></td>
-                            <td><a href="shop.php?id=<?= $item->shop_id ?>"><?= $action->shop_get($item->shop_id)->title ?></a></td>
                             <td><?= $item->count ?></td>
+                            <td><?= $cost ?></td>
+                            <td><?= $final ?></td>
                             <td>
                                 <form action="" method="post">
                                     <input type="hidden" name="delete_item" value="<?= $item->id ?>">
