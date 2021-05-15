@@ -753,7 +753,7 @@ span.ticket_check i {
 }
 
 .cart_table td:nth-child(3) ,.cart_table th:nth-child(3) {
-  width: 30%;
+  width: 22%;
   max-width: 30%;
 }
 .cart_table th {
@@ -766,7 +766,7 @@ span.ticket_check i {
 }
 
 .cart_table tr td:nth-child(4), .cart_table tr th:nth-child(4) {
-    width: 5%;
+    width: 22%;
 }
 .cart_card {
     background: rgb(226, 226, 226);
@@ -1206,4 +1206,11 @@ a.copy-icon {
 
 .message_header {
   width: 13%;
+}
+
+.notif_table.cart_table {
+  margin-top: 0;
+}
+.notif_table.cart_table td,.notif_table.cart_table th {
+  text-align: center;
 }
