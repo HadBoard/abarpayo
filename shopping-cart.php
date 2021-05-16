@@ -62,6 +62,7 @@ if(isset($_SESSION['already_in_gateway']) && $_SESSION['already_in_gateway'] == 
 
         <div class="container">
            <div class="row">
+           <?if($action->cart_items_counter($id,$access) > 0){?>
             <div class="col-md-8">
                 <div class="notif_table cart_table">
                     <table>
@@ -152,14 +153,20 @@ if(isset($_SESSION['already_in_gateway']) && $_SESSION['already_in_gateway'] == 
                                 </form>
                     
                                 <form action="" method="post">
-                                <button name="cart_cancel" type="submit" class="suc_button">انصراف</button>
+                                <button name="cart_cancel" type="submit" class="suc_button cancle_button">انصراف</button>
                                 </form>
-                    
-                    
                     </div>
                 </div>
             </div>
-            
+            <?}else{?>
+
+            <div class="row more-item" style="display: block;">
+            <div class="nomore-item">      
+                    
+                    <p>موردی  برای نمایش موجود نمی باشد . </p>
+            </div>
+        </div>
+            <?}?>
            </div>
         </div>
     </section>

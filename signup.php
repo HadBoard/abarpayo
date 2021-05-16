@@ -82,6 +82,21 @@ if(isset($_POST['submit'])){
 
     <div class="background_page">
         <div class="container">
+        <? if ($error) {
+            if ($error_val) { ?>
+
+                 <div class="modal">
+                    <div class="alert alert-fail">
+                        <span class="close_alart">×</span>
+                        <p>
+                            عملیات ناموفق بود!
+                        </p>
+                    </div>
+                </div>
+                <script src="assets/js/alert.js"></script>
+                
+            <? } 
+} ?>
             
             <div class="center_form">
                 <div class="row">

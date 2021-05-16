@@ -212,7 +212,7 @@ $action = new Action();
 </header>
 <!-- eof header -->
 <script>
-document.getElementById('default_city').onchange=function(){
+document.getElementById('default_city').onclick=function(){
        var city_id=document.getElementById('default_city').value;
        console.log(city_id);
        $.ajax({
