@@ -47,7 +47,7 @@ if(isset($_GET['category'])){
                     </a>
                     </div>
                     <div class="shop_content">
-                    <a href="shop.php?id=<?=$shop->id?>" class="shop_content">
+                    <a href="shop.php?id=<?=$shop->id?>" class="">
                         <h4><?= $shop->title ?></h4>
                         <h6>
                             <i class="fa fa-map"></i>

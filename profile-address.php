@@ -65,12 +65,12 @@ if (isset($_SESSION['error'])) {
 <div class="edit_profile_div">
     <div class="profile_header">
         <div class="profile_heade_inn">
-            <div class="profile_header_img_2"><img src="assets/images/002-place.svg"></div></div>
+            <div class="profile_header_img_2"><img style="margin-top:-17px" src="assets/images/002-place.svg"></div></div>
 
     </div>
     <div class="row profile_title">
         <h3>انتخاب شهر</h3>
-        <img src="assets/images/Group 462.svg">
+        <img  src="assets/images/Group 462.svg">
     </div>
     <div class="profile_left mp">
 
@@ -110,7 +110,7 @@ if (isset($_SESSION['error'])) {
                 ?>
             </select>
         </div>
-        <div style="margin-right:20px" class="form-group">
+        <div  class="form-group">
                 <label for="postal_code">کدپستی</label>
                 <input type="text" id="postal_code" name="postal_code" placeholder=""  value="<?= ($action->user()) ? $action->user_get($id)->postal_code : $action->marketer_get($id)->postal_code ?>">
         </div>

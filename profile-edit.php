@@ -100,7 +100,7 @@ if (isset($_SESSION['error'])) {
                 display: none;
             " name="pic">
     </div>
-    <div class="profile_left">
+    <div class="profile_left" style='margin-top:100px'>
             <div class="form-group">
                 <label for="name">نام</label>
                 <input type="text" id="first_name" name="name" value="<?= ($action->user()) ? $action->user_get($id)->first_name : $action->marketer_get($id)->first_name?>" placeholder="فقط حروف فارسی">
@@ -120,7 +120,7 @@ if (isset($_SESSION['error'])) {
             
             <div class="form-group">
             <label for="birthday">تاریخ تولد</label>
-                <input type="text" id="birthday" name="birthday" class="form-control observer-example"
+                <input type="text" id="date_eee" name="birthday" class="form-control observer-example" autocomplete="off"
                         placeholder="تاریخ تولد"
                         value="<? 
                             if($action->user() && $action->user_get($id)->birthday){
@@ -147,13 +147,29 @@ $("label[for='pic']").click(function(){
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="assets/js/persian-date.js"></script>
   <script src="assets/js/persian-datepicker.js"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-            $('.observer-example').persianDatepicker({
-        observer: true,
-        format: 'YYYY/MM/DD',
-        altField: '.observer-example-alt'
-    });
-     })
+  <script>        
+        var customOptions = {
+            placeholder: "تاریخ شروع"
+            , twodigit: false
+            , closeAfterSelect: true
+            , nextButtonIcon: "fa fa-arrow-circle-right"
+            , previousButtonIcon: "fa fa-arrow-circle-left"
+            , buttonsColor: "black"
+            , forceFarsiDigits: true
+            , markToday: true
+            , markHolidays: true
+            , highlightSelectedDay: true
+            , sync: true
+            , gotoToday: true
+        }
+        
+        kamaDatepicker('date_eee', customOptions);
+        
+        kamaDatepicker('date_start', customOptions);
 
-</script>
+        kamaDatepicker('date_start_1', customOptions);
+
+        kamaDatepicker('date_end', customOptions);
+
+        kamaDatepicker('date_end_1', customOptions);
+    </script>
