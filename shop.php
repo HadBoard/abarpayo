@@ -438,7 +438,7 @@ if ($error_val) { ?>
                             <div class="col-11">
                                 <div class="comment_item">
                                     <div class="comment_item_info">
-                                        <h4><?= $action->admin_get($reply->user_id)->first_name." ".$action->admin_get($reply->user_id)->last_name?></h4>
+                                        <h4><?= $action->shop_get($reply->user_id)->title?></h4>
                                         <div class="date">
                                             <p><?= $action->time_to_shamsi($reply->created_at);?></p>
                                         </div>

@@ -8,12 +8,19 @@
         $option_result =  $action->marketer_cart_list($id);
     }
 
+    $error = false;
+    if (isset($_SESSION['error'])) {
+        $error = true;
+        $error_val = $_SESSION['error'];
+        unset($_SESSION['error']);
+    }
+
     if(isset($_POST['withdraw_wallet'])){
         $amount = $action->request('amount');
         $cart = $action->request('cart');
         if($amount > $wallet){
             $_SESSION['error'] = 1;
-            echo '<script>window.location="?wallet-withdarw"</script>';
+            echo '<script>window.location="?wallet-withdraw"</script>';
         }else{
 
             if($action -> user()){
@@ -28,7 +35,7 @@
                 $_SESSION['error'] = 1;
             }
     
-            echo '<script>window.location="?wallet-withdarw"</script>';
+            echo '<script>window.location="?wallet-withdraw"</script>';
         }
     }
 ?>
@@ -81,11 +88,10 @@ if ($error_val) { ?>
             </h4>
             <form action="" method="post">
             <div class="form-group">
-                <select name="cart">
+                <select name="cart" required>
                     <option>کارت را انتخاب فرمایید .</option>
                     <?
                     while ($option = $option_result->fetch_object()) {
-                        //$cart = substr($option->cart_number,-4); 
                         echo '<option value="';
                         echo $option->id;
                         echo '"';

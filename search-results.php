@@ -3,26 +3,27 @@ require_once "functions/database.php";
 $action = new Action();
 $title = "نتایج جستجو";
 include_once "header.php";
+include_once "const-values.php";
 
 if(isset($_POST['advanced_search'])){
     $search = $action->request('input');
-    $city = $action->request('city');
+    $city1 = $action->request('city');
     $category = $action->request('category');
     
-    if(!$city){
+    if(!$city1){
         $result = $action->advance_search_not_city($search,$category,0);
     }else if(!$category){
-        $result = $action->advance_search_not_category($search,$city,0);
-    }else if(!$input){
-        $result = $action->advance_search_not_input($city,$category,0);
+        $result = $action->advance_search_not_category($search,$city1,0);
+    }else if(!$search){
+        $result = $action->advance_search_not_input($city1,$category,0);
     }else{
-        $result = $action->advance_search($search,$category,$city,0);
+        $result = $action->advance_search($search,$category,$city1,0);
     }
 }
 
 if(isset($_POST['search_button'])){
-    $search = $action->request('search');
-    $result = $action->shop_search($search,0);
+    $search = $action->request('input');
+    $result = $action->advance_search_not_category($search,$default,0);
 }
 $count = $result->num_rows;
 

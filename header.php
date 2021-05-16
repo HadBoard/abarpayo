@@ -48,7 +48,7 @@ $action = new Action();
             </div>
             <div class="col-md-3 search_header">
                 <form action="search-results.php" method="post">
-                <input name="search" required placeholder="لطفا کلمه مورد نظر خود را جستجو کنید">
+                <input name="input" required placeholder="لطفا کلمه مورد نظر خود را جستجو کنید">
                 <button type="submit"name="search_button"><span class="material-icons">search</span></button> 
                 </form>
             </div>
@@ -185,9 +185,9 @@ $action = new Action();
                         <a href="#">فروشگاه</a>
                     </li> -->
 
-                    <li style="width:14%">
+                    <!-- <li style="width:14%">
                         <a href="#">باشگاه مشتریان</a>
-                    </li>
+                    </li> -->
                     <li>
                         <a href="about-us.php">درباره ما</a>
                     </li>

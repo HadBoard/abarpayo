@@ -27,8 +27,8 @@
         ?>  
                 <tr>
                     <td <?= ($transaction->type == 1) ?'class="inc_wallet"' : 'class:"dec_wallet"'?>> <?= ($transaction->type == 1) ? "+".$transaction->amount : "-".$transaction->amount ?></td>
-                    <td><?= $action->time_to_shamsi($transaction->created_at)?></td>
                     <td><?= $action->action_log_get($payment->action_id)->text ?></td>
+                    <td><?= $action->time_to_shamsi($transaction->created_at)?></td>
                 </tr>
         <?
             }

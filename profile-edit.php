@@ -103,11 +103,11 @@ if (isset($_SESSION['error'])) {
     <div class="profile_left">
             <div class="form-group">
                 <label for="name">نام</label>
-                <input type="text" id="first_name" name="name" value="<?= ($action->user()) ? $action->user_get($id)->first_name : $action->marketer_get($id)->first_name?>" placeholder="فقط حروف فارسی">
+                <input required type="text" id="first_name" name="name" value="<?= ($action->user()) ? $action->user_get($id)->first_name : $action->marketer_get($id)->first_name?>" placeholder="فقط حروف فارسی">
             </div>
             <div class="form-group">
                 <label for="lname">نام خانوادگی</label>
-                <input type="text" id="last_name" name="lname" value="<?= ($action->user()) ? $action->user_get($id)->last_name : $action->marketer_get($id)->last_name?>"  placeholder="فقط حروف فارسی">
+                <input required type="text" id="last_name" name="lname" value="<?= ($action->user()) ? $action->user_get($id)->last_name : $action->marketer_get($id)->last_name?>"  placeholder="فقط حروف فارسی">
             </div>
             <div class="form-group">
                 <label for="national_code">کدملی</label>
@@ -120,12 +120,12 @@ if (isset($_SESSION['error'])) {
             
             <div class="form-group">
             <label for="birthday">تاریخ تولد</label>
-                <input type="text" id="birthday" name="birthday" class="form-control observer-example"
+                <input type="text" id="date_ee" name="birthday" class="form-control observer-example"
                         placeholder="تاریخ تولد"
                         value="<? 
-                            if($action->user() && $action->user_get($id)->birthday){
+                            if($action->user() && $action->user_get($id)->birthday != 0){
                                 echo $action->time_to_shamsi($action->user_get($id)->birthday);
-                            }else if($action->marketer() && $action->marketer_get($id)->birthday){
+                            }else if($action->marketer() && $action->marketer_get($id)->birthday != 0){
                                 echo $action->time_to_shamsi($action->marketer_get($id)->birthday);
                             }else {
                                 echo "";

@@ -1,3 +1,23 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <title>ابرپایو</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="assets/css/swiper.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/fontiran.css">
+    <link rel="stylesheet" href="assets/css/fontAswome.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-grid.css">
+    <script src='assets/js/swiper.js'></script>
+    <script src='assets/js/jquery.js'></script>
+    <script src='assets/js/fontAwsome.js'></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+</head>
+<body>
 <?
 require_once "functions/database.php";
 require_once "const-values.php";
@@ -36,8 +56,8 @@ $title = "ثبت نام";
                 $result = $action->marketer_reference_code($reference_code);
                 if(mysqli_num_rows($result)){
                     $reference = $result->fetch_object();
-                    $_SESSION['refrence_id']=$reference_id;
                     $reference_id = $reference->id;
+                    $_SESSION['refrence_id']=$reference_id;
                     $support_id = $reference_id;
                     $isVip = $action->is_vip($reference_id);
                     if($isVip){
@@ -57,10 +77,25 @@ $title = "ثبت نام";
             $_SESSION['marketer_id'] = $command;
             $action-> marketer_update_last_login( $_SESSION['marketer_id']);
             $action->log_action(3,2);
-            // $_SESSION['marketer_access'] = $action->marketer_get($command)->package_id;
+         
+         
+            $_SESSION['marketer_access'] = $action->marketer_get($command)->package_id;
+            ?>
+            <script>
+            var id=<?=$command;?>;
+            $.ajax({
+                    url:'calculat.php',
+                    method:'post',
+                    data:{id},
+                    success:function(data){
+                        console.log(id)
+                        console.log(data)
+                    }
+             })
+            </script><?
            if($payment_type == 1){
             $action->marketer_change_status($command);
-            // header("Location: index.php");
+            header("Location: index.php");
            }else{
                $price =  $action->package_get($package_id)->price;
                $discount = $action->package_get($package_id)->discount;
@@ -72,37 +107,12 @@ $title = "ثبت نام";
         if(!isset($_SESSION['refrence_id'])){
             $_SESSION['error']=1;
         }
-        ?>
-        <script>
-        var id=<?= $command;?>;
-            $.ajax({
-                url:'calculate.php',
-                method:'post',
-                data:{id}
-            })
-        </script><?
+       
     }
 
 ?>
 
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="utf-8">
-    <title>ابرپایو</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-  
-    <link rel="stylesheet" href="assets/css/swiper.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/fontiran.css">
-    <link rel="stylesheet" href="assets/css/fontAswome.css">
-    <link rel="stylesheet" href="assets/css/bootstrap-grid.css">
-    <script src='assets/js/swiper.js'></script>
-    <script src='assets/js/jquery.js'></script>
-    <script src='assets/js/fontAwsome.js'></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> 
-</head>
-<body>
+
     <div class="background_page">
         <div class="container">
             <div class="center_form">

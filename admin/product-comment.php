@@ -112,7 +112,7 @@ include('header.php'); ?>
                                     <th class="text-center">امتیاز</th>
                                     <th class="text-center">تاریخ ثبت</th>
                                     <th class="text-center">تایید</th>
-                                    <th class="text-center">حذف</th>
+                                    <!-- <th class="text-center">حذف</th> -->
                                 </tr>
                                 </thead>
 
@@ -134,11 +134,11 @@ include('header.php'); ?>
                                                 ?>
                                             </a>
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             <a href="<?= $main_url ?>?product=<?= $row->product_id?>&remove=<?= $row->id ?>">
                                                 <i class="fa fa-trash"></i>
                                             </a>
-                                        </td>
+                                        </td> -->
 
                                     </tr>
                                 <? } ?>

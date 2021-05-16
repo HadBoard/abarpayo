@@ -62,7 +62,7 @@ include_once "header.php";
                         <td>تاریخ</td>
                         <td>حذف </td>
                     </tr>
-                    <?while($row = $result->fetch_object()){ ?>
+                    <? if($result->num_rows > 0) {while($row = $result->fetch_object()){ ?>
                     <tr>
                         <td><?= ++$count ?></td>
                         <td><?= $action->action_log_get($row->id)->text?> </td>
@@ -74,7 +74,7 @@ include_once "header.php";
                             </form>
                         </td>
                     </tr>
-                    <?}?>
+                    <?}}?>
                 </table>
             </div>
         </div>

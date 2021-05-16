@@ -161,6 +161,7 @@ class Action
     public function request_date($name)
     {
         $name = $this->request('birthday', false);
+        if(!$name) return 0;
         $name = $this->shamsi_to_miladi($name);
         return strtotime($name);
     }

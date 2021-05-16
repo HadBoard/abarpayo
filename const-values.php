@@ -1,7 +1,7 @@
 <? require_once "functions/database.php";
 $action = new Action();
 
-$default_tehran = 426;
+$default = (isset($_SESSION['default_city'])) ? $_SESSION['default_city'] : 426;
 
 $register_score = (int)$action->get_system('score_register');
 $wallet_increase_score = (int)$action->get_system('score_wallet');
