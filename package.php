@@ -10,7 +10,7 @@
 
     <div class="profile_header">
         <div class="profile_heade_inn">
-            <div class="profile_header_img_2"><img style="transform: scale(1.5);margin-top: 43px;" src="assets/images/icons8-package-64.png"></div></div>    
+            <div class="profile_header_img_2"><img style="transform: scale(0.7)" src="assets/images/icons8-package-64.png"></div></div>    
     </div>
 
     <div class="profile_left profile_left2">
@@ -40,9 +40,9 @@
                     <td><?= $action->time_to_shamsi($action->marketer_get($marketer_id)->created_at)?></td>
                     <td><?= $action->package_get($package_id)->price?></td>
                     <? if( $action->hasUnpaidPackage($marketer_id)) {?>
-                        <td><form action="marketer-package-request.php" method="post">
+                        <td><form style="margin:0;padding:0;" action="marketer-package-request.php" method="post">
                             <!-- <input type="hidden" name="package" value="<?= $action->package_get($package_id)->price ?>"> -->
-                            <button name="pay_factor" class="pay_factor">پرداخت</button>
+                            <button style="margin-left:-20px;" name="pay_factor" class="pay_factor">پرداخت</button>
                         </form></td>
                     <? }else{ ?>
                         <td>پرداخت شده </td>

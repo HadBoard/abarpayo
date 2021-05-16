@@ -493,8 +493,19 @@ label.form-check-label {
 
 .package_factor table tr:last-child {border: 1px solid #bbb;border-top: none;}
 
-.package_factor table td {
-  width: 30% !important;
+.package_factor table td:last-child ,.package_factor table th:last-child {width: 40% !important;text-align: left !important;padding-left: 19px !important;}
+.package_factor table td:nth-child(1),.package_factor table th:nth-child(1){
+    width: 30% !important;
+
+}
+
+.package_factor table td:nth-child(2),.package_factor table th:nth-child(2) ,
+.package_factor table td:nth-child(3),.package_factor table th:nth-child(3){
+  width: 20% !important;
+}
+.package_factor table td:nth-child(4),.package_factor table th:nth-child(4)){
+  width:40% !important;
+  text-align:left !important;
 }
 
 .package_factor table td button {
