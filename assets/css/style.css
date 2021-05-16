@@ -50,7 +50,7 @@ header { box-shadow: rgba(0, 0, 0, 0.11) 1px 1px 3px 1px; }
 .star_card { background: rgb(226, 226, 226); padding: 5px; text-align: center; font-size: 12px; border-radius: 5px; color: rgb(71, 76, 85); }
 .star_card i {color: var(--yellow_a);margin: 0 -1px 0 3px;}
 .sell_card i { float: left; margin-right: 6px; }
-.tabcontent button { width: 99%; padding: 9px 0px; float: none; border: none; font-size: 16px; margin: 20px auto !important; }
+.tabcontent button {width: 99%;padding: 9px 0px;float: left;border: none;font-size: 16px;/* margin: 20px auto !important; */}
 .main_slider {margin-bottom: 79px;overflow: hidden;padding-top: 30px;}
 .main_slider a img { width: 100%; max-height: 486px; border-radius: 18px; box-shadow: rgba(0, 0, 0, 0.32) -3px 4px 5px 0px; }
 input[type="submit"] { border: none; cursor: pointer; }
@@ -160,8 +160,8 @@ ul { list-style: none; }
 #resent_btn { font-size: 13px; cursor: pointer; }
 .profile_col { margin-top: 30px;background-color: rgb(255, 255, 255); padding: 20px 0px 0px; }
 .profile_right { width: 88%; margin: auto; box-shadow: rgba(0, 0, 0, 0.5) 0px 1.5px 3px 0px; border-radius: 15px; padding: 20px 55px; display: table; }
-.profile_right img:first-child { float: right; max-width: 100%; border-radius: 100px; }
-.profile_right_img { width: 100px; display: table; padding-top: 19px; float: right; }
+.profile_right img:first-child {float: right;width: 100%;border-radius: 134px;height: 112px;}
+.profile_right_img {width: 122px;display: table;padding-top: 13px;float: right;height: 60px;}
 .edit_profile { width: 81%; padding: 4px 7px; text-align: right; font-size: 15px; float: none; }
 .edit_profile i { margin-left: 3px; }
 .profile_btn i, .profile_btn h4 { float: right; color: rgb(255, 255, 255); font-weight: 500; }
@@ -1239,4 +1239,11 @@ a.copy-icon {
 .add_card {
     float: left;
     margin-top: -10px;
+}
+.comment_top input[type="submit"] {
+  margin-top: 37px;
+  float: left;
+  margin-left: 110px;
+  display: table;
+  margin-top: 25px !important;
 }
