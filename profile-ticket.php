@@ -37,7 +37,7 @@
     font-size: 15px;
     width: 40px;
     height:40px;
-    line-height: 30px;
+    line-height: 39px;
     border-radius: 50%;
     transition:all 0.3s ease 0s;
 }
@@ -123,7 +123,7 @@
 
     <div class="profile_header">
         <div class="profile_heade_inn">
-            <div class="profile_header_img_2"><img src="assets/images/call.png"></div></div>
+            <div class="profile_header_img_2"><img src="assets/images/icons8-question-mark-96.png"></div></div>
             
     </div>
     <div class="row profile_title">
@@ -149,7 +149,7 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading" role="tab" id="heading<?= $row->id?>">
                                         <h4 class="panel-title">
-                                            <a class="first" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?= $row->id ?>" aria-expanded="false" aria-controls="collapse<?= $row->id ?>">
+                                            <a class=" collapsed first" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?= $row->id ?>" aria-expanded="false" aria-controls="collapse<?= $row->id ?>">
                                                 <?= $row->text ?>
                                                 <span> </span>
                                             </a>

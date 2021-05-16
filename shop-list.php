@@ -45,6 +45,11 @@ if(isset($_GET['category'])){
                         <div class="shop_off">23%</div>
                      </a>
                     <a href="shop.php?id=<?=$shop->id?>" class="shop_content">
+                    </a>
+                    </div>
+                    <div class="shop_content">
+                    <a href="shop.php?id=<?=$shop->id?>" class="">
+
                         <h4><?= $shop->title ?></h4>
                         <h6>
                             <i class="fa fa-map"></i>
