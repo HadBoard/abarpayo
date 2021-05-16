@@ -58,13 +58,13 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
                 $command = $action->update_cart_item($item->id,$count);
             }
         }
-    
+
         if($command){
             $_SESSION['error']= 0 ;
         }else{
             $_SESSION['error']= 1 ;
         }
-        header("Location: shop.php?id=$id" );
+        echo '<script>window.location="shop.php?id='.$id.'"</script>';
     }  
    
 ?>
@@ -104,7 +104,6 @@ if ($error_val) { ?>
     </div>
     
 </div>
-
 <? } }  ?>
  
 
