@@ -19,6 +19,7 @@ class DB
     protected $_DB_PASS = '';
      protected $_DB_NAME = 'hamitech';
     //protected $_DB_NAME = 'abarpayo';
+
     protected $connection;
 
     // ----------- constructor
@@ -368,16 +369,19 @@ class Action
         }
     }
     public function marketer_today_income($id){
-        $today= strtotime(date('Y-m-d'));
-        $tommoro=$today+86400;
-        $amount=0;
-        $result=$this->connection->query("SELECT * FROM `tbl_marketer_wallet_log` WHERE `marketer_id` = '$id'AND `created_at` BETWEEN '$today'AND'$tommoro'");
-        if($result->num_rows > 0){
-            while($row = $result->fetch_object()){
-                $amount+=$row->amount;
+
+        $today=strtotime(date('Y-m-d'));
+        $tomorrow=$today+86400;
+        $income=0;
+        $result=$this->connection->query("SELECT * FROM `tbl_marketer_wallet_log` WHERE `marketer_id` = '$id' AND `action_id`=4 AND `created_at` BETWEEN '$today'AND '$tomorrow'");
+        if(mysqli_num_rows($result)){
+            while($row=$result->fetch_object()){
+                $income+=$row->amount;
             }
-        }return $amount;
+        }
+        return $income;
     }
+
 
     public function app_get_payment($id){
         return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id'ORDER BY id DESC");
