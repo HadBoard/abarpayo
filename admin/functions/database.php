@@ -20,6 +20,7 @@ class DB
     protected $_DB_USER = 'root';
     protected $_DB_PASS = '';
     protected $_DB_NAME = 'hamitech';
+    //protected $_DB_NAME = 'abarpayo';
     protected $connection;
 
     // ----------- constructor
@@ -1878,21 +1879,21 @@ public function admin_log($action_id){
 public function user_log($user_id){
     $now = time();
     $ip=$_SERVER['REMOTE_ADDER'];
-    $result= $this->connection->query("INSERT INTO tbl_user_log (`user_id`,`action_id`,`ip`,`created_at`)VALUES('$user_id','3','$ip','$now')");  
+    $result= $this->connection->query("INSERT INTO tbl_user_log (`user_id`,`action_id`,`ip`,`created_at`)VALUES('$user_id','17','$ip','$now')");  
     if (!$this->result($result)) return false;
     return $this->connection->insert_id;
 }
 public function markete_log($marketer_id){
     $now = time();
     $ip=$_SERVER['REMOTE_ADDER'];
-    $result= $this->connection->query("INSERT INTO tbl_marketer_log (`marketer_id`,`action_id`,`ip`,`created_at`)VALUES('$marketer_id','3','$ip','$now')");  
+    $result= $this->connection->query("INSERT INTO tbl_marketer_log (`marketer_id`,`action_id`,`ip`,`created_at`)VALUES('$marketer_id','17','$ip','$now')");  
     if (!$this->result($result)) return false;
     return $this->connection->insert_id;
 }
 public function guild_log($guild_id,$shop_id){
     $now = time();
     $ip=$_SERVER['REMOTE_ADDER'];
-    $result= $this->connection->query("INSERT INTO tbl_guild_log (`guild_id`,`shop_id`,`action_id`,`ip`,`created_at`)VALUES('$guild_id','$shop_id','3','$ip','$now')");  
+    $result= $this->connection->query("INSERT INTO tbl_guild_log (`guild_id`,`shop_id`,`action_id`,`ip`,`created_at`)VALUES('$guild_id','$shop_id','17','$ip','$now')");  
     if (!$this->result($result)) return false;
     return $this->connection->insert_id;
 }
@@ -1911,7 +1912,7 @@ public function guild_log_list(){
   return $this->connection->query("SELECT * FROM `tbl_guild_log` WHERE `admin_view`=0 ");
 }
 public function action_log_get($id){
-    return $this->get_data("tbl_action_log", $id);
+    return $this->get_data("tbl_action", $id);
 }
 
 public function change_admin_view($id,$type){
@@ -2079,7 +2080,8 @@ public function change_admin_view($id,$type){
         `question_pack_id`='$question_pack_id',
         `start_time`='$start_time',
         `end_time`='$end_time',
-        `status`='$status'
+        `status`='$status',
+        `updated_at`='$now'
         WHERE `id` ='$id'");
         if (!$this->result($result)) return false;
         return $id;
@@ -2122,13 +2124,15 @@ public function change_admin_view($id,$type){
 
 
     public function course_edit($id,$title,$package_id,$description,$image,$file,$status){
+        $now = time();
         $result = $this->connection->query("UPDATE `tbl_course` SET 
         `title`='$title',
         `package_id` = '$package_id',
         `description`='$description', 
         `image`='$image',
         `file`='$file',
-        `status`='$status'
+        `status`='$status',
+        `updated_at`='$now'
         WHERE `id` ='$id'");
         if (!$this->result($result)) return false;
         return $id;

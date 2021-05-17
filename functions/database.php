@@ -17,7 +17,8 @@ class DB
     protected $_DB_HOST = 'localhost';
     protected $_DB_USER = 'root';
     protected $_DB_PASS = '';
-    protected $_DB_NAME = 'hamitech';
+     protected $_DB_NAME = 'hamitech';
+    //protected $_DB_NAME = 'abarpayo';
     protected $connection;
 
     // ----------- constructor
@@ -366,7 +367,17 @@ class Action
             return $this->connection->query("SELECT * FROM `tbl_marketer_wallet_log` WHERE `marketer_id` = '$id' ORDER BY id DESC LIMIT 3");
         }
     }
-
+    public function marketer_today_income($id){
+        $today= strtotime(date('Y-m-d'));
+        $tommoro=$today+86400;
+        $amount=0;
+        $result=$this->connection->query("SELECT * FROM `tbl_marketer_wallet_log` WHERE `marketer_id` = '$id'AND `created_at` BETWEEN '$today'AND'$tommoro'");
+        if($result->num_rows > 0){
+            while($row = $result->fetch_object()){
+                $amount+=$row->amount;
+            }
+        }return $amount;
+    }
 
     public function app_get_payment($id){
         return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `user_id` = '$id'ORDER BY id DESC");
@@ -716,7 +727,7 @@ class Action
         return $id;
 
     }
-
+    
     public function shop_wallet_edit($id,$amount,$type){
         $prev_wallet = $this->shop_get($id)->wallet;
         if($type == 1){
@@ -1074,6 +1085,17 @@ class Action
         return $this->connection->insert_id;
     }
 
+    public function guild_wallet_log_add($shop_id,$action,$amount)
+    {
+        $now = time();
+        $result = $this->connection->query("INSERT INTO `tbl_guild_wallet_log`
+        (`shop_id`,`action_id`,`amount`,`created_at`) 
+        VALUES
+        ('$shop_id','$action','$amount','$now')");
+        if (!$this->result($result)) return false;
+        return $this->connection->insert_id;
+    }
+
     public function app_wallet_log_add($user_id,$action_id,$amount,$type,$payment_id)
     {
         $result = $this->connection->query("INSERT INTO `tbl_wallet_log`
@@ -1087,12 +1109,13 @@ class Action
     public function wallet_log_increase($user_id){
         return $this->connection->query("SELECT * FROM `tbl_wallet_log` WHERE `user_id` = '$user_id' AND `type` = 1  ORDER BY id DESC");
     }
+    
 
     public function wallet_log_get_payment($id){
         return $this->connection->query("SELECT * FROM `tbl_payment` WHERE `id` = '$id'");
     }
 
-
+    
     // ----------- end WALLETLOG------------------------------------------------------------------------------------------
 
     // ----------- start PAYMENT ------------------------------------------------------------------------------------------

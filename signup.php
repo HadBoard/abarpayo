@@ -40,7 +40,7 @@ if(isset($_POST['submit'])){
         unset($_SESSION['phone']);
         $_SESSION['user_id'] = $command;
         $action-> user_update_last_login( $_SESSION['user_id']);
-        $action-> log_action(3,0);
+        $action-> log_action(17,0);
         header("Location: index.php");
     }else{
         ?>

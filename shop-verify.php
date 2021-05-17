@@ -38,6 +38,7 @@ if ($result->Status == 100) {
         $_SESSION['app-wallet'] = 'success';
         $participation = floatval(($action->shop_get($shop_id)->participation_percentage)* $Amount/100) ;
         $action->shop_wallet_edit($shop_id,$participation,1);
+        $action->guild_wallet_log_add($shop_id,0,$participation);
         $work = floatval(($action->shop_get($shop_id)->work_percentage)* $Amount/100) ;
         $user_percentage = 100 - $participation - $work;
         $user_wallet = floatval($user_percentage* $Amount/100);
