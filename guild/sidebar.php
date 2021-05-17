@@ -66,7 +66,7 @@ $action = new Action();
         <ul aria-expanded="false" class="collapse">
             <li><a href="wallet-log.php">کیف پول</a></li>
             <li><a href="cart-list.php">کارت ها</a></li>
-           
+            <li><a href="transaction.php">تراکنش ها</a></li>
         </ul>
     </li>
     <hr class="m-0">

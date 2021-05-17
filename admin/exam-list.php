@@ -116,7 +116,7 @@ include('header.php'); ?>
 
                                         <td class="text-center"><?= $counter++ ?></td>
                                         <td class="text-center"><?= $row->title?></td>
-                                        <td class="text-center"><?= $action->question_package_get($row->question_pack_id)?></td>
+                                        <td class="text-center"><?= $action->question_package_get($row->question_pack_id)->title?></td>
                                         <td class="text-center"><?= $action->time_to_shamsi($row->created_at) ?></td>
                                         <td class="text-center">
                                             <a href="<?= $list_url ?>?status=<?= $row->id ?>">

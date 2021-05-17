@@ -349,7 +349,7 @@ public function shop_edit($id,$category_id,$title,$icon, $phone, $fax, $city_id,
     `phone`='$phone',
     `fax`='$fax',
     `city_id`='$city_id',
-    `address`='$address',S
+    `address`='$address',
     `longitude`='$longitude',
     `latitude`='$latitude',
     `status`='$status',
@@ -395,8 +395,8 @@ public function shop_get($id)
      public function product_add($title,$description,$price,$discount,$score,$status)
      {
          $now = time();
-         $guild_id=$_SESSION['guild_id'];
-         $shop_id= $this->guild()->shop_id;;
+         $guild_id=$this->guild()->id;
+         $shop_id= $this->guild()->shop_id;
          $category_id=$this->get_data("tbl_shop",$shop_id)->category_id;
          $result = $this->connection->query("INSERT INTO `tbl_product`
          (`guild_id`,`category_id`,`shop_id`,`title`,`discription`,`price`,`discount`,`score`,`status`,`created_at`) 
@@ -409,7 +409,7 @@ public function shop_get($id)
      public function product_edit($id,$title,$description,$price,$discount,$score,$status)
      {
          $now = time();
-         $guild_id=$_SESSION['guild_id'];
+         $guild_id=$this->guild()->id;
          $shop_id= $this->guild()->shop_id;;
          $category_id=$this->get_data("tbl_shop",$shop_id)->category_id;
          $result = $this->connection->query("UPDATE `tbl_product` SET 
@@ -567,11 +567,11 @@ public function shop_get($id)
     }
    
     public function guild_log_list(){
-      $shop_id= $this->guild()->shop_id;;
-      return $this->connection->query("SELECT * FROM `tbl_guild_log` WHERE `view`=0 AND shop_id='$shop_id'");
+      $id= $this->guild()->id;;
+      return $this->connection->query("SELECT * FROM `tbl_guild_log` WHERE `view`=0 AND `guild_id`='$id'");
     }
     public function action_log_get($id){
-        return $this->get_data("tbl_action_log", $id);
+        return $this->get_data("tbl_action", $id);
     }
     public function change_view($id){
         
@@ -693,7 +693,12 @@ public function request_add($cart_id,$amount){
     return $this->connection->insert_id;
 }
 
-
+public function guild_wallet_log_list(){
+    $shop_id = $this->guild()->shop_id;
+    $result = $this->connection->query("SELECT * FROM `tbl_guild_wallet_log` WHERE shop_id=' $shop_id' ORDER BY `id` DESC");
+    if (!$this->result($result)) return false;
+    return $result;
+}
 
 // ----------- end finantial ----------------------------------------------------------------------------
 // ----------- start TICKETS -----------------------------------------------------------------------------------------
@@ -762,7 +767,7 @@ public function guild_request_edit($id,$category,$name,$owner,$address,){
 public function add_guild_list()
 {
    $shop_id= $this->guild()->shop_id;
-   $result = $this->connection->query("SELECT * FROM `tbl_shop_request` WHERE shop_id='$shop_id' ORDER BY `id` DESC");
+   $result = $this->connection->query("SELECT * FROM `tbl_shop_request` WHERE user_id='$shop_id'AND `access`=2 ORDER BY `id` DESC");
    if (!$this->result($result)) return false;
    return $result;
 }

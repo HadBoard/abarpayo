@@ -100,7 +100,8 @@ include('header.php'); ?>
                                 </thead>
 
                                 <tbody class="text-center">
-                                <? while ($row = $result->fetch_object()) { ?>
+                                <? if(mysqli_num_rows($result))
+                                while ($row = $result->fetch_object()) { ?>
                                     <tr class="text-center">
 
                                         <td class="text-center"><?= $counter++ ?></td>

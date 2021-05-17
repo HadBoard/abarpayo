@@ -164,8 +164,16 @@ include('header.php'); ?>
                                 <?= $action->time_to_shamsi($row->created_at) ?>
                             </p>
                         </div>
+                        <? if ($row->updated_at) { ?>
+                            <div class="col-lg-6">
+                                <p class="text-right m-b-0">
+                                    آخرین ویرایش :
+                                    <?= $action->time_to_shamsi($row->updated_at) ?>
+                                </p>
+                            </div>
+                        <? } ?>
                     </div>
-                <? } ?>
+                 <? } ?>
                 <!-- ----------- end history ------------------------------------------------------------------- -->
 
                 <!-- ----------- start row of fields ----------------------------------------------------------- -->

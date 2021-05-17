@@ -34,13 +34,13 @@ if (isset($_POST['submit'])) {
     // get fields
     $title = $action->request('title');
     $status = $action->request('status');
-    $start_date=$action->request($_POST['start_date']);
-    $start_time=$action->request($_POST['start_time']);
+    $start_date=$_POST['start_date'];
+    $start_time=$_POST['start_time'];
     $start_date=$action->shamsi_to_miladi($start_date);
     $start_date=$start_date.' '.$start_time;
     $start_date=strtotime($start_date);
-    $end_date=$action->request($_POST['end_date']);
-    $end_time=$action->request($_POST['end_time']);
+    $end_date=$_POST['end_date'];
+    $end_time=$_POST['end_time'];
     $end_date=$action->shamsi_to_miladi($end_date);
     $end_date=$end_date.' '.$end_time;
     $end_date=strtotime($end_date);
@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
     }
 
     // bye bye :)
-    header("Location: $main_url?edit=$command");
+     header("Location: $main_url?edit=$command");
 
 }
 // ----------- add or edit ---------------------------------------------------------------------------------------------
@@ -133,9 +133,16 @@ include('header.php'); ?>
                                 <?= $action->time_to_shamsi($row->created_at) ?>
                             </p>
                         </div>
-                       
+                        <? if ($row->updated_at) { ?>
+                            <div class="col-lg-6">
+                                <p class="text-right m-b-0">
+                                    آخرین ویرایش :
+                                    <?= $action->time_to_shamsi($row->updated_at) ?>
+                                </p>
+                            </div>
+                        <? } ?>
                     </div>
-                <? } ?>
+            <? } ?>
                 <!-- ----------- end history ------------------------------------------------------------------- -->
 
                 <!-- ----------- start row of fields ----------------------------------------------------------- -->
@@ -170,8 +177,8 @@ include('header.php'); ?>
                                     <select class="form-control" name="question_pack_id" required>
                                         <option>پکیج سوالات  را انتخاب فرمایید .</option>
                                         <?
-                                        // $option_result = $action->question_package_list();
-                                        $option_result = $action->package_list();
+                                        $option_result = $action->question_package_list();
+                                       
                                         while ($option = $option_result->fetch_object()) {
                                             echo '<option value="';
                                             echo $option->id;
@@ -185,14 +192,14 @@ include('header.php'); ?>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="start_date" id="date_start" class="form-control input-default "
+                                    <input type="text" name="start_date" id="date" class="form-control input-default "
                                            placeholder="تاریخ شروع"
                                            value="<?= ($edit) ? $action->time_to_shamsi($row->start_time): "" ?>" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="start_time" id="date_start" class="form-control input-default "
+                                    <input type="text" name="start_time"  class="form-control input-default "
                                            placeholder="ساعت شروع"
-                                           value="<?= ($edit) ? date("H:i:s",$row->start_date): "" ?>" required>
+                                           value="<?= ($edit) ? date("H:i:s",$row->start_time): "" ?>" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="text" name="end_date" id="date_start" class="form-control input-default "
@@ -200,9 +207,9 @@ include('header.php'); ?>
                                            value="<?= ($edit) ? $action->time_to_shamsi($row->end_time): "" ?>" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="end_time" id="date_start" class="form-control input-default "
+                                    <input type="text" name="end_time"  class="form-control input-default "
                                            placeholder="ساعت پایان"
-                                           value="<?= ($edit) ? date("H:i:s",$row->end_date): "" ?>" required>
+                                           value="<?= ($edit) ? date("H:i:s",$row->end_time): "" ?>" required>
                                 </div>
 
                                 

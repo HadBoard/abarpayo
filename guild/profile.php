@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
     $phone = $action->request('phone');
     $password = $action->request('password');
     $username= $action->request('username');
-    $birthday=$action->request('birthday');
+    $birthday=$action->request_date('birthday');
     $natinal_code=$action->request('natinal_code');
     $postal_code = $action->request('postal_code');
     $command = $action->guild_edit($first_name,$last_name,$phone,$username,$password,$natinal_code,$postal_code,$birthday);
@@ -79,14 +79,24 @@ include('header.php'); ?>
             <div class="col-lg-6">
 
                 <!-- ----------- start history ----------------------------------------------------------------- -->
-                <div class="row m-b-0">
-                    <div class="col-lg-6">
-                        <p class="text-right m-b-0">
-                            تاریخ ثبت :
-                            <?= $action->time_to_shamsi($row->created_at) ?>
-                        </p>
+                <? if ($row->created_at) { ?>
+                    <div class="row m-b-0">
+                        <div class="col-lg-6">
+                            <p class="text-right m-b-0">
+                                تاریخ ثبت :
+                                <?= $action->time_to_shamsi($row->created_at) ?>
+                            </p>
+                        </div>
+                        <? if ($row->updated_at) { ?>
+                            <div class="col-lg-6">
+                                <p class="text-right m-b-0">
+                                    آخرین ویرایش :
+                                    <?= $action->time_to_shamsi($row->updated_at) ?>
+                                </p>
+                            </div>
+                        <? } ?>
                     </div>
-                </div>
+            <? } ?>
                 <!-- ----------- end history ------------------------------------------------------------------- -->
 
                 <!-- ----------- start row of fields ----------------------------------------------------------- -->
@@ -113,9 +123,9 @@ include('header.php'); ?>
                                            value="<?= $row->phone ?>">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="birthday" class="form-control input-default "
+                                    <input type="text" name="birthday" id="date" class="form-control input-default "
                                            placeholder="تاریخ تولد"
-                                           value="<?= $row->birthday ?>">
+                                           value="<?= $action->time_to_shamsi($row->birthday) ?>">
                                 </div>
                                 <div class="form-group">
                                     <input type="text" name="natinal_code" class="form-control input-default "
