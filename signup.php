@@ -11,6 +11,13 @@ if($action->auth()){
     header('Location: index.php');
 }
 
+$error = false;
+if (isset($_SESSION['error'])) {
+    $error = true;
+    $error_val = $_SESSION['error'];
+    unset($_SESSION['error']);
+}
+
 if(isset($_POST['submit'])){
     unset($_SESSION['fromValidation']);
     $first_name = $action->request('first_name');
@@ -26,6 +33,7 @@ if(isset($_POST['submit'])){
             $result = $action->user_reference_code($reference_code);
             $reference = $result->fetch_object();
             $reference_id = $reference->id;
+            if(!$reference_id){$_SESSION['error'] = 1;}
             $action->score_log_add($reference_id,$invitation_score,8,1);
             $action->score_edit($reference_id,$invitation_score,1);
         }
@@ -43,17 +51,7 @@ if(isset($_POST['submit'])){
         $action-> log_action(17,0);
         header("Location: index.php");
     }else{
-        ?>
-        <div class="modal">
-                <div class="alert alert-fail">
-                    <span class="close_alart">×</span>
-                    <p>
-                            ثبت نام ناموفق بود!
-                    </p>
-                </div>
-        </div>
-        <script src="assets/js/alert.js"></script>
-        <?
+        $_SESSION['error'] = 1;
     }
 }
 ?>
@@ -84,6 +82,22 @@ if(isset($_POST['submit'])){
 
     <div class="background_page">
         <div class="container">
+        <? if ($error) {
+            if ($error_val) { ?>
+
+                 <div class="modal">
+                    <div class="alert alert-fail">
+                        <span class="close_alart">×</span>
+                        <p>
+                            عملیات ناموفق بود!
+                        </p>
+                    </div>
+                </div>
+                <script src="assets/js/alert.js"></script>
+                
+            <? } 
+} ?>
+            
             <div class="center_form">
                 <div class="row">
                     <div class="col-md-5 right-form">

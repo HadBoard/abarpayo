@@ -320,6 +320,17 @@ class Action
         return $this->get_data("tbl_marketer", $id);
     }
 
+    public function marketer_today_income($id){
+        $today= strtotime(date('Y-m-d'));
+        $tommoro=$today+86400;
+        $amount=0;
+        $result=$this->connection->query("SELECT * FROM `tbl_marketer_wallet_log` WHERE `marketer_id` = '$id'AND `created_at` BETWEEN '$today'AND'$tommoro'");
+        if($result->num_rows > 0){
+            while($row = $result->fetch_object()){
+                $amount+=$row->amount;
+            }
+        }return $amount;
+    }
 
     public function is_vip($id){
         $result = $this->table_list("tbl_vip_marketer");
@@ -818,6 +829,15 @@ class Action
         return $result->num_rows;
     }
 
+    public function cart_items_counter($id,$type){
+        if($type == 1){
+            $result =$this->connection->query("SELECT * FROM `tbl_cart` WHERE `user_id` = '$id' AND `access` = '1' ");
+        }else{
+            $result =$this->connection->query("SELECT * FROM `tbl_cart` WHERE `user_id` = '$id' AND `access`='0'");
+        }
+        return $result->num_rows;
+    }
+
     public function setMessageView($id){
         $result = $this->connection->query("UPDATE `tbl_message` SET 
         `user_view`= 1
@@ -923,28 +943,19 @@ class Action
         return $this->connection->query("SELECT * FROM `tbl_cart` WHERE `user_id` = '$id' AND `product_id` = '$product_id' AND `access` = '$isUser' ");
     }
 
-    public function shop_search($title,$cur_index){
-        if(isset($_SESSION['default_city'])){
-            $city_id = $_SESSION['default_city'];
-        }else{
-            $city_id = 426;
-        }
-        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `title` like '%".$title."%' AND `city_id` = '$city_id'  ORDER BY id LIMIT $cur_index,8 ");
-    }
-
     public function advance_search($input,$category,$city,$cur_index){
-        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE  `category_id` = '$category' AND `city_id` = '$city' AND `title` like '%".$input."%' LIMIT $cur_index,8 ");
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE  `category_id` = '$category' AND `city_id` = '$city' AND `title` LIKE '%".$input."%' LIMIT $cur_index,8 ");
     }
 
     public function advance_search_not_city($input,$category,$cur_index){
-        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE  `category_id` = '$category' AND `title` like '%".$input."%' LIMIT $cur_index,8 ");
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE  `category_id` = '$category' AND `title` LIKE '%".$input."%' LIMIT $cur_index,8 ");
     }
-
+    
     public function advance_search_not_input($city,$category,$cur_index){
         return $this->connection->query("SELECT * FROM `tbl_shop` WHERE `category_id` = '$category' AND `city_id` = '$city' LIMIT $cur_index,8 ");
     }
     public function advance_search_not_category($input,$city,$cur_index){
-        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE  `city` = '$city' AND `title` like '%".$input."%' LIMIT $cur_index,8 ");
+        return $this->connection->query("SELECT * FROM `tbl_shop` WHERE  `city_id` = '$city' AND `title` like '%".$input."%' LIMIT $cur_index,8 ");
     }
 
     public function category_shops_list_limited($category_id){
@@ -1135,6 +1146,19 @@ class Action
         return $this->connection->insert_id;
     }
 
+    public function last_purchase($id,$access){
+        return $this->connection->query("SELECT * FROM `tbl_purchase` WHERE `user_id` = '$id' AND `access` = '$access' AND `order_id` = '0' ORDER BY `id` DESC LIMIT 1 ");
+    }
+
+    public function payment_get($id,$access)
+    {
+        if($access == 1){
+            return $this->get_data("tbl_payment", $id);
+        }else{
+            return $this->get_data("tbl_marketer_payment", $id);
+        }
+    }
+
     public function payment_add($amount,$cart_number,$reference_code,$status)
     {
         $now = time();
@@ -1146,6 +1170,7 @@ class Action
         if (!$this->result($result)) return false;
         return $this->connection->insert_id;
     }
+    
 
     public function app_payment_add($user_id,$amount,$cart_number,$reference_code,$status)
     {
@@ -1429,7 +1454,7 @@ class Action
     }
 
     public function user_log_list(){
-        $user_id=$_SESSION['user_id'];
+        $user_id=$this->user()->id;
         return $this->connection->query("SELECT * FROM `tbl_user_log` WHERE `user_id` = '$user_id' AND `view`=0 ORDER BY `id` DESC");
     }
 
@@ -1505,10 +1530,10 @@ class Action
 
     public function change_view_all($id,$type){
         if($type==1){
-            $result= $this->connection->query("UPDATE tbl_user_log SET `view`='1' WHERE `user_id` ='$id'");  
+            $result= $this->connection->query("SELECT * FROM `tbl_user_log` WHERE `view`= '0' AND `user_id` ='$id'");  
         }
         if($type==0){
-            $result= $this->connection->query("UPDATE tbl_marketer_log SET `view`='1'WHERE `marketer_id`='$id'");  
+            $result= $this->connection->query("SELECT * FROM `tbl_marketer_log` WHERE `view`='0' AND `marketer_id`='$id'");  
         }
         
         while($row = $result->fetch_object()){

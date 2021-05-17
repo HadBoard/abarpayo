@@ -162,6 +162,7 @@ class Action
     public function request_date($name)
     {
         $name = $this->request('birthday', false);
+        if(!$name) return 0;
         $name = $this->shamsi_to_miladi($name);
         return strtotime($name);
     }
@@ -928,18 +929,18 @@ public function guild_cart_list($shop_id){
         return $this->table_option("tbl_product", $id);
     }
  
-     public function product_add($category_id,$shop_id,$title,$image,$description,$price,$discount,$score,$status)
+     public function product_add($category_id,$shop_id,$title,$image,$description,$price,$discount,$discount1,$discount2,$discount3,$discount4,$score,$status)
      {
          $now = time();
          $result = $this->connection->query("INSERT INTO `tbl_product`
-         (`category_id`,`shop_id`,`title`,`image`,`discription`,`price`,`discount`,`score`,`status`,`created_at`) 
+         (`category_id`,`shop_id`,`title`,`image`,`discription`,`price`,`discount`,`discount1`,`discount2`,`discount3`,`discount4`,`score`,`status`,`created_at`) 
          VALUES
-         ('$category_id','$shop_id','$title','$image','$description','$price','$discount','$score','$status','$now')");
+         ('$category_id','$shop_id','$title','$image','$description','$price','$discount','$discount1','$discount2','$discount3','$discount4','$score','$status','$now')");
          if (!$this->result($result)) return false;
          return $this->connection->insert_id;
      }
  
-     public function product_edit($id,$category_id,$shop_id,$title,$image,$description,$price,$discount,$score,$status)
+     public function product_edit($id,$category_id,$shop_id,$title,$image,$description,$price,$discount,$discount1,$discount2,$discount3,$discount4,$score,$status)
      {
          $now = time();
          $result = $this->connection->query("UPDATE `tbl_product` SET 
@@ -950,6 +951,10 @@ public function guild_cart_list($shop_id){
          `discription`='$description',
          `price` = '$price',
          `discount`= '$discount',
+         `discount1`='$discount1',
+         `discount2`= '$discount2',
+         `discount3` = '$discount3',
+         `discount4`= '$discount4',
          `score` = '$score',
          `status`='$status',
          `updated_at`='$now'

@@ -33,8 +33,8 @@
         ?>  
                 <tr>
                     <td class="inc_wallet"'> <?=  "+".$transaction->amount ?></td>
-                    <td><?= $action->time_to_shamsi($transaction->date)?></td>
                     <td><?= $action->action_log_get($payment->action_id)->text ?></td>
+                    <td><?= $action->time_to_shamsi($transaction->date)?></td>
                 </tr>
         <?
             }

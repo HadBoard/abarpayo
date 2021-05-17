@@ -6,7 +6,6 @@ $action = new Action();
 
 // ----------- urls ----------------------------------------------------------------------------------------------------
 // main url for add , edit
-$main_url = "shop-comment.php";
 // main url for remove , change status
 $list_url = "shop-comment-list.php";
 // ----------- urls ----------------------------------------------------------------------------------------------------
@@ -20,13 +19,13 @@ if (isset($_GET['shop'])) {
 // ----------- get data ------------------------------------------------------------------------------------------------
 
 // ----------- delete --------------------------------------------------------------------------------------------------
-if (isset($_GET['remove']) && isset($_GET['shop'])) {
-    $remove_id = $action->request('remove');
-    $shop_id = $action->request('shop');
-    $_SESSION['error'] = !$action->shop_comment_remove($remove_id);
-    header("Location: $list_url?shop=$shop_id");
-    return;
-}
+// if (isset($_GET['remove']) && isset($_GET['shop'])) {
+//     $remove_id = $action->request('remove');
+//     $shop_id = $action->request('shop');
+//     $_SESSION['error'] = !$action->shop_comment_remove($remove_id);
+//     header("Location: $list_url?shop=$shop_id");
+//     return;
+// }
 
 // ----------- delete --------------------------------------------------------------------------------------------------
 // ----------- check error ---------------------------------------------------------------------------------------------
@@ -100,7 +99,7 @@ include('header.php'); ?>
                                     <th class="text-center">امتیاز</th>
                                     <th class="text-center">تاریخ ثبت</th>
                                     <th class="text-center">تایید</th>
-                                    <th class="text-center">حذف</th>
+                                    <!-- <th class="text-center">مدیریت</th> -->
                                 </tr>
                                 </thead>
 
@@ -120,12 +119,11 @@ include('header.php'); ?>
                                              : "<status-indicator negative pulse></status-indicator>";
                                             ?>
                                         </td>
-                                        <td>
-                                            
+                                        <!-- <td>
                                             <a href="<?= $list_url ?>?shop=<?= $row->shop_id?>&remove=<?= $row->id ?>">
                                                 <i class="fa fa-trash"></i>
                                             </a>
-                                        </td>
+                                        </td> -->
 
                                     </tr>
                                 <? } ?>

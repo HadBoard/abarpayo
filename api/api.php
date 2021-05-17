@@ -466,6 +466,16 @@ if(isset($_POST['function'])) {
         $json = json_encode($obj);
         echo $json; 
     }
+
+    if($_POST['function'] == 'lastPurchase'){
+        $obj = null;
+        $id = $action->request('user_id');
+        $purchase = $action->last_purchase($id,1)->fetch_object();
+        $obj -> title = $action->shop_get($purchase->shop_id)->title;
+        $obj -> amount = $action->payment_get($purchase->payment_id,1)->amount;
+        $json = json_encode($obj);
+        echo $json;
+    }
     
 }
 

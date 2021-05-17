@@ -1,10 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="utf-8">
     <title>ابرپایو</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="assets/css/swiper.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/fontiran.css">
@@ -14,6 +14,7 @@
     <script src='assets/js/jquery.js'></script>
     <script src='assets/js/fontAwsome.js'></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
 <?
@@ -74,6 +75,7 @@ $title = "ثبت نام";
             $action->marketer_score_edit($command,$marketer_register_score,1);
             $_SESSION['marketer_id'] = $command;
             $action-> marketer_update_last_login( $_SESSION['marketer_id']);
+
             $action->log_action(17,2);
             $_SESSION['marketer_access'] = $action->marketer_get($command)->package_id;
             ?>

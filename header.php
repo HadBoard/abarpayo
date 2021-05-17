@@ -48,7 +48,7 @@ $action = new Action();
             </div>
             <div class="col-md-3 search_header">
                 <form action="search-results.php" method="post">
-                <input name="search" required placeholder="لطفا کلمه مورد نظر خود را جستجو کنید">
+                <input name="input" required placeholder="لطفا کلمه مورد نظر خود را جستجو کنید">
                 <button type="submit"name="search_button"><span class="material-icons">search</span></button> 
                 </form>
             </div>
@@ -128,10 +128,19 @@ $action = new Action();
                         </a>
                     </div>
                     <?}?>
+                    <?
+                        if($action->user()){
+                            $id = $action->user()->id;
+                            $type = 1;
+                        }else if($action->marketer()){
+                            $id = $action->marketer()->id;
+                            $type = 0;
+                        }
+                    ?>
                     <div class="message_header cart_header">
-                        <a href="notification.php">
+                        <a href="shopping-cart.php">
                             <img src="assets/images/icons8-shopping-cart-64.png">
-                                                        <span>5</span>
+                                <span><?= $action->cart_items_counter($id,$type) ?></span>
                         </a>
                     </div>
                 </div>
@@ -176,9 +185,9 @@ $action = new Action();
                         <a href="#">فروشگاه</a>
                     </li> -->
 
-                    <li style="width:14%">
+                    <!-- <li style="width:14%">
                         <a href="#">باشگاه مشتریان</a>
-                    </li>
+                    </li> -->
                     <li>
                         <a href="about-us.php">درباره ما</a>
                     </li>
@@ -203,7 +212,7 @@ $action = new Action();
 </header>
 <!-- eof header -->
 <script>
-document.getElementById('default_city').onchange=function(){
+document.getElementById('default_city').onclick=function(){
        var city_id=document.getElementById('default_city').value;
        console.log(city_id);
        $.ajax({

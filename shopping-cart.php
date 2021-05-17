@@ -62,14 +62,16 @@ if(isset($_SESSION['already_in_gateway']) && $_SESSION['already_in_gateway'] == 
 
         <div class="container">
            <div class="row">
+           <?if($action->cart_items_counter($id,$access) > 0){?>
             <div class="col-md-8">
                 <div class="notif_table cart_table">
                     <table>
                         <tr>
                             <th >ردیف</th>
                             <th>اسم محصول</th>
-                            <th>نام فروشگاه</th>
                             <th>تعداد</th>
+                            <th>قیمت اصلی</th>
+                            <th> قیمت پس از تخفیف</th>
                             <th>حذف </th>
                         </tr>
                         <?
@@ -80,9 +82,24 @@ if(isset($_SESSION['already_in_gateway']) && $_SESSION['already_in_gateway'] == 
                             $items = $action->cart_items($id,$access);
 
                             while($item = $items->fetch_object()){
-
                                 $price = $action->product_get($item->product_id)->price;
-                                $off = $action->product_get($item->product_id)->discount;
+                                if($action->user()){
+                                    $off = $action->product_get($item->product_id)->discount;
+                                }else if($action->marketer()){
+                                    switch($action->marketer($id)->package_id){
+                                        case 1: 
+                                            $off = $action->product_get($item->product_id)->discount1;
+                                            break;
+                                        case 2 :
+                                            $off = $action->product_get($item->product_id)->discount2;
+                                            break;
+                                        case 3 :
+                                            $off = $action->product_get($item->product_id)->discount3;
+                                            break;
+                                        case 4 :
+                                            $off = $action->product_get($item->product_id)->discount4;
+                                    }
+                                }
                                 $cost += $item->count * $price;
                                 $total_off += $item->count *($price*$off/100);
                                 $final = $item->count * (floatval($price) - floatval($price*$off/100));
@@ -91,8 +108,14 @@ if(isset($_SESSION['already_in_gateway']) && $_SESSION['already_in_gateway'] == 
                         <tr>
                             <td><?= $counter++ ?></td>
                             <td><?= $action->product_get($item->product_id)->title ?></td>
-                            <td><a href="shop.php?id=<?= $item->shop_id ?>"><?= $action->shop_get($item->shop_id)->title ?></a></td>
                             <td><?= $item->count ?></td>
+                            <? if($cost != $final){?>
+                            <td><?= $cost ?></td>
+                            <td><?= $final ?></td>
+                            <?}else{?>
+                                <td><?= $cost ?></td>
+                                <td></td>
+                            <?}?>
                             <td>
                                 <form action="" method="post">
                                     <input type="hidden" name="delete_item" value="<?= $item->id ?>">
@@ -130,14 +153,20 @@ if(isset($_SESSION['already_in_gateway']) && $_SESSION['already_in_gateway'] == 
                                 </form>
                     
                                 <form action="" method="post">
-                                <button name="cart_cancel" type="submit" class="suc_button">انصراف</button>
+                                <button name="cart_cancel" type="submit" class="suc_button cancle_button">انصراف</button>
                                 </form>
-                    
-                    
                     </div>
                 </div>
             </div>
-            
+            <?}else{?>
+
+            <div class="row more-item" style="display: block;">
+            <div class="nomore-item">      
+                    
+                    <p>موردی  برای نمایش موجود نمی باشد . </p>
+            </div>
+        </div>
+            <?}?>
            </div>
         </div>
     </section>

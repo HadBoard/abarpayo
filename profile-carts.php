@@ -6,14 +6,15 @@
         
 </div>
 <div class="row profile_title">
-    <a href="?wallet" class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
+<div class="add_cart_part">
 
+    <a href="?wallet" class="profile_title_icon"><img src="assets/images/006-right-arrow.svg"></a>
     <h3 style="width: 50%;float: right;">کارت های من</h3>
-    <div class="row">
-        <div class="col-3">
-        <a href="?add-cart"class="main_btn wallet_btn">افزودن کارت</a>
-        </div>
+    <a href="?add-cart"class="main_btn wallet_btn add_card">افزودن کارت</a>
+
     </div>
+
+    
     
     <img src="assets/images/Group 465.svg">
   

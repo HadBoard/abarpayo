@@ -58,13 +58,12 @@ $name = $action->user_get($user_id)->first_name." ".$action->user_get($user_id)-
                 $command = $action->update_cart_item($item->id,$count);
             }
         }
-    
         if($command){
             $_SESSION['error']= 0 ;
         }else{
             $_SESSION['error']= 1 ;
         }
-        header("Location: shop.php?id=$id" );
+        echo '<script>window.location="shop.php?id='.$id.'"</script>';
     }  
    
 ?>
@@ -83,18 +82,9 @@ if ($error_val) { ?>
     <script src="assets/js/alert.js"></script>
     
 <? } else { ?>
-    <div class="modal">
-        <div class="alert alert-suc">
-            <span class="close_alart">×</span>
-            <p>
-               به سبد خرید افزوده شد!
-            </p>
-        </div>
-    </div>
-    <script src="assets/js/alert.js"></script>
-    <div class="overlay_"></div>
+    <div style="opacity:1" class="overlay_"></div>
 <!--welcome modal  -->
-<!-- <div class="welcom-modal modal2 animate__animated  animate__backInDown shop_modal">
+<div style="display:block" class="welcom-modal modal2 animate__animated  animate__backInDown shop_modal">
     <a class="close-modal"><i class="fa fa-times"></i></a>
     <div class="swal">
         <div class="swal-icon swal-icon--success">
@@ -107,39 +97,14 @@ if ($error_val) { ?>
     </div>
     <h3>به سبد خرید افزوده شد</h3>
    
-    <div class="container">
-        <a class="sabadkharid">مشاهده سبد خرید</a>
-
-    </div>
-    
-</div> -->
-    
-<? }
-} 
- 
-?>
-<div class="overlay_"></div>
-<!--welcome modal  -->
-<div class="welcom-modal modal2 animate__animated  animate__backInDown shop_modal">
-    <a class="close-modal"><i class="fa fa-times"></i></a>
-    <div class="swal">
-        <div class="swal-icon swal-icon--success">
-            <span class="swal-icon--success__line swal-icon--success__line--long"></span>
-            <span class="swal-icon--success__line swal-icon--success__line--tip"></span>
-        
-            <div class="swal-icon--success__ring"></div>
-            <div class="swal-icon--success__hide-corners"></div>
-          </div>
-    </div>
-    <h3>به سبد خرید افزوده شد</h3>
-   
-    <div class="container">
-        <a class="sabadkharid">مشاهده سبد خرید</a>
+    <div  class="container">
+        <a href="shopping-cart.php" class="sabadkharid">مشاهده سبد خرید</a>
 
     </div>
     
 </div>
-
+<? } }  ?>
+ 
 
 
   <!-- shop first-container -->
@@ -471,7 +436,7 @@ if ($error_val) { ?>
                             <div class="col-11">
                                 <div class="comment_item">
                                     <div class="comment_item_info">
-                                        <h4><?= $action->admin_get($reply->user_id)->first_name." ".$action->admin_get($reply->user_id)->last_name?></h4>
+                                        <h4><?= $action->shop_get($reply->user_id)->title?></h4>
                                         <div class="date">
                                             <p><?= $action->time_to_shamsi($reply->created_at);?></p>
                                         </div>
@@ -507,10 +472,10 @@ if ($error_val) { ?>
             })
          
      }
-    //  document.querySelector('.close-modal').onclick = function(){
-    //     $('.modal2').hide();
-    //     $('.overlay_').css('opacity',0)
-    //  }
+     document.querySelector('.close-modal').onclick = function(){
+        $('.modal2').hide();
+        $('.overlay_').css('opacity',0)
+     }
     //  $('.shop_product').click(function(){
     //     $('.overlay_').css('opacity',1)
     //     $('.modal2').show();

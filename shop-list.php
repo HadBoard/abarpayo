@@ -38,15 +38,13 @@ if(isset($_GET['category'])){
         <?
             while($shop = $shops->fetch_object()){
         ?>
-            <div class="index_shop">
+
+         <div class="index_shop">
                 <div class="index_shop_inner">
-                    <div style="width: 100%;position: relative;">
-                    <a href="shop.php?id=<?=$shop->id?>" >
+                    <a href="shop.php?id=<?=$shop->id ?>" >
                         <img src="admin/images/shops/<?= $shop->image?>">
                         <div class="shop_off">23%</div>
-                    </a>
-                    </div>
-                    <div class="shop_content">
+                     </a>
                     <a href="shop.php?id=<?=$shop->id?>" class="shop_content">
                         <h4><?= $shop->title ?></h4>
                         <h6>
@@ -54,7 +52,6 @@ if(isset($_GET['category'])){
                              <?= $shop->address?>
                         </h6>
                     </a>
-                    </div>
                     <div class="shop_star">
                         <div class="row">
                             <div class="col-3">
@@ -70,11 +67,11 @@ if(isset($_GET['category'])){
                         </div>
                     </div>
                 </div>
-            </div>  
-            <?
-            }
-            ?>
+            </div>
+
+        <?}?>
         </div>
+     
         <?
             $count = $shops->num_rows;
             if($count){
