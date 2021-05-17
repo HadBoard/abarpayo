@@ -201,9 +201,6 @@ include('header.php'); ?>
                                 <?if($edit){?>
 
                                     <div class="form-group">
-                                    <!-- <select class="form-control select2" name="perms[]" multiple="multiple">
-                                        <option>سطوح دسترسی  را انتخاب فرمایید .</option> -->
-                                        <!-- <option value="all">انتخاب همه</option>-->
                                     <label for="perms">انتخاب سطح دسترسی</label>
                                     <label>
                                         <input type="checkbox" class="float-right m-1" 
@@ -227,8 +224,6 @@ include('header.php'); ?>
                                         <option value=14>پرسش های پرتکرار</option>
                                     </select>
                                 </div>
-
-                                
                                 <?}?>
                                 <div class="form-group" style="width:100%;float:right">
                                     <label class="float-right">

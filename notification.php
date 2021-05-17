@@ -53,7 +53,6 @@ include_once "header.php";
                         حذف همه
             </button>
             </form>
-        <?}?>
             <div class="notif_table">
                 <table>
                     <tr>
@@ -62,7 +61,7 @@ include_once "header.php";
                         <td>تاریخ</td>
                         <td>حذف </td>
                     </tr>
-                    <? if($result->num_rows > 0) {while($row = $result->fetch_object()){ ?>
+                    <?while($row = $result->fetch_object()){ ?>
                     <tr>
                         <td><?= ++$count ?></td>
                         <td><?= $action->action_log_get($row->id)->text?> </td>
@@ -74,9 +73,16 @@ include_once "header.php";
                             </form>
                         </td>
                     </tr>
-                    <?}}?>
+                    <?}?>
                 </table>
             </div>
+        <?}else{?>
+            <div class="row more-item" style="display: block;">
+            <div class="nomore-item">      
+                    
+                    <p>موردی  برای نمایش موجود نمی باشد . </p>
+            </div>
+        <?}?>
         </div>
     </section>
     <? include_once "footer.php" ?>
