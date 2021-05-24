@@ -503,7 +503,7 @@ label.form-check-label {
 .package_factor table td:nth-child(3),.package_factor table th:nth-child(3){
   width: 20% !important;
 }
-.package_factor table td:nth-child(4),.package_factor table th:nth-child(4)){
+.package_factor table td:nth-child(4),.package_factor table th:nth-child(4){
   width:40% !important;
   text-align:left !important;
 }
@@ -1258,3 +1258,47 @@ a.copy-icon {
   display: table;
   margin-top: 25px !important;
 }
+ 
+.wallet_table.factor-table td:first-child {
+  max-width: 30%;
+  width: 30%;
+}
+.wallet_table.factor-table td {
+  max-width: 25%;
+  width: 20%;
+}
+.factor-table td a{
+  background: rgb(226, 226, 226);
+  padding: 7px 12px;
+  border-radius: 5px;
+  color: #FF8E0A;
+  font-size: 14px;
+  transition: 0.3s ease-in-out all;
+}
+
+.factor-table td a:hover {
+  box-shadow: 1px 1px 3px 0 #3a3535cc;
+}
+
+.user_product_list_table {
+  width: 100%;
+}
+.user_product_list_table td:first-child {
+  max-width: 30%;
+  width: 30%;
+  font-weight: 500;
+  font-size: 15px
+}
+.user_product_list_table td:nth-child(2) {
+  max-width: 20%;
+  width: 20%;
+}
+.user_product_list_table td:nth-child(3) {
+  max-width: 10%;
+  width: 10%;
+}
+.user_product_list_table td:nth-child(4) ,.user_product_list_table td:nth-child(5) {
+  max-width: 15%;
+  width: 15%;
+}
+.text_right{text-align: right !important  ;}

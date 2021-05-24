@@ -12,7 +12,7 @@ $list_url = "user-list.php";
 
 // ----------- get data from database when action is edit --------------------------------------------------------------
 $edit = false;
-if (isset($_GET['edit'])) {
+if (isset($_GET['edit'])) { 
     $edit = true;
     $id = $action->request('edit');
     $row = $action->user_get($id);
